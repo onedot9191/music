@@ -474,7 +474,6 @@
       <button id="force-quit-btn" class="btn hidden">강제 종료</button>
       <button id="show-answers-btn" class="btn hidden">정답 보기</button>
       <button id="reset-btn" class="btn hidden">초기화</button>
-      <button id="start-btn" class="btn">시작</button>
     </div>
   </header>
   <main>
@@ -830,6 +829,16 @@
       <button id="close-progress-modal-btn" class="btn">확인</button>
     </div>
   </div>
+  
+  <!-- Start Modal -->
+    <div id="start-modal" class="modal-overlay active">
+        <div class="modal-content">
+            <h2>음악 퀴즈</h2>
+            <p>준비가 되면 시작 버튼을 눌러주세요!</p>
+            <button id="start-game-btn" class="btn">시작</button>
+        </div>
+    </div>
+
 
   <script>
     // Tab switching logic
@@ -855,7 +864,7 @@
     const allInputs = document.querySelectorAll('input[data-answer]');
     const comboCounter = document.getElementById('combo-counter');
     const showAnswersBtn = document.getElementById('show-answers-btn');
-    const startBtn = document.getElementById('start-btn');
+    const startGameBtn = document.getElementById('start-game-btn');
     const forceQuitBtn = document.getElementById('force-quit-btn');
     const resetBtn = document.getElementById('reset-btn');
     const character = document.getElementById('character-assistant');
@@ -865,6 +874,7 @@
     const closeModalBtn = document.getElementById('close-modal-btn');
     const progressModal = document.getElementById('progress-modal');
     const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
+    const startModal = document.getElementById('start-modal');
 
     const fmt = n => String(n).padStart(2, '0');
     const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
@@ -957,7 +967,6 @@
         updateMushroomGrowth(combo);
         comboCounter.classList.add('hidden');
         
-        startBtn.classList.add('hidden');
         forceQuitBtn.classList.add('hidden');
         setCharacterState('sad');
         showProgress();
@@ -994,17 +1003,16 @@
         showAnswersBtn.disabled = false;
         resetBtn.classList.add('hidden');
         forceQuitBtn.classList.add('hidden');
-        startBtn.classList.remove('hidden');
         stageClearModal.classList.remove('active');
         progressModal.classList.remove('active');
+        startModal.classList.add('active');
         setCharacterState('idle');
     }
 
     function startGame() {
         startAudio.play().catch(e => console.error("Start audio failed to play:", e));
-        resetGame();
+        startModal.classList.remove('active');
         allInputs.forEach(i => i.disabled = false);
-        startBtn.classList.add('hidden');
         forceQuitBtn.classList.remove('hidden');
         timerId = setInterval(tick, 1000);
         setCharacterState('idle');
@@ -1037,7 +1045,7 @@
     }
 
     // Event Listeners
-    startBtn.addEventListener('click', startGame);
+    startGameBtn.addEventListener('click', startGame);
     resetBtn.addEventListener('click', resetGame);
 
     forceQuitBtn.addEventListener('click', () => {
