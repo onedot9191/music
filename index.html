@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>음악 & 미술 퀴즈</title>
+  <title>음악 & 미술 & 국어 퀴즈</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -357,6 +357,7 @@
         margin: 2rem 0;
     }
     #time-setting-display {
+        font-family: 'Source Code Pro', monospace;
         font-size: 3rem;
         color: var(--text-light);
         width: 120px;
@@ -374,6 +375,12 @@
         color: var(--text-light);
         transform: translateY(3px);
         box-shadow: 3px 3px 0px var(--secondary);
+    }
+    
+    .notice-text {
+        font-size: 1.2rem;
+        color: var(--text-dark);
+        margin-top: 2rem;
     }
 
     /* Character Assistant Styles */
@@ -1007,6 +1014,181 @@
         </div>
     </section>
   </main>
+  
+  <main id="korean-quiz-main" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-target="listening-speaking">듣기·말하기</div>
+      <div class="tab" data-target="reading">읽기</div>
+      <div class="tab" data-target="writing">쓰기</div>
+      <div class="tab" data-target="grammar">문법</div>
+      <div class="tab" data-target="literature">문학</div>
+      <div class="tab" data-target="media">매체</div>
+    </div>
+    <section id="listening-speaking" class="active">
+        <h2>듣기·말하기</h2>
+        <div class="grade-container">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>지식 · 이해</th>
+                            <td>
+                                <input data-answer="듣기·말하기 맥락" placeholder="정답">
+                                <input data-answer="담화 유형" placeholder="정답">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>과정 · 기능</th>
+                            <td>
+                                <input data-answer="내용 확인·추론·평가" placeholder="정답">
+                                <input data-answer="내용 생성·조직·표현과 전달" placeholder="정답">
+                                <input data-answer="상호 작용" placeholder="정답">
+                                <input data-answer="점검과 조정" placeholder="정답">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="reading">
+        <h2>읽기</h2>
+        <div class="grade-container">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>지식 · 이해</th>
+                            <td>
+                                <input data-answer="읽기 맥락" placeholder="정답">
+                                <input data-answer="글의 유형" placeholder="정답">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>과정 · 기능</th>
+                            <td>
+                                <input data-answer="읽기의 기초" placeholder="정답">
+                                <input data-answer="내용 확인과 추론" placeholder="정답">
+                                <input data-answer="평가와 창의" placeholder="정답">
+                                <input data-answer="점검과 조정" placeholder="정답">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="writing">
+        <h2>쓰기</h2>
+        <div class="grade-container">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>지식 · 이해</th>
+                            <td>
+                                <input data-answer="쓰기 맥락" placeholder="정답">
+                                <input data-answer="글의 유형" placeholder="정답">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>과정 · 기능</th>
+                            <td>
+                                <input data-answer="쓰기의 기초" placeholder="정답">
+                                <input data-answer="계획하기" placeholder="정답">
+                                <input data-answer="내용 생성하기" placeholder="정답">
+                                <input data-answer="내용 조직하기" placeholder="정답">
+                                <input data-answer="표현하기" placeholder="정답">
+                                <input data-answer="공유하기" placeholder="정답">
+                                <input data-answer="점검과 조정" placeholder="정답">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="grammar">
+        <h2>문법</h2>
+        <div class="grade-container">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>지식 · 이해</th>
+                            <td>
+                                <input data-answer="언어의 본질과 매락" placeholder="정답">
+                                <input data-answer="언어 단위" placeholder="정답">
+                                <input data-answer="한글의 기초와 국어 규범" placeholder="정답">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>과정 · 기능</th>
+                            <td>
+                                <input data-answer="국어와 분석과 활용" placeholder="정답">
+                                <input data-answer="국어 실천의 성찰과 비판" placeholder="정답">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="literature">
+        <h2>문학</h2>
+        <div class="grade-container">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>지식 · 이해</th>
+                            <td>
+                                <input data-answer="갈래" placeholder="정답">
+                                <input data-answer="맥락" placeholder="정답">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>과정 · 기능</th>
+                            <td>
+                                <input data-answer="작품 읽기와 이해" placeholder="정답">
+                                <input data-answer="해석과 감상" placeholder="정답">
+                                <input data-answer="비평" placeholder="정답">
+                                <input data-answer="창작" placeholder="정답">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="media">
+        <h2>매체</h2>
+        <div class="grade-container">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>지식 · 이해</th>
+                            <td>
+                                <input data-answer="매체 소통 맥락" placeholder="정답">
+                                <input data-answer="매체 자료 유형" placeholder="정답">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>과정 · 기능</th>
+                            <td>
+                                <input data-answer="접근과 선택" placeholder="정답">
+                                <input data-answer="해석과 평가" placeholder="정답">
+                                <input data-answer="제작과 공유" placeholder="정답">
+                                <input data-answer="점검과 조정" placeholder="정답">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+  </main>
 
   <!-- Character Assistant -->
   <div id="character-assistant" class="idle">
@@ -1053,6 +1235,7 @@
             <div class="subject-selector">
                 <button class="btn subject-btn selected" data-subject="music">음악</button>
                 <button class="btn subject-btn" data-subject="art">미술</button>
+                <button class="btn subject-btn" data-subject="korean">국어</button>
             </div>
             <h2>시간 선택</h2>
             <div class="time-setter">
@@ -1060,6 +1243,7 @@
                 <div id="time-setting-display">10:00</div>
                 <button id="increase-time" class="btn time-control-btn">+</button>
             </div>
+            <p class="notice-text">※ 채점 시 띄어쓰기와 ⋅ 기호는 무시됩니다.</p>
             <button id="start-game-btn" class="btn">시작</button>
         </div>
     </div>
@@ -1171,8 +1355,8 @@
     }
 
     function showProgress() {
-        const correctCount = document.querySelectorAll(`#${selectedSubject}-quiz-main input.correct`).length;
         allInputs = document.querySelectorAll(`#${selectedSubject}-quiz-main input[data-answer]`);
+        const correctCount = document.querySelectorAll(`#${selectedSubject}-quiz-main input.correct`).length;
         const totalCount = allInputs.length;
         const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
@@ -1244,7 +1428,8 @@
         startAudio.play().catch(e => console.error("Start audio failed to play:", e));
         startModal.classList.remove('active');
         
-        headerTitle.textContent = selectedSubject === 'music' ? '음악' : '미술';
+        const subjectMap = { music: '음악', art: '미술', korean: '국어' };
+        headerTitle.textContent = subjectMap[selectedSubject] || '퀴즈';
         document.getElementById(`${selectedSubject}-quiz-main`).classList.remove('hidden');
         
         allInputs = document.querySelectorAll(`#${selectedSubject}-quiz-main input[data-answer]`);
@@ -1361,8 +1546,8 @@
       const input = e.target;
       if (input.disabled) return;
 
-      const userAnswer = input.value.trim().replace(/\s+/g, '').toLowerCase();
-      const correctAnswer = input.dataset.answer.trim().replace(/\s+/g, '').toLowerCase();
+      const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+      const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
       
       if (userAnswer === correctAnswer) {
         const wasAlreadyCorrect = input.classList.contains('correct');
