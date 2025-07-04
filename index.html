@@ -334,6 +334,25 @@
         color: var(--correct);
     }
 
+    .time-setter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+    #time-setting-display {
+        font-family: 'Source Code Pro', monospace;
+        font-size: 3rem;
+        color: var(--text-light);
+        width: 120px;
+        text-align: center;
+    }
+    .time-control-btn {
+        font-size: 2rem;
+        padding: 0.5rem 1.5rem;
+    }
+
     /* Character Assistant Styles */
     #character-assistant {
         position: fixed;
@@ -887,7 +906,12 @@
     <div id="start-modal" class="modal-overlay active">
         <div class="modal-content">
             <h2>음악 퀴즈</h2>
-            <p>준비가 되면 시작 버튼을 눌러주세요!</p>
+            <p>제한 시간을 설정해주세요!</p>
+            <div class="time-setter">
+                <button id="decrease-time" class="btn time-control-btn">-</button>
+                <div id="time-setting-display">10:00</div>
+                <button id="increase-time" class="btn time-control-btn">+</button>
+            </div>
             <button id="start-game-btn" class="btn">시작</button>
         </div>
     </div>
@@ -915,7 +939,8 @@
     failAudio.preload = 'auto';
 
     // Game elements
-    let total = 600, timerId, combo = 0;
+    let gameDuration = 600; // Default 10 minutes
+    let total = gameDuration, timerId, combo = 0;
     const timeEl = document.getElementById('time');
     const barEl = document.querySelector('#bar > div');
     const allInputs = document.querySelectorAll('input[data-answer]');
@@ -932,9 +957,16 @@
     const progressModal = document.getElementById('progress-modal');
     const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
     const startModal = document.getElementById('start-modal');
+    const timeSettingDisplay = document.getElementById('time-setting-display');
+    const decreaseTimeBtn = document.getElementById('decrease-time');
+    const increaseTimeBtn = document.getElementById('increase-time');
 
     const fmt = n => String(n).padStart(2, '0');
     const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+
+    function updateTimeSettingDisplay() {
+        timeSettingDisplay.textContent = formatTime(gameDuration);
+    }
 
     let characterStateTimeout;
     function setCharacterState(state, duration = 1500) {
@@ -1008,7 +1040,6 @@
         document.getElementById('progress-text').textContent = `${percentage}%`;
         
         const progressBarFill = document.getElementById('progress-bar-fill');
-        // A small timeout to allow the modal to render before animating the bar
         setTimeout(() => {
              progressBarFill.style.width = `${percentage}%`;
         }, 100);
@@ -1036,7 +1067,7 @@
       }
       total--;
       timeEl.textContent = formatTime(total);
-      barEl.style.width = `${(total / 600) * 100}%`;
+      barEl.style.width = `${(total / gameDuration) * 100}%`;
 
       if (total < 30 && !character.classList.contains('happy') && !character.classList.contains('sad')) {
           setCharacterState('worried');
@@ -1045,8 +1076,8 @@
 
     function resetGame() {
         clearInterval(timerId);
-        total = 600;
-        timeEl.textContent = '10:00';
+        total = gameDuration;
+        timeEl.textContent = formatTime(total);
         barEl.style.width = '100%';
         allInputs.forEach(i => {
             i.disabled = true;
@@ -1067,6 +1098,8 @@
     function startGame() {
         startAudio.play().catch(e => console.error("Start audio failed to play:", e));
         startModal.classList.remove('active');
+        total = gameDuration; // Set the timer to the selected duration
+        timeEl.textContent = formatTime(total);
         allInputs.forEach(i => i.disabled = false);
         forceQuitBtn.classList.remove('hidden');
         timerId = setInterval(tick, 1000);
@@ -1102,6 +1135,20 @@
     // Event Listeners
     startGameBtn.addEventListener('click', startGame);
     resetBtn.addEventListener('click', resetGame);
+
+    decreaseTimeBtn.addEventListener('click', () => {
+        if (gameDuration > 60) { // Minimum 1 minute
+            gameDuration -= 60;
+            updateTimeSettingDisplay();
+        }
+    });
+
+    increaseTimeBtn.addEventListener('click', () => {
+        if (gameDuration < 1800) { // Maximum 30 minutes
+            gameDuration += 60;
+            updateTimeSettingDisplay();
+        }
+    });
 
     forceQuitBtn.addEventListener('click', () => {
         total = 0;
