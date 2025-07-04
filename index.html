@@ -50,6 +50,7 @@
       justify-content: space-between;
       padding: 1rem 2rem;
       z-index: 100;
+      flex-wrap: wrap;
     }
     
     .hud-left, .hud-center, .hud-right {
@@ -295,6 +296,8 @@
       box-shadow: 10px 10px 0px var(--secondary);
       transform: scale(0.9);
       transition: transform 0.3s ease;
+      width: 90%;
+      max-width: 500px;
     }
     .modal-overlay.active .modal-content { transform: scale(1); }
     .modal-content h2 {
@@ -454,6 +457,56 @@
         60% { box-shadow: 0 0 8px #00ff00, 0 0 12px #0000ff; }
         80% { box-shadow: 0 0 8px #0000ff, 0 0 12px #4b0082; }
         100% { box-shadow: 0 0 8px #4b0082, 0 0 12px #9400d3; }
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        :root {
+            font-size: 8px;
+        }
+        header {
+            padding: 1rem;
+            flex-direction: column;
+            height: auto;
+            gap: 1rem;
+        }
+        .hud-left, .hud-center, .hud-right {
+            flex: none;
+            width: 100%;
+            justify-content: center;
+        }
+        .hud-right {
+            flex-wrap: wrap;
+        }
+        header h1 {
+            margin-bottom: 1rem;
+        }
+        main {
+            padding-top: 22rem; /* Adjust based on new header height */
+        }
+        .tabs {
+            flex-wrap: wrap;
+        }
+        .tab {
+            flex-basis: 45%;
+        }
+        .grade-container {
+            flex-direction: column;
+        }
+        #character-assistant {
+            width: 60px;
+            height: 60px;
+            bottom: 10px;
+            right: 10px;
+        }
+    }
+    @media (max-width: 480px) {
+        .hud-center {
+            flex-direction: column;
+        }
+        main {
+            padding-top: 28rem;
+        }
     }
 
   </style>
