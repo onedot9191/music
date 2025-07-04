@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>음악</title>
+  <title>음악 & 미술 퀴즈</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
@@ -334,7 +334,7 @@
         color: var(--correct);
     }
 
-    .time-setter {
+    .time-setter, .subject-selector {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -351,6 +351,15 @@
     .time-control-btn {
         font-size: 2rem;
         padding: 0.5rem 1.5rem;
+    }
+    .subject-btn {
+        font-size: 1.6rem;
+    }
+    .subject-btn.selected {
+        background: var(--primary);
+        color: var(--text-light);
+        transform: translateY(3px);
+        box-shadow: 3px 3px 0px var(--secondary);
     }
 
     /* Character Assistant Styles */
@@ -533,11 +542,11 @@
 <body>
   <header>
     <div class="hud-left">
-        <h1>음악</h1>
+        <h1 id="header-title">음악</h1>
     </div>
     <div class="hud-center">
         <div id="combo-counter" class="hidden"></div>
-        <div id="timer-container" class="kitsch-box">
+        <div id="timer-container" class="kitsch-box hidden">
             <div id="time">10:00</div>
             <div id="bar"><div></div></div>
         </div>
@@ -548,14 +557,14 @@
       <button id="reset-btn" class="btn hidden">초기화</button>
     </div>
   </header>
-  <main>
+  <main id="music-quiz-main" class="hidden">
     <div class="tabs">
       <div class="tab active" data-target="performance">연주</div>
       <div class="tab" data-target="listening">감상</div>
       <div class="tab" data-target="creation">창작</div>
       <div class="tab" data-target="elements">음악 요소</div>
     </div>
-    <!-- Performance Section -->
+    <!-- Music Sections -->
     <section id="performance" class="active">
       <h2>연주</h2>
       <div class="grade-container">
@@ -623,7 +632,6 @@
         </div>
       </div>
     </section>
-    <!-- Listening Section -->
     <section id="listening">
       <h2>감상</h2>
       <div class="grade-container">
@@ -693,7 +701,6 @@
         </div>
       </div>
     </section>
-    <!-- Creation Section -->
     <section id="creation">
       <h2>창작</h2>
       <div class="grade-container">
@@ -761,7 +768,6 @@
         </div>
       </div>
     </section>
-    <!-- Music Elements Section -->
     <section id="elements">
       <h2>음악 요소</h2>
       <div class="grade-container">
@@ -863,6 +869,130 @@
       </div>
     </section>
   </main>
+  
+  <main id="art-quiz-main" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-target="aesthetic-experience">미적체험</div>
+      <div class="tab" data-target="expression">표현</div>
+      <div class="tab" data-target="appreciation">감상</div>
+    </div>
+    <!-- Art Sections -->
+    <section id="aesthetic-experience" class="active">
+      <h2>미적체험</h2>
+      <div class="grade-container">
+        <div>
+          <div class="grade-title">3~4학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식 · 이해</th>
+                <td>
+                  <input data-answer="자신의 감각" placeholder="정답">
+                  <input data-answer="대상의 특징" placeholder="정답">
+                  <input data-answer="생활 속 미술" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정 · 기능</th>
+                <td>
+                  <input data-answer="감각을 활용하여 탐색하기" placeholder="정답">
+                  <input data-answer="대상에 반응하여 느낌과 생각을 나타내기" placeholder="정답">
+                  <input data-answer="미술의 특징과 역할을 발견하기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치 · 태도</th>
+                <td>
+                  <input data-answer="미적 탐색에 대한 호기심" placeholder="정답">
+                  <input data-answer="미술의 역할에 관한 관심" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="grade-title">5~6학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식 · 이해</th>
+                <td>
+                  <input data-answer="감각과 매체의 역할" placeholder="정답">
+                  <input data-answer="자신과 환경의 관계" placeholder="정답">
+                  <input data-answer="이미지와 의미" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정 · 기능</th>
+                <td>
+                  <input data-answer="감각과 매체을 활용하여 탐색하기" placeholder="정답">
+                  <input data-answer="대상과 상호 작용하며 의미 발견하기" placeholder="정답">
+                  <input data-answer="이미지을 해석하고 활용하기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치 · 태도</th>
+                <td>
+                  <input data-answer="주변 환경에 대한 민감성" placeholder="정답">
+                  <input data-answer="비판적으로 이해하는 태도" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section id="expression">
+        <h2>표현</h2>
+        <div class="grade-container">
+            <div>
+                <div class="grade-title">3~4학년</div>
+                <table>
+                    <tbody>
+                        <tr><th>지식 · 이해</th><td><input data-answer="표현 주제" placeholder="정답"><input data-answer="기본적인 표현 재료와 용구" placeholder="정답"><input data-answer="조형 요소의 특징" placeholder="정답"></td></tr>
+                        <tr><th>과정 · 기능</th><td><input data-answer="관찰과 상상으로 아이디어를 떠올리기" placeholder="정답"><input data-answer="표현 방법을 익히기" placeholder="정답"><input data-answer="의도을 가지고 작품을 제작하기" placeholder="정답"><input data-answer="타 교과와 관련짓기" placeholder="정답"></td></tr>
+                        <tr><th>가치 · 태도</th><td><input data-answer="표현에 대한 흥미" placeholder="정답"><input data-answer="자기 작품을 소중히 여기는 태도" placeholder="정답"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="grade-title">5~6학년</div>
+                <table>
+                    <tbody>
+                        <tr><th>지식 · 이해</th><td><input data-answer="표현 주제와 발상" placeholder="정답"><input data-answer="표현 재료와 용구, 디지털 매체" placeholder="정답"><input data-answer="조형 요소와 원리의 관계" placeholder="정답"></td></tr>
+                        <tr><th>과정 · 기능</th><td><input data-answer="다양한 방법으로 아이디어를 연결하기" placeholder="정답"><input data-answer="표현 방법을 탐색하여 활용하기" placeholder="정답"><input data-answer="과정을 돌아보며 작품을 발전시키기" placeholder="정답"><input data-answer="타 교과와 융합하기" placeholder="정답"></td></tr>
+                        <tr><th>가치 · 태도</th><td><input data-answer="주제 표현의 의지" placeholder="정답"><input data-answer="자유롭게 시도하는 태도" placeholder="정답"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section id="appreciation">
+        <h2>감상</h2>
+        <div class="grade-container">
+            <div>
+                <div class="grade-title">3~4학년</div>
+                <table>
+                    <tbody>
+                        <tr><th>지식 · 이해</th><td><input data-answer="미술 작품과 미술가" placeholder="정답"><input data-answer="미술 작품의 특징" placeholder="정답"><input data-answer="미술 전시" placeholder="정답"></td></tr>
+                        <tr><th>과정 · 기능</th><td><input data-answer="자세히 보고 질문하기" placeholder="정답"><input data-answer="미술 작품에 관한 느낌과 생각을 설명하기" placeholder="정답"><input data-answer="미술 전시 및 행사에 참여하기" placeholder="정답"></td></tr>
+                        <tr><th>가치 · 태도</th><td><input data-answer="자신의 감상 관점 존중" placeholder="정답"><input data-answer="미술 문화에 관한 관심" placeholder="정답"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="grade-title">5~6학년</div>
+                <table>
+                    <tbody>
+                        <tr><th>지식 · 이해</th><td><input data-answer="미술 작품의 배경" placeholder="정답"><input data-answer="미술 작품의 내용과 형식" placeholder="정답"><input data-answer="공동체의 미술 문화" placeholder="정답"></td></tr>
+                        <tr><th>과정 · 기능</th><td><input data-answer="작품과 배경을 연결하기" placeholder="정답"><input data-answer="다양한 방법으로 분석하기" placeholder="정답"><input data-answer="미술 문화 활동을 경험하고 공유하기" placeholder="정답"></td></tr>
+                        <tr><th>가치 · 태도</th><td><input data-answer="서로 다른 관점의 존중" placeholder="정답"><input data-answer="공동체 문화에 참여" placeholder="정답"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+  </main>
 
   <!-- Character Assistant -->
   <div id="character-assistant" class="idle">
@@ -905,8 +1035,12 @@
   <!-- Start Modal -->
     <div id="start-modal" class="modal-overlay active">
         <div class="modal-content">
-            <h2>음악 퀴즈</h2>
-            <p>제한 시간을 설정해주세요!</p>
+            <h2>과목 선택</h2>
+            <div class="subject-selector">
+                <button class="btn subject-btn selected" data-subject="music">음악</button>
+                <button class="btn subject-btn" data-subject="art">미술</button>
+            </div>
+            <h2>시간 선택</h2>
             <div class="time-setter">
                 <button id="decrease-time" class="btn time-control-btn">-</button>
                 <div id="time-setting-display">10:00</div>
@@ -918,16 +1052,6 @@
 
 
   <script>
-    // Tab switching logic
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
-    });
-
     // Audio setup for sound effects
     const successAudio = new Audio('./success.mp3');
     successAudio.preload = 'auto';
@@ -941,15 +1065,18 @@
     // Game elements
     let gameDuration = 600; // Default 10 minutes
     let total = gameDuration, timerId, combo = 0;
+    let selectedSubject = 'music';
+    let allInputs;
+
     const timeEl = document.getElementById('time');
     const barEl = document.querySelector('#bar > div');
-    const allInputs = document.querySelectorAll('input[data-answer]');
     const comboCounter = document.getElementById('combo-counter');
     const showAnswersBtn = document.getElementById('show-answers-btn');
     const startGameBtn = document.getElementById('start-game-btn');
     const forceQuitBtn = document.getElementById('force-quit-btn');
     const resetBtn = document.getElementById('reset-btn');
     const character = document.getElementById('character-assistant');
+    const headerTitle = document.getElementById('header-title');
     
     // Modal elements
     const stageClearModal = document.getElementById('stage-clear-modal');
@@ -974,7 +1101,6 @@
         character.className = state;
         if (state === 'happy' || state === 'sad') {
             characterStateTimeout = setTimeout(() => {
-                // If the timer is low, switch to worried, otherwise idle
                 if (total > 0 && total < 30) {
                     character.className = 'worried';
                 } else {
@@ -1031,7 +1157,7 @@
     }
 
     function showProgress() {
-        const correctCount = document.querySelectorAll('input.correct').length;
+        const correctCount = document.querySelectorAll(`#${selectedSubject}-quiz-main input.correct`).length;
         const totalCount = allInputs.length;
         const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
@@ -1077,13 +1203,16 @@
     function resetGame() {
         clearInterval(timerId);
         total = gameDuration;
-        timeEl.textContent = formatTime(total);
+        timeEl.textContent = formatTime(gameDuration);
         barEl.style.width = '100%';
-        allInputs.forEach(i => {
+        
+        document.querySelectorAll('main').forEach(main => main.classList.add('hidden'));
+        document.querySelectorAll('input[data-answer]').forEach(i => {
             i.disabled = true;
             i.value = '';
             i.classList.remove('correct', 'incorrect', 'revealed');
         });
+        
         combo = 0;
         updateMushroomGrowth(combo);
         comboCounter.classList.add('hidden');
@@ -1091,6 +1220,7 @@
         showAnswersBtn.disabled = false;
         resetBtn.classList.add('hidden');
         forceQuitBtn.classList.add('hidden');
+        document.getElementById('timer-container').classList.add('hidden');
         startModal.classList.add('active');
         setCharacterState('idle');
     }
@@ -1098,10 +1228,19 @@
     function startGame() {
         startAudio.play().catch(e => console.error("Start audio failed to play:", e));
         startModal.classList.remove('active');
-        total = gameDuration; // Set the timer to the selected duration
-        timeEl.textContent = formatTime(total);
+        
+        headerTitle.textContent = selectedSubject === 'music' ? '음악' : '미술';
+        document.getElementById(`${selectedSubject}-quiz-main`).classList.remove('hidden');
+        
+        allInputs = document.querySelectorAll(`#${selectedSubject}-quiz-main input[data-answer]`);
         allInputs.forEach(i => i.disabled = false);
+
+        document.getElementById('timer-container').classList.remove('hidden');
         forceQuitBtn.classList.remove('hidden');
+        
+        total = gameDuration;
+        timeEl.textContent = formatTime(total);
+        barEl.style.width = '100%';
         timerId = setInterval(tick, 1000);
         setCharacterState('idle');
     }
@@ -1133,6 +1272,31 @@
     }
 
     // Event Listeners
+    document.querySelectorAll('.subject-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedSubject = btn.dataset.subject;
+        });
+    });
+    
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const parentMain = tab.closest('main');
+        if (!parentMain) return;
+
+        parentMain.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        parentMain.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+
+        tab.classList.add('active');
+        const targetId = tab.dataset.target;
+        const targetSection = parentMain.querySelector(`#${targetId}`);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+      });
+    });
+
     startGameBtn.addEventListener('click', startGame);
     resetBtn.addEventListener('click', resetGame);
 
@@ -1224,7 +1388,7 @@
     });
 
     // Initial setup
-    resetGame();
+    document.addEventListener('DOMContentLoaded', resetGame);
 
   </script>
 </body>
