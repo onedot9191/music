@@ -6,7 +6,7 @@
   <title>음악 & 미술 퀴즈</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <style>
     :root {
@@ -26,15 +26,16 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Source Code Pro', monospace;
+      font-family: 'Noto Sans KR', sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.7;
       overflow-x: hidden;
+      font-weight: 400;
     }
     
     /* Kitsch pixel font for specific elements */
-    h1, h2, .btn, .tab, .grade-title, #combo-counter {
+    #combo-counter {
         font-family: 'Press Start 2P', cursive;
     }
 
@@ -74,6 +75,7 @@
     }
 
     header h1 {
+      font-family: 'Press Start 2P', cursive;
       font-size: 2.2rem;
       color: var(--primary);
       text-shadow: 3px 3px 0px var(--secondary);
@@ -89,7 +91,7 @@
     #time {
       font-family: 'Source Code Pro', monospace;
       font-size: 1.8rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-light);
     }
 
@@ -111,15 +113,16 @@
 
     .btn {
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-light);
       background: var(--accent);
       border: 3px solid var(--primary);
       padding: 1rem 1.5rem;
       box-shadow: 5px 5px 0px var(--secondary);
       transition: transform 0.1s, box-shadow 0.1s;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       white-space: nowrap;
+      border-radius: 8px;
     }
     .btn:hover {
       transform: translate(2px, 2px);
@@ -173,9 +176,11 @@
       background: var(--secondary);
       border: 3px solid var(--primary);
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.5rem;
+      font-weight: 700;
       color: var(--text-dark);
       transition: all 0.2s;
+      border-radius: 8px;
     }
     .tab.active {
       background: var(--primary);
@@ -191,10 +196,12 @@
       text-align: center;
       color: var(--text-light);
       margin: 2rem 0 3rem 0;
-      font-size: 2rem;
+      font-size: 2.4rem;
+      font-weight: 900;
       background: var(--accent);
       padding: 1.5rem;
       border: 3px solid var(--primary);
+      border-radius: 12px;
     }
 
     .grade-container {
@@ -209,15 +216,18 @@
       background: var(--bg-light);
       border: 3px solid var(--primary);
       padding: 2rem;
+      border-radius: 12px;
     }
     .grade-title {
       background: var(--primary);
       padding: 1rem;
-      font-size: 1.4rem;
+      font-size: 1.8rem;
+      font-weight: 900;
       text-align: center;
       color: var(--text-light);
       margin: -2rem -2rem 2rem -2rem;
       border-bottom: 3px solid var(--primary);
+      border-radius: 8px 8px 0 0;
     }
 
     table {
@@ -230,8 +240,8 @@
       text-align: left;
       vertical-align: top;
       border-bottom: none;
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: 1.6rem;
+      font-weight: 700;
     }
     th {
       padding-right: 1.5rem;
@@ -251,10 +261,11 @@
       border: 2px solid var(--text-dark);
       background: var(--bg-dark);
       color: var(--text-light);
-      font-family: 'Source Code Pro', monospace;
+      font-family: 'Noto Sans KR', sans-serif;
       caret-color: var(--primary);
       margin-bottom: 0; /* Removed margin as gap is used now */
       transition: all 0.2s ease;
+      border-radius: 8px;
     }
     td input:focus {
       outline: none;
@@ -298,6 +309,7 @@
       transition: transform 0.3s ease;
       width: 90%;
       max-width: 500px;
+      border-radius: 12px;
     }
     .modal-overlay.active .modal-content { transform: scale(1); }
     .modal-content h2 {
@@ -307,11 +319,12 @@
       background: none;
       border: none;
       padding: 0;
+      font-family: 'Press Start 2P', cursive;
     }
     .modal-content p {
-      font-family: 'Source Code Pro', monospace;
+      font-family: 'Noto Sans KR', sans-serif;
       color: var(--text-light);
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       margin-bottom: 2.5rem;
     }
     
@@ -321,12 +334,14 @@
         background: var(--bg-dark);
         border: 3px solid var(--secondary);
         margin: 1.5rem 0;
+        border-radius: 8px;
     }
     #progress-bar-fill {
         width: 0%;
         height: 100%;
         background: var(--correct);
         transition: width 0.5s ease-out;
+        border-radius: 4px;
     }
     #progress-text {
         font-size: 1.8rem !important;
@@ -342,7 +357,6 @@
         margin: 2rem 0;
     }
     #time-setting-display {
-        font-family: 'Source Code Pro', monospace;
         font-size: 3rem;
         color: var(--text-light);
         width: 120px;
@@ -1158,6 +1172,7 @@
 
     function showProgress() {
         const correctCount = document.querySelectorAll(`#${selectedSubject}-quiz-main input.correct`).length;
+        allInputs = document.querySelectorAll(`#${selectedSubject}-quiz-main input[data-answer]`);
         const totalCount = allInputs.length;
         const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
