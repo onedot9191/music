@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>음악</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #1A1A2E;
+      --bg-light: #16213E;
+      --primary: #E94560;
+      --secondary: #0F3460;
+      --accent: #533483;
+      --text-light: #F0F0F0;
+      --text-dark: #A0A0A0;
+      --correct: #39FF14; /* Neon Green */
+      --incorrect: #FF5733; /* Bright Orange-Red */
+      --revealed: #00FFFF; /* Cyan */
+      font-size: 10px; /* Base font size for rem units */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    
+    /* Kitsch pixel font for specific elements */
+    h1, h2, .btn, .tab, .grade-title, #combo-counter {
+        font-family: 'Press Start 2P', cursive;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--bg-light);
+      border-bottom: 4px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      z-index: 100;
+    }
+    
+    .hud-left, .hud-center, .hud-right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .hud-left {
+        justify-content: flex-start;
+    }
+
+    .hud-center {
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .hud-right {
+      justify-content: flex-end;
+      gap: 1.5rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      text-shadow: 3px 3px 0px var(--secondary);
+    }
+
+    .kitsch-box {
+      background: var(--secondary);
+      padding: 1rem 1.5rem;
+      border: 3px solid var(--primary);
+      box-shadow: 4px 4px 0px var(--bg-dark);
+    }
+
+    #time {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    #bar {
+      width: 16rem;
+      height: 1rem;
+      background: var(--bg-dark);
+      border: 2px solid var(--primary);
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    #bar > div {
+      height: 100%;
+      width: 100%;
+      background: var(--primary);
+      transition: width 1s linear;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-light);
+      background: var(--accent);
+      border: 3px solid var(--primary);
+      padding: 1rem 1.5rem;
+      box-shadow: 5px 5px 0px var(--secondary);
+      transition: transform 0.1s, box-shadow 0.1s;
+      font-size: 1.2rem;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 3px 3px 0px var(--secondary);
+    }
+    .btn:active {
+      transform: translate(5px, 5px);
+      box-shadow: 0px 0px 0px var(--secondary);
+    }
+     .btn.hidden {
+        display: none;
+    }
+    .btn:disabled {
+        background: #444;
+        color: #888;
+        cursor: not-allowed;
+        border-color: #555;
+        box-shadow: none;
+        transform: none;
+    }
+
+    #combo-counter {
+        color: var(--incorrect);
+        font-size: 2rem;
+        font-weight: 800;
+        text-shadow: 2px 2px 0px var(--primary);
+        min-width: 150px;
+        text-align: center;
+    }
+    .combo-pop { animation: combo-pop-animation 0.3s ease-out; }
+    @keyframes combo-pop-animation {
+        0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); }
+    }
+    .hidden { display: none; }
+
+    main {
+      padding: 12rem 2rem 4rem;
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 1.2rem 0;
+      background: var(--secondary);
+      border: 3px solid var(--primary);
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      transition: all 0.2s;
+    }
+    .tab.active {
+      background: var(--primary);
+      color: var(--text-light);
+      transform: translateY(3px);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    section { display: none; }
+    section.active { display: block; }
+
+    h2 {
+      text-align: center;
+      color: var(--text-light);
+      margin: 2rem 0 3rem 0;
+      font-size: 2rem;
+      background: var(--accent);
+      padding: 1.5rem;
+      border: 3px solid var(--primary);
+    }
+
+    .grade-container {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .grade-container > div {
+      flex: 1;
+      min-width: 320px;
+      background: var(--bg-light);
+      border: 3px solid var(--primary);
+      padding: 2rem;
+    }
+    .grade-title {
+      background: var(--primary);
+      padding: 1rem;
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--text-light);
+      margin: -2rem -2rem 2rem -2rem;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 1.5rem;
+    }
+    th, td {
+      padding: 0;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: none;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    th {
+      padding-right: 1.5rem;
+      color: var(--text-dark);
+    }
+    
+    td {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* Consistent spacing between inputs */
+    }
+
+    td input {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.4rem;
+      border: 2px solid var(--text-dark);
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Source Code Pro', monospace;
+      caret-color: var(--primary);
+      margin-bottom: 0; /* Removed margin as gap is used now */
+      transition: all 0.2s ease;
+    }
+    td input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--secondary);
+      box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+    }
+    td input.correct {
+      border-color: var(--correct);
+      color: var(--correct);
+    }
+    td input.incorrect {
+      border-color: var(--incorrect);
+      color: var(--incorrect);
+    }
+    td input.revealed {
+      color: var(--revealed);
+      border-color: var(--revealed);
+      background: var(--bg-light);
+    }
+    
+    .grade-container table tr:not(:last-child) > * {
+        border-bottom: 3px dotted var(--secondary);
+        padding-bottom: 1.5rem;
+    }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none; justify-content: center; align-items: center;
+      z-index: 200; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-content {
+      background: var(--bg-light);
+      padding: 3rem 4rem;
+      text-align: center;
+      border: 4px solid var(--primary);
+      box-shadow: 10px 10px 0px var(--secondary);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .modal-content h2 {
+      color: var(--primary);
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .modal-content p {
+      font-family: 'Source Code Pro', monospace;
+      color: var(--text-light);
+      font-size: 1.6rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .progress-bar-container {
+        width: 100%;
+        height: 2.5rem;
+        background: var(--bg-dark);
+        border: 3px solid var(--secondary);
+        margin: 1.5rem 0;
+    }
+    #progress-bar-fill {
+        width: 0%;
+        height: 100%;
+        background: var(--correct);
+        transition: width 0.5s ease-out;
+    }
+    #progress-text {
+        font-size: 1.8rem !important;
+        margin-bottom: 2rem !important;
+        color: var(--correct);
+    }
+
+    /* Character Assistant Styles */
+    #character-assistant {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        z-index: 99;
+    }
+    .mushroom {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transition: transform 0.3s ease-out;
+    }
+    .mushroom-cap {
+        width: 100%;
+        height: 65%;
+        background: #d9534f;
+        border: 3px solid #000;
+        border-radius: 50% 50% 20% 20%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .mushroom-cap .dot {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: white;
+        border-radius: 50%;
+        border: 2px solid #000;
+    }
+    .mushroom-cap .dot:nth-child(1) { top: 15%; left: 25%; }
+    .mushroom-cap .dot:nth-child(2) { top: 30%; left: 60%; }
+    .mushroom-cap .dot:nth-child(3) { top: 45%; left: 20%; }
+    
+    .mushroom-stem {
+        width: 50%;
+        height: 50%;
+        background: #f7e5d3;
+        border: 3px solid #000;
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+    .character-eye {
+        position: absolute;
+        width: 6px;
+        height: 8px;
+        background-color: #000;
+        border-radius: 50%;
+        top: 40%;
+    }
+    .character-eye.left { left: 30%; }
+    .character-eye.right { right: 30%; }
+
+    .spore {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        opacity: 0;
+        animation: spore-float 1.2s ease-out forwards;
+    }
+
+    /* Character Animations */
+    #character-assistant.idle .mushroom { animation: idle-sway 3s ease-in-out infinite; }
+    @keyframes idle-sway { 
+        0%, 100% { transform: rotate(0deg); } 
+        50% { transform: rotate(10deg); } 
+    }
+
+    #character-assistant.happy .mushroom { animation: happy-hop 0.6s ease-out; }
+    @keyframes happy-hop {
+        0%, 100% { transform: translateY(0) scale(1, 1); }
+        20% { transform: translateY(5px) scale(1.1, 0.9); } /* Squish down */
+        50% { transform: translateY(-20px) scale(0.9, 1.1); } /* Jump up and stretch */
+        80% { transform: translateY(2px) scale(1.05, 0.95); } /* Land and squish again */
+    }
+
+    @keyframes spore-float {
+        0% { transform: translate(0, 0) scale(0); opacity: 0.5; }
+        20% { transform: translate(var(--x-1), -20px) scale(1); opacity: 1; }
+        100% { transform: translate(var(--x-2), -80px) scale(0); opacity: 0; }
+    }
+
+    #character-assistant.sad .mushroom-cap { background-color: #533483; }
+    #character-assistant.sad .mushroom { transform: rotate(-15deg) translateY(5px); }
+    
+    #character-assistant.worried .mushroom { animation: worried-shake 0.3s linear infinite; }
+    @keyframes worried-shake { 
+        0%, 100% { transform: translateX(0); } 
+        25% { transform: translateX(-2px); } 
+        75% { transform: translateX(2px); } 
+    }
+
+    #character-assistant.cheer .mushroom { animation: cheer-dance 1.2s ease-in-out infinite; }
+    @keyframes cheer-dance { 
+        0%, 100% { transform: rotate(0); } 
+        25% { transform: rotate(-20deg); } 
+        75% { transform: rotate(20deg); } 
+    }
+
+    /* Combo Growth Styles */
+    #character-assistant.combo-level-1 .mushroom { transform: scale(1.1); }
+    #character-assistant.combo-level-2 .mushroom { transform: scale(1.2); }
+    #character-assistant.combo-level-2 .mushroom-cap { box-shadow: 0 0 10px gold, 0 0 15px gold; }
+    #character-assistant.combo-level-3 .mushroom { transform: scale(1.3); }
+    #character-assistant.combo-level-3 .mushroom-cap { animation: rainbow-glow 2s infinite alternate; }
+    
+    @keyframes rainbow-glow {
+        0% { box-shadow: 0 0 8px #ff0000, 0 0 12px #ff7f00; }
+        20% { box-shadow: 0 0 8px #ff7f00, 0 0 12px #ffff00; }
+        40% { box-shadow: 0 0 8px #ffff00, 0 0 12px #00ff00; }
+        60% { box-shadow: 0 0 8px #00ff00, 0 0 12px #0000ff; }
+        80% { box-shadow: 0 0 8px #0000ff, 0 0 12px #4b0082; }
+        100% { box-shadow: 0 0 8px #4b0082, 0 0 12px #9400d3; }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hud-left">
+        <h1>음악</h1>
+    </div>
+    <div class="hud-center">
+        <div id="combo-counter" class="hidden"></div>
+        <div id="timer-container" class="kitsch-box">
+            <div id="time">10:00</div>
+            <div id="bar"><div></div></div>
+        </div>
+    </div>
+    <div class="hud-right">
+      <button id="force-quit-btn" class="btn hidden">강제 종료</button>
+      <button id="show-answers-btn" class="btn hidden">정답 보기</button>
+      <button id="reset-btn" class="btn hidden">초기화</button>
+      <button id="start-btn" class="btn">시작</button>
+    </div>
+  </header>
+  <main>
+    <div class="tabs">
+      <div class="tab active" data-target="performance">연주</div>
+      <div class="tab" data-target="listening">감상</div>
+      <div class="tab" data-target="creation">창작</div>
+      <div class="tab" data-target="elements">음악 요소</div>
+    </div>
+    <!-- Performance Section -->
+    <section id="performance" class="active">
+      <h2>연주</h2>
+      <div class="grade-container">
+        <div>
+          <div class="grade-title">3~4학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식·이해</th>
+                <td>
+                  <input data-answer="생활속의음악" placeholder="정답">
+                  <input data-answer="기초적인음악요소" placeholder="정답">
+                  <input data-answer="자세와주법" placeholder="정답">
+                  <input data-answer="느낌,여러소리" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정·기능</th>
+                <td>
+                  <input data-answer="노래부르거나악기연주하기" placeholder="정답">
+                  <input data-answer="신체로표현하고놀이하기" placeholder="정답">
+                  <input data-answer="발표하고이야기하기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치·태도</th>
+                <td>
+                  <input data-answer="연주를즐기는태도" placeholder="정답">
+                  <input data-answer="연주에대한관심" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="grade-title">5~6학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식·이해</th>
+                <td>
+                  <input data-answer="간단한악곡의연주형태" placeholder="정답">
+                  <input data-answer="음악요소" placeholder="정답">
+                  <input data-answer="음악과표현기법" placeholder="정답">
+                  <input data-answer="어울림,여러악기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정·기능</th>
+                <td>
+                  <input data-answer="노래부르거나악기연주하기" placeholder="정답">
+                  <input data-answer="다양한방법으로표현하기" placeholder="정답">
+                  <input data-answer="발표하고놀이하기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치·태도</th>
+                <td>
+                  <input data-answer="음악으로함께하는태도" placeholder="정답">
+                  <input data-answer="연주준비와참여" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- Listening Section -->
+    <section id="listening">
+      <h2>감상</h2>
+      <div class="grade-container">
+        <div>
+          <div class="grade-title">3~4학년</div>
+          <table>
+             <tbody>
+              <tr>
+                <th>지식·이해</th>
+                <td>
+                  <input data-answer="다양한종류의음악" placeholder="정답">
+                  <input data-answer="지역의음악문화유산" placeholder="정답">
+                  <input data-answer="기초적인음악요소" placeholder="정답">
+                  <input data-answer="음악적특징" placeholder="정답">
+                  <input data-answer="느낌,분위기,쓰임" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정·기능</th>
+                <td>
+                  <input data-answer="반응하며듣기" placeholder="정답">
+                  <input data-answer="탐색하고발견하기" placeholder="정답">
+                  <input data-answer="묘사하거나이야기하기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치·태도</th>
+                <td>
+                  <input data-answer="소리와음악을즐기는태도" placeholder="정답">
+                  <input data-answer="음악에대한호기심" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="grade-title">5~6학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식·이해</th>
+                <td>
+                  <input data-answer="다양한종류와문화권의음악" placeholder="정답">
+                  <input data-answer="우리나라음악문화유산" placeholder="정답">
+                  <input data-answer="음악요소" placeholder="정답">
+                  <input data-answer="음악적특징,음악의간단한구성" placeholder="정답">
+                  <input data-answer="느낌,배경,활용" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정·기능</th>
+                <td>
+                  <input data-answer="감상하며듣기" placeholder="정답">
+                  <input data-answer="인식하고구별하기" placeholder="정답">
+                  <input data-answer="설명하기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치·태도</th>
+                <td>
+                  <input data-answer="음악의아름다움에대한인식" placeholder="정답">
+                  <input data-answer="음악에대한공감" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- Creation Section -->
+    <section id="creation">
+      <h2>창작</h2>
+      <div class="grade-container">
+        <div>
+          <div class="grade-title">3~4학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식·이해</th>
+                <td>
+                  <input data-answer="소리와음악" placeholder="정답">
+                  <input data-answer="기초적인음악요소" placeholder="정답">
+                  <input data-answer="간단한악보" placeholder="정답">
+                  <input data-answer="느낌,상상" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정·기능</th>
+                <td>
+                  <input data-answer="즉흥적으로표현하기" placeholder="정답">
+                  <input data-answer="부분적으로바꾸기" placeholder="정답">
+                  <input data-answer="모방하여나타내기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치·태도</th>
+                <td>
+                  <input data-answer="음악에대한흥미" placeholder="정답">
+                  <input data-answer="음악의새로움을즐기는태도" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="grade-title">5~6학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>지식·이해</th>
+                <td>
+                  <input data-answer="간단한음악" placeholder="정답">
+                  <input data-answer="음악요소" placeholder="정답">
+                  <input data-answer="기초적인기보,음악매체" placeholder="정답">
+                  <input data-answer="느낌,아이디어" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>과정·기능</th>
+                <td>
+                  <input data-answer="떠올리며표현하기" placeholder="정답">
+                  <input data-answer="간단한조건에따라바꾸기" placeholder="정답">
+                  <input data-answer="활용하여만들기" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가치·태도</th>
+                <td>
+                  <input data-answer="음악에대한자신감" placeholder="정답">
+                  <input data-answer="음악에대한열린태도" placeholder="정답">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- Music Elements Section -->
+    <section id="elements">
+      <h2>음악 요소</h2>
+      <div class="grade-container">
+        <div>
+          <div class="grade-title">3~4학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>리듬</th>
+                <td>
+                  <input data-answer="박, 박자" placeholder="정답">
+                  <input data-answer="장단, 장단의 세" placeholder="정답">
+                  <input data-answer="음의 길고 짧음" placeholder="정답">
+                  <input data-answer="간단한 리듬꼴" placeholder="정답">
+                  <input data-answer="장단꼴" placeholder="정답">
+                  <input data-answer="말붙임새" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가락</th>
+                <td>
+                  <input data-answer="음의 높고 낮음" placeholder="정답">
+                  <input data-answer="차례가기와 뛰어가기" placeholder="정답">
+                  <input data-answer="시김새" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>화성</th>
+                <td><input data-answer="소리의 어울림" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>형식</th>
+                <td><input data-answer="형식(메기고 받는 형식, ab 등)" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>셈여림</th>
+                <td><input data-answer="셈여림" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>빠르기</th>
+                <td><input data-answer="빠르기/한배" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>음색</th>
+                <td><input data-answer="목소리, 물체 소리, 타악기의 음색" placeholder="정답"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="grade-title">5~6학년</div>
+          <table>
+            <tbody>
+              <tr>
+                <th>리듬</th>
+                <td>
+                  <input data-answer="박, 박자" placeholder="정답">
+                  <input data-answer="장단, 장단의 세" placeholder="정답">
+                  <input data-answer="여러 가지 리듬꼴" placeholder="정답">
+                  <input data-answer="장단꼴" placeholder="정답">
+                  <input data-answer="말붙임새" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>가락</th>
+                <td>
+                  <input data-answer="음이름, 계이름, 음명" placeholder="정답">
+                  <input data-answer="장음계, 단음계" placeholder="정답">
+                  <input data-answer="여러 지역의 토리" placeholder="정답">
+                  <input data-answer="시김새" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>화성</th>
+                <td>
+                  <input data-answer="주요 3화음" placeholder="정답">
+                  <input data-answer="다양한 소리의 어울림" placeholder="정답">
+                </td>
+              </tr>
+              <tr>
+                <th>형식</th>
+                <td><input data-answer="형식(긴자진 형식, 시조 형식, aba, AB 등)" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>셈여림</th>
+                <td><input data-answer="셈여림" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>빠르기</th>
+                <td><input data-answer="빠르기의 변화/한배의 변화" placeholder="정답"></td>
+              </tr>
+              <tr>
+                <th>음색</th>
+                <td><input data-answer="관악기, 현악기의 음색" placeholder="정답"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Character Assistant -->
+  <div id="character-assistant" class="idle">
+      <div class="mushroom">
+          <div class="mushroom-cap">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="spore-container"></div>
+          </div>
+          <div class="mushroom-stem">
+              <div class="character-eye left"></div>
+              <div class="character-eye right"></div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Stage Clear Modal -->
+  <div id="stage-clear-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Stage Clear!</h2>
+      <p>축하합니다! 이 영역을 마스터했습니다!</p>
+      <button id="close-modal-btn" class="btn">닫기</button>
+    </div>
+  </div>
+  
+  <!-- Progress Modal -->
+  <div id="progress-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>게임 결과</h2>
+      <p>맞춘 개수: <span id="correct-count">0</span> / <span id="total-count">0</span></p>
+      <div class="progress-bar-container">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <p id="progress-text">0%</p>
+      <button id="close-progress-modal-btn" class="btn">확인</button>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching logic
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+
+    // Audio setup for sound effects
+    const successAudio = new Audio('./success.mp3');
+    const timeupAudio = new Audio('./timeup.mp3');
+    const startAudio = new Audio('./start.mp3');
+    const failAudio = new Audio('./fail.mp3');
+
+    // Game elements
+    let total = 600, timerId, combo = 0;
+    const timeEl = document.getElementById('time');
+    const barEl = document.querySelector('#bar > div');
+    const allInputs = document.querySelectorAll('input[data-answer]');
+    const comboCounter = document.getElementById('combo-counter');
+    const showAnswersBtn = document.getElementById('show-answers-btn');
+    const startBtn = document.getElementById('start-btn');
+    const forceQuitBtn = document.getElementById('force-quit-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const character = document.getElementById('character-assistant');
+    
+    // Modal elements
+    const stageClearModal = document.getElementById('stage-clear-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const progressModal = document.getElementById('progress-modal');
+    const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
+
+    const fmt = n => String(n).padStart(2, '0');
+    const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+
+    let characterStateTimeout;
+    function setCharacterState(state, duration = 1500) {
+        clearTimeout(characterStateTimeout);
+        character.className = state;
+        if (state === 'happy' || state === 'sad') {
+            characterStateTimeout = setTimeout(() => {
+                // If the timer is low, switch to worried, otherwise idle
+                if (total > 0 && total < 30) {
+                    character.className = 'worried';
+                } else {
+                    character.className = 'idle';
+                }
+                 updateMushroomGrowth(combo);
+            }, duration);
+        }
+        if (state === 'happy') {
+            const sporeContainer = character.querySelector('.spore-container');
+            if(sporeContainer) {
+                sporeContainer.innerHTML = ''; // Clear previous spores
+                let sporeCount = 5;
+                let colors = ['gold'];
+
+                if (combo >= 10) {
+                    sporeCount = 20;
+                    colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+                } else if (combo >= 5) {
+                    sporeCount = 15;
+                    colors = ['#ffd700', '#ffb347', '#ffac33'];
+                }
+
+                for(let i = 0; i < sporeCount; i++) {
+                    const spore = document.createElement('div');
+                    spore.className = 'spore';
+                    const startX = Math.random() * 60 + 20;
+                    const endX1 = (Math.random() - 0.5) * 60;
+                    const endX2 = (Math.random() - 0.5) * 100;
+                    spore.style.left = `${startX}%`;
+                    spore.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    if (combo >= 10) {
+                         spore.style.boxShadow = `0 0 5px ${spore.style.background}`;
+                    }
+                    spore.style.setProperty('--x-1', `${endX1}px`);
+                    spore.style.setProperty('--x-2', `${endX2}px`);
+                    spore.style.animationDelay = `${Math.random() * 0.2}s`;
+                    sporeContainer.appendChild(spore);
+                    setTimeout(() => spore.remove(), 1200);
+                }
+            }
+        }
+    }
+    
+    function updateMushroomGrowth(currentCombo) {
+        character.classList.remove('combo-level-1', 'combo-level-2', 'combo-level-3');
+        if (currentCombo >= 10) {
+            character.classList.add('combo-level-3');
+        } else if (currentCombo >= 5) {
+            character.classList.add('combo-level-2');
+        } else if (currentCombo >= 2) {
+            character.classList.add('combo-level-1');
+        }
+    }
+
+    function showProgress() {
+        const correctCount = document.querySelectorAll('input.correct').length;
+        const totalCount = allInputs.length;
+        const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+        document.getElementById('correct-count').textContent = correctCount;
+        document.getElementById('total-count').textContent = totalCount;
+        document.getElementById('progress-text').textContent = `${percentage}%`;
+        
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        // A small timeout to allow the modal to render before animating the bar
+        setTimeout(() => {
+             progressBarFill.style.width = `${percentage}%`;
+        }, 100);
+
+        progressModal.classList.add('active');
+    }
+
+    function handleGameOver() {
+        clearInterval(timerId);
+        allInputs.forEach(i => i.disabled = true);
+        timeupAudio.play().catch(e => console.error("Audio play failed:", e));
+        combo = 0;
+        updateMushroomGrowth(combo);
+        comboCounter.classList.add('hidden');
+        
+        startBtn.classList.add('hidden');
+        forceQuitBtn.classList.add('hidden');
+        setCharacterState('sad');
+        showProgress();
+    }
+
+    function tick() {
+      if (total <= 0) {
+        handleGameOver();
+        return;
+      }
+      total--;
+      timeEl.textContent = formatTime(total);
+      barEl.style.width = `${(total / 600) * 100}%`;
+
+      if (total < 30 && !character.classList.contains('happy') && !character.classList.contains('sad')) {
+          setCharacterState('worried');
+      }
+    }
+
+    function resetGame() {
+        clearInterval(timerId);
+        total = 600;
+        timeEl.textContent = '10:00';
+        barEl.style.width = '100%';
+        allInputs.forEach(i => {
+            i.disabled = true;
+            i.value = '';
+            i.classList.remove('correct', 'incorrect', 'revealed');
+        });
+        combo = 0;
+        updateMushroomGrowth(combo);
+        comboCounter.classList.add('hidden');
+        showAnswersBtn.classList.add('hidden');
+        showAnswersBtn.disabled = false;
+        resetBtn.classList.add('hidden');
+        forceQuitBtn.classList.add('hidden');
+        startBtn.classList.remove('hidden');
+        stageClearModal.classList.remove('active');
+        progressModal.classList.remove('active');
+        setCharacterState('idle');
+    }
+
+    function startGame() {
+        startAudio.play().catch(e => console.error("Start audio failed to play:", e));
+        resetGame();
+        allInputs.forEach(i => i.disabled = false);
+        startBtn.classList.add('hidden');
+        forceQuitBtn.classList.remove('hidden');
+        timerId = setInterval(tick, 1000);
+        setCharacterState('idle');
+    }
+
+    function checkStageClear(sectionElement) {
+        const inputsInSection = sectionElement.querySelectorAll('input[data-answer]');
+        return inputsInSection.length > 0 && [...inputsInSection].every(input => input.classList.contains('correct'));
+    }
+
+    function showStageClear() {
+        stageClearModal.classList.add('active');
+        setCharacterState('cheer', 5000);
+        
+        const duration = 2 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
+
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+          if (timeLeft <= 0) { return clearInterval(interval); }
+          const particleCount = 50 * (timeLeft / duration);
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+    }
+
+    // Event Listeners
+    startBtn.addEventListener('click', startGame);
+    resetBtn.addEventListener('click', resetGame);
+
+    forceQuitBtn.addEventListener('click', () => {
+        total = 0;
+        tick();
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        stageClearModal.classList.remove('active');
+        setCharacterState('idle');
+    });
+
+    closeProgressModalBtn.addEventListener('click', () => {
+        progressModal.classList.remove('active');
+        showAnswersBtn.classList.remove('hidden');
+        resetBtn.classList.remove('hidden');
+    });
+
+    showAnswersBtn.addEventListener('click', () => {
+        allInputs.forEach(input => {
+            if (!input.classList.contains('correct')) {
+                input.value = input.dataset.answer;
+                input.classList.remove('incorrect');
+                input.classList.add('revealed');
+            }
+        });
+        showAnswersBtn.disabled = true;
+    });
+
+    document.addEventListener('change', e => {
+      if (!e.target.matches('input[data-answer]')) return;
+      const input = e.target;
+      if (input.disabled) return;
+
+      const userAnswer = input.value.trim().replace(/\s+/g, '').toLowerCase();
+      const correctAnswer = input.dataset.answer.trim().replace(/\s+/g, '').toLowerCase();
+      
+      if (userAnswer === correctAnswer) {
+        const wasAlreadyCorrect = input.classList.contains('correct');
+        if (!wasAlreadyCorrect) {
+          successAudio.currentTime = 0;
+          successAudio.play().catch(err => console.error("Audio play failed:", err));
+          combo++;
+          setCharacterState('happy');
+          updateMushroomGrowth(combo);
+        }
+        input.classList.add('correct');
+        input.classList.remove('incorrect');
+
+        if (combo > 1) {
+            comboCounter.textContent = `COMBO x${combo}`;
+            comboCounter.classList.remove('hidden');
+            comboCounter.classList.remove('combo-pop');
+            void comboCounter.offsetWidth;
+            comboCounter.classList.add('combo-pop');
+        }
+        
+        if (!wasAlreadyCorrect) {
+            const currentSection = input.closest('section');
+            if (checkStageClear(currentSection)) {
+                setTimeout(showStageClear, 300);
+            }
+        }
+      } else {
+        input.classList.add('incorrect');
+        input.classList.remove('correct');
+        failAudio.currentTime = 0;
+        failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
+        combo = 0;
+        updateMushroomGrowth(combo);
+        comboCounter.classList.add('hidden');
+        setCharacterState('sad');
+      }
+    });
+
+    // Initial setup
+    resetGame();
+
+  </script>
+</body>
+</html>
