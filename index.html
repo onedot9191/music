@@ -1259,6 +1259,8 @@
     startAudio.preload = 'auto';
     const failAudio = new Audio('./fail.mp3');
     failAudio.preload = 'auto';
+    const clearAudio = new Audio('./clear.mp3');
+    clearAudio.preload = 'auto';
 
     // Game elements
     let gameDuration = 600; // Default 10 minutes
@@ -1451,6 +1453,7 @@
     }
 
     function showStageClear() {
+        clearAudio.play().catch(e => console.error("Clear audio failed to play:", e));
         stageClearModal.classList.add('active');
         setCharacterState('cheer', 5000);
         
