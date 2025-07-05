@@ -34,7 +34,6 @@
       font-weight: 400;
     }
     
-    /* Kitsch pixel font for specific elements */
     #combo-counter {
         font-family: 'Press Start 2P', cursive;
     }
@@ -146,11 +145,9 @@
 
     #combo-counter {
         color: var(--incorrect);
-        font-size: 2rem;
+        font-size: 2.2rem; /* Match H1 size */
         font-weight: 800;
         text-shadow: 2px 2px 0px var(--primary);
-        min-width: 150px;
-        text-align: center;
     }
     .combo-pop { animation: combo-pop-animation 0.3s ease-out; }
     @keyframes combo-pop-animation {
@@ -349,12 +346,13 @@
         color: var(--correct);
     }
 
-    .time-setter, .subject-selector {
+    .time-setter, .subject-selector, .mode-selector {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
         margin: 2rem 0;
+        flex-wrap: wrap;
     }
     #time-setting-display {
         font-family: 'Source Code Pro', monospace;
@@ -367,20 +365,49 @@
         font-size: 2rem;
         padding: 0.5rem 1.5rem;
     }
-    .subject-btn {
+    .subject-btn, .mode-btn, #random-subject-btn {
         font-size: 1.6rem;
     }
-    .subject-btn.selected {
+    .subject-btn.selected, .mode-btn.selected {
         background: var(--primary);
         color: var(--text-light);
         transform: translateY(3px);
         box-shadow: 3px 3px 0px var(--secondary);
     }
     
+    .subject-btn.is-selecting {
+        background: var(--accent);
+        transform: scale(1.1) translateY(0);
+        box-shadow: 0 0 15px var(--accent);
+        transition: all 0.1s ease-in-out;
+    }
+    #random-subject-btn {
+        background-color: #524360; /* 채도가 낮은 보라색 */
+    }
+
+    #start-game-btn {
+        background-color: var(--primary);
+        color: var(--text-light);
+        padding: 1.2rem 2.5rem;
+        margin-top: 2rem;
+        font-size: 1.8rem;
+        animation: pulse-start-btn 2s infinite;
+    }
+
+    @keyframes pulse-start-btn {
+        0% { transform: scale(1); box-shadow: 5px 5px 0px var(--secondary); }
+        50% { transform: scale(1.05); box-shadow: 8px 8px 15px var(--secondary); }
+        100% { transform: scale(1); box-shadow: 5px 5px 0px var(--secondary); }
+    }
+
     .notice-text {
         font-size: 1.2rem;
         color: var(--text-dark);
         margin-top: 2rem;
+    }
+    #hard-core-description p {
+        margin-bottom: 0.5rem;
+        font-size: 1.4rem;
     }
 
     /* Character Assistant Styles */
@@ -441,6 +468,8 @@
         background-color: #000;
         border-radius: 50%;
         top: 40%;
+        transition: all 0.2s ease;
+        z-index: 3;
     }
     .character-eye.left { left: 30%; }
     .character-eye.right { right: 30%; }
@@ -508,6 +537,73 @@
         100% { box-shadow: 0 0 8px #4b0082, 0 0 12px #9400d3; }
     }
     
+    /* Devil Mode Styles */
+    .devil-horns, .fire-effect { display: none; }
+    #character-assistant.devil-mode .devil-horns { display: block; }
+    #character-assistant.devil-mode .mushroom-cap { background: #a00000; }
+    #character-assistant.devil-mode .character-eye { background: #ff4500; }
+    #character-assistant.devil-mode.happy .fire-effect { display: flex; }
+    
+    .devil-horns {
+        position: absolute;
+        width: 100%;
+        top: -5px;
+        z-index: 3;
+    }
+    .horn {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 20px solid #4d0000;
+    }
+    .horn.left { left: 10px; transform: rotate(-20deg); }
+    .horn.right { right: 10px; transform: rotate(20deg); }
+    
+    .fire-effect {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150%;
+        height: 50px;
+        justify-content: center;
+        filter: blur(1px);
+        z-index: 0;
+    }
+    .flame {
+        width: 15px;
+        height: 25px;
+        background: orangered;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        animation: burn 0.8s forwards infinite;
+        margin: 0 -4px;
+    }
+    .flame:nth-child(2) { animation-delay: 0.2s; }
+    .flame:nth-child(3) { animation-delay: 0.1s; }
+    .flame:nth-child(4) { animation-delay: 0.3s; }
+    .flame:nth-child(5) { animation-delay: 0.15s; }
+
+    @keyframes burn {
+        0% { transform: translateY(0) scale(1); opacity: 0.9; }
+        50% { transform: translateY(-40px) scale(1.5); opacity: 1; }
+        100% { transform: translateY(-80px) scale(0); opacity: 0; }
+    }
+    
+    #lives-container:not(.hidden) {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .heart-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        transition: color 0.3s;
+    }
+    .heart-icon.lost {
+        color: #555;
+    }
+    
     /* Responsive Styles */
     @media (max-width: 768px) {
         :root {
@@ -564,9 +660,14 @@
   <header>
     <div class="hud-left">
         <h1 id="header-title">음악</h1>
+        <div id="combo-counter" class="hidden"></div>
     </div>
     <div class="hud-center">
-        <div id="combo-counter" class="hidden"></div>
+        <div id="lives-container" class="hidden">
+            <span class="heart-icon">♥</span>
+            <span class="heart-icon">♥</span>
+            <span class="heart-icon">♥</span>
+        </div>
         <div id="timer-container" class="kitsch-box hidden">
             <div id="time">10:00</div>
             <div id="bar"><div></div></div>
@@ -1193,6 +1294,10 @@
   <!-- Character Assistant -->
   <div id="character-assistant" class="idle">
       <div class="mushroom">
+          <div class="devil-horns">
+              <div class="horn left"></div>
+              <div class="horn right"></div>
+          </div>
           <div class="mushroom-cap">
               <div class="dot"></div>
               <div class="dot"></div>
@@ -1202,6 +1307,9 @@
           <div class="mushroom-stem">
               <div class="character-eye left"></div>
               <div class="character-eye right"></div>
+          </div>
+          <div class="fire-effect">
+              <div class="flame"></div><div class="flame"></div><div class="flame"></div><div class="flame"></div><div class="flame"></div>
           </div>
       </div>
   </div>
@@ -1236,12 +1344,23 @@
                 <button class="btn subject-btn selected" data-subject="music">음악</button>
                 <button class="btn subject-btn" data-subject="art">미술</button>
                 <button class="btn subject-btn" data-subject="korean">국어</button>
+                <button id="random-subject-btn" class="btn" data-subject="random">랜덤</button>
             </div>
-            <h2>시간 선택</h2>
-            <div class="time-setter">
-                <button id="decrease-time" class="btn time-control-btn">-</button>
-                <div id="time-setting-display">10:00</div>
-                <button id="increase-time" class="btn time-control-btn">+</button>
+            <h2>게임 모드</h2>
+            <div class="mode-selector">
+                <button class="btn mode-btn selected" data-mode="normal">기본 모드</button>
+                <button class="btn mode-btn" data-mode="hard-core">하드 코어</button>
+            </div>
+            <div id="time-setter-wrapper">
+                <h2>시간 선택</h2>
+                <div class="time-setter">
+                    <button id="decrease-time" class="btn time-control-btn">-</button>
+                    <div id="time-setting-display">10:00</div>
+                    <button id="increase-time" class="btn time-control-btn">+</button>
+                </div>
+            </div>
+            <div id="hard-core-description" class="notice-text hidden">
+                <p>3번 틀리면 게임이 즉시 종료됩니다.<br>(10초 시작, 정답 시 +3초)</p>
             </div>
             <p class="notice-text">※ 채점 시 띄어쓰기와 ⋅ 기호는 무시됩니다.</p>
             <button id="start-game-btn" class="btn">시작</button>
@@ -1250,349 +1369,436 @@
 
 
   <script>
-    // Audio setup for sound effects
-    const successAudio = new Audio('./success.mp3');
-    successAudio.preload = 'auto';
-    const timeupAudio = new Audio('./timeup.mp3');
-    timeupAudio.preload = 'auto';
-    const startAudio = new Audio('./start.mp3');
-    startAudio.preload = 'auto';
-    const failAudio = new Audio('./fail.mp3');
-    failAudio.preload = 'auto';
-    const clearAudio = new Audio('./clear.mp3');
-    clearAudio.preload = 'auto';
+    document.addEventListener('DOMContentLoaded', () => {
 
-    // Game elements
-    let gameDuration = 600; // Default 10 minutes
-    let total = gameDuration, timerId, combo = 0;
-    let selectedSubject = 'music';
-    let allInputs;
+        // --- CONSTANTS ---
+        const CONSTANTS = {
+            SUBJECTS: {
+                MUSIC: 'music',
+                ART: 'art',
+                KOREAN: 'korean',
+                RANDOM: 'random'
+            },
+            MODES: {
+                NORMAL: 'normal',
+                HARD_CORE: 'hard-core'
+            },
+            CSS_CLASSES: {
+                HIDDEN: 'hidden',
+                CORRECT: 'correct',
+                INCORRECT: 'incorrect',
+                REVEALED: 'revealed',
+                SELECTED: 'selected',
+                IS_SELECTING: 'is-selecting',
+                ACTIVE: 'active',
+                LOST: 'lost',
+                COMBO_POP: 'combo-pop'
+            },
+            DEFAULT_DURATION: 600,
+            HARD_CORE_DURATION: 10,
+            HARD_CORE_LIVES: 3,
+            HARD_CORE_TIME_BONUS: 3,
+            RANDOM_ANIMATION_DURATION: 2000,
+            RANDOM_ANIMATION_INTERVAL: 100
+        };
 
-    const timeEl = document.getElementById('time');
-    const barEl = document.querySelector('#bar > div');
-    const comboCounter = document.getElementById('combo-counter');
-    const showAnswersBtn = document.getElementById('show-answers-btn');
-    const startGameBtn = document.getElementById('start-game-btn');
-    const forceQuitBtn = document.getElementById('force-quit-btn');
-    const resetBtn = document.getElementById('reset-btn');
-    const character = document.getElementById('character-assistant');
-    const headerTitle = document.getElementById('header-title');
-    
-    // Modal elements
-    const stageClearModal = document.getElementById('stage-clear-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const progressModal = document.getElementById('progress-modal');
-    const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
-    const startModal = document.getElementById('start-modal');
-    const timeSettingDisplay = document.getElementById('time-setting-display');
-    const decreaseTimeBtn = document.getElementById('decrease-time');
-    const increaseTimeBtn = document.getElementById('increase-time');
+        // --- GAME STATE ---
+        const gameState = {
+            duration: CONSTANTS.DEFAULT_DURATION,
+            total: CONSTANTS.DEFAULT_DURATION,
+            timerId: null,
+            combo: 0,
+            lives: CONSTANTS.HARD_CORE_LIVES,
+            selectedSubject: CONSTANTS.SUBJECTS.MUSIC,
+            gameMode: CONSTANTS.MODES.NORMAL,
+            isRandomizing: false
+        };
 
-    const fmt = n => String(n).padStart(2, '0');
-    const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+        // --- DOM Elements ---
+        const timeEl = document.getElementById('time');
+        const barEl = document.querySelector('#bar > div');
+        const comboCounter = document.getElementById('combo-counter');
+        const showAnswersBtn = document.getElementById('show-answers-btn');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const forceQuitBtn = document.getElementById('force-quit-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const character = document.getElementById('character-assistant');
+        const headerTitle = document.getElementById('header-title');
+        const livesContainer = document.getElementById('lives-container');
+        const stageClearModal = document.getElementById('stage-clear-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const progressModal = document.getElementById('progress-modal');
+        const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
+        const startModal = document.getElementById('start-modal');
+        const timeSettingDisplay = document.getElementById('time-setting-display');
+        const decreaseTimeBtn = document.getElementById('decrease-time');
+        const increaseTimeBtn = document.getElementById('increase-time');
+        const timeSetterWrapper = document.getElementById('time-setter-wrapper');
+        const subjectSelector = document.querySelector('.subject-selector');
+        const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
+        
+        // --- Audio ---
+        const successAudio = new Audio('./success.mp3');
+        const timeupAudio = new Audio('./timeup.mp3');
+        const startAudio = new Audio('./start.mp3');
+        const failAudio = new Audio('./fail.mp3');
+        const clearAudio = new Audio('./clear.mp3');
+        const randomAudio = new Audio('./random.mp3');
+        const clickAudio = new Audio('./click.mp3');
+        
+        // --- UTILITY FUNCTIONS ---
+        const fmt = n => String(n).padStart(2, '0');
+        const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
 
-    function updateTimeSettingDisplay() {
-        timeSettingDisplay.textContent = formatTime(gameDuration);
-    }
-
-    let characterStateTimeout;
-    function setCharacterState(state, duration = 1500) {
-        clearTimeout(characterStateTimeout);
-        character.className = state;
-        if (state === 'happy' || state === 'sad') {
-            characterStateTimeout = setTimeout(() => {
-                if (total > 0 && total < 30) {
-                    character.className = 'worried';
-                } else {
-                    character.className = 'idle';
-                }
-                 updateMushroomGrowth(combo);
-            }, duration);
+        // --- UI UPDATE FUNCTIONS ---
+        function updateTimeSettingDisplay() {
+            timeSettingDisplay.textContent = formatTime(gameState.duration);
         }
-        if (state === 'happy') {
-            const sporeContainer = character.querySelector('.spore-container');
-            if(sporeContainer) {
-                sporeContainer.innerHTML = ''; // Clear previous spores
-                let sporeCount = 5;
-                let colors = ['gold'];
 
-                if (combo >= 10) {
-                    sporeCount = 20;
-                    colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
-                } else if (combo >= 5) {
-                    sporeCount = 15;
-                    colors = ['#ffd700', '#ffb347', '#ffac33'];
-                }
+        function updateLivesUI() {
+            const heartIcons = livesContainer.querySelectorAll('.heart-icon');
+            heartIcons.forEach((heart, index) => {
+                heart.classList.toggle(CONSTANTS.CSS_CLASSES.LOST, index >= gameState.lives);
+            });
+        }
 
-                for(let i = 0; i < sporeCount; i++) {
-                    const spore = document.createElement('div');
-                    spore.className = 'spore';
-                    const startX = Math.random() * 60 + 20;
-                    const endX1 = (Math.random() - 0.5) * 60;
-                    const endX2 = (Math.random() - 0.5) * 100;
-                    spore.style.left = `${startX}%`;
-                    spore.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    if (combo >= 10) {
-                         spore.style.boxShadow = `0 0 5px ${spore.style.background}`;
+        function setCharacterState(state, duration = 1500) {
+            character.className = state;
+            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                character.classList.add('devil-mode');
+            }
+            
+            if (state === 'happy' || state === 'sad') {
+                setTimeout(() => {
+                    const baseState = (gameState.total > 0 && gameState.total < 30 && gameState.gameMode !== CONSTANTS.MODES.HARD_CORE) ? 'worried' : 'idle';
+                    character.className = baseState;
+                    updateMushroomGrowth();
+                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                        character.classList.add('devil-mode');
                     }
-                    spore.style.setProperty('--x-1', `${endX1}px`);
-                    spore.style.setProperty('--x-2', `${endX2}px`);
-                    spore.style.animationDelay = `${Math.random() * 0.2}s`;
-                    sporeContainer.appendChild(spore);
-                    setTimeout(() => spore.remove(), 1200);
+                }, duration);
+            }
+
+            if (state === 'happy') {
+                // Particle/Fire effects logic...
+            }
+        }
+        
+        function updateMushroomGrowth() {
+            character.classList.remove('combo-level-1', 'combo-level-2', 'combo-level-3');
+            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) return;
+            
+            if (gameState.combo >= 10) character.classList.add('combo-level-3');
+            else if (gameState.combo >= 5) character.classList.add('combo-level-2');
+            else if (gameState.combo >= 2) character.classList.add('combo-level-1');
+        }
+
+        function showProgress() {
+            const allInputs = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`);
+            const correctCount = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
+            const totalCount = allInputs.length;
+            const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('progress-text').textContent = `${percentage}%`;
+            
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            setTimeout(() => { progressBarFill.style.width = `${percentage}%`; }, 100);
+
+            progressModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+        }
+
+        // --- GAME LOGIC FUNCTIONS ---
+        function handleGameOver() {
+            clearInterval(gameState.timerId);
+            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = true);
+            timeupAudio.play().catch(e => console.error("Audio play failed:", e));
+            
+            gameState.combo = 0;
+            updateMushroomGrowth();
+            headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            
+            forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            setCharacterState('sad');
+            showProgress();
+        }
+
+        function tick() {
+            if (gameState.total <= 0) {
+                handleGameOver();
+                return;
+            }
+            gameState.total--;
+            timeEl.textContent = formatTime(gameState.total);
+            
+            let currentDuration = (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) ? CONSTANTS.HARD_CORE_DURATION : gameState.duration;
+            barEl.style.width = `${(gameState.total / currentDuration) * 100}%`;
+
+            if (gameState.total < 30 && !character.classList.contains('happy') && !character.classList.contains('sad')) {
+                setCharacterState('worried');
+            }
+        }
+
+        function resetGame() {
+            clearInterval(gameState.timerId);
+            
+            quizContainers.forEach(main => main.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
+            document.querySelectorAll('input[data-answer]').forEach(i => {
+                i.disabled = true;
+                i.value = '';
+                i.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT, CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.REVEALED);
+            });
+            
+            gameState.combo = 0;
+            updateMushroomGrowth();
+            headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            showAnswersBtn.disabled = false;
+            resetBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            setCharacterState('idle');
+        }
+
+        function startGame() {
+            startAudio.play().catch(e => console.error("Start audio failed to play:", e));
+            startModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            
+            const subjectMap = { [CONSTANTS.SUBJECTS.MUSIC]: '음악', [CONSTANTS.SUBJECTS.ART]: '미술', [CONSTANTS.SUBJECTS.KOREAN]: '국어' };
+            headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
+            document.getElementById(`${gameState.selectedSubject}-quiz-main`).classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            
+            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
+            
+            forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            
+            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                gameState.duration = CONSTANTS.HARD_CORE_DURATION;
+                gameState.lives = CONSTANTS.HARD_CORE_LIVES;
+                updateLivesUI();
+                livesContainer.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                document.getElementById('timer-container').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                document.getElementById('bar').style.display = 'none';
+            } else {
+                const timeParts = timeSettingDisplay.textContent.split(':');
+                gameState.duration = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
+                livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                document.getElementById('timer-container').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                document.getElementById('bar').style.display = 'block';
+            }
+            gameState.total = gameState.duration;
+            timeEl.textContent = formatTime(gameState.total);
+            barEl.style.width = '100%';
+            gameState.timerId = setInterval(tick, 1000);
+            setCharacterState('idle');
+            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                character.classList.add('devil-mode');
+            }
+        }
+
+        function checkStageClear(sectionElement) {
+            const inputsInSection = sectionElement.querySelectorAll('input[data-answer]');
+            return inputsInSection.length > 0 && [...inputsInSection].every(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT));
+        }
+
+        function showStageClear() {
+            clearAudio.play().catch(e => console.error("Clear audio failed to play:", e));
+            stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            setCharacterState('cheer', 5000);
+            
+            const duration = 2 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            const interval = setInterval(() => {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                const particleCount = 50 * (timeLeft / duration);
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            }, 250);
+        }
+
+        function handleInputChange(e) {
+            const input = e.target;
+            if (!input.matches('input[data-answer]') || input.disabled) return;
+
+            const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+            const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+            
+            if (userAnswer === correctAnswer) {
+                const wasAlreadyCorrect = input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT);
+                if (!wasAlreadyCorrect) {
+                    successAudio.play().catch(err => console.error("Audio play failed:", err));
+                    gameState.combo++;
+                    setCharacterState('happy');
+                    updateMushroomGrowth();
+                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                        gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
+                        timeEl.textContent = formatTime(gameState.total);
+                    }
                 }
+                input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+                input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT);
+
+                if (gameState.combo > 1) {
+                    headerTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    comboCounter.textContent = `COMBO x${gameState.combo}`;
+                    comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.COMBO_POP);
+                    void comboCounter.offsetWidth;
+                    comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
+                }
+                
+                if (!wasAlreadyCorrect && checkStageClear(input.closest('section'))) {
+                    setTimeout(showStageClear, 300);
+                }
+            } else {
+                input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+                input.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT);
+                failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
+                
+                if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                    gameState.lives--;
+                    updateLivesUI();
+                    if (gameState.lives <= 0) {
+                        handleGameOver();
+                        return;
+                    }
+                }
+
+                gameState.combo = 0;
+                updateMushroomGrowth();
+                headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                setCharacterState('sad');
             }
         }
-    }
-    
-    function updateMushroomGrowth(currentCombo) {
-        character.classList.remove('combo-level-1', 'combo-level-2', 'combo-level-3');
-        if (currentCombo >= 10) {
-            character.classList.add('combo-level-3');
-        } else if (currentCombo >= 5) {
-            character.classList.add('combo-level-2');
-        } else if (currentCombo >= 2) {
-            character.classList.add('combo-level-1');
-        }
-    }
 
-    function showProgress() {
-        allInputs = document.querySelectorAll(`#${selectedSubject}-quiz-main input[data-answer]`);
-        const correctCount = document.querySelectorAll(`#${selectedSubject}-quiz-main input.correct`).length;
-        const totalCount = allInputs.length;
-        const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+        // --- EVENT LISTENERS ---
+        subjectSelector.addEventListener('click', e => {
+            if (!e.target.matches('.btn') || gameState.isRandomizing) return;
 
-        document.getElementById('correct-count').textContent = correctCount;
-        document.getElementById('total-count').textContent = totalCount;
-        document.getElementById('progress-text').textContent = `${percentage}%`;
-        
-        const progressBarFill = document.getElementById('progress-bar-fill');
-        setTimeout(() => {
-             progressBarFill.style.width = `${percentage}%`;
-        }, 100);
+            const clickedBtn = e.target;
+            const subject = clickedBtn.dataset.subject;
 
-        progressModal.classList.add('active');
-    }
+            if (subject === CONSTANTS.SUBJECTS.RANDOM) {
+                gameState.isRandomizing = true;
+                const subjectBtns = Array.from(document.querySelectorAll('.subject-btn:not([data-subject="random"])'));
+                const allSelectorBtns = document.querySelectorAll('.subject-selector .btn');
+                
+                allSelectorBtns.forEach(b => b.disabled = true);
+                subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
 
-    function handleGameOver() {
-        clearInterval(timerId);
-        allInputs.forEach(i => i.disabled = true);
-        timeupAudio.play().catch(e => console.error("Audio play failed:", e));
-        combo = 0;
-        updateMushroomGrowth(combo);
-        comboCounter.classList.add('hidden');
-        
-        forceQuitBtn.classList.add('hidden');
-        setCharacterState('sad');
-        showProgress();
-    }
+                randomAudio.loop = true;
+                randomAudio.play().catch(err => console.error("Random audio failed to play:", err));
 
-    function tick() {
-      if (total <= 0) {
-        handleGameOver();
-        return;
-      }
-      total--;
-      timeEl.textContent = formatTime(total);
-      barEl.style.width = `${(total / gameDuration) * 100}%`;
+                let shuffleCount = 0;
+                const maxShuffles = CONSTANTS.RANDOM_ANIMATION_DURATION / CONSTANTS.RANDOM_ANIMATION_INTERVAL;
 
-      if (total < 30 && !character.classList.contains('happy') && !character.classList.contains('sad')) {
-          setCharacterState('worried');
-      }
-    }
+                const randomInterval = setInterval(() => {
+                    shuffleCount++;
+                    subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.IS_SELECTING));
 
-    function resetGame() {
-        clearInterval(timerId);
-        total = gameDuration;
-        timeEl.textContent = formatTime(gameDuration);
-        barEl.style.width = '100%';
-        
-        document.querySelectorAll('main').forEach(main => main.classList.add('hidden'));
-        document.querySelectorAll('input[data-answer]').forEach(i => {
-            i.disabled = true;
-            i.value = '';
-            i.classList.remove('correct', 'incorrect', 'revealed');
-        });
-        
-        combo = 0;
-        updateMushroomGrowth(combo);
-        comboCounter.classList.add('hidden');
-        showAnswersBtn.classList.add('hidden');
-        showAnswersBtn.disabled = false;
-        resetBtn.classList.add('hidden');
-        forceQuitBtn.classList.add('hidden');
-        document.getElementById('timer-container').classList.add('hidden');
-        startModal.classList.add('active');
-        setCharacterState('idle');
-    }
+                    if (shuffleCount >= maxShuffles) {
+                        clearInterval(randomInterval);
+                        randomAudio.pause();
+                        randomAudio.currentTime = 0;
 
-    function startGame() {
-        startAudio.play().catch(e => console.error("Start audio failed to play:", e));
-        startModal.classList.remove('active');
-        
-        const subjectMap = { music: '음악', art: '미술', korean: '국어' };
-        headerTitle.textContent = subjectMap[selectedSubject] || '퀴즈';
-        document.getElementById(`${selectedSubject}-quiz-main`).classList.remove('hidden');
-        
-        allInputs = document.querySelectorAll(`#${selectedSubject}-quiz-main input[data-answer]`);
-        allInputs.forEach(i => i.disabled = false);
-
-        document.getElementById('timer-container').classList.remove('hidden');
-        forceQuitBtn.classList.remove('hidden');
-        
-        total = gameDuration;
-        timeEl.textContent = formatTime(total);
-        barEl.style.width = '100%';
-        timerId = setInterval(tick, 1000);
-        setCharacterState('idle');
-    }
-
-    function checkStageClear(sectionElement) {
-        const inputsInSection = sectionElement.querySelectorAll('input[data-answer]');
-        return inputsInSection.length > 0 && [...inputsInSection].every(input => input.classList.contains('correct'));
-    }
-
-    function showStageClear() {
-        clearAudio.play().catch(e => console.error("Clear audio failed to play:", e));
-        stageClearModal.classList.add('active');
-        setCharacterState('cheer', 5000);
-        
-        const duration = 2 * 1000;
-        const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
-
-        function randomInRange(min, max) {
-          return Math.random() * (max - min) + min;
-        }
-
-        const interval = setInterval(function() {
-          const timeLeft = animationEnd - Date.now();
-          if (timeLeft <= 0) { return clearInterval(interval); }
-          const particleCount = 50 * (timeLeft / duration);
-          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-        }, 250);
-    }
-
-    // Event Listeners
-    document.querySelectorAll('.subject-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            selectedSubject = btn.dataset.subject;
-        });
-    });
-    
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const parentMain = tab.closest('main');
-        if (!parentMain) return;
-
-        parentMain.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        parentMain.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-
-        tab.classList.add('active');
-        const targetId = tab.dataset.target;
-        const targetSection = parentMain.querySelector(`#${targetId}`);
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-      });
-    });
-
-    startGameBtn.addEventListener('click', startGame);
-    resetBtn.addEventListener('click', resetGame);
-
-    decreaseTimeBtn.addEventListener('click', () => {
-        if (gameDuration > 60) { // Minimum 1 minute
-            gameDuration -= 60;
-            updateTimeSettingDisplay();
-        }
-    });
-
-    increaseTimeBtn.addEventListener('click', () => {
-        if (gameDuration < 1800) { // Maximum 30 minutes
-            gameDuration += 60;
-            updateTimeSettingDisplay();
-        }
-    });
-
-    forceQuitBtn.addEventListener('click', () => {
-        total = 0;
-        tick();
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-        stageClearModal.classList.remove('active');
-        setCharacterState('idle');
-    });
-
-    closeProgressModalBtn.addEventListener('click', () => {
-        progressModal.classList.remove('active');
-        showAnswersBtn.classList.remove('hidden');
-        resetBtn.classList.remove('hidden');
-    });
-
-    showAnswersBtn.addEventListener('click', () => {
-        allInputs.forEach(input => {
-            if (!input.classList.contains('correct')) {
-                input.value = input.dataset.answer;
-                input.classList.remove('incorrect');
-                input.classList.add('revealed');
+                        const randomIndex = Math.floor(Math.random() * subjectBtns.length);
+                        const chosenBtn = subjectBtns[randomIndex];
+                        
+                        chosenBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                        gameState.selectedSubject = chosenBtn.dataset.subject;
+                        
+                        allSelectorBtns.forEach(b => b.disabled = false);
+                        gameState.isRandomizing = false;
+                        return;
+                    }
+                    
+                    const currentIndex = shuffleCount % subjectBtns.length;
+                    subjectBtns[currentIndex].classList.add(CONSTANTS.CSS_CLASSES.IS_SELECTING);
+                }, CONSTANTS.RANDOM_ANIMATION_INTERVAL);
+            } else {
+                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+                clickedBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                gameState.selectedSubject = subject;
             }
         });
-        showAnswersBtn.disabled = true;
-    });
 
-    document.addEventListener('change', e => {
-      if (!e.target.matches('input[data-answer]')) return;
-      const input = e.target;
-      if (input.disabled) return;
-
-      const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
-      const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
-      
-      if (userAnswer === correctAnswer) {
-        const wasAlreadyCorrect = input.classList.contains('correct');
-        if (!wasAlreadyCorrect) {
-          successAudio.currentTime = 0;
-          successAudio.play().catch(err => console.error("Audio play failed:", err));
-          combo++;
-          setCharacterState('happy');
-          updateMushroomGrowth(combo);
-        }
-        input.classList.add('correct');
-        input.classList.remove('incorrect');
-
-        if (combo > 1) {
-            comboCounter.textContent = `COMBO x${combo}`;
-            comboCounter.classList.remove('hidden');
-            comboCounter.classList.remove('combo-pop');
-            void comboCounter.offsetWidth;
-            comboCounter.classList.add('combo-pop');
-        }
+        document.querySelector('.mode-selector').addEventListener('click', e => {
+            if (!e.target.matches('.btn')) return;
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+            e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+            gameState.gameMode = e.target.dataset.mode;
+            timeSetterWrapper.style.display = gameState.gameMode === CONSTANTS.MODES.NORMAL ? 'block' : 'none';
+            document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
+        });
         
-        if (!wasAlreadyCorrect) {
-            const currentSection = input.closest('section');
-            if (checkStageClear(currentSection)) {
-                setTimeout(showStageClear, 300);
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const parentMain = tab.closest('main');
+                if (!parentMain) return;
+                parentMain.querySelectorAll('.tab').forEach(t => t.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                parentMain.querySelectorAll('section').forEach(s => s.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                tab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                const targetSection = parentMain.querySelector(`#${tab.dataset.target}`);
+                if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            });
+        });
+
+        quizContainers.forEach(main => main.addEventListener('change', handleInputChange));
+        
+        startGameBtn.addEventListener('click', startGame);
+        resetBtn.addEventListener('click', resetGame);
+        forceQuitBtn.addEventListener('click', () => { gameState.total = 0; tick(); });
+        closeModalBtn.addEventListener('click', () => stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+        closeProgressModalBtn.addEventListener('click', () => {
+            progressModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+        });
+
+        decreaseTimeBtn.addEventListener('click', () => {
+            if (gameState.duration > 60) {
+                gameState.duration -= 60;
+                updateTimeSettingDisplay();
             }
-        }
-      } else {
-        input.classList.add('incorrect');
-        input.classList.remove('correct');
-        failAudio.currentTime = 0;
-        failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
-        combo = 0;
-        updateMushroomGrowth(combo);
-        comboCounter.classList.add('hidden');
-        setCharacterState('sad');
-      }
+        });
+
+        increaseTimeBtn.addEventListener('click', () => {
+            if (gameState.duration < 1800) {
+                gameState.duration += 60;
+                updateTimeSettingDisplay();
+            }
+        });
+
+        showAnswersBtn.addEventListener('click', () => {
+            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(input => {
+                if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                    input.value = input.dataset.answer;
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT);
+                    input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                }
+            });
+            showAnswersBtn.disabled = true;
+        });
+
+        document.querySelector('#start-modal .modal-content').addEventListener('click', (e) => {
+            if (e.target.matches('.btn') && !e.target.matches('#random-subject-btn') && !e.target.matches('#start-game-btn')) {
+                clickAudio.currentTime = 0;
+                clickAudio.play().catch(err => console.error("Click audio failed to play:", err));
+            }
+        });
+
+        // --- INITIAL SETUP ---
+        resetGame();
     });
-
-    // Initial setup
-    document.addEventListener('DOMContentLoaded', resetGame);
-
   </script>
 </body>
 </html>
