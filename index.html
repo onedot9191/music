@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>음악 & 미술 & 국어 퀴즈</title>
+  <title>내체표 게임</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -305,7 +305,7 @@
       transform: scale(0.9);
       transition: transform 0.3s ease;
       width: 90%;
-      max-width: 500px;
+      max-width: 600px;
       border-radius: 12px;
     }
     .modal-overlay.active .modal-content { transform: scale(1); }
@@ -418,6 +418,7 @@
         width: 80px;
         height: 80px;
         z-index: 99;
+        transition: all 0.5s ease-in-out;
     }
     .mushroom {
         width: 100%;
@@ -541,9 +542,17 @@
     .devil-horns, .fire-effect { display: none; }
     #character-assistant.devil-mode .devil-horns { display: block; }
     #character-assistant.devil-mode .mushroom-cap { background: #a00000; }
-    #character-assistant.devil-mode .character-eye { background: #ff4500; }
     #character-assistant.devil-mode.happy .fire-effect { display: flex; }
     
+    #character-assistant.devil-mode.sad .mushroom-cap {
+        background: #2c003e; /* Very dark, menacing purple */
+        box-shadow: 0 0 15px #ff0000, inset 0 0 10px #000;
+    }
+    #character-assistant.devil-mode.sad .character-eye {
+        background: #ff0000; /* Glowing red eyes */
+        box-shadow: 0 0 10px #ff0000;
+    }
+
     .devil-horns {
         position: absolute;
         width: 100%;
@@ -604,6 +613,63 @@
         color: #555;
     }
     
+    /* Result Modal Enhancements */
+    #progress-modal .modal-content {
+        position: relative;
+        padding-top: 1rem;
+    }
+    #result-character-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        min-height: 100px;
+    }
+    #modal-character-placeholder {
+        width: 80px;
+        height: 80px;
+        position: relative;
+    }
+    #modal-character-placeholder > #character-assistant {
+        position: static; /* Override fixed positioning */
+        bottom: auto;
+        right: auto;
+    }
+    .speech-bubble {
+        position: relative;
+        background: var(--bg-dark);
+        border-radius: .4em;
+        padding: 1.5rem;
+        min-width: 250px;
+        max-width: 300px;
+        text-align: left;
+        border: 2px solid var(--primary);
+    }
+    .speech-bubble:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-right-color: var(--primary);
+        border-left: 0;
+        border-bottom: 0;
+        margin-top: -10px;
+        margin-left: -22px;
+    }
+    #result-dialogue {
+        margin: 0;
+        font-size: 1.6rem;
+        line-height: 1.6;
+    }
+    #result-title {
+        font-size: 2.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+
     /* Responsive Styles */
     @media (max-width: 768px) {
         :root {
@@ -652,6 +718,19 @@
         main {
             padding-top: 28rem;
         }
+        #result-character-container {
+            flex-direction: column;
+        }
+        .speech-bubble:after {
+            top: 0;
+            left: 50%;
+            border: 20px solid transparent;
+            border-bottom-color: var(--primary);
+            border-top: 0;
+            border-right: 0;
+            margin-left: -10px;
+            margin-top: -20px;
+        }
     }
 
   </style>
@@ -659,7 +738,7 @@
 <body>
   <header>
     <div class="hud-left">
-        <h1 id="header-title">음악</h1>
+        <h1 id="header-title">내체표 게임</h1>
         <div id="combo-counter" class="hidden"></div>
     </div>
     <div class="hud-center">
@@ -1325,15 +1404,21 @@
   
   <!-- Progress Modal -->
   <div id="progress-modal" class="modal-overlay">
-    <div class="modal-content">
-      <h2>게임 결과</h2>
-      <p>맞춘 개수: <span id="correct-count">0</span> / <span id="total-count">0</span></p>
-      <div class="progress-bar-container">
-        <div id="progress-bar-fill"></div>
+      <div class="modal-content">
+          <div id="result-character-container">
+              <div id="modal-character-placeholder"></div>
+              <div class="speech-bubble hidden">
+                  <p id="result-dialogue"></p>
+              </div>
+          </div>
+          <h2 id="result-title">게임 결과</h2>
+          <p>맞춘 개수: <span id="correct-count">0</span> / <span id="total-count">0</span></p>
+          <div class="progress-bar-container">
+              <div id="progress-bar-fill"></div>
+          </div>
+          <p id="progress-text">0%</p>
+          <button id="close-progress-modal-btn" class="btn">확인</button>
       </div>
-      <p id="progress-text">0%</p>
-      <button id="close-progress-modal-btn" class="btn">확인</button>
-    </div>
   </div>
   
   <!-- Start Modal -->
@@ -1352,7 +1437,7 @@
                 <button class="btn mode-btn" data-mode="hard-core">하드 코어</button>
             </div>
             <div id="time-setter-wrapper">
-                <h2>시간 선택</h2>
+                <h2>제한 시간 선택</h2>
                 <div class="time-setter">
                     <button id="decrease-time" class="btn time-control-btn">-</button>
                     <div id="time-setting-display">10:00</div>
@@ -1360,7 +1445,7 @@
                 </div>
             </div>
             <div id="hard-core-description" class="notice-text hidden">
-                <p>3번 틀리면 게임이 즉시 종료됩니다.<br>(10초 시작, 정답 시 +3초)</p>
+                <p>3번 틀리면 게임이 즉시 종료됩니다.<br>(제한시간 30초, 정답 시 +3초)</p>
             </div>
             <p class="notice-text">※ 채점 시 띄어쓰기와 ⋅ 기호는 무시됩니다.</p>
             <button id="start-game-btn" class="btn">시작</button>
@@ -1395,7 +1480,7 @@
                 COMBO_POP: 'combo-pop'
             },
             DEFAULT_DURATION: 600,
-            HARD_CORE_DURATION: 10,
+            HARD_CORE_DURATION: 30, // 변경: 10초 -> 30초
             HARD_CORE_LIVES: 3,
             HARD_CORE_TIME_BONUS: 3,
             RANDOM_ANIMATION_DURATION: 2000,
@@ -1411,7 +1496,8 @@
             lives: CONSTANTS.HARD_CORE_LIVES,
             selectedSubject: CONSTANTS.SUBJECTS.MUSIC,
             gameMode: CONSTANTS.MODES.NORMAL,
-            isRandomizing: false
+            isRandomizing: false,
+            typingInterval: null
         };
 
         // --- DOM Elements ---
@@ -1436,6 +1522,10 @@
         const timeSetterWrapper = document.getElementById('time-setter-wrapper');
         const subjectSelector = document.querySelector('.subject-selector');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
+        const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
+        const speechBubble = document.querySelector('.speech-bubble');
+        const resultDialogue = document.getElementById('result-dialogue');
+        const resultTitle = document.getElementById('result-title');
         
         // --- Audio ---
         const successAudio = new Audio('./success.mp3');
@@ -1449,6 +1539,23 @@
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+
+        function typewriter(element, text) {
+            if (gameState.typingInterval) {
+                clearInterval(gameState.typingInterval);
+            }
+            element.textContent = '';
+            let i = 0;
+            gameState.typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(gameState.typingInterval);
+                    gameState.typingInterval = null;
+                }
+            }, 50);
+        }
 
         // --- UI UPDATE FUNCTIONS ---
         function updateTimeSettingDisplay() {
@@ -1504,9 +1611,46 @@
             document.getElementById('progress-text').textContent = `${percentage}%`;
             
             const progressBarFill = document.getElementById('progress-bar-fill');
-            setTimeout(() => { progressBarFill.style.width = `${percentage}%`; }, 100);
+            
+            // --- Result Feedback Logic ---
+            let feedback;
+            if (percentage === 100) {
+                feedback = { title: "신의 경지", dialogue: "완벽해! 당신은 이 게임의 신이야!", animation: "cheer", effect: "perfect" };
+            } else if (percentage >= 90) {
+                feedback = { title: "내체표 마스터", dialogue: "대단한 실력인데? 거의 마스터 수준이야!", animation: "happy", effect: "excellent" };
+            } else if (percentage >= 70) {
+                feedback = { title: "내체표 고수", dialogue: "꽤 하는걸? 이 감각, 잊지 말라구!", animation: "idle", effect: "great" };
+            } else if (percentage >= 50) {
+                feedback = { title: "내체표 중수", dialogue: "절반은 넘었네! 다음엔 더 잘할 수 있겠어.", animation: "idle", effect: "good" };
+            } else if (percentage >= 20) {
+                feedback = { title: "내체표 하수", dialogue: "으... 너무 어려웠어. 다시 해볼까?", animation: "sad", effect: "notbad" };
+            } else {
+                feedback = { title: "내체표 입문자", dialogue: "털썩... (아무 말도 하지 못했다)", animation: "sad", effect: "tryagain" };
+            }
 
+            resultTitle.textContent = feedback.title;
+            
+            // Move character into modal
+            const clonedCharacter = character.cloneNode(true);
+            clonedCharacter.style = ''; // Reset fixed positioning
+            modalCharacterPlaceholder.innerHTML = '';
+            modalCharacterPlaceholder.appendChild(clonedCharacter);
+            
+            // Set character animation for result
+            setTimeout(() => {
+                const modalChar = modalCharacterPlaceholder.querySelector('#character-assistant');
+                modalChar.className = feedback.animation;
+                 if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                    modalChar.classList.add('devil-mode');
+                }
+            }, 100);
+
+            // Show speech bubble and start typing
+            speechBubble.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            typewriter(resultDialogue, feedback.dialogue);
+            
             progressModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            setTimeout(() => { progressBarFill.style.width = `${percentage}%`; }, 100);
         }
 
         // --- GAME LOGIC FUNCTIONS ---
@@ -1553,6 +1697,7 @@
             
             gameState.combo = 0;
             updateMushroomGrowth();
+            headerTitle.textContent = '내체표 게임';
             headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
