@@ -1548,8 +1548,8 @@
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
 
         function playSound(audioElement) {
-            audioElement.currentTime = 0;
-            audioElement.play().catch(err => console.error(`Audio play failed for ${audioElement.src}:`, err));
+            const newAudio = audioElement.cloneNode();
+            newAudio.play().catch(err => console.error(`Audio play failed for ${audioElement.src}:`, err));
         }
 
         function typewriter(element, text) {
@@ -1817,11 +1817,11 @@
                 }
             } else {
                 playSound(failAudio);
+                setCharacterState('sad');
                 gameState.combo = 0;
                 updateMushroomGrowth();
                 headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-                setCharacterState('sad');
 
                 if(input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
