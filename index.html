@@ -1778,8 +1778,12 @@
             
             if (userAnswer === correctAnswer) {
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
+                input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+                input.value = input.dataset.answer; // Show the fully formatted correct answer
+                input.disabled = true; // Disable on correct
+
                 const wasAlreadyCorrect = input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT);
-                if (!wasAlreadyCorrect) {
+                if (!wasAlreadyCorrect) { 
                     successAudio.play().catch(err => console.error("Audio play failed:", err));
                     gameState.combo++;
                     setCharacterState('happy');
@@ -1789,7 +1793,6 @@
                         timeEl.textContent = formatTime(gameState.total);
                     }
                 }
-                input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
                 
                 if (gameState.combo > 1) {
                     headerTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -1935,9 +1938,12 @@
 
         showAnswersBtn.addEventListener('click', () => {
             document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(input => {
-                if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                    input.value = input.dataset.answer;
-                    input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT);
+                input.value = input.dataset.answer;
+                input.disabled = true;
+                if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                    // Already correct, just ensure the formatting is perfect
+                } else {
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
                 }
             });
