@@ -19,6 +19,7 @@
       --text-dark: #A0A0A0;
       --correct: #39FF14; /* Neon Green */
       --incorrect: #FF5733; /* Bright Orange-Red */
+      --retrying: #FFC300; /* Amber/Yellow for retry */
       --revealed: #00FFFF; /* Cyan */
       font-size: 10px; /* Base font size for rem units */
     }
@@ -277,6 +278,10 @@
     td input.incorrect {
       border-color: var(--incorrect);
       color: var(--incorrect);
+    }
+    td input.retrying {
+        border-color: var(--retrying);
+        color: var(--retrying);
     }
     td input.revealed {
       color: var(--revealed);
@@ -765,7 +770,6 @@
       <div class="tab" data-target="creation">창작</div>
       <div class="tab" data-target="elements">음악 요소</div>
     </div>
-    <!-- Music Sections -->
     <section id="performance" class="active">
       <h2>연주</h2>
       <div class="grade-container">
@@ -1077,7 +1081,6 @@
       <div class="tab" data-target="expression">표현</div>
       <div class="tab" data-target="appreciation">감상</div>
     </div>
-    <!-- Art Sections -->
     <section id="aesthetic-experience" class="active">
       <h2>미적체험</h2>
       <div class="grade-container">
@@ -1370,7 +1373,6 @@
     </section>
   </main>
 
-  <!-- Character Assistant -->
   <div id="character-assistant" class="idle">
       <div class="mushroom">
           <div class="devil-horns">
@@ -1393,7 +1395,6 @@
       </div>
   </div>
 
-  <!-- Stage Clear Modal -->
   <div id="stage-clear-modal" class="modal-overlay">
     <div class="modal-content">
       <h2>Stage Clear!</h2>
@@ -1402,7 +1403,6 @@
     </div>
   </div>
   
-  <!-- Progress Modal -->
   <div id="progress-modal" class="modal-overlay">
       <div class="modal-content">
           <div id="result-character-container">
@@ -1421,8 +1421,7 @@
       </div>
   </div>
   
-  <!-- Start Modal -->
-    <div id="start-modal" class="modal-overlay active">
+  <div id="start-modal" class="modal-overlay active">
         <div class="modal-content">
             <h2>과목 선택</h2>
             <div class="subject-selector">
@@ -1472,6 +1471,7 @@
                 HIDDEN: 'hidden',
                 CORRECT: 'correct',
                 INCORRECT: 'incorrect',
+                RETRYING: 'retrying',
                 REVEALED: 'revealed',
                 SELECTED: 'selected',
                 IS_SELECTING: 'is-selecting',
@@ -1692,7 +1692,7 @@
             document.querySelectorAll('input[data-answer]').forEach(i => {
                 i.disabled = true;
                 i.value = '';
-                i.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT, CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.REVEALED);
+                i.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT, CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING, CONSTANTS.CSS_CLASSES.REVEALED);
             });
             
             gameState.combo = 0;
@@ -1777,6 +1777,7 @@
             const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
             
             if (userAnswer === correctAnswer) {
+                input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 const wasAlreadyCorrect = input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT);
                 if (!wasAlreadyCorrect) {
                     successAudio.play().catch(err => console.error("Audio play failed:", err));
@@ -1789,8 +1790,7 @@
                     }
                 }
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
-                input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT);
-
+                
                 if (gameState.combo > 1) {
                     headerTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                     comboCounter.textContent = `COMBO x${gameState.combo}`;
@@ -1804,24 +1804,34 @@
                     setTimeout(showStageClear, 300);
                 }
             } else {
-                input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
-                input.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT);
-                failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
-                
-                if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
-                    gameState.lives--;
-                    updateLivesUI();
-                    if (gameState.lives <= 0) {
-                        handleGameOver();
-                        return;
-                    }
-                }
+                if(input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
+                    input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+                    
+                    input.value = input.dataset.answer;
+                    input.disabled = true;
 
-                gameState.combo = 0;
-                updateMushroomGrowth();
-                headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-                comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-                setCharacterState('sad');
+                    failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
+                    
+                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                        gameState.lives--;
+                        updateLivesUI();
+                        if (gameState.lives <= 0) {
+                            handleGameOver();
+                            return;
+                        }
+                    }
+
+                    gameState.combo = 0;
+                    updateMushroomGrowth();
+                    headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    setCharacterState('sad');
+
+                } else {
+                    input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
+                    input.value = '';
+                }
             }
         }
 
