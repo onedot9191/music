@@ -1529,12 +1529,19 @@
         
         // --- Audio ---
         const successAudio = new Audio('./success.mp3');
+        successAudio.preload = 'auto';
         const timeupAudio = new Audio('./timeup.mp3');
+        timeupAudio.preload = 'auto';
         const startAudio = new Audio('./start.mp3');
+        startAudio.preload = 'auto';
         const failAudio = new Audio('./fail.mp3');
+        failAudio.preload = 'auto';
         const clearAudio = new Audio('./clear.mp3');
+        clearAudio.preload = 'auto';
         const randomAudio = new Audio('./random.mp3');
+        randomAudio.preload = 'auto';
         const clickAudio = new Audio('./click.mp3');
+        clickAudio.preload = 'auto';
         
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
@@ -1777,21 +1784,18 @@
             const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
             
             if (userAnswer === correctAnswer) {
+                successAudio.play().catch(err => console.error("Audio play failed:", err));
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
                 input.value = input.dataset.answer; // Show the fully formatted correct answer
                 input.disabled = true; // Disable on correct
 
-                const wasAlreadyCorrect = input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT);
-                if (!wasAlreadyCorrect) { 
-                    successAudio.play().catch(err => console.error("Audio play failed:", err));
-                    gameState.combo++;
-                    setCharacterState('happy');
-                    updateMushroomGrowth();
-                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
-                        gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
-                        timeEl.textContent = formatTime(gameState.total);
-                    }
+                gameState.combo++;
+                setCharacterState('happy');
+                updateMushroomGrowth();
+                if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                    gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
+                    timeEl.textContent = formatTime(gameState.total);
                 }
                 
                 if (gameState.combo > 1) {
@@ -1803,18 +1807,18 @@
                     comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
                 }
                 
-                if (!wasAlreadyCorrect && checkStageClear(input.closest('section'))) {
+                if (checkStageClear(input.closest('section'))) {
                     setTimeout(showStageClear, 300);
                 }
             } else {
+                failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
+                
                 if(input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
                     
                     input.value = input.dataset.answer;
                     input.disabled = true;
-
-                    failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
                     
                     if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                         gameState.lives--;
