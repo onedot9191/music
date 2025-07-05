@@ -6,7 +6,7 @@
   <title>내체표 아웃풋</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Press+Start+2P&family=Source+Code+Pro:wght@700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <style>
     :root {
@@ -86,6 +86,7 @@
       padding: 1rem 1.5rem;
       border: 3px solid var(--primary);
       box-shadow: 4px 4px 0px var(--bg-dark);
+      border-radius: 8px;
     }
 
     #time {
@@ -102,6 +103,7 @@
       border: 2px solid var(--primary);
       overflow: hidden;
       margin-top: 0.5rem;
+      border-radius: 4px;
     }
 
     #bar > div {
@@ -109,6 +111,7 @@
       width: 100%;
       background: var(--primary);
       transition: width 1s linear;
+      border-radius: 2px;
     }
 
     .btn {
@@ -132,7 +135,7 @@
       transform: translate(5px, 5px);
       box-shadow: 0px 0px 0px var(--secondary);
     }
-     .btn.hidden {
+      .btn.hidden {
         display: none;
     }
     .btn:disabled {
@@ -244,6 +247,8 @@
     th {
       padding-right: 1.5rem;
       color: var(--text-dark);
+      width: 1%; /* Prevent th from taking too much space */
+      white-space: nowrap;
     }
     
     td {
@@ -843,7 +848,7 @@
         <div>
           <div class="grade-title">3~4학년</div>
           <table>
-             <tbody>
+              <tbody>
               <tr>
                 <th>지식 · 이해</th>
                 <td>
@@ -1528,19 +1533,19 @@
         const resultTitle = document.getElementById('result-title');
         
         // --- Audio ---
-        const successAudio = new Audio('./success.mp3');
+        const successAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/success.mp3');
         successAudio.preload = 'auto';
-        const timeupAudio = new Audio('./timeup.mp3');
+        const timeupAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/timeup.mp3');
         timeupAudio.preload = 'auto';
-        const startAudio = new Audio('./start.mp3');
+        const startAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/start.mp3');
         startAudio.preload = 'auto';
-        const failAudio = new Audio('./fail.mp3');
+        const failAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/fail.mp3');
         failAudio.preload = 'auto';
-        const clearAudio = new Audio('./clear.mp3');
+        const clearAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/clear.mp3');
         clearAudio.preload = 'auto';
-        const randomAudio = new Audio('./random.mp3');
+        const randomAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/random.mp3');
         randomAudio.preload = 'auto';
-        const clickAudio = new Audio('./click.mp3');
+        const clickAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/click.mp3');
         clickAudio.preload = 'auto';
         
         // --- UTILITY FUNCTIONS ---
@@ -1548,8 +1553,14 @@
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
 
         function playSound(audioElement) {
-            const newAudio = audioElement.cloneNode();
-            newAudio.play().catch(err => console.error(`Audio play failed for ${audioElement.src}:`, err));
+            // 효과음을 더 안정적으로 재생하기 위해, 재생 시작 시간을 0으로 설정 후 재생합니다.
+            if (audioElement && typeof audioElement.play === 'function') {
+                audioElement.currentTime = 0;
+                audioElement.play().catch(err => {
+                    // 오디오 재생 실패 시 콘솔에 에러를 기록합니다.
+                    console.error(`Audio playback failed for ${audioElement.src}:`, err);
+                });
+            }
         }
 
         function typewriter(element, text) {
@@ -1566,7 +1577,7 @@
                     clearInterval(gameState.typingInterval);
                     gameState.typingInterval = null;
                 }
-            }, 50);
+            }, 50); // Typing speed
         }
 
         // --- UI UPDATE FUNCTIONS ---
@@ -1582,24 +1593,25 @@
         }
 
         function setCharacterState(state, duration = 1500) {
-            character.className = state;
+            character.className = ''; // Clear all classes first
+            character.classList.add(state);
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                 character.classList.add('devil-mode');
             }
             
+            // Re-apply combo growth class after state change
+            updateMushroomGrowth();
+
             if (state === 'happy' || state === 'sad') {
                 setTimeout(() => {
                     const baseState = (gameState.total > 0 && gameState.total < 30 && gameState.gameMode !== CONSTANTS.MODES.HARD_CORE) ? 'worried' : 'idle';
-                    character.className = baseState;
-                    updateMushroomGrowth();
+                    character.className = ''; // Clear again
+                    character.classList.add(baseState);
                     if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                         character.classList.add('devil-mode');
                     }
+                    updateMushroomGrowth();
                 }, duration);
-            }
-
-            if (state === 'happy') {
-                // Particle/Fire effects logic...
             }
         }
         
@@ -1624,7 +1636,6 @@
             
             const progressBarFill = document.getElementById('progress-bar-fill');
             
-            // --- Result Feedback Logic ---
             let feedback;
             if (percentage === 100) {
                 feedback = { title: "신의 경지", dialogue: "완벽해! 당신은 이 게임의 신이야!", animation: "cheer", effect: "perfect" };
@@ -1642,22 +1653,18 @@
 
             resultTitle.textContent = feedback.title;
             
-            // Move character into modal
-            const clonedCharacter = character.cloneNode(true);
-            clonedCharacter.style = ''; // Reset fixed positioning
             modalCharacterPlaceholder.innerHTML = '';
-            modalCharacterPlaceholder.appendChild(clonedCharacter);
+            modalCharacterPlaceholder.appendChild(character.cloneNode(true));
             
-            // Set character animation for result
             setTimeout(() => {
                 const modalChar = modalCharacterPlaceholder.querySelector('#character-assistant');
-                modalChar.className = feedback.animation;
+                modalChar.className = '';
+                modalChar.classList.add(feedback.animation);
                  if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                     modalChar.classList.add('devil-mode');
                 }
             }, 100);
 
-            // Show speech bubble and start typing
             speechBubble.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             typewriter(resultDialogue, feedback.dialogue);
             
@@ -1668,6 +1675,7 @@
         // --- GAME LOGIC FUNCTIONS ---
         function handleGameOver() {
             clearInterval(gameState.timerId);
+            gameState.timerId = null;
             document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = true);
             playSound(timeupAudio);
             
@@ -1692,19 +1700,20 @@
             let currentDuration = (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) ? CONSTANTS.HARD_CORE_DURATION : gameState.duration;
             barEl.style.width = `${(gameState.total / currentDuration) * 100}%`;
 
-            if (gameState.total < 30 && !character.classList.contains('happy') && !character.classList.contains('sad')) {
-                setCharacterState('worried');
+            if (gameState.total < 30 && !character.classList.contains('happy') && !character.classList.contains('sad') && gameState.gameMode !== CONSTANTS.MODES.HARD_CORE) {
+                setCharacterState('worried', 1000);
             }
         }
 
         function resetGame() {
             clearInterval(gameState.timerId);
+            gameState.timerId = null;
             
             quizContainers.forEach(main => main.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
             document.querySelectorAll('input[data-answer]').forEach(i => {
                 i.disabled = true;
                 i.value = '';
-                i.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT, CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING, CONSTANTS.CSS_CLASSES.REVEALED);
+                i.className = '';
             });
             
             gameState.combo = 0;
@@ -1751,7 +1760,9 @@
             gameState.total = gameState.duration;
             timeEl.textContent = formatTime(gameState.total);
             barEl.style.width = '100%';
-            gameState.timerId = setInterval(tick, 1000);
+            if (gameState.timerId === null) {
+                gameState.timerId = setInterval(tick, 1000);
+            }
             setCharacterState('idle');
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                 character.classList.add('devil-mode');
@@ -1789,15 +1800,17 @@
             const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
             
             if (userAnswer === correctAnswer) {
-                playSound(successAudio);
+                // --- 정답 로직 ---
+                playSound(successAudio); // 정답 효과음 재생
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
-                input.value = input.dataset.answer; // Show the fully formatted correct answer
-                input.disabled = true; // Disable on correct
+                input.value = input.dataset.answer;
+                input.disabled = true;
 
                 gameState.combo++;
-                setCharacterState('happy');
+                setCharacterState('happy'); // 행복한 반응
                 updateMushroomGrowth();
+
                 if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                     gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
                     timeEl.textContent = formatTime(gameState.total);
@@ -1816,14 +1829,17 @@
                     setTimeout(showStageClear, 300);
                 }
             } else {
-                playSound(failAudio);
-                setCharacterState('sad');
+                // --- 오답 로직 ---
                 gameState.combo = 0;
                 updateMushroomGrowth();
                 headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
-                if(input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
+                if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
+                    // 두 번째 오답
+                    playSound(failAudio);
+                    setCharacterState('sad');
+
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
                     
@@ -1838,6 +1854,10 @@
                         }
                     }
                 } else {
+                    // 첫 번째 오답
+                    playSound(failAudio);      // 오답 효과음 재생
+                    setCharacterState('sad');  // 슬픈 반응
+
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
                 }
@@ -1924,7 +1944,7 @@
         
         startGameBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', resetGame);
-        forceQuitBtn.addEventListener('click', () => { gameState.total = 0; tick(); });
+        forceQuitBtn.addEventListener('click', () => { if(gameState.timerId) { gameState.total = 0; tick(); } });
         closeModalBtn.addEventListener('click', () => stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
         closeProgressModalBtn.addEventListener('click', () => {
             progressModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
@@ -1942,7 +1962,7 @@
 
         increaseTimeBtn.addEventListener('click', () => {
             playSound(clickAudio);
-            if (gameState.duration < 1800) {
+            if (gameState.duration < 1800) { // Max 30 mins
                 gameState.duration += 60;
                 updateTimeSettingDisplay();
             }
@@ -1953,7 +1973,7 @@
                 input.value = input.dataset.answer;
                 input.disabled = true;
                 if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                    // Already correct, just ensure the formatting is perfect
+                    // Already correct, do nothing
                 } else {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
