@@ -1533,19 +1533,20 @@
         const resultTitle = document.getElementById('result-title');
         
         // --- Audio ---
-        const successAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/success.mp3');
+        // 로컬 환경에서 실행할 수 있도록 상대 경로로 수정합니다.
+        const successAudio = new Audio('./success.mp3');
         successAudio.preload = 'auto';
-        const timeupAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/timeup.mp3');
+        const timeupAudio = new Audio('./timeup.mp3');
         timeupAudio.preload = 'auto';
-        const startAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/start.mp3');
+        const startAudio = new Audio('./start.mp3');
         startAudio.preload = 'auto';
-        const failAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/fail.mp3');
+        const failAudio = new Audio('./fail.mp3');
         failAudio.preload = 'auto';
-        const clearAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/clear.mp3');
+        const clearAudio = new Audio('./clear.mp3');
         clearAudio.preload = 'auto';
-        const randomAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/random.mp3');
+        const randomAudio = new Audio('./random.mp3');
         randomAudio.preload = 'auto';
-        const clickAudio = new Audio('https://github.com/jakekwak/naechaypyo-output/raw/main/click.mp3');
+        const clickAudio = new Audio('./click.mp3');
         clickAudio.preload = 'auto';
         
         // --- UTILITY FUNCTIONS ---
@@ -1553,11 +1554,9 @@
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
 
         function playSound(audioElement) {
-            // 효과음을 더 안정적으로 재생하기 위해, 재생 시작 시간을 0으로 설정 후 재생합니다.
             if (audioElement && typeof audioElement.play === 'function') {
                 audioElement.currentTime = 0;
                 audioElement.play().catch(err => {
-                    // 오디오 재생 실패 시 콘솔에 에러를 기록합니다.
                     console.error(`Audio playback failed for ${audioElement.src}:`, err);
                 });
             }
@@ -1577,7 +1576,7 @@
                     clearInterval(gameState.typingInterval);
                     gameState.typingInterval = null;
                 }
-            }, 50); // Typing speed
+            }, 50);
         }
 
         // --- UI UPDATE FUNCTIONS ---
@@ -1593,19 +1592,18 @@
         }
 
         function setCharacterState(state, duration = 1500) {
-            character.className = ''; // Clear all classes first
+            character.className = '';
             character.classList.add(state);
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                 character.classList.add('devil-mode');
             }
             
-            // Re-apply combo growth class after state change
             updateMushroomGrowth();
 
             if (state === 'happy' || state === 'sad') {
                 setTimeout(() => {
                     const baseState = (gameState.total > 0 && gameState.total < 30 && gameState.gameMode !== CONSTANTS.MODES.HARD_CORE) ? 'worried' : 'idle';
-                    character.className = ''; // Clear again
+                    character.className = '';
                     character.classList.add(baseState);
                     if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                         character.classList.add('devil-mode');
@@ -1800,15 +1798,14 @@
             const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
             
             if (userAnswer === correctAnswer) {
-                // --- 정답 로직 ---
-                playSound(successAudio); // 정답 효과음 재생
+                playSound(successAudio);
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
                 input.value = input.dataset.answer;
                 input.disabled = true;
 
                 gameState.combo++;
-                setCharacterState('happy'); // 행복한 반응
+                setCharacterState('happy');
                 updateMushroomGrowth();
 
                 if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
@@ -1829,14 +1826,12 @@
                     setTimeout(showStageClear, 300);
                 }
             } else {
-                // --- 오답 로직 ---
                 gameState.combo = 0;
                 updateMushroomGrowth();
                 headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
                 if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
-                    // 두 번째 오답
                     playSound(failAudio);
                     setCharacterState('sad');
 
@@ -1854,9 +1849,8 @@
                         }
                     }
                 } else {
-                    // 첫 번째 오답
-                    playSound(failAudio);      // 오답 효과음 재생
-                    setCharacterState('sad');  // 슬픈 반응
+                    playSound(failAudio);
+                    setCharacterState('sad');
 
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
@@ -1973,7 +1967,6 @@
                 input.value = input.dataset.answer;
                 input.disabled = true;
                 if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                    // Already correct, do nothing
                 } else {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
