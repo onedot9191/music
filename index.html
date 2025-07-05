@@ -335,6 +335,64 @@
       margin-bottom: 2.5rem;
     }
     
+    #guide-modal .modal-content {
+        text-align: left;
+        padding: 3rem 3.5rem;
+    }
+    #guide-modal h3 {
+        text-align: center;
+        font-family: 'Press Start 2P', cursive;
+        color: var(--correct);
+        margin-bottom: 3rem;
+        font-size: 2.4rem;
+    }
+    .guide-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+    .guide-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px dotted var(--secondary);
+    }
+    .guide-steps .guide-step:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .guide-label {
+        font-family: 'Press Start 2P', cursive;
+        color: var(--primary);
+        font-size: 1.4rem;
+        flex-shrink: 0;
+        padding-top: 2px;
+    }
+    .guide-text {
+        font-size: 1.6rem;
+        line-height: 1.7;
+    }
+    .guide-text strong {
+        color: var(--revealed);
+        font-weight: 700;
+    }
+    #guide-modal .tip {
+        font-size: 1.4rem;
+        text-align: center;
+        color: var(--text-dark);
+        margin-top: 3rem;
+        background: var(--secondary);
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    #close-guide-btn {
+        display: block;
+        margin: 2.5rem auto 0;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+
     .progress-bar-container {
         width: 100%;
         height: 2.5rem;
@@ -409,12 +467,7 @@
         50% { transform: scale(1.05); box-shadow: 8px 8px 15px var(--secondary); }
         100% { transform: scale(1); box-shadow: 5px 5px 0px var(--secondary); }
     }
-
-    .notice-text {
-        font-size: 1.2rem;
-        color: var(--text-dark);
-        margin-top: 2rem;
-    }
+    
     #hard-core-description p {
         margin-bottom: 0.5rem;
         font-size: 1.4rem;
@@ -765,7 +818,7 @@
     <div class="hud-right">
       <button id="force-quit-btn" class="btn hidden">강제 종료</button>
       <button id="show-answers-btn" class="btn hidden">정답 보기</button>
-      <button id="reset-btn" class="btn hidden">초기화</button>
+      <button id="reset-btn" class="btn hidden">재시작</button>
     </div>
   </header>
   <main id="music-quiz-main" class="hidden">
@@ -1426,7 +1479,33 @@
       </div>
   </div>
   
-  <div id="start-modal" class="modal-overlay active">
+  <div id="guide-modal" class="modal-overlay">
+      <div class="modal-content">
+          <h3>HOW TO PLAY</h3>
+          <div class="guide-steps">
+              <div class="guide-step">
+                  <div class="guide-label">STEP 1</div>
+                  <div class="guide-text"><strong>설정:</strong> 학습할 과목, 모드, 시간을 선택하세요.</div>
+              </div>
+              <div class="guide-step">
+                  <div class="guide-label">STEP 2</div>
+                  <div class="guide-text"><strong>시작:</strong> '시작' 버튼을 눌러 게임을 시작!</div>
+              </div>
+              <div class="guide-step">
+                  <div class="guide-label">STEP 3</div>
+                  <div class="guide-text"><strong>채점:</strong> 빈칸에 정답을 입력하면 즉시 채점됩니다.</div>
+              </div>
+              <div class="guide-step">
+                  <div class="guide-label">STEP 4</div>
+                  <div class="guide-text"><strong>복습:</strong> 게임 종료 후, '정답 보기'로 복습하세요.</div>
+              </div>
+          </div>
+          <p class="tip">※ 채점 시 띄어쓰기와 ⋅ 기호는 무시됩니다.</p>
+          <button id="close-guide-btn" class="btn">OK!</button>
+      </div>
+  </div>
+
+  <div id="start-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>과목 선택</h2>
             <div class="subject-selector">
@@ -1451,7 +1530,6 @@
             <div id="hard-core-description" class="notice-text hidden">
                 <p>3번 틀리면 게임이 즉시 종료됩니다.<br>(제한시간 30초, 정답 시 +3초)</p>
             </div>
-            <p class="notice-text">※ 채점 시 띄어쓰기와 ⋅ 기호는 무시됩니다.</p>
             <button id="start-game-btn" class="btn">시작</button>
         </div>
     </div>
@@ -1463,19 +1541,13 @@
         // --- AudioContext for Autoplay Policy ---
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
-        /**
-         * Unlocks the AudioContext. Must be called after a user gesture (e.g., click).
-         * This function removes itself after the first successful run.
-         */
         function unlockAudio() {
             if (audioContext.state === 'suspended') {
                 audioContext.resume();
             }
-            // Remove the listeners after the first interaction to avoid redundant calls
             document.body.removeEventListener('click', unlockAudio);
             document.body.removeEventListener('touchend', unlockAudio);
         }
-        // Add event listeners to unlock audio on the first user interaction
         document.body.addEventListener('click', unlockAudio);
         document.body.addEventListener('touchend', unlockAudio);
 
@@ -1541,6 +1613,8 @@
         const progressModal = document.getElementById('progress-modal');
         const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
         const startModal = document.getElementById('start-modal');
+        const guideModal = document.getElementById('guide-modal');
+        const closeGuideBtn = document.getElementById('close-guide-btn');
         const timeSettingDisplay = document.getElementById('time-setting-display');
         const decreaseTimeBtn = document.getElementById('decrease-time');
         const increaseTimeBtn = document.getElementById('increase-time');
@@ -1573,7 +1647,6 @@
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
 
         function playSound(audioElement) {
-            // Check if context is unlocked, if not, the unlockAudio handler will take care of it.
             if (audioContext.state === 'running' && audioElement && typeof audioElement.play === 'function') {
                 audioElement.currentTime = 0;
                 audioElement.play().catch(err => {
@@ -1725,7 +1798,7 @@
             }
         }
 
-        function resetGame() {
+        function resetGame(showStartModal = true) {
             clearInterval(gameState.timerId);
             gameState.timerId = null;
             
@@ -1747,7 +1820,11 @@
             forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-            startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            
+            if (showStartModal) {
+                startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            }
+            
             setCharacterState('idle');
         }
 
@@ -1959,11 +2036,17 @@
         quizContainers.forEach(main => main.addEventListener('change', handleInputChange));
         
         startGameBtn.addEventListener('click', startGame);
-        resetBtn.addEventListener('click', resetGame);
+        resetBtn.addEventListener('click', () => resetGame(true));
         forceQuitBtn.addEventListener('click', () => { if(gameState.timerId) { gameState.total = 0; tick(); } });
         closeModalBtn.addEventListener('click', () => stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+        
+        closeGuideBtn.addEventListener('click', () => {
+            guideModal.classList.remove('active');
+            startModal.classList.add('active');
+        });
+
         closeProgressModalBtn.addEventListener('click', () => {
-            progressModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            progressModal.classList.remove('active');
             showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
         });
@@ -1998,7 +2081,12 @@
         });
 
         // --- INITIAL SETUP ---
-        resetGame();
+        function initializeApp() {
+            resetGame(false); // Reset state without showing any modal
+            guideModal.classList.add('active'); // Always show guide on page load
+        }
+
+        initializeApp();
     });
   </script>
 </body>
