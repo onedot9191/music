@@ -1480,7 +1480,7 @@
                 COMBO_POP: 'combo-pop'
             },
             DEFAULT_DURATION: 600,
-            HARD_CORE_DURATION: 30, // 변경: 10초 -> 30초
+            HARD_CORE_DURATION: 30, 
             HARD_CORE_LIVES: 3,
             HARD_CORE_TIME_BONUS: 3,
             RANDOM_ANIMATION_DURATION: 2000,
@@ -1546,6 +1546,11 @@
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+
+        function playSound(audioElement) {
+            audioElement.currentTime = 0;
+            audioElement.play().catch(err => console.error(`Audio play failed for ${audioElement.src}:`, err));
+        }
 
         function typewriter(element, text) {
             if (gameState.typingInterval) {
@@ -1664,7 +1669,7 @@
         function handleGameOver() {
             clearInterval(gameState.timerId);
             document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = true);
-            timeupAudio.play().catch(e => console.error("Audio play failed:", e));
+            playSound(timeupAudio);
             
             gameState.combo = 0;
             updateMushroomGrowth();
@@ -1718,7 +1723,7 @@
         }
 
         function startGame() {
-            startAudio.play().catch(e => console.error("Start audio failed to play:", e));
+            playSound(startAudio);
             startModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
             
             const subjectMap = { [CONSTANTS.SUBJECTS.MUSIC]: '음악', [CONSTANTS.SUBJECTS.ART]: '미술', [CONSTANTS.SUBJECTS.KOREAN]: '국어' };
@@ -1759,7 +1764,7 @@
         }
 
         function showStageClear() {
-            clearAudio.play().catch(e => console.error("Clear audio failed to play:", e));
+            playSound(clearAudio);
             stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
             setCharacterState('cheer', 5000);
             
@@ -1784,7 +1789,7 @@
             const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
             
             if (userAnswer === correctAnswer) {
-                successAudio.play().catch(err => console.error("Audio play failed:", err));
+                playSound(successAudio);
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
                 input.value = input.dataset.answer; // Show the fully formatted correct answer
@@ -1811,8 +1816,13 @@
                     setTimeout(showStageClear, 300);
                 }
             } else {
-                failAudio.play().catch(err => console.error("Fail audio failed to play:", err));
-                
+                playSound(failAudio);
+                gameState.combo = 0;
+                updateMushroomGrowth();
+                headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                setCharacterState('sad');
+
                 if(input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
@@ -1825,16 +1835,8 @@
                         updateLivesUI();
                         if (gameState.lives <= 0) {
                             handleGameOver();
-                            return;
                         }
                     }
-
-                    gameState.combo = 0;
-                    updateMushroomGrowth();
-                    headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-                    comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-                    setCharacterState('sad');
-
                 } else {
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
@@ -1848,6 +1850,10 @@
 
             const clickedBtn = e.target;
             const subject = clickedBtn.dataset.subject;
+            
+            if (subject !== CONSTANTS.SUBJECTS.RANDOM) {
+                 playSound(clickAudio);
+            }
 
             if (subject === CONSTANTS.SUBJECTS.RANDOM) {
                 gameState.isRandomizing = true;
@@ -1858,7 +1864,7 @@
                 subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
 
                 randomAudio.loop = true;
-                randomAudio.play().catch(err => console.error("Random audio failed to play:", err));
+                playSound(randomAudio);
 
                 let shuffleCount = 0;
                 const maxShuffles = CONSTANTS.RANDOM_ANIMATION_DURATION / CONSTANTS.RANDOM_ANIMATION_INTERVAL;
@@ -1870,8 +1876,7 @@
                     if (shuffleCount >= maxShuffles) {
                         clearInterval(randomInterval);
                         randomAudio.pause();
-                        randomAudio.currentTime = 0;
-
+                        
                         const randomIndex = Math.floor(Math.random() * subjectBtns.length);
                         const chosenBtn = subjectBtns[randomIndex];
                         
@@ -1895,6 +1900,7 @@
 
         document.querySelector('.mode-selector').addEventListener('click', e => {
             if (!e.target.matches('.btn')) return;
+            playSound(clickAudio);
             document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
             e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
             gameState.gameMode = e.target.dataset.mode;
@@ -1927,6 +1933,7 @@
         });
 
         decreaseTimeBtn.addEventListener('click', () => {
+            playSound(clickAudio);
             if (gameState.duration > 60) {
                 gameState.duration -= 60;
                 updateTimeSettingDisplay();
@@ -1934,6 +1941,7 @@
         });
 
         increaseTimeBtn.addEventListener('click', () => {
+            playSound(clickAudio);
             if (gameState.duration < 1800) {
                 gameState.duration += 60;
                 updateTimeSettingDisplay();
@@ -1952,13 +1960,6 @@
                 }
             });
             showAnswersBtn.disabled = true;
-        });
-
-        document.querySelector('#start-modal .modal-content').addEventListener('click', (e) => {
-            if (e.target.matches('.btn') && !e.target.matches('#random-subject-btn') && !e.target.matches('#start-game-btn')) {
-                clickAudio.currentTime = 0;
-                clickAudio.play().catch(err => console.error("Click audio failed to play:", err));
-            }
         });
 
         // --- INITIAL SETUP ---
