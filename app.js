@@ -20,6 +20,7 @@
                 MUSIC: 'music',
                 ART: 'art',
                 KOREAN: 'korean',
+                COMPETENCY: "competency",
                 RANDOM: 'random'
             },
             MODES: {
@@ -294,7 +295,7 @@
             playSound(startAudio);
             startModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
             
-            const subjectMap = { [CONSTANTS.SUBJECTS.MUSIC]: '음악', [CONSTANTS.SUBJECTS.ART]: '미술', [CONSTANTS.SUBJECTS.KOREAN]: '국어' };
+            const subjectMap = { [CONSTANTS.SUBJECTS.MUSIC]: '음악', [CONSTANTS.SUBJECTS.ART]: '미술', [CONSTANTS.SUBJECTS.KOREAN]: '국어', [CONSTANTS.SUBJECTS.COMPETENCY]: '역량' };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
             document.getElementById(`${gameState.selectedSubject}-quiz-main`).classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             
