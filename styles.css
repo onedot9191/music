@@ -775,7 +775,7 @@
             right: 10px;
         }
     }
-    @media (max-width: 480px) {
+@media (max-width: 480px) {
         .hud-center {
             flex-direction: column;
         }
@@ -796,4 +796,28 @@
             margin-top: -20px;
         }
     }
+
+/* Competency Section Enhancements */
+#competency-quiz-main.competency-ui .tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#competency-quiz-main.competency-ui .tab {
+    flex: 1 1 140px;
+}
+
+#competency-quiz-main.competency-ui .grade-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+#competency-quiz-main.competency-ui .grade-container > div {
+    border-color: var(--accent);
+}
+
+#competency-quiz-main.competency-ui th {
+    color: var(--primary);
+}
 
