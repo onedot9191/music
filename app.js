@@ -352,9 +352,91 @@
             }, 250);
         }
 
+        function evaluateCompetencySection(sectionElement) {
+            const inputs = Array.from(sectionElement.querySelectorAll('input[data-answer]'));
+            if (inputs.some(input => input.value.trim() === '' || input.disabled)) return;
+
+            const answers = inputs.map(i => i.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase());
+            const used = new Array(answers.length).fill(false);
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                const matchIndex = answers.findIndex((ans, idx) => !used[idx] && ans === userAnswer);
+
+                if (matchIndex !== -1) {
+                    playSound(successAudio);
+                    used[matchIndex] = true;
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
+                    if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                        input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+
+                        gameState.combo++;
+                        setCharacterState('happy');
+                        updateMushroomGrowth();
+
+                        if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                            gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
+                            timeEl.textContent = formatTime(gameState.total);
+                        }
+
+                        if (gameState.combo > 1) {
+                            headerTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                            comboCounter.textContent = `COMBO x${gameState.combo}`;
+                            comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                            comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.COMBO_POP);
+                            void comboCounter.offsetWidth;
+                            comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
+                        }
+                    }
+                } else {
+                    gameState.combo = 0;
+                    updateMushroomGrowth();
+                    headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+
+                    if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
+                        playSound(failAudio);
+                        setCharacterState('sad');
+
+                        input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
+                        input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+
+                        if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                            gameState.lives--;
+                            updateLivesUI();
+                            if (gameState.lives <= 0) {
+                                handleGameOver();
+                            }
+                        }
+                    } else {
+                        playSound(failAudio);
+                        setCharacterState('sad');
+
+                        input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
+                        input.value = '';
+                    }
+                }
+            });
+
+            if (checkStageClear(sectionElement)) {
+                setTimeout(showStageClear, 300);
+            }
+        }
+
         function handleInputChange(e) {
             const input = e.target;
             if (!input.matches('input[data-answer]') || input.disabled) return;
+
+            const competencyMain = input.closest('main');
+            if (competencyMain && competencyMain.id === 'competency-quiz-main') {
+                evaluateCompetencySection(input.closest('section'));
+                return;
+            }
 
             const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
             const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
