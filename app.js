@@ -60,6 +60,9 @@
             typingInterval: null
         };
 
+        // Used to keep track of which answers have been matched in competency sections
+        const usedAnswersMap = new WeakMap();
+
         // --- DOM Elements ---
         const timeEl = document.getElementById('time');
         const barEl = document.querySelector('#bar > div');
@@ -356,14 +359,41 @@
             const input = e.target;
             if (!input.matches('input[data-answer]') || input.disabled) return;
 
+            const section = input.closest('section');
             const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
-            const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
-            
-            if (userAnswer === correctAnswer) {
+
+            let isCorrect = false;
+            let displayAnswer = input.dataset.answer;
+
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                if (!usedAnswersMap.has(section)) usedAnswersMap.set(section, new Set());
+                const usedSet = usedAnswersMap.get(section);
+
+                const answerMap = new Map();
+                section.querySelectorAll('input[data-answer]').forEach(inp => {
+                    const original = inp.dataset.answer.trim();
+                    const normalized = original.replace(/[\s⋅·]+/g, '').toLowerCase();
+                    answerMap.set(normalized, original);
+                });
+
+                if (answerMap.has(userAnswer) && !usedSet.has(userAnswer)) {
+                    isCorrect = true;
+                    displayAnswer = answerMap.get(userAnswer);
+                    usedSet.add(userAnswer);
+                }
+            } else {
+                const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    isCorrect = true;
+                    displayAnswer = input.dataset.answer;
+                }
+            }
+
+            if (isCorrect) {
                 playSound(successAudio);
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
-                input.value = input.dataset.answer;
+                input.value = displayAnswer;
                 input.disabled = true;
 
                 gameState.combo++;
