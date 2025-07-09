@@ -246,6 +246,18 @@
       gap: 1rem; /* Consistent spacing between inputs */
     }
 
+    td.two-col-answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      td.two-col-answers {
+        grid-template-columns: 1fr;
+      }
+    }
+
     td input {
       width: 100%;
       padding: 1.2rem;
