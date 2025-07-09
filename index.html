@@ -2033,7 +2033,8 @@
             });
         });
 
-        quizContainers.forEach(main => main.addEventListener('change', handleInputChange));
+        // Listen for real-time input on quiz answers
+        quizContainers.forEach(main => main.addEventListener('input', handleInputChange));
         
         startGameBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', () => resetGame(true));
