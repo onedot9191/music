@@ -527,15 +527,26 @@
             document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
         });
         
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const parentMain = tab.closest('main');
-                if (!parentMain) return;
-                parentMain.querySelectorAll('.tab').forEach(t => t.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                parentMain.querySelectorAll('section').forEach(s => s.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                tab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                const targetSection = parentMain.querySelector(`#${tab.dataset.target}`);
-                if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+        function toggleAccordion(header) {
+            const accordion = header.closest('.accordion');
+            const targetSection = header.nextElementSibling;
+            if (!accordion || !targetSection) return;
+            const isExpanded = header.getAttribute('aria-expanded') === 'true';
+            accordion.querySelectorAll('.accordion-header').forEach(h => h.setAttribute('aria-expanded', 'false'));
+            accordion.querySelectorAll('section').forEach(s => s.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+            if (!isExpanded) {
+                header.setAttribute('aria-expanded', 'true');
+                targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            }
+        }
+
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => toggleAccordion(header));
+            header.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleAccordion(header);
+                }
             });
         });
 
