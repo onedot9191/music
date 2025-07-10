@@ -61,7 +61,7 @@
         };
 
         // Used to keep track of which answers have been matched in competency sections
-        const usedAnswersMap = new WeakMap();
+        let usedAnswersMap = new WeakMap();
 
         // --- DOM Elements ---
         const timeEl = document.getElementById('time');
@@ -111,6 +111,10 @@
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+
+        function resetUsedAnswers() {
+            usedAnswersMap = new WeakMap();
+        }
 
         function playSound(audioElement) {
             if (audioContext.state === 'running' && audioElement && typeof audioElement.play === 'function') {
@@ -274,6 +278,7 @@
                 i.value = '';
                 i.className = '';
             });
+            resetUsedAnswers();
             
             gameState.combo = 0;
             updateMushroomGrowth();
