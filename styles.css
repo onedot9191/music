@@ -854,6 +854,13 @@
 
 #competency-quiz-main .competency-tabs {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#competency-quiz-main .competency-tabs .tab-row {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
