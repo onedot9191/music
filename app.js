@@ -37,7 +37,8 @@
                 IS_SELECTING: 'is-selecting',
                 ACTIVE: 'active',
                 LOST: 'lost',
-                COMBO_POP: 'combo-pop'
+                COMBO_POP: 'combo-pop',
+                COMPLETED: 'completed'
             },
             DEFAULT_DURATION: 600,
             HARD_CORE_DURATION: 30, 
@@ -273,11 +274,12 @@
             gameState.timerId = null;
             
             quizContainers.forEach(main => main.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
-            document.querySelectorAll('input[data-answer]').forEach(i => {
+           document.querySelectorAll('input[data-answer]').forEach(i => {
                 i.disabled = true;
                 i.value = '';
                 i.className = '';
             });
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove(CONSTANTS.CSS_CLASSES.COMPLETED));
             resetUsedAnswers();
             
             gameState.combo = 0;
@@ -340,6 +342,16 @@
         function checkStageClear(sectionElement) {
             const inputsInSection = sectionElement.querySelectorAll('input[data-answer]');
             return inputsInSection.length > 0 && [...inputsInSection].every(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT));
+        }
+
+        function highlightTabIfComplete(sectionElement) {
+            const tab = document.querySelector(`.tab[data-target="${sectionElement.id}"]`);
+            if (!tab) return;
+            if (checkStageClear(sectionElement)) {
+                tab.classList.add(CONSTANTS.CSS_CLASSES.COMPLETED);
+            } else {
+                tab.classList.remove(CONSTANTS.CSS_CLASSES.COMPLETED);
+            }
         }
 
         function showStageClear() {
@@ -420,6 +432,7 @@
                 }
                 
                 if (checkStageClear(input.closest('section'))) {
+                    highlightTabIfComplete(input.closest('section'));
                     setTimeout(showStageClear, 300);
                 }
             } else {
@@ -527,26 +540,15 @@
             document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
         });
         
-        function toggleAccordion(header) {
-            const accordion = header.closest('.accordion');
-            const targetSection = header.nextElementSibling;
-            if (!accordion || !targetSection) return;
-            const isExpanded = header.getAttribute('aria-expanded') === 'true';
-            accordion.querySelectorAll('.accordion-header').forEach(h => h.setAttribute('aria-expanded', 'false'));
-            accordion.querySelectorAll('section').forEach(s => s.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-            if (!isExpanded) {
-                header.setAttribute('aria-expanded', 'true');
-                targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-            }
-        }
-
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => toggleAccordion(header));
-            header.addEventListener('keydown', e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggleAccordion(header);
-                }
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const parentMain = tab.closest('main');
+                if (!parentMain) return;
+                parentMain.querySelectorAll('.tab').forEach(t => t.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                parentMain.querySelectorAll('section').forEach(s => s.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                tab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                const targetSection = parentMain.querySelector(`#${tab.dataset.target}`);
+                if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
             });
         });
 

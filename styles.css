@@ -179,10 +179,15 @@
       box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
     }
 
-    .accordion {
-      display: flex;
-      flex-direction: column;
-    }
+.tab.completed {
+      background: var(--correct);
+      color: var(--bg-dark);
+}
+
+.tab.active.completed {
+      background: var(--correct);
+      color: var(--bg-dark);
+}
 
     section { display: none; }
     section.active { display: block; }
@@ -803,31 +808,13 @@
     }
 
 /* Competency Section Enhancements */
-
-#competency-quiz-main.competency-ui .accordion-header {
-    width: 100%;
-    text-align: left;
-    padding: 1.2rem;
-    background: var(--secondary);
-    border: 3px solid var(--primary);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-light);
-    cursor: pointer;
-    border-radius: 8px;
-    position: relative;
-    margin-top: 1rem;
+#competency-quiz-main.competency-ui .tabs {
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-#competency-quiz-main.competency-ui .accordion-header::after {
-    content: '\25BC';
-    position: absolute;
-    right: 1rem;
-    transition: transform 0.3s;
-}
-
-#competency-quiz-main.competency-ui .accordion-header[aria-expanded="true"]::after {
-    transform: rotate(180deg);
+#competency-quiz-main.competency-ui .tab {
+    flex: 1 1 140px;
 }
 
 #competency-quiz-main.competency-ui .grade-container {
