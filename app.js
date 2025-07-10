@@ -423,16 +423,27 @@
                 headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
-                if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
-                    playSound(failAudio);
-                    setCharacterState('sad');
+                playSound(failAudio);
+                setCharacterState('sad');
 
+                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
-                    
+
+                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                        gameState.lives--;
+                        updateLivesUI();
+                        if (gameState.lives <= 0) {
+                            handleGameOver();
+                        }
+                    }
+                } else if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
+                    input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+
                     input.value = input.dataset.answer;
                     input.disabled = true;
-                    
+
                     if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                         gameState.lives--;
                         updateLivesUI();
@@ -441,9 +452,6 @@
                         }
                     }
                 } else {
-                    playSound(failAudio);
-                    setCharacterState('sad');
-
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
                 }
