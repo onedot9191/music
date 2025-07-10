@@ -380,6 +380,31 @@
             }
         }
 
+        function revealCompetencyAnswers() {
+            const normalize = str => str.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+            document
+                .querySelectorAll(`#${gameState.selectedSubject}-quiz-main section`)
+                .forEach(section => {
+                    const inputs = section.querySelectorAll('input[data-answer]');
+                    const usedSet = usedAnswersMap.get(section) || new Set();
+                    const answers = Array.from(inputs).map(i => i.dataset.answer);
+                    const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                    let idx = 0;
+                    inputs.forEach(input => {
+                        input.classList.remove(
+                            CONSTANTS.CSS_CLASSES.INCORRECT,
+                            CONSTANTS.CSS_CLASSES.RETRYING
+                        );
+                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                            input.value = remaining[idx] ?? input.dataset.answer;
+                            idx++;
+                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                        }
+                        input.disabled = true;
+                    });
+                });
+        }
+
         function handleInputChange(e) {
             const input = e.target;
             if (!input.matches('input[data-answer]') || input.disabled) return;
@@ -624,19 +649,23 @@
         });
 
         showAnswersBtn.addEventListener('click', () => {
-            document
-                .querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`)
-                .forEach(input => {
-                    if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                        input.value = input.dataset.answer;
-                        input.classList.remove(
-                            CONSTANTS.CSS_CLASSES.INCORRECT,
-                            CONSTANTS.CSS_CLASSES.RETRYING
-                        );
-                        input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
-                    }
-                    input.disabled = true;
-                });
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                revealCompetencyAnswers();
+            } else {
+                document
+                    .querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`)
+                    .forEach(input => {
+                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                            input.value = input.dataset.answer;
+                            input.classList.remove(
+                                CONSTANTS.CSS_CLASSES.INCORRECT,
+                                CONSTANTS.CSS_CLASSES.RETRYING
+                            );
+                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                        }
+                        input.disabled = true;
+                    });
+            }
             showAnswersBtn.disabled = true;
         });
 
