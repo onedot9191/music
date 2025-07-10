@@ -624,15 +624,19 @@
         });
 
         showAnswersBtn.addEventListener('click', () => {
-            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(input => {
-                input.value = input.dataset.answer;
-                input.disabled = true;
-                if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                } else {
-                    input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
-                    input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
-                }
-            });
+            document
+                .querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`)
+                .forEach(input => {
+                    if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                        input.value = input.dataset.answer;
+                        input.classList.remove(
+                            CONSTANTS.CSS_CLASSES.INCORRECT,
+                            CONSTANTS.CSS_CLASSES.RETRYING
+                        );
+                        input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                    }
+                    input.disabled = true;
+                });
             showAnswersBtn.disabled = true;
         });
 
