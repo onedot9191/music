@@ -844,3 +844,11 @@
     color: var(--primary);
 }
 
+#competency-quiz-main .competency-tabs {
+    flex-wrap: wrap;
+}
+#competency-quiz-main .competency-tab.cleared {
+    background: var(--correct);
+    color: var(--bg-dark);
+}
+
