@@ -360,6 +360,26 @@
             }, 250);
         }
 
+        function celebrateCompetencySection(sectionElement) {
+            const targetId = sectionElement.id;
+            const tabButton = document.querySelector(`.competency-tab[data-target="${targetId}"]`);
+            if (tabButton && !tabButton.classList.contains('cleared')) {
+                tabButton.classList.add('cleared');
+                playSound(clearAudio);
+                const duration = 2000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
+                function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+                const interval = setInterval(() => {
+                    const timeLeft = animationEnd - Date.now();
+                    if (timeLeft <= 0) return clearInterval(interval);
+                    const particleCount = 50 * (timeLeft / duration);
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                }, 250);
+            }
+        }
+
         function handleInputChange(e) {
             const input = e.target;
             if (!input.matches('input[data-answer]') || input.disabled) return;
@@ -419,8 +439,12 @@
                     comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
                 }
                 
-                if (checkStageClear(input.closest('section'))) {
-                    setTimeout(showStageClear, 300);
+                if (checkStageClear(section)) {
+                    if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                        setTimeout(() => celebrateCompetencySection(section), 300);
+                    } else {
+                        setTimeout(showStageClear, 300);
+                    }
                 }
             } else {
                 gameState.combo = 0;
@@ -526,6 +550,20 @@
             timeSetterWrapper.style.display = gameState.gameMode === CONSTANTS.MODES.NORMAL ? 'block' : 'none';
             document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
         });
+
+        const competencyTabs = document.querySelector('.competency-tabs');
+        if (competencyTabs) {
+            competencyTabs.addEventListener('click', e => {
+                if (!e.target.matches('.competency-tab')) return;
+                playSound(clickAudio);
+                document.querySelectorAll('.competency-tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                e.target.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                const targetId = e.target.dataset.target;
+                document.querySelectorAll('#competency-quiz-main section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            });
+        }
         
         function toggleAccordion(header) {
             const accordion = header.closest('.accordion');
