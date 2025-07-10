@@ -552,25 +552,8 @@
         });
 
         const competencyTabs = document.querySelector('.competency-tabs');
-        const scrollLeftBtn = document.querySelector('.competency-tab-wrapper .scroll-btn.left');
-        const scrollRightBtn = document.querySelector('.competency-tab-wrapper .scroll-btn.right');
-
-        function updateScrollButtons() {
-            if (!competencyTabs) return;
-            if (scrollLeftBtn) scrollLeftBtn.disabled = competencyTabs.scrollLeft <= 0;
-            if (scrollRightBtn) scrollRightBtn.disabled = competencyTabs.scrollLeft + competencyTabs.clientWidth >= competencyTabs.scrollWidth - 1;
-        }
 
         if (competencyTabs) {
-            updateScrollButtons();
-            if (scrollLeftBtn) scrollLeftBtn.addEventListener('click', () => {
-                competencyTabs.scrollBy({ left: -200, behavior: 'smooth' });
-            });
-            if (scrollRightBtn) scrollRightBtn.addEventListener('click', () => {
-                competencyTabs.scrollBy({ left: 200, behavior: 'smooth' });
-            });
-            competencyTabs.addEventListener('scroll', updateScrollButtons);
-            window.addEventListener('resize', updateScrollButtons);
             competencyTabs.addEventListener('click', e => {
                 if (!e.target.matches('.competency-tab')) return;
                 playSound(clickAudio);
