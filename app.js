@@ -424,12 +424,20 @@
                     const original = inp.dataset.answer.trim();
                     const normalized = original.replace(/[\s⋅·]+/g, '').toLowerCase();
                     answerMap.set(normalized, original);
+                    const alias = normalized.replace(/역량$/, '');
+                    if (alias !== normalized) {
+                        answerMap.set(alias, original);
+                    }
                 });
 
-                if (answerMap.has(userAnswer) && !usedSet.has(userAnswer)) {
-                    isCorrect = true;
-                    displayAnswer = answerMap.get(userAnswer);
-                    usedSet.add(userAnswer);
+                if (answerMap.has(userAnswer)) {
+                    const canonical = answerMap.get(userAnswer);
+                    const canonicalNorm = canonical.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                    if (!usedSet.has(canonicalNorm)) {
+                        isCorrect = true;
+                        displayAnswer = canonical;
+                        usedSet.add(canonicalNorm);
+                    }
                 }
             } else {
                 const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
