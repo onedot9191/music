@@ -420,7 +420,7 @@
         color: var(--correct);
     }
 
-    .time-setter, .subject-selector, .mode-selector, .topic-selector {
+    .time-setter, .subject-selector, .mode-selector {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -439,10 +439,10 @@
         font-size: 2rem;
         padding: 0.5rem 1.5rem;
     }
-    .subject-btn, .mode-btn, .topic-btn, #random-subject-btn {
+    .subject-btn, .mode-btn, #random-subject-btn {
         font-size: 1.6rem;
     }
-    .subject-btn.selected, .mode-btn.selected, .topic-btn.selected {
+    .subject-btn.selected, .mode-btn.selected {
         background: var(--primary);
         color: var(--text-light);
         transform: translateY(3px);
