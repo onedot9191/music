@@ -92,7 +92,6 @@
         const timeSetterWrapper = document.getElementById('time-setter-wrapper');
         const topicSelector = document.querySelector('.topic-selector');
         const subjectSelector = document.querySelector('.subject-selector');
-        const subjectHeading = document.getElementById('subject-heading');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
         const speechBubble = document.querySelector('.speech-bubble');
@@ -164,9 +163,11 @@
         }
 
         function updateStartModalUI() {
-            const showSubjects = gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM;
-            subjectSelector.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !showSubjects);
-            subjectHeading.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !showSubjects);
+            if (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM) {
+                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            } else {
+                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
         }
 
         function setCharacterState(state, duration = 1500) {
@@ -543,16 +544,17 @@
             const topic = e.target.dataset.topic;
             gameState.selectedTopic = topic;
             if (topic === CONSTANTS.TOPICS.CURRICULUM) {
+                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 if (!document.querySelector('.subject-btn.selected')) {
                     const defaultBtn = document.querySelector('.subject-btn[data-subject="music"]');
                     if (defaultBtn) defaultBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
                     gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
                 }
             } else {
+                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
                 gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
             }
-            updateStartModalUI();
         });
 
         subjectSelector.addEventListener('click', e => {
