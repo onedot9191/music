@@ -620,6 +620,24 @@
             document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
         });
 
+        // Handle section switching for subject tabs (music, art, korean)
+        document.querySelectorAll('.tabs').forEach(tabsContainer => {
+            if (tabsContainer.classList.contains('competency-tabs')) return;
+            tabsContainer.addEventListener('click', e => {
+                if (!e.target.classList.contains('tab')) return;
+                playSound(clickAudio);
+                const main = e.target.closest('main');
+                tabsContainer.querySelectorAll('.tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                e.target.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                if (main) {
+                    const targetId = e.target.dataset.target;
+                    main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                    const targetSection = main.querySelector(`#${targetId}`);
+                    if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                }
+            });
+        });
+
         const competencyTabs = document.querySelector('.competency-tabs');
 
         if (competencyTabs) {
