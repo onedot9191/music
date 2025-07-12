@@ -23,6 +23,10 @@
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
+            TOPICS: {
+                CURRICULUM: 'curriculum',
+                COMPETENCY: 'competency'
+            },
             MODES: {
                 NORMAL: 'normal',
                 HARD_CORE: 'hard-core'
@@ -55,6 +59,7 @@
             combo: 0,
             lives: CONSTANTS.HARD_CORE_LIVES,
             selectedSubject: CONSTANTS.SUBJECTS.MUSIC,
+            selectedTopic: CONSTANTS.TOPICS.CURRICULUM,
             gameMode: CONSTANTS.MODES.NORMAL,
             isRandomizing: false,
             typingInterval: null
@@ -85,6 +90,7 @@
         const decreaseTimeBtn = document.getElementById('decrease-time');
         const increaseTimeBtn = document.getElementById('increase-time');
         const timeSetterWrapper = document.getElementById('time-setter-wrapper');
+        const topicSelector = document.querySelector('.topic-selector');
         const subjectSelector = document.querySelector('.subject-selector');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
@@ -154,6 +160,14 @@
             heartIcons.forEach((heart, index) => {
                 heart.classList.toggle(CONSTANTS.CSS_CLASSES.LOST, index >= gameState.lives);
             });
+        }
+
+        function updateStartModalUI() {
+            if (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM) {
+                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            } else {
+                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
         }
 
         function setCharacterState(state, duration = 1500) {
@@ -291,11 +305,12 @@
             forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-            
+
             if (showStartModal) {
                 startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                updateStartModalUI();
             }
-            
+
             setCharacterState('idle');
         }
 
@@ -521,6 +536,27 @@
         }
 
         // --- EVENT LISTENERS ---
+        topicSelector.addEventListener('click', e => {
+            if (!e.target.matches('.btn')) return;
+            playSound(clickAudio);
+            document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+            e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+            const topic = e.target.dataset.topic;
+            gameState.selectedTopic = topic;
+            if (topic === CONSTANTS.TOPICS.CURRICULUM) {
+                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                if (!document.querySelector('.subject-btn.selected')) {
+                    const defaultBtn = document.querySelector('.subject-btn[data-subject="music"]');
+                    if (defaultBtn) defaultBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                    gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
+                }
+            } else {
+                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+                gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
+            }
+        });
+
         subjectSelector.addEventListener('click', e => {
             if (!e.target.matches('.btn') || gameState.isRandomizing) return;
 
@@ -698,7 +734,10 @@
 
         // --- INITIAL SETUP ---
         function initializeApp() {
+            gameState.selectedTopic = CONSTANTS.TOPICS.CURRICULUM;
+            gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
             resetGame(false); // Reset state without showing any modal
+            updateStartModalUI();
             guideModal.classList.add('active'); // Always show guide on page load
         }
 

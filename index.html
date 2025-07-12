@@ -792,7 +792,7 @@
           <div class="guide-steps">
               <div class="guide-step">
                   <div class="guide-label">STEP 1</div>
-                  <div class="guide-text"><strong>설정:</strong> 학습할 과목, 모드, 시간을 선택하세요.</div>
+                  <div class="guide-text"><strong>설정:</strong> 학습할 주제와 과목, 모드, 시간을 선택하세요.</div>
               </div>
               <div class="guide-step">
                   <div class="guide-label">STEP 2</div>
@@ -814,12 +814,16 @@
 
   <div id="start-modal" class="modal-overlay">
         <div class="modal-content">
+            <h2>주제 선택</h2>
+            <div class="topic-selector">
+                <button class="btn topic-btn selected" data-topic="curriculum">내체표</button>
+                <button class="btn topic-btn" data-topic="competency">역량</button>
+            </div>
             <h2>과목 선택</h2>
             <div class="subject-selector">
                 <button class="btn subject-btn selected" data-subject="music">음악</button>
                 <button class="btn subject-btn" data-subject="art">미술</button>
                 <button class="btn subject-btn" data-subject="korean">국어</button>
-                <button class="btn subject-btn" data-subject="competency">역량</button>
                 <button id="random-subject-btn" class="btn" data-subject="random">랜덤</button>
             </div>
             <h2>게임 모드</h2>
