@@ -686,6 +686,46 @@
     </section>
   </main>
 
+  <main id="wise-quiz-main" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-target="wise-who">우리는 누구로 살아 갈까</div>
+      <div class="tab" data-target="wise-where">우리는 어디서 살아 갈까</div>
+      <div class="tab" data-target="wise-how">우리는 지금 어떻게 살아 갈까</div>
+      <div class="tab" data-target="wise-what">우리는 무엇을 하며 살아 갈까</div>
+    </div>
+    <section id="wise-who" class="active">
+      <h2>우리는 누구로 살아 갈까</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>지식 · 이해</th><td><input data-answer="학교 안팎의 모습과 생활" aria-label="학교 안팎의 모습과 생활" placeholder="정답"><input data-answer="자아인식" aria-label="자아인식" placeholder="정답"><input data-answer="가족과 주변 사람" aria-label="가족과 주변 사람" placeholder="정답"><input data-answer="사람·자연·동식물" aria-label="사람·자연·동식물" placeholder="정답"></td></tr>
+        <tr><th>과정 · 기능</th><td><input data-answer="탐색하기" aria-label="탐색하기" placeholder="정답"><input data-answer="설명하기" aria-label="설명하기" placeholder="정답"><input data-answer="탐구하기" aria-label="탐구하기" placeholder="정답"></td></tr>
+        <tr><th>가치 · 태도</th><td><input data-answer="안전한 학교생활" aria-label="안전한 학교생활" placeholder="정답"></td></tr>
+      </tbody></table></div></div>
+    </section>
+    <section id="wise-where">
+      <h2>우리는 어디서 살아 갈까</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>지식 · 이해</th><td><input data-answer="마을의 모습과 생활" aria-label="마을의 모습과 생활" placeholder="정답"><input data-answer="우리나라의 모습과 문화" aria-label="우리나라의 모습과 문화" placeholder="정답"><input data-answer="다른 나라의 모습과 문화" aria-label="다른 나라의 모습과 문화" placeholder="정답"><input data-answer="궁금한 세계" aria-label="궁금한 세계" placeholder="정답"></td></tr>
+        <tr><th>과정 · 기능</th><td><input data-answer="살펴보기" aria-label="살펴보기" placeholder="정답"><input data-answer="조사하기" aria-label="조사하기" placeholder="정답"><input data-answer="탐구하기" aria-label="탐구하기" placeholder="정답"><input data-answer="매체 활용하기" aria-label="매체 활용하기" placeholder="정답"><input data-answer="탐색하기" aria-label="탐색하기" placeholder="정답"></td></tr>
+        <tr><th>가치 · 태도</th><td><input data-answer="관심" aria-label="관심" placeholder="정답"><input data-answer="호기심" aria-label="호기심" placeholder="정답"></td></tr>
+      </tbody></table></div></div>
+    </section>
+    <section id="wise-how">
+      <h2>우리는 지금 어떻게 살아 갈까</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>지식 · 이해</th><td><input data-answer="하루의 변화와 생활" aria-label="하루의 변화와 생활" placeholder="정답"><input data-answer="계절과 생활" aria-label="계절과 생활" placeholder="정답"><input data-answer="과거-현재-미래" aria-label="과거-현재-미래" placeholder="정답"></td></tr>
+        <tr><th>과정 · 기능</th><td><input data-answer="탐색하기" aria-label="탐색하기" placeholder="정답"><input data-answer="탐구하기" aria-label="탐구하기" placeholder="정답"><input data-answer="살펴보기" aria-label="살펴보기" placeholder="정답"></td></tr>
+        <tr><th>가치 · 태도</th><td><input data-answer="상상력" aria-label="상상력" placeholder="정답"></td></tr>
+      </tbody></table></div></div>
+    </section>
+    <section id="wise-what">
+      <h2>우리는 무엇을 하며 살아 갈까</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>지식 · 이해</th><td><input data-answer="생활 도구의 모양과 기능" aria-label="생활 도구의 모양과 기능" placeholder="정답"><input data-answer="다양한 매체와 재료" aria-label="다양한 매체와 재료" placeholder="정답"><input data-answer="관심 주제" aria-label="관심 주제" placeholder="정답"><input data-answer="배운 것과 배울 것" aria-label="배운 것과 배울 것" placeholder="정답"></td></tr>
+        <tr><th>과정 · 기능</th><td><input data-answer="바꾸기" aria-label="바꾸기" placeholder="정답"><input data-answer="매체 활용하기" aria-label="매체 활용하기" placeholder="정답"><input data-answer="상상하여 구현하기" aria-label="상상하여 구현하기" placeholder="정답"><input data-answer="조사하기" aria-label="조사하기" placeholder="정답"><input data-answer="연결하기" aria-label="연결하기" placeholder="정답"><input data-answer="탐색하기" aria-label="탐색하기" placeholder="정답"></td></tr>
+        <tr><th>가치 · 태도</th><td><input data-answer="창의성" aria-label="창의성" placeholder="정답"></td></tr>
+      </tbody></table></div></div>
+    </section>
+  </main>
 <!-- competency main start -->
 <main id="competency-quiz-main" class="hidden competency-ui">
   <div class="competency-tab-wrapper">
@@ -866,6 +906,7 @@
                 <button class="btn subject-btn" data-subject="art">미술</button>
                 <button class="btn subject-btn" data-subject="korean">국어</button>
                 <button class="btn subject-btn" data-subject="life">바른 생활</button>
+                <button class="btn subject-btn" data-subject="wise">슬기로운 생활</button>
                 <button id="random-subject-btn" class="btn" data-subject="random">랜덤</button>
             </div>
             <h2>게임 모드</h2>
