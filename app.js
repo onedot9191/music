@@ -91,7 +91,6 @@
         const increaseTimeBtn = document.getElementById('increase-time');
         const timeSetterWrapper = document.getElementById('time-setter-wrapper');
         const topicSelector = document.querySelector('.topic-selector');
-        const subjectTitle = document.getElementById('subject-title');
         const subjectSelector = document.querySelector('.subject-selector');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
@@ -164,9 +163,11 @@
         }
 
         function updateStartModalUI() {
-            const showSubject = gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM;
-            subjectTitle.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !showSubject);
-            subjectSelector.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !showSubject);
+            if (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM) {
+                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            } else {
+                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
         }
 
         function setCharacterState(state, duration = 1500) {
@@ -543,7 +544,6 @@
             const topic = e.target.dataset.topic;
             gameState.selectedTopic = topic;
             if (topic === CONSTANTS.TOPICS.CURRICULUM) {
-                subjectTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 if (!document.querySelector('.subject-btn.selected')) {
                     const defaultBtn = document.querySelector('.subject-btn[data-subject="music"]');
@@ -551,7 +551,6 @@
                     gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
                 }
             } else {
-                subjectTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
                 gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
