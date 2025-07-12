@@ -162,11 +162,15 @@
             });
         }
 
-        function updateStartModalUI() {
+       function updateStartModalUI() {
+            const subjectButtons = subjectSelector.querySelectorAll('.btn');
+
             if (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                subjectButtons.forEach(btn => { btn.disabled = false; });
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                subjectButtons.forEach(btn => { btn.disabled = true; });
             }
         }
 
@@ -555,6 +559,7 @@
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
                 gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
             }
+            updateStartModalUI();
         });
 
         subjectSelector.addEventListener('click', e => {
