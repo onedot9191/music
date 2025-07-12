@@ -23,6 +23,7 @@
                 LIFE: 'life',
                 WISE: 'wise',
                 JOY: 'joy',
+                PE: 'pe',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -332,6 +333,7 @@
                 [CONSTANTS.SUBJECTS.LIFE]: '바른 생활',
                 [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
                 [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
+                [CONSTANTS.SUBJECTS.PE]: '체육',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
