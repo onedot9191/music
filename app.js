@@ -622,7 +622,26 @@
             });
         });
 
-        quizContainers.forEach(main => main.addEventListener('change', handleInputChange));
+        quizContainers.forEach(main => {
+            main.addEventListener('change', handleInputChange);
+            main.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && e.target.matches('input[data-answer]')) {
+                    handleInputChange({ target: e.target });
+                    if (e.target.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                        const inputs = Array.from(
+                            main.querySelectorAll('input[data-answer]')
+                        );
+                        const idx = inputs.indexOf(e.target);
+                        for (let i = idx + 1; i < inputs.length; i++) {
+                            if (!inputs[i].disabled) {
+                                inputs[i].focus();
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+        });
         
         startGameBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', () => resetGame(true));
