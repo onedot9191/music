@@ -314,6 +314,10 @@
             document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
+            // Reset competency tab states
+            document.querySelectorAll('.competency-tab.cleared')
+                .forEach(tab => tab.classList.remove('cleared'));
+
             if (showStartModal) {
                 startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                 updateStartModalUI();
