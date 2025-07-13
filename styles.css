@@ -317,14 +317,16 @@ th input.sub-area-input {
 
 td input.activity-input {
   border: 3px solid var(--accent);
-  background: var(--secondary);
-  font-weight: 700;
+  background: var(--primary);
+  font-weight: 800;
+  color: var(--text-light);
 }
 
 td input.example-input {
   border: 2px dashed var(--text-dark);
-  background: var(--bg-dark);
+  background: var(--bg-light);
   margin-left: 1rem;
+  border-left: 5px dotted var(--primary);
 }
 
 td input.activity-input:not(:first-child) {
