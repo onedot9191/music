@@ -299,6 +299,24 @@
       border-color: var(--revealed);
       background: var(--bg-light);
     }
+
+    th input.sub-area-input {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.4rem;
+      border: 2px solid var(--accent);
+      background: var(--bg-dark);
+      color: var(--text-light);
+      border-radius: 8px;
+    }
+
+    td input.activity-input {
+      border-color: var(--accent);
+    }
+
+    td input.example-input {
+      border-color: var(--text-dark);
+    }
     
     .grade-container table tr:not(:last-child) > * {
         border-bottom: 3px dotted var(--secondary);
