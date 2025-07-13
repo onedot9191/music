@@ -416,29 +416,28 @@
             }
         }
 
-        function revealCompetencyAnswers() {
-            const normalize = str => str.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
-            document
-                .querySelectorAll(`#${gameState.selectedSubject}-quiz-main section`)
-                .forEach(section => {
-                    const inputs = section.querySelectorAll('input[data-answer]');
-                    const usedSet = usedAnswersMap.get(section) || new Set();
-                    const answers = Array.from(inputs).map(i => i.dataset.answer);
-                    const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
-                    let idx = 0;
-                    inputs.forEach(input => {
-                        input.classList.remove(
-                            CONSTANTS.CSS_CLASSES.INCORRECT,
-                            CONSTANTS.CSS_CLASSES.RETRYING
-                        );
-                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                            input.value = remaining[idx] ?? input.dataset.answer;
-                            idx++;
-                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
-                        }
-                        input.disabled = true;
-                    });
+        function revealCompetencyAnswers(rootEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`)) {
+            const normalize = str => str.trim().replace(/[\s⋅·∙]+/g, '').toLowerCase();
+            rootEl.querySelectorAll('section').forEach(section => {
+                const inputs = section.querySelectorAll('input[data-answer][data-check-style="competency"]');
+                if (inputs.length === 0) return;
+                const usedSet = usedAnswersMap.get(section) || new Set();
+                const answers = Array.from(inputs).map(i => i.dataset.answer);
+                const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                let idx = 0;
+                inputs.forEach(input => {
+                    input.classList.remove(
+                        CONSTANTS.CSS_CLASSES.INCORRECT,
+                        CONSTANTS.CSS_CLASSES.RETRYING
+                    );
+                    if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                        input.value = remaining[idx] ?? input.dataset.answer;
+                        idx++;
+                        input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                    }
+                    input.disabled = true;
                 });
+            });
         }
 
         function handleInputChange(e) {
@@ -446,19 +445,31 @@
             if (!input.matches('input[data-answer]') || input.disabled) return;
 
             const section = input.closest('section');
-            const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+            const userAnswer = input.value.trim().replace(/[\s⋅·∙]+/g, '').toLowerCase();
 
             let isCorrect = false;
             let displayAnswer = input.dataset.answer;
 
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+            const isCompetencyStyle =
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY ||
+                section.dataset.checkStyle === 'competency' ||
+                input.dataset.checkStyle === 'competency';
+            if (isCompetencyStyle) {
                 if (!usedAnswersMap.has(section)) usedAnswersMap.set(section, new Set());
                 const usedSet = usedAnswersMap.get(section);
 
+                let selector = 'input[data-answer]';
+                if (
+                    gameState.selectedSubject !== CONSTANTS.SUBJECTS.COMPETENCY &&
+                    section.dataset.checkStyle !== 'competency'
+                ) {
+                    selector = 'input[data-answer][data-check-style="competency"]';
+                }
+
                 const answerMap = new Map();
-                section.querySelectorAll('input[data-answer]').forEach(inp => {
+                section.querySelectorAll(selector).forEach(inp => {
                     const original = inp.dataset.answer.trim();
-                    const normalized = original.replace(/[\s⋅·]+/g, '').toLowerCase();
+                    const normalized = original.replace(/[\s⋅·∙]+/g, '').toLowerCase();
                     answerMap.set(normalized, original);
                     const alias = normalized.replace(/역량$/, '');
                     if (alias !== normalized) {
@@ -468,7 +479,7 @@
 
                 if (answerMap.has(userAnswer)) {
                     const canonical = answerMap.get(userAnswer);
-                    const canonicalNorm = canonical.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                    const canonicalNorm = canonical.trim().replace(/[\s⋅·∙]+/g, '').toLowerCase();
                     if (!usedSet.has(canonicalNorm)) {
                         isCorrect = true;
                         displayAnswer = canonical;
@@ -476,7 +487,7 @@
                     }
                 }
             } else {
-                const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·∙]+/g, '').toLowerCase();
                 if (userAnswer === correctAnswer) {
                     isCorrect = true;
                     displayAnswer = input.dataset.answer;
@@ -752,11 +763,27 @@
         });
 
         showAnswersBtn.addEventListener('click', () => {
+            const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
             if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
-                revealCompetencyAnswers();
+                revealCompetencyAnswers(mainEl);
+            } else if (mainEl.querySelector('input[data-check-style="competency"]')) {
+                revealCompetencyAnswers(mainEl);
+                mainEl
+                    .querySelectorAll('input[data-answer]:not([data-check-style="competency"])')
+                    .forEach(input => {
+                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                            input.value = input.dataset.answer;
+                            input.classList.remove(
+                                CONSTANTS.CSS_CLASSES.INCORRECT,
+                                CONSTANTS.CSS_CLASSES.RETRYING
+                            );
+                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                        }
+                        input.disabled = true;
+                    });
             } else {
-                document
-                    .querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`)
+                mainEl
+                    .querySelectorAll('input[data-answer]')
                     .forEach(input => {
                         if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
                             input.value = input.dataset.answer;
