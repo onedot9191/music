@@ -332,6 +332,19 @@ td input.example-input {
 td input.activity-input:not(:first-child) {
   margin-top: 1.5rem;
 }
+.activity-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px dashed var(--secondary);
+  border-radius: 8px;
+}
+
+.activity-group + .activity-group {
+  margin-top: 1.5rem;
+}
+
     
     .grade-container table tr:not(:last-child) > * {
         border-bottom: 3px dotted var(--secondary);
