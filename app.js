@@ -655,7 +655,20 @@
                     const targetId = e.target.dataset.target;
                     main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                     const targetSection = main.querySelector(`#${targetId}`);
-                    if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    if (targetSection) {
+                        targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        if (targetId === 'activity-examples') {
+                            const subTabs = targetSection.querySelector('.sub-tabs');
+                            if (subTabs) {
+                                const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
+                                subTabs.querySelectorAll('.tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                                if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                            }
+                            targetSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                            const defaultSection = targetSection.querySelector('#activity-exercise');
+                            if (defaultSection) defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        }
+                    }
                 }
             });
         });
