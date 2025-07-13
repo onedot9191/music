@@ -301,15 +301,15 @@
     }
 
 th.sub-area-cell {
-  min-width: 28rem;
+  min-width: 22rem;
 }
 
 th input.sub-area-input {
   width: 100%;
-  padding: 1.2rem;
-  font-size: 1.4rem;
-  border: 3px solid var(--accent);
-  background: var(--primary);
+  padding: 2rem 2.6rem;
+  font-size: 2.2rem;
+  border: 4px double var(--accent);
+  background: var(--secondary);
   color: var(--text-light);
   border-radius: 8px;
   font-weight: 700;
