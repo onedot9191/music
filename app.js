@@ -644,7 +644,7 @@
 
         // Handle section switching for subject tabs (music, art, korean)
         document.querySelectorAll('.tabs').forEach(tabsContainer => {
-            if (tabsContainer.classList.contains('competency-tabs')) return;
+            if (tabsContainer.classList.contains('competency-tabs') || tabsContainer.classList.contains('sub-tabs')) return;
             tabsContainer.addEventListener('click', e => {
                 if (!e.target.classList.contains('tab')) return;
                 playSound(clickAudio);
@@ -655,6 +655,24 @@
                     const targetId = e.target.dataset.target;
                     main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                     const targetSection = main.querySelector(`#${targetId}`);
+                    if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                }
+            });
+        });
+
+        // Handle section switching for sub-tabs within sections
+        document.querySelectorAll('.sub-tabs').forEach(tabsContainer => {
+            tabsContainer.addEventListener('click', e => {
+                if (!e.target.classList.contains('tab')) return;
+                e.stopPropagation();
+                playSound(clickAudio);
+                const parentSection = tabsContainer.closest('section');
+                tabsContainer.querySelectorAll('.tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                e.target.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                if (parentSection) {
+                    const targetId = e.target.dataset.target;
+                    parentSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                    const targetSection = parentSection.querySelector(`#${targetId}`);
                     if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                 }
             });
