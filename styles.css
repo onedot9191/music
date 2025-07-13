@@ -213,7 +213,7 @@
       padding: 2rem;
       border-radius: 12px;
     }
-    .grade-title {
+.grade-title {
       background: var(--primary);
       padding: 1rem;
       font-size: 1.8rem;
@@ -817,6 +817,13 @@
     border-radius: 8px;
     position: relative;
     margin-top: 1rem;
+}
+
+.activity-category-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: var(--primary);
+  padding: 0.5rem 0;
 }
 
 #competency-quiz-main.competency-ui .accordion-header::after {
