@@ -300,29 +300,36 @@
       background: var(--bg-light);
     }
 
-    th.sub-area-cell {
-      min-width: 18rem;
-    }
+th.sub-area-cell {
+  min-width: 22rem;
+}
 
-    th input.sub-area-input {
-      width: 100%;
-      padding: 1.4rem 1.6rem;
-      font-size: 1.6rem;
-      border: 3px solid var(--accent);
-      background: var(--secondary);
-      color: var(--text-light);
-      border-radius: 8px;
-    }
+th input.sub-area-input {
+  width: 100%;
+  padding: 1.6rem 2rem;
+  font-size: 1.8rem;
+  border: 4px double var(--primary);
+  background: var(--bg-light);
+  color: var(--text-light);
+  border-radius: 8px;
+  font-weight: 700;
+}
 
-    td input.activity-input {
-      border: 3px solid var(--accent);
-      background: var(--bg-dark);
-    }
+td input.activity-input {
+  border: 3px solid var(--accent);
+  background: var(--secondary);
+  font-weight: 700;
+}
 
-    td input.example-input {
-      border: 2px dashed var(--text-dark);
-      background: var(--bg-light);
-    }
+td input.example-input {
+  border: 2px dashed var(--text-dark);
+  background: var(--bg-dark);
+  margin-left: 1rem;
+}
+
+td input.activity-input:not(:first-child) {
+  margin-top: 1.5rem;
+}
     
     .grade-container table tr:not(:last-child) > * {
         border-bottom: 3px dotted var(--secondary);
