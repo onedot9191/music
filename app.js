@@ -88,7 +88,6 @@
         const headerTitle = document.getElementById('header-title');
         const livesContainer = document.getElementById('lives-container');
         const stageClearModal = document.getElementById('stage-clear-modal');
-        const closeModalBtn = document.getElementById('close-modal-btn');
         const progressModal = document.getElementById('progress-modal');
         const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
         const startModal = document.getElementById('start-modal');
@@ -227,10 +226,81 @@
         function updateMushroomGrowth() {
             character.classList.remove('combo-level-1', 'combo-level-2', 'combo-level-3');
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) return;
-            
+
             if (gameState.combo >= 10) character.classList.add('combo-level-3');
             else if (gameState.combo >= 5) character.classList.add('combo-level-2');
             else if (gameState.combo >= 2) character.classList.add('combo-level-1');
+        }
+
+        function resetToFirstStage(subject) {
+            const main = document.getElementById(`${subject}-quiz-main`);
+            if (!main) return;
+            const tabsContainer = main.querySelector('.tabs');
+            if (!tabsContainer) return;
+            const tabs = Array.from(tabsContainer.querySelectorAll('.tab'));
+            tabs.forEach(t => t.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+            main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+            if (tabs.length === 0) return;
+            const firstTab = tabs[0];
+            firstTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            const firstSection = main.querySelector(`#${firstTab.dataset.target}`);
+            if (firstSection) {
+                firstSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                if (firstTab.dataset.target === 'activity-examples') {
+                    const subTabs = firstSection.querySelector('.sub-tabs');
+                    if (subTabs) {
+                        const subTabBtns = subTabs.querySelectorAll('.tab');
+                        subTabBtns.forEach(t => t.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                        const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
+                        if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    }
+                    firstSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                    const defaultSection = firstSection.querySelector('#activity-exercise');
+                    if (defaultSection) defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                }
+                focusFirstInput(firstSection);
+            }
+        }
+
+        function advanceToNextStage() {
+            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            if (!main) return;
+            const tabs = Array.from(main.querySelector('.tabs').querySelectorAll('.tab'));
+            const currentIndex = tabs.findIndex(t => t.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE));
+            if (currentIndex === -1) return;
+            const nextIndex = currentIndex + 1;
+            const currentSection = main.querySelector(`#${tabs[currentIndex].dataset.target}`);
+            tabs[currentIndex].classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            if (currentSection) currentSection.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            if (nextIndex < tabs.length) {
+                const nextTab = tabs[nextIndex];
+                nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                const nextSection = main.querySelector(`#${nextTab.dataset.target}`);
+                if (nextSection) {
+                    nextSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    if (nextTab.dataset.target === 'activity-examples') {
+                        const subTabs = nextSection.querySelector('.sub-tabs');
+                        if (subTabs) {
+                            const subBtns = subTabs.querySelectorAll('.tab');
+                            subBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                            const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
+                            if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        }
+                        nextSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                        const defaultSection = nextSection.querySelector('#activity-exercise');
+                        if (defaultSection) {
+                            defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                            focusFirstInput(defaultSection);
+                        } else {
+                            focusFirstInput(nextSection);
+                        }
+                    } else {
+                        focusFirstInput(nextSection);
+                    }
+                }
+            } else {
+                showProgress();
+            }
         }
 
         function showProgress() {
@@ -368,8 +438,10 @@
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
-            document.getElementById(`${gameState.selectedSubject}-quiz-main`).classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-            
+            const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            resetToFirstStage(gameState.selectedSubject);
+
             document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
             
             forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -408,11 +480,16 @@
             return inputsInSection.length > 0 && [...inputsInSection].every(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT));
         }
 
-        function showStageClear() {
-            playSound(clearAudio);
-            stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-            setCharacterState('cheer', 5000);
-            
+       function showStageClear() {
+           playSound(clearAudio);
+           stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+           setCharacterState('cheer', 5000);
+
+            if (gameState.timerId !== null) {
+                clearInterval(gameState.timerId);
+                gameState.timerId = null;
+            }
+
             const duration = 2 * 1000;
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
@@ -424,6 +501,15 @@
                 confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
                 confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
             }, 250);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+                advanceToNextStage();
+                if (gameState.total > 0 && gameState.timerId === null) {
+                    gameState.timerId = setInterval(tick, 1000);
+                }
+            }, duration);
         }
 
         function celebrateCompetencySection(sectionElement) {
@@ -797,7 +883,6 @@
         startGameBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', () => resetGame(true));
         forceQuitBtn.addEventListener('click', () => { if(gameState.timerId) { gameState.total = 0; tick(); } });
-        closeModalBtn.addEventListener('click', () => stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
         
         closeGuideBtn.addEventListener('click', () => {
             guideModal.classList.remove('active');
