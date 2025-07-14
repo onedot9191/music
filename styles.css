@@ -930,3 +930,12 @@ td input.activity-input:not(:first-child) {
     color: var(--bg-dark);
 }
 
+.inline-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.inline-item input {
+  flex: 1;
+  width: auto;
+}
