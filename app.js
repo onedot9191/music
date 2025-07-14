@@ -52,9 +52,9 @@
                 COMBO_POP: 'combo-pop'
             },
             DEFAULT_DURATION: 600,
-            HARD_CORE_DURATION: 30, 
-            HARD_CORE_LIVES: 3,
-            HARD_CORE_TIME_BONUS: 3,
+            HARD_CORE_DURATION: 60,
+            HARD_CORE_LIVES: Infinity,
+            HARD_CORE_TIME_BONUS: 5,
             RANDOM_ANIMATION_DURATION: 2000,
             RANDOM_ANIMATION_INTERVAL: 100
         };
@@ -449,8 +449,7 @@
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                 gameState.duration = CONSTANTS.HARD_CORE_DURATION;
                 gameState.lives = CONSTANTS.HARD_CORE_LIVES;
-                updateLivesUI();
-                livesContainer.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.getElementById('timer-container').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.getElementById('bar').style.display = 'none';
             } else {
@@ -658,13 +657,6 @@
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
 
-                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
-                        gameState.lives--;
-                        updateLivesUI();
-                        if (gameState.lives <= 0) {
-                            handleGameOver();
-                        }
-                    }
                 } else if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
@@ -672,13 +664,6 @@
                     input.value = input.dataset.answer;
                     input.disabled = true;
 
-                    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
-                        gameState.lives--;
-                        updateLivesUI();
-                        if (gameState.lives <= 0) {
-                            handleGameOver();
-                        }
-                    }
                 } else {
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
