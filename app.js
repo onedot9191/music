@@ -35,7 +35,8 @@
             TOPICS: {
                 CURRICULUM: 'curriculum',
                 COMPETENCY: 'competency',
-                MODEL: 'model'
+                MODEL: 'model',
+                COURSE: 'course'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -200,7 +201,11 @@
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
             const topic = gameState.selectedTopic;
 
-            if (topic === CONSTANTS.TOPICS.CURRICULUM || topic === CONSTANTS.TOPICS.MODEL) {
+            if (
+                topic === CONSTANTS.TOPICS.CURRICULUM ||
+                topic === CONSTANTS.TOPICS.MODEL ||
+                topic === CONSTANTS.TOPICS.COURSE
+            ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => {
                     const btnTopics = (btn.dataset.topic || '').split(' ');
@@ -691,10 +696,21 @@
             e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
             const topic = e.target.dataset.topic;
             gameState.selectedTopic = topic;
-            if (topic === CONSTANTS.TOPICS.CURRICULUM || topic === CONSTANTS.TOPICS.MODEL) {
+            if (
+                topic === CONSTANTS.TOPICS.CURRICULUM ||
+                topic === CONSTANTS.TOPICS.MODEL ||
+                topic === CONSTANTS.TOPICS.COURSE
+            ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-                const defaultSubject = topic === CONSTANTS.TOPICS.MODEL ? CONSTANTS.SUBJECTS.ETHICS : CONSTANTS.SUBJECTS.MUSIC;
+                let defaultSubject;
+                if (topic === CONSTANTS.TOPICS.MODEL) {
+                    defaultSubject = CONSTANTS.SUBJECTS.ETHICS;
+                } else if (topic === CONSTANTS.TOPICS.COURSE) {
+                    defaultSubject = CONSTANTS.SUBJECTS.PE_BACK;
+                } else {
+                    defaultSubject = CONSTANTS.SUBJECTS.MUSIC;
+                }
                 const defaultBtn = document.querySelector(`.subject-btn[data-subject="${defaultSubject}"]`);
                 if (defaultBtn) defaultBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
                 gameState.selectedSubject = defaultSubject;
