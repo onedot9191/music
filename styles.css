@@ -257,6 +257,13 @@
       gap: 1rem;
     }
 
+/* Force one-column layout for model topic sections */
+#ethics-quiz-main td.two-col-answers,
+#practical-quiz-main td.two-col-answers {
+  display: flex;
+  flex-direction: column;
+}
+
     @media (max-width: 480px) {
       td.two-col-answers {
         grid-template-columns: 1fr;
