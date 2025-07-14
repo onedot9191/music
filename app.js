@@ -490,7 +490,7 @@
                 gameState.timerId = null;
             }
 
-            const duration = 2 * 1000;
+            const duration = 1 * 1000;
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
             function randomInRange(min, max) { return Math.random() * (max - min) + min; }
@@ -518,6 +518,10 @@
             if (tabButton && !tabButton.classList.contains('cleared')) {
                 tabButton.classList.add('cleared');
                 playSound(clearAudio);
+                if (gameState.timerId !== null) {
+                    clearInterval(gameState.timerId);
+                    gameState.timerId = null;
+                }
                 const duration = 2000;
                 const animationEnd = Date.now() + duration;
                 const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
@@ -529,6 +533,13 @@
                     confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
                     confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
                 }, 250);
+                setTimeout(() => {
+                    clearInterval(interval);
+                    advanceToNextStage();
+                    if (gameState.total > 0 && gameState.timerId === null) {
+                        gameState.timerId = setInterval(tick, 1000);
+                    }
+                }, duration);
             }
         }
 
