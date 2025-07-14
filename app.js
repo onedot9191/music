@@ -149,6 +149,17 @@
             }
         }
 
+        function normalizeAnswer(str) {
+            const pattern = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL
+                ? /[\s⋅·의]+/g
+                : /[\s⋅·]+/g;
+            return str
+                .replace(/\([^)]*\)/g, '')
+                .trim()
+                .replace(pattern, '')
+                .toLowerCase();
+        }
+
         function typewriter(element, text) {
             if (gameState.typingInterval) {
                 clearInterval(gameState.typingInterval);
@@ -543,7 +554,7 @@
         }
 
         function revealCompetencyAnswers() {
-            const normalize = str => str.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+            const normalize = str => normalizeAnswer(str);
             document
                 .querySelectorAll(`#${gameState.selectedSubject}-quiz-main section`)
                 .forEach(section => {
@@ -572,10 +583,7 @@
             if (!input.matches('input[data-answer]') || input.disabled) return;
 
             const section = input.closest('section');
-            const ignorePattern = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL
-                ? /[\s⋅·의]+/g
-                : /[\s⋅·]+/g;
-            const userAnswer = input.value.trim().replace(ignorePattern, '').toLowerCase();
+            const userAnswer = normalizeAnswer(input.value);
 
             let isCorrect = false;
             let displayAnswer = input.dataset.answer;
@@ -587,7 +595,7 @@
                 const answerMap = new Map();
                 section.querySelectorAll('input[data-answer]').forEach(inp => {
                     const original = inp.dataset.answer.trim();
-                    const normalized = original.replace(ignorePattern, '').toLowerCase();
+                    const normalized = normalizeAnswer(original);
                     answerMap.set(normalized, original);
                     const alias = normalized.replace(/역량$/, '');
                     if (alias !== normalized) {
@@ -597,7 +605,7 @@
 
                 if (answerMap.has(userAnswer)) {
                     const canonical = answerMap.get(userAnswer);
-                    const canonicalNorm = canonical.trim().replace(ignorePattern, '').toLowerCase();
+                    const canonicalNorm = normalizeAnswer(canonical);
                     if (!usedSet.has(canonicalNorm)) {
                         isCorrect = true;
                         displayAnswer = canonical;
@@ -605,7 +613,7 @@
                     }
                 }
             } else {
-                const correctAnswer = input.dataset.answer.trim().replace(ignorePattern, '').toLowerCase();
+                const correctAnswer = normalizeAnswer(input.dataset.answer);
                 if (userAnswer === correctAnswer) {
                     isCorrect = true;
                     displayAnswer = input.dataset.answer;
