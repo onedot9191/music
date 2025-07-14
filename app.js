@@ -25,6 +25,7 @@
                 JOY: 'joy',
                 PE: 'pe',
                 ETHICS: 'ethics',
+                PRACTICAL: 'practical',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -347,6 +348,7 @@
                 [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
                 [CONSTANTS.SUBJECTS.PE]: '체육',
                 [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
+                [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
