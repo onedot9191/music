@@ -26,6 +26,7 @@
                 PE: 'pe',
                 ETHICS: 'ethics',
                 PRACTICAL: 'practical',
+                SOCIAL: 'social',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -358,6 +359,7 @@
                 [CONSTANTS.SUBJECTS.PE]: '체육',
                 [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
                 [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
+                [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
