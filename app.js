@@ -319,15 +319,15 @@
             if (percentage === 100) {
                 feedback = { title: "신의 경지", dialogue: "완벽해! 당신은 이 게임의 신이야!", animation: "cheer", effect: "perfect" };
             } else if (percentage >= 90) {
-                feedback = { title: "아웃풋 마스터", dialogue: "대단한 실력인데? 거의 마스터 수준이야!", animation: "happy", effect: "excellent" };
+                feedback = { title: "내체표 마스터", dialogue: "대단한 실력인데? 거의 마스터 수준이야!", animation: "happy", effect: "excellent" };
             } else if (percentage >= 70) {
-                feedback = { title: "아웃풋 고수", dialogue: "꽤 하는걸? 이 감각, 잊지 말라구!", animation: "idle", effect: "great" };
+                feedback = { title: "내체표 고수", dialogue: "꽤 하는걸? 이 감각, 잊지 말라구!", animation: "idle", effect: "great" };
             } else if (percentage >= 50) {
-                feedback = { title: "아웃풋 중수", dialogue: "절반은 넘었네! 다음엔 더 잘할 수 있겠어.", animation: "idle", effect: "good" };
+                feedback = { title: "내체표 중수", dialogue: "절반은 넘었네! 다음엔 더 잘할 수 있겠어.", animation: "idle", effect: "good" };
             } else if (percentage >= 20) {
-                feedback = { title: "아웃풋 하수", dialogue: "으... 너무 어려웠어. 다시 해볼까?", animation: "sad", effect: "notbad" };
+                feedback = { title: "내체표 하수", dialogue: "으... 너무 어려웠어. 다시 해볼까?", animation: "sad", effect: "notbad" };
             } else {
-                feedback = { title: "아웃풋 입문자", dialogue: "털썩... (아무 말도 하지 못했다)", animation: "sad", effect: "tryagain" };
+                feedback = { title: "내체표 입문자", dialogue: "털썩... (아무 말도 하지 못했다)", animation: "sad", effect: "tryagain" };
             }
 
             resultTitle.textContent = feedback.title;
@@ -398,7 +398,7 @@
             
             gameState.combo = 0;
             updateMushroomGrowth();
-            headerTitle.textContent = '아웃풋을 해보자';
+            headerTitle.textContent = '내체표를 해보자';
             headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
