@@ -24,12 +24,14 @@
                 WISE: 'wise',
                 JOY: 'joy',
                 PE: 'pe',
+                ETHICS: 'ethics',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
             TOPICS: {
                 CURRICULUM: 'curriculum',
-                COMPETENCY: 'competency'
+                COMPETENCY: 'competency',
+                MODEL: 'model'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -168,10 +170,16 @@
 
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
+            const topic = gameState.selectedTopic;
 
-            if (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM) {
+            if (topic === CONSTANTS.TOPICS.CURRICULUM || topic === CONSTANTS.TOPICS.MODEL) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-                subjectButtons.forEach(btn => { btn.disabled = false; });
+                subjectButtons.forEach(btn => {
+                    const btnTopics = (btn.dataset.topic || '').split(' ');
+                    const visible = btnTopics.includes(topic) || btnTopics.length === 0;
+                    btn.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !visible);
+                    btn.disabled = false;
+                });
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => { btn.disabled = true; });
@@ -338,6 +346,7 @@
                 [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
                 [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
                 [CONSTANTS.SUBJECTS.PE]: '체육',
+                [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
@@ -564,13 +573,13 @@
             e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
             const topic = e.target.dataset.topic;
             gameState.selectedTopic = topic;
-            if (topic === CONSTANTS.TOPICS.CURRICULUM) {
+            if (topic === CONSTANTS.TOPICS.CURRICULUM || topic === CONSTANTS.TOPICS.MODEL) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-                if (!document.querySelector('.subject-btn.selected')) {
-                    const defaultBtn = document.querySelector('.subject-btn[data-subject="music"]');
-                    if (defaultBtn) defaultBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                    gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
-                }
+                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+                const defaultSubject = topic === CONSTANTS.TOPICS.MODEL ? CONSTANTS.SUBJECTS.ETHICS : CONSTANTS.SUBJECTS.MUSIC;
+                const defaultBtn = document.querySelector(`.subject-btn[data-subject="${defaultSubject}"]`);
+                if (defaultBtn) defaultBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                gameState.selectedSubject = defaultSubject;
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
@@ -591,7 +600,7 @@
 
             if (subject === CONSTANTS.SUBJECTS.RANDOM) {
                 gameState.isRandomizing = true;
-                const subjectBtns = Array.from(document.querySelectorAll('.subject-btn:not([data-subject="random"])'));
+                const subjectBtns = Array.from(document.querySelectorAll('.subject-btn:not([data-subject="random"]):not(.hidden)'));
                 const allSelectorBtns = document.querySelectorAll('.subject-selector .btn');
                 
                 allSelectorBtns.forEach(b => b.disabled = true);
