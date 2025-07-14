@@ -468,7 +468,10 @@
             if (!input.matches('input[data-answer]') || input.disabled) return;
 
             const section = input.closest('section');
-            const userAnswer = input.value.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+            const ignorePattern = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL
+                ? /[\s⋅·의]+/g
+                : /[\s⋅·]+/g;
+            const userAnswer = input.value.trim().replace(ignorePattern, '').toLowerCase();
 
             let isCorrect = false;
             let displayAnswer = input.dataset.answer;
@@ -480,7 +483,7 @@
                 const answerMap = new Map();
                 section.querySelectorAll('input[data-answer]').forEach(inp => {
                     const original = inp.dataset.answer.trim();
-                    const normalized = original.replace(/[\s⋅·]+/g, '').toLowerCase();
+                    const normalized = original.replace(ignorePattern, '').toLowerCase();
                     answerMap.set(normalized, original);
                     const alias = normalized.replace(/역량$/, '');
                     if (alias !== normalized) {
@@ -490,7 +493,7 @@
 
                 if (answerMap.has(userAnswer)) {
                     const canonical = answerMap.get(userAnswer);
-                    const canonicalNorm = canonical.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                    const canonicalNorm = canonical.trim().replace(ignorePattern, '').toLowerCase();
                     if (!usedSet.has(canonicalNorm)) {
                         isCorrect = true;
                         displayAnswer = canonical;
@@ -498,7 +501,7 @@
                     }
                 }
             } else {
-                const correctAnswer = input.dataset.answer.trim().replace(/[\s⋅·]+/g, '').toLowerCase();
+                const correctAnswer = input.dataset.answer.trim().replace(ignorePattern, '').toLowerCase();
                 if (userAnswer === correctAnswer) {
                     isCorrect = true;
                     displayAnswer = input.dataset.answer;
