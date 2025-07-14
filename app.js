@@ -179,6 +179,11 @@
             });
         }
 
+        function focusFirstInput(container) {
+            const firstInput = container.querySelector('input[data-answer]:not([disabled])');
+            if (firstInput) firstInput.focus();
+        }
+
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
             const topic = gameState.selectedTopic;
@@ -393,6 +398,9 @@
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                 character.classList.add('devil-mode');
             }
+
+            const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
+            if (activeSection) focusFirstInput(activeSection);
         }
 
         function checkStageClear(sectionElement) {
@@ -682,6 +690,7 @@
                     const targetSection = main.querySelector(`#${targetId}`);
                     if (targetSection) {
                         targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        focusFirstInput(targetSection);
                         if (targetId === 'activity-examples') {
                             const subTabs = targetSection.querySelector('.sub-tabs');
                             if (subTabs) {
@@ -691,7 +700,10 @@
                             }
                             targetSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                             const defaultSection = targetSection.querySelector('#activity-exercise');
-                            if (defaultSection) defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                            if (defaultSection) {
+                                defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                                focusFirstInput(defaultSection);
+                            }
                         }
                     }
                 }
@@ -710,8 +722,11 @@
                 if (parentSection) {
                     const targetId = e.target.dataset.target;
                     parentSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                    const targetSection = parentSection.querySelector(`#${targetId}`);
-                    if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                   const targetSection = parentSection.querySelector(`#${targetId}`);
+                    if (targetSection) {
+                        targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        focusFirstInput(targetSection);
+                    }
                 }
             });
         });
@@ -727,7 +742,10 @@
                 const targetId = e.target.dataset.target;
                 document.querySelectorAll('#competency-quiz-main section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                 const targetSection = document.getElementById(targetId);
-                if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                if (targetSection) {
+                    targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    focusFirstInput(targetSection);
+                }
             });
         }
         
@@ -741,6 +759,7 @@
             if (!isExpanded) {
                 header.setAttribute('aria-expanded', 'true');
                 targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                focusFirstInput(targetSection);
             }
         }
 
