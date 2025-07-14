@@ -923,6 +923,56 @@
         <input data-answer="설명 및 해결방안 제시" aria-label="설명 및 해결방안 제시" placeholder="단계명">
         <input data-answer="실행" aria-label="실행" placeholder="단계명">
       </td></tr></tbody></table></div></div>
+  </section>
+  </main>
+  <main id="pe-back-quiz-main" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-target="teach-learn">교수⋅학습</div>
+      <div class="tab" data-target="assessment">평가</div>
+    </div>
+    <section id="teach-learn" class="active">
+      <h2>교수⋅학습</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>방향</th><td>
+          <input data-answer="신체활동 역량 함양을 위한 교수⋅학습" aria-label="신체활동 역량 함양을 위한 교수⋅학습" placeholder="정답">
+          <input data-answer="움직임의 체계적 발달을 위한 교수⋅학습" aria-label="움직임의 체계적 발달을 위한 교수⋅학습" placeholder="정답">
+          <input data-answer="자기 주도적 학습을 위한 맞춤형 교수⋅학습" aria-label="자기 주도적 학습을 위한 맞춤형 교수⋅학습" placeholder="정답">
+          <input data-answer="신체활동의 시간적⋅공간적 확장을 위한 교수⋅학습" aria-label="신체활동의 시간적⋅공간적 확장을 위한 교수⋅학습" placeholder="정답">
+          <input data-answer="디지털 기술을 활용한 효율적 교수⋅학습" aria-label="디지털 기술을 활용한 효율적 교수⋅학습" placeholder="정답">
+          <input data-answer="창의성과 인성 함양을 위한 통합적 교수⋅학습" aria-label="창의성과 인성 함양을 위한 통합적 교수⋅학습" placeholder="정답">
+        </td></tr>
+        <tr><th>방법</th><td>
+          <input data-answer="교육과정의 운영" aria-label="교육과정의 운영" placeholder="정답">
+          <input data-answer="학년군 단위 교육과정의 운영" aria-label="학년군 단위 교육과정의 운영" placeholder="정답">
+          <input data-answer="연간 교육과정 운영" aria-label="연간 교육과정 운영" placeholder="정답">
+          <input data-answer="온⋅오프라인 연계 교육과정의 운영" aria-label="온⋅오프라인 연계 교육과정의 운영" placeholder="정답">
+          <input data-answer="단원의 운영" aria-label="단원의 운영" placeholder="정답">
+          <input data-answer="영역의 특성을 고려한 단원 목표와 학습 활동의 선정" aria-label="영역의 특성을 고려한 단원 목표와 학습 활동의 선정" placeholder="정답">
+          <input data-answer="학습자 수준을 고려한 교수⋅학습 활동의 다양화" aria-label="학습자 수준을 고려한 교수⋅학습 활동의 다양화" placeholder="정답">
+          <input data-answer="체육 시설 및 교육환경을 고려한 교수⋅학습" aria-label="체육 시설 및 교육환경을 고려한 교수⋅학습" placeholder="정답">
+          <input data-answer="차시별 수업 내용의 엄선과 위계적 조직" aria-label="차시별 수업 내용의 엄선과 위계적 조직" placeholder="정답">
+          <input data-answer="수업의 운영" aria-label="수업의 운영" placeholder="정답">
+          <input data-answer="학습 활동의 재구성" aria-label="학습 활동의 재구성" placeholder="정답">
+          <input data-answer="학습 기회의 형평성 제고" aria-label="학습 기회의 형평성 제고" placeholder="정답">
+          <input data-answer="학습자의 효율적 관리와 안전한 수업 분위기 조성" aria-label="학습자의 효율적 관리와 안전한 수업 분위기 조성" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+    </section>
+    <section id="assessment">
+      <h2>평가</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>방향</th><td>
+          <input data-answer="신체활동 역량 함양을 위한 종합적 평가" aria-label="신체활동 역량 함양을 위한 종합적 평가" placeholder="정답">
+          <input data-answer="학습자의 성장 과정을 반영한 다양한 평가" aria-label="학습자의 성장 과정을 반영한 다양한 평가" placeholder="정답">
+          <input data-answer="학습자의 수준을 고려한 맞춤형 평가" aria-label="학습자의 수준을 고려한 맞춤형 평가" placeholder="정답">
+        </td></tr>
+        <tr><th>방법</th><td>
+          <input data-answer="평가 내용 선정" aria-label="평가 내용 선정" placeholder="정답">
+          <input data-answer="성취기준 및 성취수준 선정" aria-label="성취기준 및 성취수준 선정" placeholder="정답">
+          <input data-answer="평가 방법 및 도구의 선정" aria-label="평가 방법 및 도구의 선정" placeholder="정답">
+          <input data-answer="평가 결과의 활용" aria-label="평가 결과의 활용" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
     </section>
   </main>
   <main id="korean-quiz-main" class="hidden">
@@ -1841,6 +1891,7 @@
                 <button class="btn subject-btn" data-subject="practical" data-topic="model">실과</button>
                 <button class="btn subject-btn" data-subject="social" data-topic="model">사회</button>
                 <button class="btn subject-btn" data-subject="science" data-topic="model">과학</button>
+                <button class="btn subject-btn" data-subject="pe-back" data-topic="model">체육(뒷교)</button>
                 <button id="random-subject-btn" class="btn" data-subject="random" data-topic="curriculum model">랜덤</button>
             </div>
             <h2>게임 모드</h2>
