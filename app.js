@@ -106,20 +106,29 @@
         const resultTitle = document.getElementById('result-title');
         
         // --- Audio ---
+        const SFX_VOLUME = 0.4;
+
         const successAudio = new Audio('./success.mp3');
         successAudio.preload = 'auto';
+        successAudio.volume = SFX_VOLUME;
         const timeupAudio = new Audio('./timeup.mp3');
         timeupAudio.preload = 'auto';
+        timeupAudio.volume = SFX_VOLUME;
         const startAudio = new Audio('./start.mp3');
         startAudio.preload = 'auto';
+        startAudio.volume = SFX_VOLUME;
         const failAudio = new Audio('./fail.mp3');
         failAudio.preload = 'auto';
+        failAudio.volume = SFX_VOLUME;
         const clearAudio = new Audio('./clear.mp3');
         clearAudio.preload = 'auto';
+        clearAudio.volume = SFX_VOLUME;
         const randomAudio = new Audio('./random.mp3');
         randomAudio.preload = 'auto';
+        randomAudio.volume = SFX_VOLUME;
         const clickAudio = new Audio('./click.mp3');
         clickAudio.preload = 'auto';
+        clickAudio.volume = SFX_VOLUME;
         
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
