@@ -27,6 +27,7 @@
                 ETHICS: 'ethics',
                 PRACTICAL: 'practical',
                 SOCIAL: 'social',
+                SCIENCE: 'science',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -446,6 +447,7 @@
                 [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
                 [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
                 [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
+                [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
