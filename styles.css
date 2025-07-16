@@ -952,7 +952,7 @@ td input.activity-input:not(:first-child) {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--accent);
+  color: var(--primary);
 }
 #creative-quiz-main .creative-question {
   display: block; /* allow natural inline flow around inputs */
