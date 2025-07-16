@@ -956,17 +956,12 @@ td input.activity-input:not(:first-child) {
 }
 #creative-quiz-main .creative-question {
   display: block; /* allow natural inline flow around inputs */
-  line-height: 1.8; /* increased for readability */
+  line-height: 1.6;
   font-size: 2rem;
   font-weight: 500;
   padding-bottom: 2rem;
   border-bottom: 2px dashed var(--secondary);
-  margin-bottom: 2.5rem; /* extra spacing between items */
-}
-
-#creative-quiz-main ul.creative-question {
-  list-style-type: disc;
-  padding-left: 2rem;
+  margin-bottom: 2rem;
 }
 #creative-quiz-main .creative-question:last-child {
   border-bottom: none;
@@ -1006,8 +1001,4 @@ td input.activity-input:not(:first-child) {
 #creative-quiz-main .creative-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
-}
-
-#creative-quiz-main .creative-question strong {
-  color: var(--accent);
 }
