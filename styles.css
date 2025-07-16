@@ -973,20 +973,6 @@ td input.activity-input:not(:first-child) {
   margin: 1rem 0;
   color: var(--accent);
 }
-
-.marker-korean,
-.marker-numeric {
-  font-weight: 700;
-  margin-right: 0.4rem;
-}
-
-.marker-korean {
-  color: var(--primary);
-}
-
-.marker-numeric {
-  color: var(--accent);
-}
 #creative-quiz-main .creative-question {
   display: block; /* allow natural inline flow around inputs */
   line-height: 1.8; /* more breathing room for multi-line questions */
