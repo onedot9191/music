@@ -970,5 +970,16 @@ td input.activity-input:not(:first-child) {
 #creative-quiz-main .creative-question input {
   flex: 0 0 auto;
   font-size: 2rem;
-  min-width: 6rem;
+  padding: 0.2rem 0.4rem;
+  border: none;
+  border-bottom: 2px solid var(--secondary);
+  background: transparent;
+  color: var(--text-light);
+  text-align: center;
+  width: auto;
+}
+
+#creative-quiz-main .creative-question input:focus {
+  outline: none;
+  border-color: var(--primary);
 }
