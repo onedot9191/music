@@ -169,9 +169,16 @@
         }
 
         function normalizeAnswer(str) {
-            const pattern = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL
-                ? /[\s⋅·의]+/g
-                : /[\s⋅·]+/g;
+            const ignoreParticleEui =
+                gameState.selectedTopic === CONSTANTS.TOPICS.MODEL ||
+                (
+                    gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM &&
+                    (
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE
+                    )
+                );
+            const pattern = ignoreParticleEui ? /[\s⋅·의]+/g : /[\s⋅·]+/g;
             return str
                 .replace(/\([^)]*\)/g, '')
                 .trim()
