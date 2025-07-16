@@ -961,9 +961,9 @@ td input.activity-input:not(:first-child) {
   font-size: 2rem;
   font-weight: 500;
   gap: 0.6rem;
-  padding-bottom: 0.8rem;
+  padding-bottom: 1.2rem;
   border-bottom: 2px dashed var(--secondary);
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
 }
 #creative-quiz-main .creative-question:last-child {
   border-bottom: none;
@@ -983,4 +983,24 @@ td input.activity-input:not(:first-child) {
 #creative-quiz-main .creative-question input:focus {
   outline: none;
   border-color: var(--primary);
+}
+
+#creative-quiz-main .creative-question input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+}
+
+#creative-quiz-main .creative-question input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+}
+
+#creative-quiz-main .creative-question input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+}
+
+#creative-quiz-main .creative-question input.revealed {
+  color: var(--revealed);
+  border-color: var(--revealed);
 }
