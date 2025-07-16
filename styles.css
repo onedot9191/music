@@ -967,6 +967,12 @@ td input.activity-input:not(:first-child) {
   margin-bottom: 1rem;
   color: var(--primary);
 }
+#overview-quiz-main .sub-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 1rem 0;
+  color: var(--accent);
+}
 #creative-quiz-main .creative-question {
   display: block; /* allow natural inline flow around inputs */
   line-height: 1.8; /* more breathing room for multi-line questions */
