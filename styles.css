@@ -956,12 +956,12 @@ td input.activity-input:not(:first-child) {
 }
 #creative-quiz-main .creative-question {
   display: block; /* allow natural inline flow around inputs */
-  line-height: 1.6;
+  line-height: 1.8; /* more breathing room for multi-line questions */
   font-size: 2rem;
   font-weight: 500;
   padding-bottom: 2rem;
   border-bottom: 2px dashed var(--secondary);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem; /* extra spacing between questions */
 }
 #creative-quiz-main .creative-question:last-child {
   border-bottom: none;
