@@ -193,10 +193,19 @@
             });
         }
 
-        function focusFirstInput(container) {
-            const firstInput = container.querySelector('input[data-answer]:not([disabled])');
-            if (firstInput) firstInput.focus();
-        }
+       function focusFirstInput(container) {
+           const firstInput = container.querySelector('input[data-answer]:not([disabled])');
+           if (firstInput) firstInput.focus();
+       }
+
+       function adjustCreativeInputWidths() {
+            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer]')
+                .forEach(input => {
+                    const answerLen = (input.dataset.answer || '').length;
+                    const size = Math.max(2, answerLen + 1);
+                    input.setAttribute('size', size);
+                });
+       }
 
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
@@ -428,13 +437,14 @@
             livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
             // Reset competency tab states
-            document.querySelectorAll('.competency-tab.cleared')
-                .forEach(tab => tab.classList.remove('cleared'));
+           document.querySelectorAll('.competency-tab.cleared')
+               .forEach(tab => tab.classList.remove('cleared'));
 
-            if (showStartModal) {
-                startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                updateStartModalUI();
-            }
+           if (showStartModal) {
+               startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+               updateStartModalUI();
+               adjustCreativeInputWidths();
+           }
 
             setCharacterState('idle');
         }
@@ -460,11 +470,14 @@
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
-            const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
-            mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-            resetToFirstStage(gameState.selectedSubject);
+           const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+           mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+           resetToFirstStage(gameState.selectedSubject);
 
-            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
+           document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE) {
+                adjustCreativeInputWidths();
+            }
             
             forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             
@@ -963,6 +976,7 @@
             gameState.selectedTopic = CONSTANTS.TOPICS.CURRICULUM;
             gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
             resetGame(false); // Reset state without showing any modal
+            adjustCreativeInputWidths();
             updateStartModalUI();
             guideModal.classList.add('active'); // Always show guide on page load
         }
