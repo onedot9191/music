@@ -10,7 +10,7 @@
       --incorrect: #FF5733; /* Bright Orange-Red */
       --retrying: #FFC300; /* Amber/Yellow for retry */
       --revealed: #00FFFF; /* Cyan */
-      font-size: 10px; /* Base font size for rem units */
+      font-size: 12px; /* Base font size for rem units */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -150,8 +150,9 @@
 
     main {
       padding: 12rem 2rem 4rem;
-      max-width: 1024px;
+      max-width: 1400px;
       margin: 0 auto;
+      width: 100%;
     }
 
     .tabs {
@@ -938,4 +939,55 @@ td input.activity-input:not(:first-child) {
 .inline-item input {
   flex: 1;
   width: auto;
+}
+
+/* Text content paragraphs with inline blanks */
+.text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: 1.6rem;
+  line-height: 1.8;
+}
+
+.text-content input {
+  display: inline-block;
+  padding: 1rem 1.2rem;
+  font-size: 1.6rem;
+  border: 2px solid var(--text-dark);
+  background: var(--bg-dark);
+  color: var(--text-light);
+  margin: 0 0.4rem;
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  caret-color: var(--primary);
+  transition: all 0.2s ease;
+}
+
+.text-content input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--secondary);
+  box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+
+.text-content input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+}
+
+.text-content input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+}
+
+.text-content input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+}
+
+.text-content input.revealed {
+  border-color: var(--revealed);
+  color: var(--revealed);
+  background: var(--bg-light);
 }
