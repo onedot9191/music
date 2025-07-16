@@ -1,6 +1,6 @@
 # Music Quiz Game
 
-This project is a simple music-based quiz game for practicing various subjects. It runs entirely in the browser.
+This project is a simple music-based quiz game for practicing various subjects. It runs entirely in the browser. All quiz answers are stored in `questions.json` and loaded dynamically.
 
 ## Linting
 

@@ -1,4 +1,21 @@
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+
+        // Load quiz answers from external JSON file and attach to inputs
+        try {
+            const res = await fetch('./questions.json');
+            if (res.ok) {
+                const answers = await res.json();
+                document.querySelectorAll('input[data-id]').forEach((input, idx) => {
+                    if (idx < answers.length) {
+                        input.dataset.answer = answers[idx];
+                    }
+                });
+            } else {
+                console.error('Failed to load questions.json');
+            }
+        } catch (err) {
+            console.error('Error loading questions.json:', err);
+        }
 
         // --- AudioContext for Autoplay Policy ---
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
