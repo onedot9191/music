@@ -959,6 +959,7 @@ td input.activity-input:not(:first-child) {
   flex-wrap: wrap;
   line-height: 1.6;
   font-size: 2rem;
+  font-weight: 500;
   gap: 0.6rem;
   padding-bottom: 0.8rem;
   border-bottom: 2px dashed var(--secondary);
