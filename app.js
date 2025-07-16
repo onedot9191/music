@@ -30,6 +30,7 @@
                 SCIENCE: 'science',
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
+                OVERVIEW: 'overview',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -199,7 +200,7 @@
        }
 
        function adjustCreativeInputWidths() {
-            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer]')
+            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answerLen = (input.dataset.answer || '').length;
                     const size = Math.max(2, answerLen + 1);
@@ -467,6 +468,7 @@
                 [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
                 [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
                 [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
+                [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
@@ -475,7 +477,10 @@
            resetToFirstStage(gameState.selectedSubject);
 
            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE) {
+            if (
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW
+            ) {
                 adjustCreativeInputWidths();
             }
             
