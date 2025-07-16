@@ -29,7 +29,6 @@
                 SOCIAL: 'social',
                 SCIENCE: 'science',
                 PE_BACK: 'pe-back',
-                CCA: 'cca',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -456,7 +455,6 @@
                 [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
                 [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
                 [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
-                [CONSTANTS.SUBJECTS.CCA]: '창체',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
