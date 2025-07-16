@@ -144,13 +144,27 @@
         }
 
         function playSound(audioElement) {
-            if (audioContext.state === 'running' && audioElement && typeof audioElement.play === 'function') {
+            if (!audioElement || typeof audioElement.play !== 'function') {
+                console.error('Provided element is not a valid audio element.');
+                return;
+            }
+
+            const play = () => {
                 audioElement.currentTime = 0;
                 audioElement.play().catch(err => {
                     console.error(`Audio playback failed for ${audioElement.src}:`, err);
                 });
-            } else if (audioElement && typeof audioElement.play !== 'function') {
-                 console.error("Provided element is not a valid audio element.");
+            };
+
+            if (audioContext.state === 'suspended') {
+                audioContext
+                    .resume()
+                    .then(play)
+                    .catch(err => {
+                        console.warn('Failed to resume AudioContext:', err);
+                    });
+            } else {
+                play();
             }
         }
 
