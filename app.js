@@ -644,12 +644,14 @@
                 }
             }
 
+            let shouldAdvance = false;
             if (isCorrect) {
                 playSound(successAudio);
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
                 input.value = displayAnswer;
                 input.disabled = true;
+                shouldAdvance = true;
 
                 gameState.combo++;
                 setCharacterState('happy');
@@ -695,10 +697,25 @@
 
                     input.value = input.dataset.answer;
                     input.disabled = true;
+                    shouldAdvance = true;
 
                 } else {
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
+                }
+            }
+
+            if (shouldAdvance) {
+                const main = input.closest('main');
+                if (main) {
+                    const inputs = Array.from(main.querySelectorAll('input[data-answer]'));
+                    const idx = inputs.indexOf(input);
+                    for (let i = idx + 1; i < inputs.length; i++) {
+                        if (!inputs[i].disabled) {
+                            inputs[i].focus();
+                            break;
+                        }
+                    }
                 }
             }
         }
