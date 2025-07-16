@@ -955,12 +955,10 @@ td input.activity-input:not(:first-child) {
   color: var(--accent);
 }
 #creative-quiz-main .creative-question {
-  display: flex;
-  flex-wrap: wrap;
+  display: block; /* allow natural inline flow around inputs */
   line-height: 1.6;
   font-size: 2rem;
   font-weight: 500;
-  gap: 0.6rem;
   padding-bottom: 1.2rem;
   border-bottom: 2px dashed var(--secondary);
   margin-bottom: 1.2rem;
@@ -969,9 +967,9 @@ td input.activity-input:not(:first-child) {
   border-bottom: none;
 }
 #creative-quiz-main .creative-question input {
-  flex: 0 0 auto;
   font-size: 2rem;
   padding: 0.2rem 0.4rem;
+  margin: 0 0.4rem;
   border: none;
   border-bottom: 2px solid var(--secondary);
   background: transparent;
