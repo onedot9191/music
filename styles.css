@@ -10,7 +10,7 @@
       --incorrect: #FF5733; /* Bright Orange-Red */
       --retrying: #FFC300; /* Amber/Yellow for retry */
       --revealed: #00FFFF; /* Cyan */
-      font-size: 10px; /* Base font size for rem units */
+      font-size: 12px; /* Base font size for rem units */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -150,7 +150,7 @@
 
     main {
       padding: 12rem 2rem 4rem;
-      max-width: 1024px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
@@ -938,4 +938,42 @@ td input.activity-input:not(:first-child) {
 .inline-item input {
   flex: 1;
   width: auto;
+}
+
+/* CCA inline paragraph styles */
+#cca-quiz-main p {
+  font-size: 1.8rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+#cca-quiz-main input.inline-input {
+  padding: 0.6rem 1rem;
+  font-size: 1.6rem;
+  border: 2px solid var(--text-dark);
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-radius: 6px;
+}
+#cca-quiz-main input.inline-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--secondary);
+  box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+#cca-quiz-main input.inline-input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+}
+#cca-quiz-main input.inline-input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+}
+#cca-quiz-main input.inline-input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+}
+#cca-quiz-main input.inline-input.revealed {
+  color: var(--revealed);
+  border-color: var(--revealed);
+  background: var(--bg-light);
 }
