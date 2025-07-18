@@ -968,6 +968,17 @@ td input.activity-input:not(:first-child) {
   gap: 0.5rem;
 }
 
+#english-quiz-main .assessment-list {
+  margin: 0 auto;
+  list-style-position: inside;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem 2rem;
+}
+#english-quiz-main td {
+  align-items: center;
+}
+
 /* Creative subject readability tweaks */
 #creative-quiz-main .creative-block {
   margin-bottom: 2rem;
