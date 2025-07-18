@@ -235,9 +235,14 @@
             document.querySelectorAll('#english-quiz-main input[data-answer]')
                 .forEach(input => {
                     const answerLen = (input.dataset.answer || '').length;
-                    const size = Math.max(2, answerLen + 3);
-                    input.setAttribute('size', size);
-                    input.style.width = `${size}ch`;
+                    const desired = Math.max(2, answerLen + 3);
+                    const inlineWidth = parseInt(input.style.width) || 0;
+                    const attrSize = parseInt(input.getAttribute('size')) || 0;
+                    const current = Math.max(inlineWidth, attrSize);
+                    if (current < desired) {
+                        input.setAttribute('size', desired);
+                        input.style.width = `${desired}ch`;
+                    }
                 });
        }
 
