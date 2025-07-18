@@ -950,6 +950,10 @@ td input.activity-input:not(:first-child) {
   gap: 1rem;
   align-items: center;
 }
+.inline-answers input.fit-answer {
+  width: auto;
+  min-width: 8ch;
+}
 
 .assessment-list {
   list-style-type: disc;
