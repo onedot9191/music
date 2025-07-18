@@ -944,6 +944,13 @@ td input.activity-input:not(:first-child) {
   width: auto;
 }
 
+.inline-answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
 /* Creative subject readability tweaks */
 #creative-quiz-main .creative-block {
   margin-bottom: 2rem;
