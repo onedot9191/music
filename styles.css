@@ -283,6 +283,10 @@
       transition: all 0.2s ease;
       border-radius: 8px;
     }
+    td input.fit-answer {
+      width: auto;
+      display: inline-block;
+    }
     td input:focus {
       outline: none;
       border-color: var(--primary);
