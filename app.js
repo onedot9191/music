@@ -235,7 +235,7 @@
             document.querySelectorAll('#english-quiz-main input[data-answer]')
                 .forEach(input => {
                     const answerLen = (input.dataset.answer || '').length;
-                    const desired = Math.max(2, answerLen + 3);
+                    const desired = Math.max(2, Math.ceil(answerLen * 1.3) + 4);
                     const inlineWidth = parseInt(input.style.width) || 0;
                     const attrSize = parseInt(input.getAttribute('size')) || 0;
                     const current = Math.max(inlineWidth, attrSize);
