@@ -235,7 +235,7 @@
             document.querySelectorAll('#english-quiz-main input[data-answer]')
                 .forEach(input => {
                     const answerLen = (input.dataset.answer || '').length;
-                    const size = Math.max(2, answerLen + 2);
+                    const size = Math.max(2, answerLen + 3);
                     input.setAttribute('size', size);
                     input.style.width = `${size}ch`;
                 });
