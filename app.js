@@ -24,6 +24,7 @@
                 WISE: 'wise',
                 JOY: 'joy',
                 PE: 'pe',
+                ENGLISH: 'english',
                 ETHICS: 'ethics',
                 PRACTICAL: 'practical',
                 SOCIAL: 'social',
@@ -38,7 +39,8 @@
                 CURRICULUM: 'curriculum',
                 COMPETENCY: 'competency',
                 MODEL: 'model',
-                COURSE: 'course'
+                COURSE: 'course',
+                BASIC: 'basic'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -236,7 +238,8 @@
             if (
                 topic === CONSTANTS.TOPICS.CURRICULUM ||
                 topic === CONSTANTS.TOPICS.MODEL ||
-                topic === CONSTANTS.TOPICS.COURSE
+                topic === CONSTANTS.TOPICS.COURSE ||
+                topic === CONSTANTS.TOPICS.BASIC
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => {
@@ -483,6 +486,7 @@
                 [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
                 [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
                 [CONSTANTS.SUBJECTS.PE]: '체육',
+                [CONSTANTS.SUBJECTS.ENGLISH]: '영어',
                 [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
                 [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
                 [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
@@ -757,7 +761,8 @@
             if (
                 topic === CONSTANTS.TOPICS.CURRICULUM ||
                 topic === CONSTANTS.TOPICS.MODEL ||
-                topic === CONSTANTS.TOPICS.COURSE
+                topic === CONSTANTS.TOPICS.COURSE ||
+                topic === CONSTANTS.TOPICS.BASIC
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
@@ -766,6 +771,8 @@
                     defaultSubject = CONSTANTS.SUBJECTS.ETHICS;
                 } else if (topic === CONSTANTS.TOPICS.COURSE) {
                     defaultSubject = CONSTANTS.SUBJECTS.PE_BACK;
+                } else if (topic === CONSTANTS.TOPICS.BASIC) {
+                    defaultSubject = CONSTANTS.SUBJECTS.ENGLISH;
                 } else {
                     defaultSubject = CONSTANTS.SUBJECTS.MUSIC;
                 }
