@@ -940,7 +940,7 @@ td input.activity-input:not(:first-child) {
   gap: 0.5rem;
 }
 .inline-item input {
-  flex: 1;
+  flex: 0 0 auto;
   width: auto;
 }
 
