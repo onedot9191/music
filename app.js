@@ -231,6 +231,16 @@
                 });
        }
 
+       function adjustEnglishInputWidths() {
+            document.querySelectorAll('#english-quiz-main input[data-answer]')
+                .forEach(input => {
+                    const answerLen = (input.dataset.answer || '').length;
+                    const size = Math.max(2, answerLen + 1);
+                    input.setAttribute('size', size);
+                    input.style.width = `${size}ch`;
+                });
+       }
+
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
             const topic = gameState.selectedTopic;
@@ -469,6 +479,7 @@
                startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                updateStartModalUI();
                adjustCreativeInputWidths();
+               adjustEnglishInputWidths();
            }
 
             setCharacterState('idle');
@@ -507,6 +518,11 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW
             ) {
                 adjustCreativeInputWidths();
+            } else if (
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH &&
+                gameState.selectedTopic === CONSTANTS.TOPICS.BASIC
+            ) {
+                adjustEnglishInputWidths();
             }
             
             forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
