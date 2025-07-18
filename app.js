@@ -32,6 +32,7 @@
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
+                ESSAY: 'essay',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -40,7 +41,8 @@
                 COMPETENCY: 'competency',
                 MODEL: 'model',
                 COURSE: 'course',
-                BASIC: 'basic'
+                BASIC: 'basic',
+                ESSAY: 'essay'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -514,7 +516,8 @@
                 [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
                 [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
                 [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
-                [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
+                [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
+                [CONSTANTS.SUBJECTS.ESSAY]: '논술'
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
            const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
@@ -807,7 +810,11 @@
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-                gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
+                if (topic === CONSTANTS.TOPICS.ESSAY) {
+                    gameState.selectedSubject = CONSTANTS.SUBJECTS.ESSAY;
+                } else {
+                    gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
+                }
             }
             updateStartModalUI();
         });
