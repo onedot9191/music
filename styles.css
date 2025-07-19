@@ -953,6 +953,15 @@ td input.activity-input:not(:first-child) {
   margin: 0 0.4rem;
 }
 
+/* Arrange essay introduction and conclusion blocks vertically */
+#essay-quiz-main .grade-container {
+  flex-direction: column;
+}
+#essay-quiz-main .grade-container > div {
+  flex: none;
+  width: 100%;
+}
+
 .inline-answers {
   display: flex;
   flex-wrap: wrap;
