@@ -945,6 +945,14 @@ td input.activity-input:not(:first-child) {
   width: auto;
 }
 
+/* Ensure essay inputs resemble English blanks */
+#essay-quiz-main input.fit-answer {
+  width: auto;
+  display: inline-block;
+  min-width: 16ch;
+  margin: 0 0.4rem;
+}
+
 .inline-answers {
   display: flex;
   flex-wrap: wrap;
