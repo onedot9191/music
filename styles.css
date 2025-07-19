@@ -939,6 +939,7 @@ td input.activity-input:not(:first-child) {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 .inline-item input {
   flex: 0 0 auto;
