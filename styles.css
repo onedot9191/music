@@ -978,12 +978,6 @@ td input.activity-input:not(:first-child) {
   gap: 1rem;
 }
 
-/* Prevent long essay answers from overflowing */
-#essay-quiz-main .assessment-list .fit-answer {
-  width: 100%;
-  max-width: 100%;
-}
-
 .sub-list {
   list-style-type: circle;
   margin-left: 2rem;
