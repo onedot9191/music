@@ -962,6 +962,15 @@ td input.activity-input:not(:first-child) {
   width: 100%;
 }
 
+/* Arrange English acquisition blocks vertically */
+#english-quiz-main #acquisition .grade-container {
+  flex-direction: column;
+}
+#english-quiz-main #acquisition .grade-container > div {
+  flex: none;
+  width: 100%;
+}
+
 .inline-answers {
   display: flex;
   flex-wrap: wrap;
