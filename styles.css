@@ -972,6 +972,21 @@ td input.activity-input:not(:first-child) {
   width: 100%;
 }
 
+/* Display discourse marker sections side by side */
+#essay-quiz-main .discourse-pair {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+#essay-quiz-main .discourse-pair > div {
+  flex: 1;
+  min-width: 320px;
+  background: var(--bg-light);
+  border: 3px solid var(--primary);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
 /* Arrange English acquisition blocks vertically */
 #english-quiz-main #acquisition .grade-container {
   flex-direction: column;
