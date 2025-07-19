@@ -252,6 +252,25 @@
                 });
        }
 
+       function adjustEssayInputWidths() {
+            document
+                .querySelectorAll('#essay-quiz-main input[data-answer]')
+                .forEach(input => {
+                    const answer = input.dataset.answer || '';
+                    const answerLen = answer.length;
+                    const hasHangul = /[\u3131-\uD79D]/.test(answer);
+                    const factor = hasHangul ? 1.2 : 1.1;
+                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 2);
+                    const inlineWidth = parseInt(input.style.width) || 0;
+                    const attrSize = parseInt(input.getAttribute('size')) || 0;
+                    const current = Math.max(inlineWidth, attrSize);
+                    if (current < desired) {
+                        input.setAttribute('size', desired);
+                        input.style.width = `${desired}ch`;
+                    }
+                });
+       }
+
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
             const topic = gameState.selectedTopic;
@@ -491,6 +510,7 @@
                updateStartModalUI();
                adjustCreativeInputWidths();
                adjustEnglishInputWidths();
+               adjustEssayInputWidths();
            }
 
             setCharacterState('idle');
@@ -535,6 +555,10 @@
                 gameState.selectedTopic === CONSTANTS.TOPICS.BASIC
             ) {
                 adjustEnglishInputWidths();
+            } else if (
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.ESSAY
+            ) {
+                adjustEssayInputWidths();
             }
             
             forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
