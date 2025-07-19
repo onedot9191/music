@@ -32,6 +32,7 @@
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
+                INTEGRATED_COURSE: 'integrated-course',
                 ESSAY: 'essay',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
@@ -225,7 +226,7 @@
        }
 
        function adjustCreativeInputWidths() {
-            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer]')
+            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answerLen = (input.dataset.answer || '').length;
                     const size = Math.max(2, answerLen + 1);
@@ -536,6 +537,7 @@
                 [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
                 [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
                 [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
+                [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
                 [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
                 [CONSTANTS.SUBJECTS.ESSAY]: '논술'
             };
@@ -547,7 +549,8 @@
            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
             if (
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE
             ) {
                 adjustCreativeInputWidths();
             } else if (
