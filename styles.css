@@ -286,7 +286,7 @@
     td input.fit-answer {
       width: auto;
       display: inline-block;
-      min-width: 14ch;
+      min-width: 18ch;
     }
     td input:focus {
       outline: none;
