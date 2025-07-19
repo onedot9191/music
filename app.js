@@ -521,6 +521,10 @@
             };
             headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
            const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+           if (!mainEl) {
+               console.error(`Element #${gameState.selectedSubject}-quiz-main not found`);
+               return;
+           }
            mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
            resetToFirstStage(gameState.selectedSubject);
 
