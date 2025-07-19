@@ -1001,6 +1001,17 @@ td input.activity-input:not(:first-child) {
   gap: 0.5rem;
 }
 
+/* Deeper sub-list levels for English quiz */
+#english-quiz-main .sub-list .sub-list {
+  margin-left: 3rem;
+  list-style-type: square;
+}
+
+#english-quiz-main .sub-list .sub-list .sub-list {
+  margin-left: 4rem;
+  list-style-type: disc;
+}
+
 /* Creative subject readability tweaks */
 #creative-quiz-main .creative-block {
   margin-bottom: 2rem;
