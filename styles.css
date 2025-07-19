@@ -1093,3 +1093,9 @@ td input.activity-input:not(:first-child) {
   color: var(--revealed);
   border-color: var(--revealed);
 }
+
+.essay-prompt {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
