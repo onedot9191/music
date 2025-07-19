@@ -981,10 +981,7 @@ td input.activity-input:not(:first-child) {
 #essay-quiz-main .discourse-pair > div {
   flex: 1;
   min-width: 320px;
-  background: var(--bg-light);
-  border: 3px solid var(--primary);
   padding: 2rem;
-  border-radius: 12px;
 }
 
 /* Arrange English acquisition blocks vertically */
