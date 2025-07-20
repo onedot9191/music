@@ -1118,6 +1118,7 @@ td input.activity-input:not(:first-child) {
   color: var(--text-light);
   text-align: center;
   width: auto;
+  min-width: 16ch;
 }
 #overview-quiz-main .overview-question input,
 #integrated-course-quiz-main .overview-question input {
@@ -1130,6 +1131,7 @@ td input.activity-input:not(:first-child) {
   color: var(--text-light);
   text-align: center;
   width: auto;
+  min-width: 16ch;
 }
 
 #creative-quiz-main .creative-question input:focus {
