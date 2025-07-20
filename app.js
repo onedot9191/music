@@ -222,7 +222,10 @@
 
        function focusFirstInput(container) {
            const firstInput = container.querySelector('input[data-answer]:not([disabled])');
-           if (firstInput) firstInput.focus();
+           if (firstInput) {
+               firstInput.focus();
+               firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+           }
        }
 
        function adjustCreativeInputWidths() {
@@ -807,6 +810,7 @@
                     for (let i = idx + 1; i < inputs.length; i++) {
                         if (!inputs[i].disabled) {
                             inputs[i].focus();
+                            inputs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
                             break;
                         }
                     }
@@ -1056,6 +1060,7 @@
                         for (let i = idx + 1; i < inputs.length; i++) {
                             if (!inputs[i].disabled) {
                                 inputs[i].focus();
+                                inputs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
                                 break;
                             }
                         }
