@@ -61,7 +61,7 @@
                 LOST: 'lost',
                 COMBO_POP: 'combo-pop'
             },
-            DEFAULT_DURATION: 600,
+            DEFAULT_DURATION: 900,
             HARD_CORE_DURATION: 60,
             HARD_CORE_LIVES: Infinity,
             HARD_CORE_TIME_BONUS: 5,
