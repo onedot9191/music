@@ -1011,8 +1011,8 @@ td input.activity-input:not(:first-child) {
 
 /* Prevent long essay answers from overflowing */
 #essay-quiz-main .assessment-list .fit-answer {
-  width: 100%;
-  max-width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .sub-list {
