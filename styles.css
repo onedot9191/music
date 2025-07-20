@@ -946,6 +946,7 @@ td input.activity-input:not(:first-child) {
 
 .inline-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
@@ -991,6 +992,12 @@ td input.activity-input:not(:first-child) {
 #english-quiz-main #acquisition .grade-container > div {
   flex: none;
   width: 100%;
+}
+
+/* Prevent long answers from overflowing in English quizzes */
+#english-quiz-main input.fit-answer {
+  width: 100%;
+  max-width: 100%;
 }
 
 .inline-answers {
