@@ -228,9 +228,18 @@
        function adjustCreativeInputWidths() {
             document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
-                    const answerLen = (input.dataset.answer || '').length;
-                    const size = Math.max(2, answerLen + 1);
-                    input.setAttribute('size', size);
+                    const answer = input.dataset.answer || '';
+                    const answerLen = answer.length;
+                    const hasHangul = /[\u3131-\uD79D]/.test(answer);
+                    const factor = hasHangul ? 1.8 : 1.3;
+                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 4);
+                    const inlineWidth = parseInt(input.style.width) || 0;
+                    const attrSize = parseInt(input.getAttribute('size')) || 0;
+                    const current = Math.max(inlineWidth, attrSize);
+                    if (current < desired) {
+                        input.setAttribute('size', desired);
+                        input.style.width = `${desired}ch`;
+                    }
                 });
        }
 
