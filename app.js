@@ -925,6 +925,16 @@
                     if (targetSection) {
                         targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                         focusFirstInput(targetSection);
+                        if (
+                            gameState.selectedSubject ===
+                                CONSTANTS.SUBJECTS.CREATIVE ||
+                            gameState.selectedSubject ===
+                                CONSTANTS.SUBJECTS.OVERVIEW ||
+                            gameState.selectedSubject ===
+                                CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                        ) {
+                            adjustCreativeInputWidths();
+                        }
                         if (targetId === 'activity-examples') {
                             const subTabs = targetSection.querySelector('.sub-tabs');
                             if (subTabs) {
@@ -937,6 +947,16 @@
                             if (defaultSection) {
                                 defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                                 focusFirstInput(defaultSection);
+                                if (
+                                    gameState.selectedSubject ===
+                                        CONSTANTS.SUBJECTS.CREATIVE ||
+                                    gameState.selectedSubject ===
+                                        CONSTANTS.SUBJECTS.OVERVIEW ||
+                                    gameState.selectedSubject ===
+                                        CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                                ) {
+                                    adjustCreativeInputWidths();
+                                }
                             }
                         }
                     }
@@ -960,6 +980,13 @@
                     if (targetSection) {
                         targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                         focusFirstInput(targetSection);
+                        if (
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                        ) {
+                            adjustCreativeInputWidths();
+                        }
                     }
                 }
             });
