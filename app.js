@@ -298,21 +298,18 @@
        }
 
        function adjustEssayInputWidths() {
+            const MAX_WIDTH_CH = 30;
             document
                 .querySelectorAll('#essay-quiz-main input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
                     const hasHangul = /[\u3131-\uD79D]/.test(answer);
-                    const factor = hasHangul ? 2.0 : 1.4;
-                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 6);
-                    const inlineWidth = parseInt(input.style.width) || 0;
-                    const attrSize = parseInt(input.getAttribute('size')) || 0;
-                    const current = Math.max(inlineWidth, attrSize);
-                    if (current < desired) {
-                        input.setAttribute('size', desired);
-                        input.style.width = `${desired}ch`;
-                    }
+                    const factor = hasHangul ? 1.3 : 1.1;
+                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 2);
+                    const widthCh = Math.min(desired, MAX_WIDTH_CH);
+                    input.setAttribute('size', widthCh);
+                    input.style.width = `${widthCh}ch`;
                 });
        }
 
