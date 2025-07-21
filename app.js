@@ -316,6 +316,17 @@
                 });
        }
 
+       function shuffleSocialityFunctionList() {
+            const list = document.getElementById('sociality-function-list');
+            if (!list) return;
+            const items = Array.from(list.children);
+            for (let i = items.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                list.appendChild(items[j]);
+                items.splice(j, 1);
+            }
+       }
+
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
             const topic = gameState.selectedTopic;
@@ -395,6 +406,9 @@
                     firstSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                     const defaultSection = firstSection.querySelector('#activity-exercise');
                     if (defaultSection) defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                }
+                if (subject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE) {
+                    shuffleSocialityFunctionList();
                 }
                 focusFirstInput(firstSection);
             }
