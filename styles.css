@@ -1132,6 +1132,7 @@ td input.activity-input:not(:first-child) {
   text-align: center;
   width: auto;
   min-width: 8ch;
+  max-width: 100%;
 }
 
 #creative-quiz-main .creative-question input:focus {
