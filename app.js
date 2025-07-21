@@ -69,6 +69,36 @@
             RANDOM_ANIMATION_INTERVAL: 100
         };
 
+        const SUBJECT_NAMES = {
+            [CONSTANTS.SUBJECTS.MUSIC]: '음악',
+            [CONSTANTS.SUBJECTS.ART]: '미술',
+            [CONSTANTS.SUBJECTS.KOREAN]: '국어',
+            [CONSTANTS.SUBJECTS.LIFE]: '바른 생활',
+            [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
+            [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
+            [CONSTANTS.SUBJECTS.PE]: '체육',
+            [CONSTANTS.SUBJECTS.ENGLISH]: '영어',
+            [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
+            [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
+            [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
+            [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
+            [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
+            [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
+            [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
+            [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
+            [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
+            [CONSTANTS.SUBJECTS.ESSAY]: '논술'
+        };
+
+        const TOPIC_NAMES = {
+            [CONSTANTS.TOPICS.CURRICULUM]: '내체표',
+            [CONSTANTS.TOPICS.COMPETENCY]: '역량',
+            [CONSTANTS.TOPICS.MODEL]: '모형',
+            [CONSTANTS.TOPICS.COURSE]: '교육과정',
+            [CONSTANTS.TOPICS.BASIC]: '기본이론',
+            [CONSTANTS.TOPICS.ESSAY]: '논술'
+        };
+
         // --- GAME STATE ---
         const gameState = {
             duration: CONSTANTS.DEFAULT_DURATION,
@@ -114,6 +144,8 @@
         const speechBubble = document.querySelector('.speech-bubble');
         const resultDialogue = document.getElementById('result-dialogue');
         const resultTitle = document.getElementById('result-title');
+        const resultSubject = document.getElementById('result-subject');
+        const resultTopic = document.getElementById('result-topic');
         
         // --- Audio ---
         const SFX_VOLUME = 0.4;
@@ -418,7 +450,9 @@
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-count').textContent = totalCount;
             document.getElementById('progress-text').textContent = `${percentage}%`;
-            
+            resultSubject.textContent = SUBJECT_NAMES[gameState.selectedSubject] || '';
+            resultTopic.textContent = TOPIC_NAMES[gameState.selectedTopic] || '';
+
             const progressBarFill = document.getElementById('progress-bar-fill');
             
             let feedback;
@@ -533,27 +567,8 @@
             playSound(startAudio);
             startModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
             
-            const subjectMap = {
-                [CONSTANTS.SUBJECTS.MUSIC]: '음악',
-                [CONSTANTS.SUBJECTS.ART]: '미술',
-                [CONSTANTS.SUBJECTS.KOREAN]: '국어',
-                [CONSTANTS.SUBJECTS.LIFE]: '바른 생활',
-                [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
-                [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
-                [CONSTANTS.SUBJECTS.PE]: '체육',
-                [CONSTANTS.SUBJECTS.ENGLISH]: '영어',
-                [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
-                [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
-                [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
-                [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
-                [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
-                [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
-                [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
-                [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
-                [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
-                [CONSTANTS.SUBJECTS.ESSAY]: '논술'
-            };
-            headerTitle.textContent = subjectMap[gameState.selectedSubject] || '퀴즈';
+            headerTitle.textContent =
+                SUBJECT_NAMES[gameState.selectedSubject] || '퀴즈';
            const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
            mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
            resetToFirstStage(gameState.selectedSubject);
