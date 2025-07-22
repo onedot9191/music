@@ -608,15 +608,25 @@ td input.activity-input:not(:first-child) {
     .heatmap-cell.level-3 { background: #a3e4b6; }
     .heatmap-cell.level-4 { background: #d1f2d6; }
 
-    /* Sidebar placement for heatmap */
-    #left-sidebar {
-        position: fixed;
-        top: 12rem;
-        left: 1rem;
-        z-index: 50;
+    /* Start modal layout for heatmap */
+    #start-modal .modal-content {
+        display: flex;
+        gap: 2rem;
+        max-width: 800px;
+        text-align: left;
     }
-    #left-sidebar #activity-heatmap {
-        margin-top: 0;
+    #start-modal .heatmap-panel {
+        width: 220px;
+        flex-shrink: 0;
+        text-align: center;
+    }
+    #start-modal .heatmap-panel h3 {
+        font-family: 'Press Start 2P', cursive;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+    #start-modal .settings-main {
+        flex: 1;
     }
 
     /* Character Assistant Styles */
