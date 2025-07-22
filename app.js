@@ -306,6 +306,8 @@
                 const values = Array.from(slotReels).map(r => r.textContent);
                 if (values.every(v => v === values[0])) {
                     playSound(slotWinAudio);
+                    slotMachineEl.classList.add('win');
+                    setTimeout(() => slotMachineEl.classList.remove('win'), 1000);
                     const duration = 800;
                     const end = Date.now() + duration;
                     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 300 };
