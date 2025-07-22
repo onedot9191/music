@@ -103,6 +103,29 @@
       border-radius: 2px;
     }
 
+    .slot-machine {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .slot-machine .reel {
+      width: 3rem;
+      height: 3rem;
+      background: var(--secondary);
+      border: 3px solid var(--primary);
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    .slot-machine.hidden {
+      display: none;
+    }
+
     .btn {
       cursor: pointer;
       font-weight: 700;
