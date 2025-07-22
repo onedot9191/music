@@ -371,8 +371,8 @@
        }
 
        function adjustEssayInputWidths() {
-            const MAX_WIDTH_CH = 30;
-            const MIN_WIDTH_CH = 16;
+            const MAX_WIDTH_CH = 80;
+            const MIN_WIDTH_CH = 30;
             document
                 .querySelectorAll('#essay-quiz-main input[data-answer]')
                 .forEach(input => {
