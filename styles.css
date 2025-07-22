@@ -608,15 +608,18 @@ td input.activity-input:not(:first-child) {
     .heatmap-cell.level-3 { background: #a3e4b6; }
     .heatmap-cell.level-4 { background: #d1f2d6; }
 
-    /* Sidebar placement for heatmap */
-    #left-sidebar {
-        position: fixed;
-        top: 12rem;
-        left: 1rem;
-        z-index: 50;
+    /* Heatmap panel placement next to settings */
+    #start-modal .modal-boxes {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
     }
-    #left-sidebar #activity-heatmap {
-        margin-top: 0;
+    #heatmap-panel {
+        max-width: 260px;
+    }
+    #heatmap-panel h2 {
+        margin-bottom: 1rem;
+        font-size: 2rem;
     }
 
     /* Character Assistant Styles */

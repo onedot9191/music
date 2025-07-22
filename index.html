@@ -38,9 +38,6 @@
       <button id="reset-btn" class="btn hidden">재시작</button>
     </div>
   </header>
-  <aside id="left-sidebar">
-      <div id="activity-heatmap"></div>
-  </aside>
   <main id="music-quiz-main" class="hidden">
     <div class="tabs">
       <div class="tab active" data-target="performance">연주</div>
@@ -3133,7 +3130,8 @@
   </div>
 
   <div id="start-modal" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-boxes">
+            <div class="modal-content">
             <h2>주제 선택</h2>
             <div class="topic-selector">
                 <button class="btn topic-btn selected" data-topic="curriculum">내체표</button>
@@ -3180,6 +3178,11 @@
                 <p>제한시간 60초, 정답 시 +5초가 주어집니다.</p>
             </div>
             <button id="start-game-btn" class="btn">시작</button>
+        </div>
+        <div id="heatmap-panel" class="modal-content">
+            <h2>Contributions</h2>
+            <div id="activity-heatmap"></div>
+        </div>
         </div>
     </div>
 
