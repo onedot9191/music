@@ -185,6 +185,42 @@
             usedAnswersMap = new WeakMap();
         }
 
+        function saveDailyStats(count) {
+            const key = new Date().toISOString().slice(0, 10);
+            const stats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
+            stats[key] = (stats[key] || 0) + count;
+            localStorage.setItem('dailyStats', JSON.stringify(stats));
+        }
+
+        function getDailyStats(days = 30) {
+            const stats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
+            const result = [];
+            for (let i = days - 1; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const key = d.toISOString().slice(0, 10);
+                result.push({ date: key, count: stats[key] || 0 });
+            }
+            return result;
+        }
+
+        function renderHeatmap(stats) {
+            const container = document.getElementById('activity-heatmap');
+            if (!container) return;
+            container.innerHTML = '';
+            const max = Math.max(...stats.map(s => s.count), 0);
+            stats.forEach(({ date, count }) => {
+                const cell = document.createElement('div');
+                cell.classList.add('heatmap-cell');
+                if (max > 0 && count > 0) {
+                    const level = Math.min(4, Math.ceil((count / max) * 4));
+                    cell.classList.add(`level-${level}`);
+                }
+                cell.title = `${date}: ${count}`;
+                container.appendChild(cell);
+            });
+        }
+
         function playSound(audioElement) {
             if (!audioElement || typeof audioElement.play !== 'function') {
                 console.error('Provided element is not a valid audio element.');
@@ -443,6 +479,7 @@
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => { btn.disabled = true; });
             }
+            renderHeatmap(getDailyStats(30));
         }
 
         function setCharacterState(state, duration = 1500) {
@@ -555,6 +592,8 @@
             const correctCount = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
             const totalCount = allInputs.length;
             const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+            saveDailyStats(correctCount);
 
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-count').textContent = totalCount;
@@ -1228,6 +1267,7 @@
         closeGuideBtn.addEventListener('click', () => {
             guideModal.classList.remove('active');
             startModal.classList.add('active');
+            updateStartModalUI();
         });
 
         closeProgressModalBtn.addEventListener('click', () => {
