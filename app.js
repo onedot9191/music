@@ -133,6 +133,8 @@
         const startModal = document.getElementById('start-modal');
         const guideModal = document.getElementById('guide-modal');
         const closeGuideBtn = document.getElementById('close-guide-btn');
+        const slotMachineOverlay = document.getElementById('slot-machine-overlay');
+        const slotMachineText = document.getElementById('slot-machine-text');
         const timeSettingDisplay = document.getElementById('time-setting-display');
         const decreaseTimeBtn = document.getElementById('decrease-time');
         const increaseTimeBtn = document.getElementById('increase-time');
@@ -945,12 +947,15 @@
                 gameState.isRandomizing = true;
                 const subjectBtns = Array.from(document.querySelectorAll('.subject-btn:not([data-subject="random"]):not(.hidden)'));
                 const allSelectorBtns = document.querySelectorAll('.subject-selector .btn');
-                
+
                 allSelectorBtns.forEach(b => b.disabled = true);
                 subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
 
                 randomAudio.loop = true;
                 playSound(randomAudio);
+
+                slotMachineOverlay.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                const subjectNames = subjectBtns.map(b => b.textContent);
 
                 let shuffleCount = 0;
                 const maxShuffles = CONSTANTS.RANDOM_ANIMATION_DURATION / CONSTANTS.RANDOM_ANIMATION_INTERVAL;
@@ -958,24 +963,27 @@
                 const randomInterval = setInterval(() => {
                     shuffleCount++;
                     subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.IS_SELECTING));
+                    const currentIndex = shuffleCount % subjectBtns.length;
+                    subjectBtns[currentIndex].classList.add(CONSTANTS.CSS_CLASSES.IS_SELECTING);
+                    slotMachineText.textContent = subjectNames[currentIndex];
 
                     if (shuffleCount >= maxShuffles) {
                         clearInterval(randomInterval);
                         randomAudio.pause();
-                        
+
                         const randomIndex = Math.floor(Math.random() * subjectBtns.length);
                         const chosenBtn = subjectBtns[randomIndex];
-                        
-                        chosenBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                        gameState.selectedSubject = chosenBtn.dataset.subject;
-                        
-                        allSelectorBtns.forEach(b => b.disabled = false);
-                        gameState.isRandomizing = false;
-                        return;
+
+                        slotMachineText.textContent = chosenBtn.textContent;
+
+                        setTimeout(() => {
+                            slotMachineOverlay.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+                            chosenBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                            gameState.selectedSubject = chosenBtn.dataset.subject;
+                            allSelectorBtns.forEach(b => b.disabled = false);
+                            gameState.isRandomizing = false;
+                        }, 500);
                     }
-                    
-                    const currentIndex = shuffleCount % subjectBtns.length;
-                    subjectBtns[currentIndex].classList.add(CONSTANTS.CSS_CLASSES.IS_SELECTING);
                 }, CONSTANTS.RANDOM_ANIMATION_INTERVAL);
             } else {
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
