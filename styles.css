@@ -105,20 +105,20 @@
 
     .slot-machine {
       display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
     .slot-machine .reel {
-      width: 3rem;
-      height: 3rem;
+      width: 5rem;
+      height: 5rem;
       background: var(--secondary);
       border: 3px solid var(--primary);
       border-radius: 4px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
+      font-size: 3rem;
       font-family: 'Press Start 2P', cursive;
       transition: transform 0.3s, opacity 0.3s;
     }
