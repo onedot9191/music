@@ -173,7 +173,7 @@
         const clickAudio = new Audio('./click.mp3');
         clickAudio.preload = 'auto';
         clickAudio.volume = SFX_VOLUME;
-        const slotWinAudio = new Audio('./success.mp3');
+        const slotWinAudio = new Audio('./hit.mp3');
         slotWinAudio.preload = 'auto';
         slotWinAudio.volume = SFX_VOLUME;
         
@@ -268,7 +268,8 @@
             generateSymbols() {
                 const symbols = [];
                 symbols[0] = this.randomSymbol();
-                symbols[1] = Math.random() < 0.7 ? symbols[0] : this.randomSymbol();
+                // Increase chance that the first two reels match
+                symbols[1] = Math.random() < 0.9 ? symbols[0] : this.randomSymbol();
                 if (symbols[1] === symbols[0]) {
                     symbols[2] = Math.random() < 0.5 ? symbols[0] : this.randomSymbol();
                 } else {
@@ -305,6 +306,8 @@
                 const values = Array.from(slotReels).map(r => r.textContent);
                 if (values.every(v => v === values[0])) {
                     playSound(slotWinAudio);
+                    slotMachineEl.classList.add('win');
+                    setTimeout(() => slotMachineEl.classList.remove('win'), 1000);
                     const duration = 800;
                     const end = Date.now() + duration;
                     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 300 };
@@ -371,8 +374,8 @@
        }
 
        function adjustEssayInputWidths() {
-            const MAX_WIDTH_CH = 30;
-            const MIN_WIDTH_CH = 16;
+            const MAX_WIDTH_CH = 80;
+            const MIN_WIDTH_CH = 30;
             document
                 .querySelectorAll('#essay-quiz-main input[data-answer]')
                 .forEach(input => {
