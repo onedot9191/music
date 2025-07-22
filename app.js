@@ -299,6 +299,7 @@
 
        function adjustEssayInputWidths() {
             const MAX_WIDTH_CH = 30;
+            const MIN_WIDTH_CH = 16;
             document
                 .querySelectorAll('#essay-quiz-main input[data-answer]')
                 .forEach(input => {
@@ -307,9 +308,30 @@
                     const hasHangul = /[\u3131-\uD79D]/.test(answer);
                     const factor = hasHangul ? 1.3 : 1.1;
                     const desired = Math.max(2, Math.ceil(answerLen * factor) + 2);
-                    const widthCh = Math.min(desired, MAX_WIDTH_CH);
+                    const widthCh = Math.max(MIN_WIDTH_CH, Math.min(desired, MAX_WIDTH_CH));
                     input.setAttribute('size', widthCh);
                     input.style.width = `${widthCh}ch`;
+                });
+       }
+
+       function adjustBasicTopicInputWidths() {
+            if (gameState.selectedTopic !== CONSTANTS.TOPICS.BASIC) return;
+            const mainId = `${gameState.selectedSubject}-quiz-main`;
+            document
+                .querySelectorAll(`#${mainId} input[data-answer]`)
+                .forEach(input => {
+                    const answer = input.dataset.answer || '';
+                    const answerLen = answer.length;
+                    const hasHangul = /[\u3131-\uD79D]/.test(answer);
+                    const factor = hasHangul ? 1.8 : 1.3;
+                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 4);
+                    const inlineWidth = parseInt(input.style.width) || 0;
+                    const attrSize = parseInt(input.getAttribute('size')) || 0;
+                    const current = Math.max(inlineWidth, attrSize);
+                    if (current < desired) {
+                        input.setAttribute('size', desired);
+                        input.style.width = `${desired}ch`;
+                    }
                 });
        }
 
@@ -569,6 +591,7 @@
                adjustCreativeInputWidths();
                adjustEnglishInputWidths();
                adjustEssayInputWidths();
+               adjustBasicTopicInputWidths();
            }
 
             setCharacterState('idle');
@@ -601,6 +624,7 @@
             ) {
                 adjustEssayInputWidths();
             }
+            adjustBasicTopicInputWidths();
             
             forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             
