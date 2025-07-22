@@ -147,7 +147,7 @@
         const resultSubject = document.getElementById('result-subject');
         const resultTopic = document.getElementById('result-topic');
         const slotMachineEl = document.getElementById('slot-machine');
-        const slotReels = slotMachineEl.querySelectorAll('.reel img');
+        const slotReels = slotMachineEl.querySelectorAll('.reel');
         
         // --- Audio ---
         const SFX_VOLUME = 0.4;
@@ -258,15 +258,7 @@
        }
 
         // --- SLOT MACHINE ---
-        const SLOT_SYMBOLS = ['cherry', 'lemon', 'bell', 'star', 'seven'];
-        const SYMBOL_MAP = {
-            cherry: 'icons/cherry.svg',
-            lemon: 'icons/lemon.svg',
-            bell: 'icons/bell.svg',
-            star: 'icons/star.svg',
-            seven: 'icons/seven.svg',
-            question: 'icons/question.svg'
-        };
+        const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '⭐', '7'];
         const slotMachine = {
             index: 0,
             predetermined: [],
@@ -295,17 +287,14 @@
                 this.predetermined = this.generateSymbols();
                 slotMachineEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 slotReels.forEach(reel => {
-                    reel.src = SYMBOL_MAP.question;
-                    reel.dataset.symbol = 'question';
+                    reel.textContent = '?';
                     reel.classList.remove('revealed');
                 });
             },
             stopNext() {
                 if (this.index >= slotReels.length) return;
                 const reel = slotReels[this.index];
-                const symbol = this.predetermined[this.index];
-                reel.src = SYMBOL_MAP[symbol];
-                reel.dataset.symbol = symbol;
+                reel.textContent = this.predetermined[this.index];
                 reel.classList.add('revealed');
                 setTimeout(() => reel.classList.remove('revealed'), 300);
                 this.index++;
@@ -314,7 +303,7 @@
                 }
             },
             checkWin() {
-                const values = Array.from(slotReels).map(r => r.dataset.symbol);
+                const values = Array.from(slotReels).map(r => r.textContent);
                 if (values.every(v => v === values[0])) {
                     playSound(slotWinAudio);
                     slotMachineEl.classList.add('win');
@@ -332,10 +321,7 @@
                 setTimeout(() => this.start(), 1000);
             },
             reset() {
-                slotReels.forEach(reel => {
-                    reel.src = SYMBOL_MAP.question;
-                    reel.dataset.symbol = 'question';
-                });
+                slotReels.forEach(reel => reel.textContent = '?');
                 this.predetermined = [];
                 this.index = 0;
                 if (slotMachineEl) slotMachineEl.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
