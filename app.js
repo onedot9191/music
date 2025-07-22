@@ -141,7 +141,8 @@
         const subjectSelector = document.querySelector('.subject-selector');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
-        const speechBubble = document.querySelector('.speech-bubble');
+        const speechBubble = progressModal.querySelector('.speech-bubble');
+        const assistantBubble = document.getElementById('assistant-bubble');
         const resultDialogue = document.getElementById('result-dialogue');
         const resultTitle = document.getElementById('result-title');
         const resultSubject = document.getElementById('result-subject');
@@ -256,6 +257,23 @@
                heart.classList.toggle(CONSTANTS.CSS_CLASSES.LOST, index >= gameState.lives);
            });
        }
+
+        function updateAssistantBubble() {
+            if (!assistantBubble) return;
+            const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
+            if (!activeSection) {
+                assistantBubble.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                return;
+            }
+            const inputs = Array.from(activeSection.querySelectorAll('input[data-answer]'));
+            const remaining = inputs.filter(inp => !inp.disabled).length;
+            if (inputs.length >= 10 && remaining > 0 && remaining <= 5) {
+                assistantBubble.textContent = `빈칸 ${remaining}개 남았어요!`;
+                assistantBubble.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            } else {
+                assistantBubble.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
+        }
 
         // --- SLOT MACHINE ---
         const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '⭐', '7'];
@@ -506,6 +524,7 @@
                     shuffleSocialityFunctionList();
                 }
                 focusFirstInput(firstSection);
+                updateAssistantBubble();
             }
         }
 
@@ -548,9 +567,11 @@
             } else {
                 showProgress();
             }
+            updateAssistantBubble();
         }
 
-        function showProgress() {
+       function showProgress() {
+            assistantBubble.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             const allInputs = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`);
             const correctCount = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
             const totalCount = allInputs.length;
@@ -656,7 +677,9 @@
             resetBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-            livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+           livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+
+            assistantBubble.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
             // Reset competency tab states
            document.querySelectorAll('.competency-tab.cleared')
@@ -726,13 +749,14 @@
                 gameState.timerId = setInterval(tick, 1000);
             }
             setCharacterState('idle');
-            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
-                character.classList.add('devil-mode');
-            }
+           if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+               character.classList.add('devil-mode');
+           }
 
            const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
            if (activeSection) focusFirstInput(activeSection);
-            slotMachine.start();
+            updateAssistantBubble();
+           slotMachine.start();
        }
 
         function checkStageClear(sectionElement) {
@@ -756,6 +780,7 @@
            playSound(clearAudio);
            stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
            setCharacterState('cheer', 5000);
+            assistantBubble.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
             if (gameState.timerId !== null) {
                 clearInterval(gameState.timerId);
@@ -838,6 +863,7 @@
                         input.disabled = true;
                     });
                 });
+            updateAssistantBubble();
         }
 
         function handleInputChange(e) {
@@ -968,6 +994,7 @@
                     }
                 }
             }
+            updateAssistantBubble();
         }
 
         // --- EVENT LISTENERS ---
@@ -1267,10 +1294,11 @@
                             );
                             input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
                         }
-                        input.disabled = true;
-                    });
+                    input.disabled = true;
+                });
             }
             showAnswersBtn.disabled = true;
+            updateAssistantBubble();
         });
 
         // --- INITIAL SETUP ---
