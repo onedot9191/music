@@ -606,7 +606,8 @@ td input.activity-input:not(:first-child) {
     .heatmap-cell.level-1 { background: #4c9f70; }
     .heatmap-cell.level-2 { background: #6fcf97; }
     .heatmap-cell.level-3 { background: #a3e4b6; }
-    .heatmap-cell.level-4 { background: #d1f2d6; }
+.heatmap-cell.level-4 { background: #d1f2d6; }
+.heatmap-cell.empty { background: transparent; }
 
     /* Heatmap panel placement next to settings */
     #start-modal .modal-boxes {
