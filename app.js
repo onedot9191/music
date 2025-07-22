@@ -175,7 +175,7 @@
         clickAudio.volume = SFX_VOLUME;
         const slotWinAudio = new Audio('./hit.mp3');
         slotWinAudio.preload = 'auto';
-        slotWinAudio.volume = SFX_VOLUME;
+        slotWinAudio.volume = Math.min(1, SFX_VOLUME * 2);
         
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
