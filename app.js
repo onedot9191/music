@@ -204,10 +204,20 @@
             return result;
         }
 
-        function renderHeatmap(stats) {
-            const container = document.getElementById('activity-heatmap');
-            if (!container) return;
-            container.innerHTML = '';
+       function renderHeatmap(stats) {
+           const container = document.getElementById('activity-heatmap');
+           if (!container) return;
+           container.innerHTML = '';
+            if (stats.length === 0) return;
+
+            const firstDate = new Date(stats[0].date);
+            let offset = (firstDate.getDay() + 6) % 7; // Monday = 0
+            for (let i = 0; i < offset; i++) {
+                const empty = document.createElement('div');
+                empty.classList.add('heatmap-cell', 'empty');
+                container.appendChild(empty);
+            }
+
             const max = Math.max(...stats.map(s => s.count), 0);
             stats.forEach(({ date, count }) => {
                 const cell = document.createElement('div');
