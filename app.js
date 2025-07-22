@@ -658,7 +658,10 @@
 
         function checkStageClear(sectionElement) {
             const inputsInSection = sectionElement.querySelectorAll('input[data-answer]');
-            return inputsInSection.length > 0 && [...inputsInSection].every(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT));
+            return (
+                inputsInSection.length > 0 &&
+                [...inputsInSection].every(input => input.disabled)
+            );
         }
 
        function showStageClear() {
@@ -818,13 +821,6 @@
                     comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
                 }
                 
-                if (checkStageClear(section)) {
-                    if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
-                        setTimeout(() => celebrateCompetencySection(section), 300);
-                    } else {
-                        setTimeout(showStageClear, 300);
-                    }
-                }
             } else {
                 gameState.combo = 0;
                 updateMushroomGrowth();
@@ -849,6 +845,14 @@
                 } else {
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.value = '';
+                }
+            }
+
+            if (shouldAdvance && checkStageClear(section)) {
+                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                    setTimeout(() => celebrateCompetencySection(section), 300);
+                } else {
+                    setTimeout(showStageClear, 300);
                 }
             }
 
