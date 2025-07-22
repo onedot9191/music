@@ -173,7 +173,7 @@
         const clickAudio = new Audio('./click.mp3');
         clickAudio.preload = 'auto';
         clickAudio.volume = SFX_VOLUME;
-        const slotWinAudio = new Audio('./success.mp3');
+        const slotWinAudio = new Audio('./hit.mp3');
         slotWinAudio.preload = 'auto';
         slotWinAudio.volume = SFX_VOLUME;
         
