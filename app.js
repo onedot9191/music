@@ -146,6 +146,8 @@
         const resultTitle = document.getElementById('result-title');
         const resultSubject = document.getElementById('result-subject');
         const resultTopic = document.getElementById('result-topic');
+        const slotMachineEl = document.getElementById('slot-machine');
+        const slotReels = slotMachineEl.querySelectorAll('.reel');
         
         // --- Audio ---
         const SFX_VOLUME = 0.4;
@@ -171,6 +173,9 @@
         const clickAudio = new Audio('./click.mp3');
         clickAudio.preload = 'auto';
         clickAudio.volume = SFX_VOLUME;
+        const slotWinAudio = new Audio('./clear.mp3');
+        slotWinAudio.preload = 'auto';
+        slotWinAudio.volume = SFX_VOLUME;
         
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
@@ -245,12 +250,52 @@
             timeSettingDisplay.textContent = formatTime(gameState.duration);
         }
 
-        function updateLivesUI() {
-            const heartIcons = livesContainer.querySelectorAll('.heart-icon');
-            heartIcons.forEach((heart, index) => {
-                heart.classList.toggle(CONSTANTS.CSS_CLASSES.LOST, index >= gameState.lives);
-            });
-        }
+       function updateLivesUI() {
+           const heartIcons = livesContainer.querySelectorAll('.heart-icon');
+           heartIcons.forEach((heart, index) => {
+               heart.classList.toggle(CONSTANTS.CSS_CLASSES.LOST, index >= gameState.lives);
+           });
+       }
+
+        // --- SLOT MACHINE ---
+        const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '⭐', '7'];
+        const slotMachine = {
+            index: 0,
+            intervals: [],
+            start() {
+                if (!slotMachineEl) return;
+                this.index = 0;
+                slotMachineEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                slotReels.forEach((reel, i) => {
+                    this.intervals[i] = setInterval(() => {
+                        reel.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+                    }, 100);
+                });
+            },
+            stopNext() {
+                if (this.index >= slotReels.length) return;
+                clearInterval(this.intervals[this.index]);
+                this.intervals[this.index] = null;
+                this.index++;
+                if (this.index === slotReels.length) {
+                    this.checkWin();
+                }
+            },
+            checkWin() {
+                const values = Array.from(slotReels).map(r => r.textContent);
+                if (values.every(v => v === values[0])) {
+                    playSound(slotWinAudio);
+                }
+                setTimeout(() => this.start(), 1000);
+            },
+            reset() {
+                slotReels.forEach(reel => reel.textContent = '?');
+                this.intervals.forEach(iv => clearInterval(iv));
+                this.intervals = [];
+                this.index = 0;
+                if (slotMachineEl) slotMachineEl.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
+        };
 
        function focusFirstInput(container) {
            const firstInput = container.querySelector('input[data-answer]:not([disabled])');
@@ -535,8 +580,9 @@
             updateMushroomGrowth();
             headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-            
+
             forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            slotMachine.reset();
             setCharacterState('sad');
             showProgress();
         }
@@ -594,8 +640,9 @@
                adjustBasicTopicInputWidths();
            }
 
-            setCharacterState('idle');
-        }
+           setCharacterState('idle');
+            slotMachine.reset();
+       }
 
         function startGame() {
             playSound(startAudio);
@@ -652,9 +699,10 @@
                 character.classList.add('devil-mode');
             }
 
-            const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
-            if (activeSection) focusFirstInput(activeSection);
-        }
+           const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
+           if (activeSection) focusFirstInput(activeSection);
+            slotMachine.start();
+       }
 
         function checkStageClear(sectionElement) {
             const inputs = sectionElement.querySelectorAll('input[data-answer]');
@@ -815,6 +863,7 @@
                 gameState.combo++;
                 setCharacterState('happy');
                 updateMushroomGrowth();
+                slotMachine.stopNext();
 
                 if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                     gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
