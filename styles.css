@@ -589,6 +589,25 @@ td input.activity-input:not(:first-child) {
         font-size: 1.4rem;
     }
 
+    /* Activity Heatmap */
+    #activity-heatmap {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        justify-items: center;
+        margin-top: 1rem;
+    }
+    .heatmap-cell {
+        width: 20px;
+        height: 20px;
+        background: #444;
+        border-radius: 4px;
+    }
+    .heatmap-cell.level-1 { background: #4c9f70; }
+    .heatmap-cell.level-2 { background: #6fcf97; }
+    .heatmap-cell.level-3 { background: #a3e4b6; }
+    .heatmap-cell.level-4 { background: #d1f2d6; }
+
     /* Character Assistant Styles */
     #character-assistant {
         position: fixed;
