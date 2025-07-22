@@ -173,7 +173,7 @@
         const clickAudio = new Audio('./click.mp3');
         clickAudio.preload = 'auto';
         clickAudio.volume = SFX_VOLUME;
-        const slotWinAudio = new Audio('./clear.mp3');
+        const slotWinAudio = new Audio('./success.mp3');
         slotWinAudio.preload = 'auto';
         slotWinAudio.volume = SFX_VOLUME;
         
@@ -261,9 +261,7 @@
         const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '⭐', '7'];
         const slotMachine = {
             index: 0,
-            intervals: [],
             predetermined: [],
-            SPIN_SPEED: 300,
             randomSymbol() {
                 return SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
             },
@@ -287,17 +285,17 @@
                 this.index = 0;
                 this.predetermined = this.generateSymbols();
                 slotMachineEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-                slotReels.forEach((reel, i) => {
-                    this.intervals[i] = setInterval(() => {
-                        reel.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                    }, this.SPIN_SPEED);
+                slotReels.forEach(reel => {
+                    reel.textContent = '?';
+                    reel.classList.remove('revealed');
                 });
             },
             stopNext() {
                 if (this.index >= slotReels.length) return;
-                clearInterval(this.intervals[this.index]);
-                this.intervals[this.index] = null;
-                slotReels[this.index].textContent = this.predetermined[this.index];
+                const reel = slotReels[this.index];
+                reel.textContent = this.predetermined[this.index];
+                reel.classList.add('revealed');
+                setTimeout(() => reel.classList.remove('revealed'), 300);
                 this.index++;
                 if (this.index === slotReels.length) {
                     this.checkWin();
@@ -307,13 +305,20 @@
                 const values = Array.from(slotReels).map(r => r.textContent);
                 if (values.every(v => v === values[0])) {
                     playSound(slotWinAudio);
+                    const duration = 800;
+                    const end = Date.now() + duration;
+                    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 300 };
+                    const interval = setInterval(() => {
+                        const timeLeft = end - Date.now();
+                        if (timeLeft <= 0) return clearInterval(interval);
+                        const count = 50 * (timeLeft / duration);
+                        confetti({ ...defaults, particleCount: count, origin: { x: Math.random(), y: Math.random() - 0.2 } });
+                    }, 200);
                 }
                 setTimeout(() => this.start(), 1000);
             },
             reset() {
                 slotReels.forEach(reel => reel.textContent = '?');
-                this.intervals.forEach(iv => clearInterval(iv));
-                this.intervals = [];
                 this.predetermined = [];
                 this.index = 0;
                 if (slotMachineEl) slotMachineEl.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
