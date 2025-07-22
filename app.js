@@ -262,20 +262,42 @@
         const slotMachine = {
             index: 0,
             intervals: [],
+            predetermined: [],
+            SPIN_SPEED: 300,
+            randomSymbol() {
+                return SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
+            },
+            generateSymbols() {
+                const symbols = [];
+                symbols[0] = this.randomSymbol();
+                symbols[1] = Math.random() < 0.7 ? symbols[0] : this.randomSymbol();
+                if (symbols[1] === symbols[0]) {
+                    symbols[2] = Math.random() < 0.5 ? symbols[0] : this.randomSymbol();
+                } else {
+                    if (Math.random() < 0.5) {
+                        symbols[2] = Math.random() < 0.5 ? symbols[0] : symbols[1];
+                    } else {
+                        symbols[2] = this.randomSymbol();
+                    }
+                }
+                return symbols;
+            },
             start() {
                 if (!slotMachineEl) return;
                 this.index = 0;
+                this.predetermined = this.generateSymbols();
                 slotMachineEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 slotReels.forEach((reel, i) => {
                     this.intervals[i] = setInterval(() => {
                         reel.textContent = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-                    }, 100);
+                    }, this.SPIN_SPEED);
                 });
             },
             stopNext() {
                 if (this.index >= slotReels.length) return;
                 clearInterval(this.intervals[this.index]);
                 this.intervals[this.index] = null;
+                slotReels[this.index].textContent = this.predetermined[this.index];
                 this.index++;
                 if (this.index === slotReels.length) {
                     this.checkWin();
@@ -292,6 +314,7 @@
                 slotReels.forEach(reel => reel.textContent = '?');
                 this.intervals.forEach(iv => clearInterval(iv));
                 this.intervals = [];
+                this.predetermined = [];
                 this.index = 0;
                 if (slotMachineEl) slotMachineEl.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             }
