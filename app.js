@@ -268,7 +268,8 @@
             generateSymbols() {
                 const symbols = [];
                 symbols[0] = this.randomSymbol();
-                symbols[1] = Math.random() < 0.7 ? symbols[0] : this.randomSymbol();
+                // Increase chance that the first two reels match
+                symbols[1] = Math.random() < 0.9 ? symbols[0] : this.randomSymbol();
                 if (symbols[1] === symbols[0]) {
                     symbols[2] = Math.random() < 0.5 ? symbols[0] : this.randomSymbol();
                 } else {
