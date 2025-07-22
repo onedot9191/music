@@ -595,7 +595,7 @@ td input.activity-input:not(:first-child) {
         grid-template-columns: repeat(7, 1fr);
         gap: 4px;
         justify-items: center;
-        margin-top: 1rem;
+        margin: 1rem auto 0;
     }
     .heatmap-cell {
         width: 20px;
@@ -616,10 +616,13 @@ td input.activity-input:not(:first-child) {
     }
     #heatmap-panel {
         max-width: 260px;
+        text-align: center;
     }
     #heatmap-panel h2 {
         margin-bottom: 1rem;
-        font-size: 2rem;
+        font-size: 1.6rem;
+        font-family: 'Noto Sans KR', sans-serif;
+        word-break: keep-all;
     }
 
     /* Character Assistant Styles */
