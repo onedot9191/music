@@ -120,6 +120,16 @@
       align-items: center;
       font-size: 2rem;
       font-family: 'Press Start 2P', cursive;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .slot-machine .reel.revealed {
+      animation: reel-pop 0.3s ease-out;
+    }
+
+    @keyframes reel-pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .slot-machine.hidden {
