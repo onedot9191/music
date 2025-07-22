@@ -608,6 +608,17 @@ td input.activity-input:not(:first-child) {
     .heatmap-cell.level-3 { background: #a3e4b6; }
     .heatmap-cell.level-4 { background: #d1f2d6; }
 
+    /* Sidebar placement for heatmap */
+    #left-sidebar {
+        position: fixed;
+        top: 12rem;
+        left: 1rem;
+        z-index: 50;
+    }
+    #left-sidebar #activity-heatmap {
+        margin-top: 0;
+    }
+
     /* Character Assistant Styles */
     #character-assistant {
         position: fixed;
