@@ -760,26 +760,6 @@ td input.activity-input:not(:first-child) {
         filter: blur(1px);
         z-index: 0;
     }
-
-    #assistant-bubble {
-        position: absolute;
-        right: 100%;
-        bottom: 50%;
-        transform: translateY(50%);
-        margin-right: 10px;
-        white-space: nowrap;
-    }
-
-    #assistant-bubble:after {
-        left: 100%;
-        top: 50%;
-        border: 20px solid transparent;
-        border-left-color: var(--primary);
-        border-right: 0;
-        border-bottom: 0;
-        margin-top: -10px;
-        margin-left: 0;
-    }
     .flame {
         width: 15px;
         height: 25px;
