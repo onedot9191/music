@@ -657,10 +657,19 @@
         }
 
         function checkStageClear(sectionElement) {
-            const inputsInSection = sectionElement.querySelectorAll('input[data-answer]');
+            const inputs = sectionElement.querySelectorAll('input[data-answer]');
             return (
-                inputsInSection.length > 0 &&
-                [...inputsInSection].every(input => input.disabled)
+                inputs.length > 0 &&
+                [...inputs].every(input =>
+                    input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)
+                )
+            );
+        }
+
+        function isSectionComplete(sectionElement) {
+            const inputs = sectionElement.querySelectorAll('input[data-answer]');
+            return (
+                inputs.length > 0 && [...inputs].every(input => input.disabled)
             );
         }
 
@@ -848,11 +857,20 @@
                 }
             }
 
-            if (shouldAdvance && checkStageClear(section)) {
-                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
-                    setTimeout(() => celebrateCompetencySection(section), 300);
+            if (shouldAdvance && isSectionComplete(section)) {
+                if (checkStageClear(section)) {
+                    if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                        setTimeout(() => celebrateCompetencySection(section), 300);
+                    } else {
+                        setTimeout(showStageClear, 300);
+                    }
                 } else {
-                    setTimeout(showStageClear, 300);
+                    setTimeout(() => {
+                        advanceToNextStage();
+                        if (gameState.total > 0 && gameState.timerId === null) {
+                            gameState.timerId = setInterval(tick, 1000);
+                        }
+                    }, 300);
                 }
             }
 
