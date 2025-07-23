@@ -307,7 +307,18 @@
        }
 
         // --- SLOT MACHINE ---
-        const SLOT_SYMBOLS = ['🍒', '🍋', '🔔', '⭐', '7'];
+        const SLOT_SYMBOLS = [
+            '🍒',
+            '🍋',
+            '🔔',
+            '⭐',
+            '7',
+            '🍉',
+            '🍇',
+            '💎',
+            '👑',
+            '🍀'
+        ];
         const slotMachine = {
             index: 0,
             predetermined: [],
