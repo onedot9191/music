@@ -563,7 +563,7 @@
             }
         }
 
-        function advanceToNextStage() {
+        function advanceToNextStage(showProgressIfNoNext = true) {
             const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
             if (!main) return;
             const tabs = Array.from(main.querySelector('.tabs').querySelectorAll('.tab'));
@@ -599,7 +599,7 @@
                         focusFirstInput(nextSection);
                     }
                 }
-            } else {
+            } else if (showProgressIfNoNext) {
                 showProgress();
             }
         }
@@ -833,7 +833,7 @@
             setTimeout(() => {
                 clearInterval(interval);
                 stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-                advanceToNextStage();
+                advanceToNextStage(false);
                 if (gameState.total > 0 && gameState.timerId === null) {
                     gameState.timerId = setInterval(tick, 1000);
                 }
@@ -863,7 +863,7 @@
                 }, 250);
                 setTimeout(() => {
                     clearInterval(interval);
-                    advanceToNextStage();
+                    advanceToNextStage(false);
                     if (gameState.total > 0 && gameState.timerId === null) {
                         gameState.timerId = setInterval(tick, 1000);
                     }
@@ -1002,7 +1002,7 @@
                     }
                 } else {
                     setTimeout(() => {
-                        advanceToNextStage();
+                        advanceToNextStage(false);
                         if (gameState.total > 0 && gameState.timerId === null) {
                             gameState.timerId = setInterval(tick, 1000);
                         }
