@@ -638,9 +638,15 @@ td input.activity-input:not(:first-child) {
         gap: 2rem;
         align-items: flex-start;
     }
+    #settings-panel {
+        width: 600px;
+        max-width: 600px;
+        flex-shrink: 0;
+    }
     #heatmap-panel {
         max-width: 260px;
         text-align: center;
+        flex-shrink: 0;
     }
     #heatmap-panel h2 {
         margin-bottom: 1rem;
