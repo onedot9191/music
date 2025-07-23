@@ -368,15 +368,8 @@
                     playSound(slotWinAudio);
                     slotMachineEl.classList.add('win');
                     setTimeout(() => slotMachineEl.classList.remove('win'), 1000);
-                    const duration = 800;
-                    const end = Date.now() + duration;
-                    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 300 };
-                    const interval = setInterval(() => {
-                        const timeLeft = end - Date.now();
-                        if (timeLeft <= 0) return clearInterval(interval);
-                        const count = 50 * (timeLeft / duration);
-                        confetti({ ...defaults, particleCount: count, origin: { x: Math.random(), y: Math.random() - 0.2 } });
-                    }, 200);
+                    slotMachineEl.classList.add('win-lights');
+                    setTimeout(() => slotMachineEl.classList.remove('win-lights'), 800);
                 }
                 setTimeout(() => this.start(), 1000);
             },
