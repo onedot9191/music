@@ -29,6 +29,7 @@
                 PRACTICAL: 'practical',
                 SOCIAL: 'social',
                 SCIENCE: 'science',
+                SCIENCE_STD: 'science-std',
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
@@ -43,7 +44,8 @@
                 MODEL: 'model',
                 COURSE: 'course',
                 BASIC: 'basic',
-                ESSAY: 'essay'
+                ESSAY: 'essay',
+                ACHIEVEMENT: 'achievement'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -82,6 +84,7 @@
             [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
+            [CONSTANTS.SUBJECTS.SCIENCE_STD]: '과학',
             [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
@@ -96,7 +99,8 @@
             [CONSTANTS.TOPICS.MODEL]: '모형',
             [CONSTANTS.TOPICS.COURSE]: '교육과정',
             [CONSTANTS.TOPICS.BASIC]: '기본이론',
-            [CONSTANTS.TOPICS.ESSAY]: '논술'
+            [CONSTANTS.TOPICS.ESSAY]: '논술',
+            [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준'
         };
 
         // --- GAME STATE ---
@@ -483,7 +487,8 @@
                 topic === CONSTANTS.TOPICS.CURRICULUM ||
                 topic === CONSTANTS.TOPICS.MODEL ||
                 topic === CONSTANTS.TOPICS.COURSE ||
-                topic === CONSTANTS.TOPICS.BASIC
+                topic === CONSTANTS.TOPICS.BASIC ||
+                topic === CONSTANTS.TOPICS.ACHIEVEMENT
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => {
@@ -1038,7 +1043,8 @@
                 topic === CONSTANTS.TOPICS.CURRICULUM ||
                 topic === CONSTANTS.TOPICS.MODEL ||
                 topic === CONSTANTS.TOPICS.COURSE ||
-                topic === CONSTANTS.TOPICS.BASIC
+                topic === CONSTANTS.TOPICS.BASIC ||
+                topic === CONSTANTS.TOPICS.ACHIEVEMENT
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
@@ -1049,6 +1055,8 @@
                     defaultSubject = CONSTANTS.SUBJECTS.PE_BACK;
                 } else if (topic === CONSTANTS.TOPICS.BASIC) {
                     defaultSubject = CONSTANTS.SUBJECTS.ENGLISH;
+                } else if (topic === CONSTANTS.TOPICS.ACHIEVEMENT) {
+                    defaultSubject = CONSTANTS.SUBJECTS.SCIENCE_STD;
                 } else {
                     defaultSubject = CONSTANTS.SUBJECTS.MUSIC;
                 }
