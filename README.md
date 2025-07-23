@@ -19,6 +19,10 @@ This command will analyze JavaScript and HTML files using the configuration prov
 Additional CSS rules refine the nested list appearance within the English quiz section. Third and fourth list levels now have larger left margins and unique bullet styles to make the hierarchy clearer.
 Dividing lines have been added to the English quiz lists so each level is visibly separated.
 
+## Contributions Heatmap
+
+The activity heatmap on the start screen visualizes your quiz attempts. The color saturation now increases as contribution counts rise, so days with more completed quizzes appear in darker green hues.
+
 ## License
 
 This project is licensed under the [ISC License](LICENSE).
