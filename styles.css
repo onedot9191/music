@@ -600,13 +600,13 @@ td input.activity-input:not(:first-child) {
     .heatmap-cell {
         width: 20px;
         height: 20px;
-        background: #444;
+        background: #333;
         border-radius: 4px;
     }
-    .heatmap-cell.level-1 { background: #4c9f70; }
-    .heatmap-cell.level-2 { background: #6fcf97; }
-    .heatmap-cell.level-3 { background: #a3e4b6; }
-.heatmap-cell.level-4 { background: #d1f2d6; }
+    .heatmap-cell.level-1 { background: #d1f2d6; }
+    .heatmap-cell.level-2 { background: #a3e4b6; }
+    .heatmap-cell.level-3 { background: #6fcf97; }
+    .heatmap-cell.level-4 { background: #4c9f70; }
 .heatmap-cell.empty { background: transparent; }
 
     /* Heatmap panel placement next to settings */
