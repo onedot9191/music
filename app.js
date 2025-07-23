@@ -180,13 +180,16 @@
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
         const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
+        const formatDateKey = (date = new Date()) => {
+            return [date.getFullYear(), fmt(date.getMonth() + 1), fmt(date.getDate())].join('-');
+        };
 
         function resetUsedAnswers() {
             usedAnswersMap = new WeakMap();
         }
 
         function saveDailyStats(count) {
-            const key = new Date().toISOString().slice(0, 10);
+            const key = formatDateKey();
             const stats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
             stats[key] = (stats[key] || 0) + count;
             localStorage.setItem('dailyStats', JSON.stringify(stats));
@@ -198,7 +201,7 @@
             for (let i = days - 1; i >= 0; i--) {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
-                const key = d.toISOString().slice(0, 10);
+                const key = formatDateKey(d);
                 result.push({ date: key, count: stats[key] || 0 });
             }
             return result;
