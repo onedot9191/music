@@ -394,7 +394,7 @@
        }
 
        function adjustCreativeInputWidths() {
-            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer]')
+            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -750,7 +750,8 @@
             if (
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD
             ) {
                 adjustCreativeInputWidths();
             } else if (
@@ -1160,7 +1161,9 @@
                             gameState.selectedSubject ===
                                 CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                                CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject ===
+                                CONSTANTS.SUBJECTS.SCIENCE_STD
                         ) {
                             adjustCreativeInputWidths();
                         }
@@ -1182,7 +1185,9 @@
                                     gameState.selectedSubject ===
                                         CONSTANTS.SUBJECTS.OVERVIEW ||
                                     gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                                        CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                                    gameState.selectedSubject ===
+                                        CONSTANTS.SUBJECTS.SCIENCE_STD
                                 ) {
                                     adjustCreativeInputWidths();
                                 }
@@ -1212,7 +1217,8 @@
                         if (
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
-                            gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD
                         ) {
                             adjustCreativeInputWidths();
                         }
