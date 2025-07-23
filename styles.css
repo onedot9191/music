@@ -1287,7 +1287,3 @@ td input.activity-input:not(:first-child) {
   color: var(--revealed);
   border-color: var(--revealed);
 }
-#settings-panel {
-    height: 600px;
-    overflow-y: auto;
-}
