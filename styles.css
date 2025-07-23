@@ -137,9 +137,18 @@
     }
 
 /* Flash reels when the slot machine hits a win */
-    .slot-machine.win .reel {
-      animation: reel-win-flash 0.4s ease-out 0s 2;
-    }
+.slot-machine.win {
+  animation: slot-win-rotate 1s ease-out;
+}
+
+.slot-machine.win .reel {
+  animation: reel-win-flash 0.4s ease-out 0s 2;
+}
+
+@keyframes slot-win-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
     @keyframes reel-win-flash {
       0%, 100% { transform: scale(1); box-shadow: 0 0 0 var(--accent); }
