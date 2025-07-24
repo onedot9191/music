@@ -1317,7 +1317,10 @@ td input.activity-input:not(:first-child) {
   border-color: var(--revealed);
 }
 
-/* Wider blanks for the PE (Back) teaching methods section */
+/* Wider blanks for the PE (Back) teaching methods section
+   Ensure blanks expand within each numbered item */
 #pe-back-quiz-main .inline-item input.fit-answer {
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 30ch;
 }
