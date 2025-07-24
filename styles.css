@@ -1316,3 +1316,8 @@ td input.activity-input:not(:first-child) {
   color: var(--revealed);
   border-color: var(--revealed);
 }
+
+/* Wider blanks for the PE (Back) teaching methods section */
+#pe-back-quiz-main .inline-item input.fit-answer {
+  min-width: 30ch;
+}
