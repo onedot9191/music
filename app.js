@@ -60,12 +60,10 @@
                 SELECTED: 'selected',
                 IS_SELECTING: 'is-selecting',
                 ACTIVE: 'active',
-                LOST: 'lost',
                 COMBO_POP: 'combo-pop'
             },
             DEFAULT_DURATION: 900,
             HARD_CORE_DURATION: 60,
-            HARD_CORE_LIVES: Infinity,
             HARD_CORE_TIME_BONUS: 5,
             RANDOM_ANIMATION_DURATION: 2000,
             RANDOM_ANIMATION_INTERVAL: 100
@@ -109,7 +107,6 @@
             total: CONSTANTS.DEFAULT_DURATION,
             timerId: null,
             combo: 0,
-            lives: CONSTANTS.HARD_CORE_LIVES,
             selectedSubject: CONSTANTS.SUBJECTS.MUSIC,
             selectedTopic: CONSTANTS.TOPICS.CURRICULUM,
             gameMode: CONSTANTS.MODES.NORMAL,
@@ -130,7 +127,6 @@
         const resetBtn = document.getElementById('reset-btn');
         const character = document.getElementById('character-assistant');
         const headerTitle = document.getElementById('header-title');
-        const livesContainer = document.getElementById('lives-container');
         const stageClearModal = document.getElementById('stage-clear-modal');
         const progressModal = document.getElementById('progress-modal');
         const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
@@ -302,14 +298,6 @@
         function updateTimeSettingDisplay() {
             timeSettingDisplay.textContent = formatTime(gameState.duration);
         }
-
-       function updateLivesUI() {
-           const heartIcons = livesContainer.querySelectorAll('.heart-icon');
-           heartIcons.forEach((heart, index) => {
-               heart.classList.toggle(CONSTANTS.CSS_CLASSES.LOST, index >= gameState.lives);
-           });
-       }
-
         // --- SLOT MACHINE ---
         const SLOT_SYMBOLS = [
             '🍒',
@@ -717,7 +705,6 @@
             resetBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-            livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
             // Reset competency tab states
            document.querySelectorAll('.competency-tab.cleared')
@@ -770,14 +757,11 @@
             
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
                 gameState.duration = CONSTANTS.HARD_CORE_DURATION;
-                gameState.lives = CONSTANTS.HARD_CORE_LIVES;
-                livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.getElementById('timer-container').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.getElementById('bar').style.display = 'none';
             } else {
                 const timeParts = timeSettingDisplay.textContent.split(':');
                 gameState.duration = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
-                livesContainer.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.getElementById('timer-container').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.getElementById('bar').style.display = 'block';
             }

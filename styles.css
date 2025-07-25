@@ -845,18 +845,6 @@ td input.activity-input:not(:first-child) {
         100% { transform: translateY(-80px) scale(0); opacity: 0; }
     }
     
-    #lives-container:not(.hidden) {
-        display: flex;
-        gap: 0.5rem;
-    }
-    .heart-icon {
-        font-size: 2rem;
-        color: var(--primary);
-        transition: color 0.3s;
-    }
-    .heart-icon.lost {
-        color: #555;
-    }
     
     /* Result Modal Enhancements */
     #progress-modal .modal-content {
