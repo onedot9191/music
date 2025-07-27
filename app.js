@@ -30,6 +30,7 @@
                 SOCIAL: 'social',
                 SCIENCE: 'science',
                 SCIENCE_STD: 'science-std',
+                PRACTICAL_STD: 'practical-std',
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
@@ -83,6 +84,7 @@
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
             [CONSTANTS.SUBJECTS.SCIENCE_STD]: '과학',
+            [CONSTANTS.SUBJECTS.PRACTICAL_STD]: '실과',
             [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
@@ -382,7 +384,7 @@
        }
 
        function adjustCreativeInputWidths() {
-            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer]')
+            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -738,7 +740,8 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
             ) {
                 adjustCreativeInputWidths();
             } else if (
@@ -1147,7 +1150,9 @@
                             gameState.selectedSubject ===
                                 CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                             gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.SCIENCE_STD
+                                CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                            gameState.selectedSubject ===
+                                CONSTANTS.SUBJECTS.PRACTICAL_STD
                         ) {
                             adjustCreativeInputWidths();
                         }
@@ -1171,7 +1176,9 @@
                                     gameState.selectedSubject ===
                                         CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                                     gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.SCIENCE_STD
+                                        CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                                    gameState.selectedSubject ===
+                                        CONSTANTS.SUBJECTS.PRACTICAL_STD
                                 ) {
                                     adjustCreativeInputWidths();
                                 }
@@ -1202,7 +1209,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
-                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
                         ) {
                             adjustCreativeInputWidths();
                         }
