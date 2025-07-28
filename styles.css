@@ -1320,5 +1320,5 @@ td input.activity-input:not(:first-child) {
 #pe-back-quiz-main .inline-item input.fit-answer {
   flex: 1 1 auto;
   width: 100%;
-  min-width: 60ch;
+  /* Allow the blank to stretch the full cell width */
 }
