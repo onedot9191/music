@@ -1319,12 +1319,14 @@ td input.activity-input:not(:first-child) {
    Ensure blanks expand within each numbered item */
 #pe-back-quiz-main .inline-item {
   width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
 }
 
 #pe-back-quiz-main .inline-item input.fit-answer {
-  flex: 1 0 100%;
   width: 100%;
   max-width: 100%;
-  min-width: 100%;
-  /* Allow the blank to stretch the full cell width */
+  min-width: 0;
+  flex: 1 0 auto;
 }
