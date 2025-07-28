@@ -1317,8 +1317,14 @@ td input.activity-input:not(:first-child) {
 
 /* Wider blanks for the PE (Back) teaching methods section
    Ensure blanks expand within each numbered item */
-#pe-back-quiz-main .inline-item input.fit-answer {
-  flex: 1 1 auto;
+#pe-back-quiz-main .inline-item {
   width: 100%;
+}
+
+#pe-back-quiz-main .inline-item input.fit-answer {
+  flex: 1 0 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
   /* Allow the blank to stretch the full cell width */
 }
