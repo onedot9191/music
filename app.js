@@ -562,40 +562,52 @@
             const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
             if (!main) return;
             const tabs = Array.from(main.querySelector('.tabs').querySelectorAll('.tab'));
-            const currentIndex = tabs.findIndex(t => t.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE));
+            const currentIndex = tabs.findIndex(t =>
+                t.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE)
+            );
             if (currentIndex === -1) return;
             const nextIndex = currentIndex + 1;
+
+            // If there is no next stage, keep the current one active
+            if (nextIndex >= tabs.length) {
+                if (showProgressIfNoNext) {
+                    showProgress();
+                }
+                return;
+            }
+
             const currentSection = main.querySelector(`#${tabs[currentIndex].dataset.target}`);
             tabs[currentIndex].classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
             if (currentSection) currentSection.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-            if (nextIndex < tabs.length) {
-                const nextTab = tabs[nextIndex];
-                nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                const nextSection = main.querySelector(`#${nextTab.dataset.target}`);
-                if (nextSection) {
-                    nextSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                    if (nextTab.dataset.target === 'activity-examples') {
-                        const subTabs = nextSection.querySelector('.sub-tabs');
-                        if (subTabs) {
-                            const subBtns = subTabs.querySelectorAll('.tab');
-                            subBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                            const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
-                            if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                        }
-                        nextSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                        const defaultSection = nextSection.querySelector('#activity-exercise');
-                        if (defaultSection) {
-                            defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                            focusFirstInput(defaultSection);
-                        } else {
-                            focusFirstInput(nextSection);
-                        }
+
+            const nextTab = tabs[nextIndex];
+            nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            const nextSection = main.querySelector(`#${nextTab.dataset.target}`);
+            if (nextSection) {
+                nextSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                if (nextTab.dataset.target === 'activity-examples') {
+                    const subTabs = nextSection.querySelector('.sub-tabs');
+                    if (subTabs) {
+                        const subBtns = subTabs.querySelectorAll('.tab');
+                        subBtns.forEach(b =>
+                            b.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE)
+                        );
+                        const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
+                        if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    }
+                    nextSection
+                        .querySelectorAll('section')
+                        .forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                    const defaultSection = nextSection.querySelector('#activity-exercise');
+                    if (defaultSection) {
+                        defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        focusFirstInput(defaultSection);
                     } else {
                         focusFirstInput(nextSection);
                     }
+                } else {
+                    focusFirstInput(nextSection);
                 }
-            } else if (showProgressIfNoNext) {
-                showProgress();
             }
         }
 
