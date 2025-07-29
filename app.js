@@ -813,6 +813,15 @@
             );
         }
 
+        function isQuizComplete() {
+            const inputs = document.querySelectorAll(
+                `#${gameState.selectedSubject}-quiz-main input[data-answer]`
+            );
+            return (
+                inputs.length > 0 && [...inputs].every(input => input.disabled)
+            );
+        }
+
        function showStageClear() {
            playSound(clearAudio);
            stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
@@ -841,6 +850,14 @@
                 advanceToNextStage(false);
                 if (gameState.total > 0 && gameState.timerId === null) {
                     gameState.timerId = setInterval(tick, 1000);
+                }
+                if (isQuizComplete()) {
+                    if (gameState.timerId) {
+                        gameState.total = 0;
+                        tick();
+                    } else {
+                        handleGameOver();
+                    }
                 }
             }, duration);
         }
@@ -1027,6 +1044,15 @@
                             break;
                         }
                     }
+                }
+            }
+
+            if (isQuizComplete()) {
+                if (gameState.timerId) {
+                    gameState.total = 0;
+                    tick();
+                } else {
+                    handleGameOver();
                 }
             }
         }
@@ -1346,6 +1372,14 @@
                     });
             }
             showAnswersBtn.disabled = true;
+            if (isQuizComplete()) {
+                if (gameState.timerId) {
+                    gameState.total = 0;
+                    tick();
+                } else {
+                    handleGameOver();
+                }
+            }
         });
 
         // --- INITIAL SETUP ---
