@@ -1152,7 +1152,8 @@ td input.activity-input:not(:first-child) {
   border-radius: 8px;
 }
 #overview-quiz-main .creative-block,
-#integrated-course-quiz-main .creative-block {
+#integrated-course-quiz-main .creative-block,
+#moral-course-quiz-main .creative-block {
   margin-bottom: 2rem;
   padding: 1rem;
   background: var(--bg-light);
@@ -1181,14 +1182,16 @@ td input.activity-input:not(:first-child) {
   color: #ff5555;
 }
 #overview-quiz-main .outline-title,
-#integrated-course-quiz-main .outline-title {
+#integrated-course-quiz-main .outline-title,
+#moral-course-quiz-main .outline-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--primary);
 }
 #overview-quiz-main .sub-title,
-#integrated-course-quiz-main .sub-title {
+#integrated-course-quiz-main .sub-title,
+#moral-course-quiz-main .sub-title {
   font-size: 1.8rem;
   font-weight: 600;
   margin: 1rem 0;
@@ -1206,6 +1209,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question,
 #integrated-course-quiz-main .overview-question,
+#moral-course-quiz-main .overview-question,
 #science-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question {
   display: block;
@@ -1222,6 +1226,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question:last-child,
 #integrated-course-quiz-main .overview-question:last-child,
+#moral-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child {
   border-bottom: none;
@@ -1240,6 +1245,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question input,
 #integrated-course-quiz-main .overview-question input,
+#moral-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input {
   font-size: 2rem;
@@ -1261,6 +1267,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question input:focus,
 #integrated-course-quiz-main .overview-question input:focus,
+#moral-course-quiz-main .overview-question input:focus,
 #science-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus {
   outline: none;
@@ -1273,6 +1280,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question input.correct,
 #integrated-course-quiz-main .overview-question input.correct,
+#moral-course-quiz-main .overview-question input.correct,
 #science-std-quiz-main .overview-question input.correct,
 #practical-std-quiz-main .overview-question input.correct {
   border-color: var(--correct);
@@ -1285,6 +1293,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question input.incorrect,
 #integrated-course-quiz-main .overview-question input.incorrect,
+#moral-course-quiz-main .overview-question input.incorrect,
 #science-std-quiz-main .overview-question input.incorrect,
 #practical-std-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
@@ -1297,6 +1306,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question input.retrying,
 #integrated-course-quiz-main .overview-question input.retrying,
+#moral-course-quiz-main .overview-question input.retrying,
 #science-std-quiz-main .overview-question input.retrying,
 #practical-std-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
@@ -1309,6 +1319,7 @@ td input.activity-input:not(:first-child) {
 }
 #overview-quiz-main .overview-question input.revealed,
 #integrated-course-quiz-main .overview-question input.revealed,
+#moral-course-quiz-main .overview-question input.revealed,
 #science-std-quiz-main .overview-question input.revealed,
 #practical-std-quiz-main .overview-question input.revealed {
   color: var(--revealed);
