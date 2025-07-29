@@ -35,6 +35,7 @@
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
+                MORAL_COURSE: 'moral-course',
                 ESSAY: 'essay',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
@@ -89,6 +90,7 @@
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
+            [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.ESSAY]: '논술'
         };
@@ -384,7 +386,7 @@
        }
 
        function adjustCreativeInputWidths() {
-            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer]')
+            document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -752,6 +754,8 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                                CONSTANTS.SUBJECTS.MORAL_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
             ) {
@@ -1188,6 +1192,8 @@
                             gameState.selectedSubject ===
                                 CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                             gameState.selectedSubject ===
+                                CONSTANTS.SUBJECTS.MORAL_COURSE ||
+                            gameState.selectedSubject ===
                                 CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject ===
                                 CONSTANTS.SUBJECTS.PRACTICAL_STD
@@ -1213,6 +1219,8 @@
                                         CONSTANTS.SUBJECTS.OVERVIEW ||
                                     gameState.selectedSubject ===
                                         CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                                    gameState.selectedSubject ===
+                                        CONSTANTS.SUBJECTS.MORAL_COURSE ||
                                     gameState.selectedSubject ===
                                         CONSTANTS.SUBJECTS.SCIENCE_STD ||
                                     gameState.selectedSubject ===
@@ -1247,6 +1255,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
                         ) {
