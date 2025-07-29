@@ -1372,14 +1372,7 @@
                     });
             }
             showAnswersBtn.disabled = true;
-            if (isQuizComplete()) {
-                if (gameState.timerId) {
-                    gameState.total = 0;
-                    tick();
-                } else {
-                    handleGameOver();
-                }
-            }
+            // 결과 창이 즉시 표시되지 않도록 진행 상태를 확인하지 않는다.
         });
 
         // --- INITIAL SETUP ---
