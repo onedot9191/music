@@ -936,17 +936,16 @@ td input.activity-input:not(:first-child) {
         position: relative;
         padding-top: 1rem;
         width: min(80vmin, 500px);
-        aspect-ratio: 1 / 1;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 1.5rem;
     }
     #result-character-container {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 2rem;
-        margin-bottom: 2rem;
         min-height: 100px;
         flex: 1;
     }
