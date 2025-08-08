@@ -149,6 +149,8 @@
         const resultTitle = document.getElementById('result-title');
         const resultSubject = document.getElementById('result-subject');
         const resultTopic = document.getElementById('result-topic');
+        const resultProgress = document.getElementById('result-progress');
+        const resultPercentage = document.getElementById('result-percentage');
         const slotMachineEl = document.getElementById('slot-machine');
         const slotReels = slotMachineEl.querySelectorAll('.reel');
         
@@ -607,63 +609,8 @@
 
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-count').textContent = totalCount;
-            const heatmap = document.getElementById('heatmap');
-            heatmap.innerHTML = '';
-
-            const quizMain = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
-            const sections = quizMain.querySelectorAll('section');
-
-            const areaStats = new Map();
-            if (sections.length > 0) {
-                sections.forEach(section => {
-                    const areaName = section.querySelector('h2')?.textContent.trim() || '';
-                    const sectionInputs = section.querySelectorAll('input[data-answer]').length;
-                    const correctInSection = section.querySelectorAll(`input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
-                    areaStats.set(areaName, { correct: correctInSection, total: sectionInputs });
-                });
-            } else {
-                allInputs.forEach(input => {
-                    const row = input.closest('tr');
-                    const areaName = row ? row.querySelector('th')?.textContent.trim() : '';
-                    if (!areaStats.has(areaName)) {
-                        areaStats.set(areaName, { correct: 0, total: 0 });
-                    }
-                    const stats = areaStats.get(areaName);
-                    stats.total++;
-                    if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                        stats.correct++;
-                    }
-                });
-            }
-
-            const CELLS_PER_AREA = 10;
-            areaStats.forEach((stats, areaName) => {
-                const wrapper = document.createElement('div');
-                wrapper.classList.add('heatmap-area');
-
-                const label = document.createElement('div');
-                label.classList.add('heatmap-label');
-                label.textContent = areaName;
-
-                const row = document.createElement('div');
-                row.classList.add('heatmap-row');
-
-                const correctCells = stats.total > 0 ? Math.round((stats.correct / stats.total) * CELLS_PER_AREA) : 0;
-                for (let i = 0; i < CELLS_PER_AREA; i++) {
-                    const cell = document.createElement('div');
-                    cell.classList.add('heatmap-cell');
-                    if (i < correctCells) {
-                        cell.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
-                    } else {
-                        cell.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
-                    }
-                    row.appendChild(cell);
-                }
-
-                wrapper.appendChild(label);
-                wrapper.appendChild(row);
-                heatmap.appendChild(wrapper);
-            });
+            resultProgress.style.width = `${percentage}%`;
+            resultPercentage.textContent = `${percentage}%`;
 
             resultSubject.textContent = SUBJECT_NAMES[gameState.selectedSubject] || '';
             resultTopic.textContent = TOPIC_NAMES[gameState.selectedTopic] || '';

@@ -4013,10 +4013,17 @@
               </div>
           </div>
           <h2 id="result-title">게임 결과</h2>
-          <p>주제: <span id="result-topic"></span></p>
-          <p>과목: <span id="result-subject"></span></p>
-          <p>맞춘 개수: <span id="correct-count">0</span> / <span id="total-count">0</span></p>
-          <div id="heatmap" class="heatmap"></div>
+          <div id="result-info">
+              <p><span class="label">주제:</span> <span id="result-topic"></span></p>
+              <p><span class="label">과목:</span> <span id="result-subject"></span></p>
+              <p><span class="label">맞춘 개수:</span> <span id="correct-count">0</span> / <span id="total-count">0</span></p>
+              <div class="progress-container">
+                  <div class="progress-bar">
+                      <div id="result-progress" class="progress-fill"></div>
+                  </div>
+                  <span id="result-percentage">0%</span>
+              </div>
+          </div>
           <button id="scrap-result-image-btn" class="btn">결과창 복사</button>
           <button id="close-progress-modal-btn" class="btn">확인</button>
       </div>

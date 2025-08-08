@@ -531,33 +531,36 @@ td input.activity-input:not(:first-child) {
         margin: 2.5rem auto 0;
         font-family: 'Press Start 2P', cursive;
     }
-
-
-    .heatmap {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-        margin: 1.5rem 0;
+    #result-info p {
+        font-size: 1.6rem;
+        margin: 0.5rem 0;
     }
-    .heatmap-area {
+    #result-info .label {
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    .progress-container {
         display: flex;
         align-items: center;
-        gap: 0.8rem;
+        gap: 1rem;
+        margin-top: 1rem;
     }
-    .heatmap-label {
-        font-size: 1.4rem;
-        min-width: 6rem;
+    .progress-bar {
+        flex: 1;
+        height: 20px;
+        background: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
     }
-    .heatmap-row {
-        display: grid;
-        grid-template-columns: repeat(10, 20px);
-        gap: 4px;
-    }
-    .heatmap-cell.correct {
+    .progress-fill {
+        height: 100%;
+        width: 0%;
         background: var(--correct);
     }
-    .heatmap-cell.incorrect {
-        background: var(--incorrect);
+    #result-percentage {
+        font-size: 1.6rem;
+        min-width: 3rem;
+        text-align: right;
     }
 
     .time-setter, .subject-selector, .mode-selector, .topic-selector {
