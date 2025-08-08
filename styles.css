@@ -571,6 +571,7 @@ td input.activity-input:not(:first-child) {
         align-items: center;
         justify-content: center;
         gap: 0.8rem;
+        flex-wrap: nowrap;
     }
     #result-info p {
         font-size: 1.6rem;
@@ -580,6 +581,8 @@ td input.activity-input:not(:first-child) {
         border: 2px solid var(--primary);
         box-shadow: 2px 2px 0 var(--bg-dark);
         border-radius: 6px;
+        flex-shrink: 0;
+        white-space: nowrap;
     }
     #result-info .label {
         font-weight: bold;
