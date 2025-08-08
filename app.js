@@ -607,8 +607,8 @@
 
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-count').textContent = totalCount;
-            const heatmap = document.getElementById('heatmap');
-            heatmap.innerHTML = '';
+            const progressContainer = document.getElementById('progress-bars');
+            progressContainer.innerHTML = '';
 
             const quizMain = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
             const sections = quizMain.querySelectorAll('section');
@@ -636,33 +636,31 @@
                 });
             }
 
-            const CELLS_PER_AREA = 10;
             areaStats.forEach((stats, areaName) => {
                 const wrapper = document.createElement('div');
-                wrapper.classList.add('heatmap-area');
+                wrapper.classList.add('progress-area');
 
                 const label = document.createElement('div');
-                label.classList.add('heatmap-label');
+                label.classList.add('progress-label');
                 label.textContent = areaName;
 
-                const row = document.createElement('div');
-                row.classList.add('heatmap-row');
+                const bar = document.createElement('div');
+                bar.classList.add('progress-bar');
 
-                const correctCells = stats.total > 0 ? Math.round((stats.correct / stats.total) * CELLS_PER_AREA) : 0;
-                for (let i = 0; i < CELLS_PER_AREA; i++) {
-                    const cell = document.createElement('div');
-                    cell.classList.add('heatmap-cell');
-                    if (i < correctCells) {
-                        cell.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
-                    } else {
-                        cell.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
-                    }
-                    row.appendChild(cell);
-                }
+                const fill = document.createElement('div');
+                fill.classList.add('progress-fill');
+                const percent = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+                fill.style.width = `${percent}%`;
 
+                const percentLabel = document.createElement('div');
+                percentLabel.classList.add('progress-percent');
+                percentLabel.textContent = `${percent}%`;
+
+                bar.appendChild(fill);
                 wrapper.appendChild(label);
-                wrapper.appendChild(row);
-                heatmap.appendChild(wrapper);
+                wrapper.appendChild(bar);
+                wrapper.appendChild(percentLabel);
+                progressContainer.appendChild(wrapper);
             });
 
             resultSubject.textContent = SUBJECT_NAMES[gameState.selectedSubject] || '';
