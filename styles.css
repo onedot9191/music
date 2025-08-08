@@ -365,7 +365,7 @@
       width: 100%;
       padding: 1.2rem;
       font-size: 1.4rem;
-      border: 2px solid #e0e0e0; /* subtle off-white border */
+      border: 2px solid var(--text-dark); /* subtle gray border */
       background: var(--bg-dark);
       color: var(--text-light);
       font-family: 'Noto Sans KR', sans-serif;
@@ -1209,7 +1209,7 @@ td input.activity-input:not(:first-child) {
 
 /* Visual separators for English quiz hierarchy */
 #english-quiz-main .assessment-list > li:not(:last-child) {
-  border-bottom: 2px solid #e0e0e0; /* subtle off-white border */
+  border-bottom: 2px solid var(--text-dark); /* subtle gray border */
   padding-bottom: 1rem;
   margin-bottom: 1rem;
 }
@@ -1312,7 +1312,7 @@ td input.activity-input:not(:first-child) {
   padding: 0.2rem 0.4rem;
   margin: 0 0.4rem;
   border: none;
-  border-bottom: 2px solid #e0e0e0; /* subtle off-white border */
+  border-bottom: 2px solid var(--text-dark); /* subtle gray border */
   background: transparent;
   color: var(--text-light);
   text-align: center;
@@ -1328,7 +1328,7 @@ td input.activity-input:not(:first-child) {
   padding: 0.2rem 0.4rem;
   margin: 0 0.4rem;
   border: none;
-  border-bottom: 2px solid #e0e0e0; /* subtle off-white border */
+  border-bottom: 2px solid var(--text-dark); /* subtle gray border */
   background: transparent;
   color: var(--text-light);
   text-align: center;
