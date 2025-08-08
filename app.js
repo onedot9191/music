@@ -1371,8 +1371,8 @@
         });
 
         scrapResultImageBtn.addEventListener('click', () => {
-            const modal = document.getElementById('progress-modal');
-            html2canvas(modal)
+            const modalContent = document.querySelector('#progress-modal .modal-content');
+            html2canvas(modalContent)
                 .then(canvas =>
                     canvas.toBlob(async blob => {
                         try {
