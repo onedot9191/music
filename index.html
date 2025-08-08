@@ -10,6 +10,24 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="favicon.ico">
+  <style>
+    #competency-quiz-main .competency-tabs {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    #competency-quiz-main .competency-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    #competency-quiz-main .competency-row .row-title {
+      font-weight: 700;
+      margin-right: 1rem;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -3886,8 +3904,8 @@
 <main id="competency-quiz-main" class="hidden competency-ui">
   <div class="competency-tab-wrapper">
     <div class="tabs competency-tabs">
-      <div class="competency-column">
-        <div class="column-title">교육과정A</div>
+      <div class="competency-row">
+        <div class="row-title">교육과정A</div>
         <button class="competency-tab tab" data-target="korean">국어</button>
         <button class="competency-tab tab" data-target="english">영어</button>
         <button class="competency-tab tab active" data-target="summary">총론</button>
@@ -3896,8 +3914,8 @@
         <button class="competency-tab tab" data-target="moral-emphasis">도덕-도덕과 강조점</button>
         <button class="competency-tab tab" data-target="practical">실과</button>
       </div>
-      <div class="competency-column">
-        <div class="column-title">교육과정B</div>
+      <div class="competency-row">
+        <div class="row-title">교육과정B</div>
         <button class="competency-tab tab" data-target="math">수학</button>
         <button class="competency-tab tab" data-target="art">미술</button>
         <button class="competency-tab tab" data-target="integrated">통합</button>
