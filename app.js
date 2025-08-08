@@ -1342,18 +1342,18 @@
         scrapResultImageBtn.addEventListener('click', () => {
             const modalContent = document.querySelector('#progress-modal .modal-content');
             html2canvas(modalContent)
-                .then(canvas => {
+                .then(async canvas => {
                     if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
-                        canvas.toBlob(async blob => {
-                            try {
-                                await navigator.clipboard.write([
-                                    new ClipboardItem({ 'image/png': blob })
-                                ]);
-                                alert('결과 이미지가 복사되었습니다!');
-                            } catch (err) {
-                                alert('이미지 복사에 실패했습니다.');
-                            }
-                        });
+                        try {
+                            const dataUrl = canvas.toDataURL('image/png');
+                            const blob = await (await fetch(dataUrl)).blob();
+                            await navigator.clipboard.write([
+                                new ClipboardItem({ [blob.type]: blob })
+                            ]);
+                            alert('결과 이미지가 복사되었습니다!');
+                        } catch (err) {
+                            alert('이미지 복사에 실패했습니다.');
+                        }
                     } else {
                         const dataUrl = canvas.toDataURL('image/png');
                         const hiddenDiv = document.createElement('div');
