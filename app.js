@@ -1344,13 +1344,29 @@
             html2canvas(modalContent)
                 .then(canvas =>
                     canvas.toBlob(async blob => {
+                        if (!blob) {
+                            alert('이미지 캡처에 실패했습니다.');
+                            return;
+                        }
                         try {
-                            await navigator.clipboard.write([
-                                new ClipboardItem({ 'image/png': blob })
-                            ]);
-                            alert('결과 이미지가 복사되었습니다!');
+                            if (navigator.clipboard && window.ClipboardItem) {
+                                await navigator.clipboard.write([
+                                    new ClipboardItem({ 'image/png': blob })
+                                ]);
+                                alert('결과 이미지가 복사되었습니다!');
+                            } else {
+                                throw new Error('Clipboard API not supported');
+                            }
                         } catch (err) {
-                            alert('이미지 복사에 실패했습니다.');
+                            const url = URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = 'result.png';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(url);
+                            alert('이미지가 복사되지 않아 다운로드되었습니다.');
                         }
                     })
                 )
