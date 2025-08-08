@@ -135,6 +135,7 @@
         const startModal = document.getElementById('start-modal');
         const guideModal = document.getElementById('guide-modal');
         const closeGuideBtn = document.getElementById('close-guide-btn');
+        const settingsPanel = document.getElementById('settings-panel');
         const timeSettingDisplay = document.getElementById('time-setting-display');
         const decreaseTimeBtn = document.getElementById('decrease-time');
         const increaseTimeBtn = document.getElementById('increase-time');
@@ -455,6 +456,13 @@
             }
        }
 
+       function fixSettingsPanelHeight() {
+            if (!settingsPanel.dataset.fixedHeight) {
+                settingsPanel.style.height = `${settingsPanel.offsetHeight}px`;
+                settingsPanel.dataset.fixedHeight = 'true';
+            }
+       }
+
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
             const topic = gameState.selectedTopic;
@@ -717,6 +725,7 @@
                adjustCreativeInputWidths();
                adjustEnglishInputWidths();
                adjustBasicTopicInputWidths();
+               fixSettingsPanelHeight();
            }
 
            setCharacterState('idle');
@@ -1321,6 +1330,7 @@
             guideModal.classList.remove('active');
             startModal.classList.add('active');
             updateStartModalUI();
+            fixSettingsPanelHeight();
         });
 
         closeProgressModalBtn.addEventListener('click', () => {
