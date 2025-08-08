@@ -1052,35 +1052,6 @@ td input.activity-input:not(:first-child) {
   width: auto;
 }
 
-/* Ensure essay inputs resemble English blanks */
-#essay-quiz-main input.fit-answer {
-  width: auto;
-  display: inline-block;
-  min-width: 16ch;
-  margin: 0 0.4rem;
-}
-
-/* Arrange essay introduction and conclusion blocks vertically */
-#essay-quiz-main .grade-container {
-  flex-direction: column;
-}
-#essay-quiz-main .grade-container > div {
-  flex: none;
-  width: 100%;
-}
-
-/* Display discourse marker sections side by side */
-#essay-quiz-main .discourse-pair {
-  display: flex;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-}
-#essay-quiz-main .discourse-pair > div {
-  flex: 1;
-  min-width: 320px;
-  padding: 2rem;
-}
-
 /* Arrange English acquisition blocks vertically */
 #english-quiz-main #acquisition .grade-container {
   flex-direction: column;
@@ -1106,11 +1077,6 @@ td input.activity-input:not(:first-child) {
   gap: 1rem;
 }
 
-/* Prevent long essay answers from overflowing */
-#essay-quiz-main .assessment-list .fit-answer {
-  width: 100%;
-  max-width: 100%;
-}
 
 .sub-list {
   list-style-type: circle;

@@ -36,7 +36,6 @@
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
                 MORAL_COURSE: 'moral-course',
-                ESSAY: 'essay',
                 COMPETENCY: "competency",
                 RANDOM: 'random'
             },
@@ -46,7 +45,6 @@
                 MODEL: 'model',
                 COURSE: 'course',
                 BASIC: 'basic',
-                ESSAY: 'essay',
                 ACHIEVEMENT: 'achievement'
             },
             MODES: {
@@ -91,8 +89,7 @@
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
-            [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
-            [CONSTANTS.SUBJECTS.ESSAY]: '논술'
+            [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
         };
 
         const TOPIC_NAMES = {
@@ -101,7 +98,6 @@
             [CONSTANTS.TOPICS.MODEL]: '모형',
             [CONSTANTS.TOPICS.COURSE]: '교육과정',
             [CONSTANTS.TOPICS.BASIC]: '기본이론',
-            [CONSTANTS.TOPICS.ESSAY]: '논술',
             [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준'
         };
 
@@ -422,23 +418,6 @@
                 });
        }
 
-       function adjustEssayInputWidths() {
-            const MAX_WIDTH_CH = 80;
-            const MIN_WIDTH_CH = 30;
-            document
-                .querySelectorAll('#essay-quiz-main input[data-answer]')
-                .forEach(input => {
-                    const answer = input.dataset.answer || '';
-                    const answerLen = answer.length;
-                    const hasHangul = /[\u3131-\uD79D]/.test(answer);
-                    const factor = hasHangul ? 1.3 : 1.1;
-                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 2);
-                    const widthCh = Math.max(MIN_WIDTH_CH, Math.min(desired, MAX_WIDTH_CH));
-                    input.setAttribute('size', widthCh);
-                    input.style.width = `${widthCh}ch`;
-                });
-       }
-
        function adjustBasicTopicInputWidths() {
             if (gameState.selectedTopic !== CONSTANTS.TOPICS.BASIC) return;
             const mainId = `${gameState.selectedSubject}-quiz-main`;
@@ -731,7 +710,6 @@
                updateStartModalUI();
                adjustCreativeInputWidths();
                adjustEnglishInputWidths();
-               adjustEssayInputWidths();
                adjustBasicTopicInputWidths();
            }
 
@@ -765,10 +743,6 @@
                 gameState.selectedTopic === CONSTANTS.TOPICS.BASIC
             ) {
                 adjustEnglishInputWidths();
-            } else if (
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.ESSAY
-            ) {
-                adjustEssayInputWidths();
             }
             adjustBasicTopicInputWidths();
             
@@ -1096,11 +1070,7 @@
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-                if (topic === CONSTANTS.TOPICS.ESSAY) {
-                    gameState.selectedSubject = CONSTANTS.SUBJECTS.ESSAY;
-                } else {
-                    gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
-                }
+                gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
             }
             updateStartModalUI();
         });
