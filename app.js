@@ -131,6 +131,7 @@
         const stageClearModal = document.getElementById('stage-clear-modal');
         const progressModal = document.getElementById('progress-modal');
         const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
+        const scrapResultImageBtn = document.getElementById('scrap-result-image-btn');
         const startModal = document.getElementById('start-modal');
         const guideModal = document.getElementById('guide-modal');
         const closeGuideBtn = document.getElementById('close-guide-btn');
@@ -1334,6 +1335,26 @@
             progressModal.classList.remove('active');
             showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+        });
+
+        scrapResultImageBtn.addEventListener('click', () => {
+            const modal = document.getElementById('progress-modal');
+            html2canvas(modal)
+                .then(canvas =>
+                    canvas.toBlob(async blob => {
+                        try {
+                            await navigator.clipboard.write([
+                                new ClipboardItem({ 'image/png': blob })
+                            ]);
+                            alert('결과 이미지가 복사되었습니다!');
+                        } catch (err) {
+                            alert('이미지 복사에 실패했습니다.');
+                        }
+                    })
+                )
+                .catch(() => {
+                    alert('이미지 캡처에 실패했습니다.');
+                });
         });
 
         decreaseTimeBtn.addEventListener('click', () => {
