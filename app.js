@@ -1342,18 +1342,52 @@
         scrapResultImageBtn.addEventListener('click', () => {
             const modalContent = document.querySelector('#progress-modal .modal-content');
             html2canvas(modalContent)
-                .then(canvas =>
-                    canvas.toBlob(async blob => {
+                .then(canvas => {
+                    if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
+                        canvas.toBlob(async blob => {
+                            try {
+                                await navigator.clipboard.write([
+                                    new ClipboardItem({ 'image/png': blob })
+                                ]);
+                                alert('결과 이미지가 복사되었습니다!');
+                            } catch (err) {
+                                alert('이미지 복사에 실패했습니다.');
+                            }
+                        });
+                    } else {
+                        const dataUrl = canvas.toDataURL('image/png');
+                        const hiddenDiv = document.createElement('div');
+                        hiddenDiv.contentEditable = true;
+                        hiddenDiv.style.position = 'fixed';
+                        hiddenDiv.style.top = '-10000px';
+                        const img = document.createElement('img');
+                        img.src = dataUrl;
+                        hiddenDiv.appendChild(img);
+                        document.body.appendChild(hiddenDiv);
+
+                        const range = document.createRange();
+                        range.selectNode(img);
+                        const selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+
+                        let success = false;
                         try {
-                            await navigator.clipboard.write([
-                                new ClipboardItem({ 'image/png': blob })
-                            ]);
-                            alert('결과 이미지가 복사되었습니다!');
+                            success = document.execCommand('copy');
                         } catch (err) {
+                            success = false;
+                        }
+
+                        document.body.removeChild(hiddenDiv);
+                        selection.removeAllRanges();
+
+                        if (success) {
+                            alert('결과 이미지가 복사되었습니다!');
+                        } else {
                             alert('이미지 복사에 실패했습니다.');
                         }
-                    })
-                )
+                    }
+                })
                 .catch(() => {
                     alert('이미지 캡처에 실패했습니다.');
                 });
