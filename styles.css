@@ -1052,23 +1052,25 @@ td input.activity-input:not(:first-child) {
 #competency-quiz-main .competency-tab-wrapper {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
     margin-bottom: 2rem;
 }
 
 #competency-quiz-main .competency-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+#competency-quiz-main .competency-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
 }
 
-#competency-quiz-main .competency-tabs .tab-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+#competency-quiz-main .competency-column .column-title {
+    font-weight: 700;
 }
 #competency-quiz-main .competency-tab {
     flex: 0 0 auto;
