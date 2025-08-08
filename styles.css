@@ -356,9 +356,9 @@
     }
     td input:focus {
       outline: none;
-      border-color: var(--primary);
+      border-color: #fff;
       background: var(--secondary);
-      box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
     td input.correct {
       border-color: var(--correct);
@@ -1229,7 +1229,7 @@ td input.activity-input:not(:first-child) {
 
 #creative-quiz-main .creative-question input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: #fff;
 }
 #overview-quiz-main .overview-question input:focus,
 #integrated-course-quiz-main .overview-question input:focus,
@@ -1237,7 +1237,7 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: #fff;
 }
 
 #creative-quiz-main .creative-question input.correct {
