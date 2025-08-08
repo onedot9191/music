@@ -378,6 +378,16 @@
       background: var(--bg-light);
     }
 
+    td input.shake {
+      animation: dori-dori 0.3s;
+    }
+
+    @keyframes dori-dori {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
 th.sub-area-cell {
   min-width: 22rem;
 }
