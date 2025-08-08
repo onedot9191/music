@@ -287,11 +287,12 @@
             if (gameState.typingInterval) {
                 clearInterval(gameState.typingInterval);
             }
-            element.textContent = '';
+            element.innerHTML = '';
             let i = 0;
             gameState.typingInterval = setInterval(() => {
                 if (i < text.length) {
-                    element.textContent += text.charAt(i);
+                    const char = text.charAt(i);
+                    element.innerHTML += char === '\n' ? '<br>' : char;
                     i++;
                 } else {
                     clearInterval(gameState.typingInterval);
