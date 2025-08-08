@@ -542,6 +542,11 @@ td input.activity-input:not(:first-child) {
     #result-info p {
         font-size: 1.6rem;
         margin: 0.5rem 0;
+        background: var(--secondary);
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--primary);
+        box-shadow: 2px 2px 0 var(--bg-dark);
+        border-radius: 6px;
     }
     #result-info .label {
         font-weight: bold;
@@ -558,19 +563,23 @@ td input.activity-input:not(:first-child) {
     .progress-bar {
         flex: 1;
         height: 20px;
-        background: #e0e0e0;
+        background: var(--bg-dark);
+        border: 2px solid var(--primary);
+        box-shadow: 2px 2px 0 var(--secondary);
         border-radius: 10px;
         overflow: hidden;
     }
     .progress-fill {
         height: 100%;
         width: 0%;
-        background: var(--correct);
+        background: var(--primary);
+        transition: width 0.3s ease;
     }
     #result-percentage {
         font-size: 1.6rem;
         min-width: 3rem;
         text-align: right;
+        font-family: 'Press Start 2P', cursive;
     }
 
     .result-buttons {
@@ -942,6 +951,9 @@ td input.activity-input:not(:first-child) {
     #result-title {
         font-size: 2.5rem !important;
         margin-bottom: 1rem !important;
+        font-family: 'Press Start 2P', cursive;
+        color: var(--primary);
+        text-shadow: 3px 3px 0 var(--secondary);
     }
 
     /* Responsive Styles */
