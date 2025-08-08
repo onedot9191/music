@@ -563,6 +563,8 @@ td input.activity-input:not(:first-child) {
         text-align: center;
         gap: 0.8rem;
         margin-bottom: 2rem;
+        flex: 1;
+        justify-content: center;
     }
     #result-details {
         display: flex;
@@ -933,6 +935,11 @@ td input.activity-input:not(:first-child) {
     #progress-modal .modal-content {
         position: relative;
         padding-top: 1rem;
+        width: min(80vmin, 500px);
+        aspect-ratio: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     #result-character-container {
         display: flex;
@@ -941,6 +948,7 @@ td input.activity-input:not(:first-child) {
         gap: 2rem;
         margin-bottom: 2rem;
         min-height: 100px;
+        flex: 1;
     }
     #modal-character-placeholder {
         width: 80px;
