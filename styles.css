@@ -724,6 +724,7 @@ td input.activity-input:not(:first-child) {
         width: 600px;
         max-width: 600px;
         flex-shrink: 0;
+        overflow-y: auto;
     }
     #heatmap-panel {
         max-width: 260px;
