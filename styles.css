@@ -539,9 +539,15 @@ td input.activity-input:not(:first-child) {
         gap: 0.8rem;
         margin-bottom: 2rem;
     }
+    #result-details {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+    }
     #result-info p {
         font-size: 1.6rem;
-        margin: 0.5rem 0;
+        margin: 0;
         background: var(--secondary);
         padding: 0.5rem 1rem;
         border: 2px solid var(--primary);
