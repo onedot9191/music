@@ -1112,7 +1112,9 @@
                     if (shuffleCount >= maxShuffles) {
                         clearInterval(randomInterval);
                         randomAudio.pause();
-                        
+                        randomAudio.currentTime = 0;
+                        randomAudio.loop = false;
+
                         const randomIndex = Math.floor(Math.random() * subjectBtns.length);
                         const chosenBtn = subjectBtns[randomIndex];
                         
