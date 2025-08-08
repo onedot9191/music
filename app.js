@@ -155,7 +155,7 @@
         const slotReels = slotMachineEl.querySelectorAll('.reel');
         
         // --- Audio ---
-        const SFX_VOLUME = 0.4;
+        const SFX_VOLUME = 0.2;
 
         const successAudio = new Audio('./success.mp3');
         successAudio.preload = 'auto';
