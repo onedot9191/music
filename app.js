@@ -606,11 +606,21 @@
 
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-count').textContent = totalCount;
-            document.getElementById('progress-text').textContent = `${percentage}%`;
+            const heatmap = document.getElementById('heatmap');
+            heatmap.innerHTML = '';
+            allInputs.forEach(input => {
+                const cell = document.createElement('div');
+                cell.classList.add('heatmap-cell');
+                if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                    cell.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+                } else {
+                    cell.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+                }
+                heatmap.appendChild(cell);
+            });
+
             resultSubject.textContent = SUBJECT_NAMES[gameState.selectedSubject] || '';
             resultTopic.textContent = TOPIC_NAMES[gameState.selectedTopic] || '';
-
-            const progressBarFill = document.getElementById('progress-bar-fill');
             
             let feedback;
             if (percentage === 100) {
@@ -645,7 +655,6 @@
             typewriter(resultDialogue, feedback.dialogue);
             
             progressModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-            setTimeout(() => { progressBarFill.style.width = `${percentage}%`; }, 100);
         }
 
         // --- GAME LOGIC FUNCTIONS ---
