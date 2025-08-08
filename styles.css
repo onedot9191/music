@@ -972,7 +972,7 @@ td input.activity-input:not(:first-child) {
         border-radius: .4em;
         padding: 1.5rem;
         min-width: 250px;
-        max-width: 300px;
+        max-width: 90vw;
         text-align: left;
         border: 2px solid var(--primary);
     }
@@ -994,6 +994,8 @@ td input.activity-input:not(:first-child) {
         margin: 0;
         font-size: 1.6rem;
         line-height: 1.6;
+        white-space: pre-line;
+        word-break: keep-all;
     }
     #result-title {
         font-size: 2.5rem !important;
@@ -1053,6 +1055,12 @@ td input.activity-input:not(:first-child) {
         }
         #result-character-container {
             flex-direction: column;
+        }
+        .speech-bubble {
+            max-width: 90vw;
+        }
+        #result-dialogue {
+            font-size: 1.4rem;
         }
         .speech-bubble:after {
             top: 0;
