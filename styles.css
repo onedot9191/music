@@ -563,6 +563,11 @@ td input.activity-input:not(:first-child) {
         flex-wrap: wrap;
     }
 
+    .subject-break {
+        flex-basis: 100%;
+        height: 0;
+    }
+
     /* Arrange topic buttons in two rows with three per row */
     .topic-selector {
         display: grid;

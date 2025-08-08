@@ -140,6 +140,7 @@
         const timeSetterWrapper = document.getElementById('time-setter-wrapper');
         const topicSelector = document.querySelector('.topic-selector');
         const subjectSelector = document.querySelector('.subject-selector');
+        const curriculumBreak = document.getElementById('curriculum-break');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
         const speechBubble = document.querySelector('.speech-bubble');
@@ -469,9 +470,11 @@
                     btn.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !visible);
                     btn.disabled = false;
                 });
+                curriculumBreak.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.CURRICULUM);
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => { btn.disabled = true; });
+                curriculumBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             }
             renderHeatmap(getDailyStats(30));
         }
