@@ -60,7 +60,8 @@
                 SELECTED: 'selected',
                 IS_SELECTING: 'is-selecting',
                 ACTIVE: 'active',
-                COMBO_POP: 'combo-pop'
+                COMBO_POP: 'combo-pop',
+                SHAKE: 'shake'
             },
             DEFAULT_DURATION: 900,
             HARD_CORE_DURATION: 60,
@@ -974,6 +975,11 @@
 
                 playSound(failAudio);
                 setCharacterState('sad');
+
+                input.classList.add(CONSTANTS.CSS_CLASSES.SHAKE);
+                input.addEventListener('animationend', () => {
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.SHAKE);
+                }, { once: true });
 
                 if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
