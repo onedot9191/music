@@ -609,15 +609,48 @@
             document.getElementById('total-count').textContent = totalCount;
             const heatmap = document.getElementById('heatmap');
             heatmap.innerHTML = '';
+
+            const areaStats = new Map();
             allInputs.forEach(input => {
-                const cell = document.createElement('div');
-                cell.classList.add('heatmap-cell');
-                if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                    cell.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
-                } else {
-                    cell.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+                const row = input.closest('tr');
+                const areaName = row ? row.querySelector('th').textContent.trim() : '';
+                if (!areaStats.has(areaName)) {
+                    areaStats.set(areaName, { correct: 0, total: 0 });
                 }
-                heatmap.appendChild(cell);
+                const stats = areaStats.get(areaName);
+                stats.total++;
+                if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                    stats.correct++;
+                }
+            });
+
+            const CELLS_PER_AREA = 10;
+            areaStats.forEach((stats, areaName) => {
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('heatmap-area');
+
+                const label = document.createElement('div');
+                label.classList.add('heatmap-label');
+                label.textContent = areaName;
+
+                const row = document.createElement('div');
+                row.classList.add('heatmap-row');
+
+                const correctCells = stats.total > 0 ? Math.round((stats.correct / stats.total) * CELLS_PER_AREA) : 0;
+                for (let i = 0; i < CELLS_PER_AREA; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('heatmap-cell');
+                    if (i < correctCells) {
+                        cell.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+                    } else {
+                        cell.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+                    }
+                    row.appendChild(cell);
+                }
+
+                wrapper.appendChild(label);
+                wrapper.appendChild(row);
+                heatmap.appendChild(wrapper);
             });
 
             resultSubject.textContent = SUBJECT_NAMES[gameState.selectedSubject] || '';
