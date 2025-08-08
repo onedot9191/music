@@ -610,19 +610,31 @@
             const heatmap = document.getElementById('heatmap');
             heatmap.innerHTML = '';
 
+            const quizMain = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            const sections = quizMain.querySelectorAll('section');
+
             const areaStats = new Map();
-            allInputs.forEach(input => {
-                const row = input.closest('tr');
-                const areaName = row ? row.querySelector('th').textContent.trim() : '';
-                if (!areaStats.has(areaName)) {
-                    areaStats.set(areaName, { correct: 0, total: 0 });
-                }
-                const stats = areaStats.get(areaName);
-                stats.total++;
-                if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                    stats.correct++;
-                }
-            });
+            if (sections.length > 0) {
+                sections.forEach(section => {
+                    const areaName = section.querySelector('h2')?.textContent.trim() || '';
+                    const sectionInputs = section.querySelectorAll('input[data-answer]').length;
+                    const correctInSection = section.querySelectorAll(`input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
+                    areaStats.set(areaName, { correct: correctInSection, total: sectionInputs });
+                });
+            } else {
+                allInputs.forEach(input => {
+                    const row = input.closest('tr');
+                    const areaName = row ? row.querySelector('th')?.textContent.trim() : '';
+                    if (!areaStats.has(areaName)) {
+                        areaStats.set(areaName, { correct: 0, total: 0 });
+                    }
+                    const stats = areaStats.get(areaName);
+                    stats.total++;
+                    if (input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                        stats.correct++;
+                    }
+                });
+            }
 
             const CELLS_PER_AREA = 10;
             areaStats.forEach((stats, areaName) => {
