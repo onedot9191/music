@@ -623,6 +623,10 @@ td input.activity-input:not(:first-child) {
         gap: 1rem;
     }
 
+    .result-buttons .btn {
+        width: 12rem;
+    }
+
     .time-setter, .subject-selector, .mode-selector, .topic-selector {
         display: flex;
         justify-content: center;
