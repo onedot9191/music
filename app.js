@@ -129,15 +129,13 @@
         const character = document.getElementById('character-assistant');
         const headerTitle = document.getElementById('header-title');
         const stageClearModal = document.getElementById('stage-clear-modal');
-       const progressModal = document.getElementById('progress-modal');
-       const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
-       const scrapResultImageBtn = document.getElementById('scrap-result-image-btn');
-       const startModal = document.getElementById('start-modal');
-       const guideModal = document.getElementById('guide-modal');
-       const closeGuideBtn = document.getElementById('close-guide-btn');
-       const modelNamesModal = document.getElementById('model-names-modal');
-       const closeModelNamesBtn = document.getElementById('close-model-names-btn');
-       const settingsPanel = document.getElementById('settings-panel');
+        const progressModal = document.getElementById('progress-modal');
+        const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
+        const scrapResultImageBtn = document.getElementById('scrap-result-image-btn');
+        const startModal = document.getElementById('start-modal');
+        const guideModal = document.getElementById('guide-modal');
+        const closeGuideBtn = document.getElementById('close-guide-btn');
+        const settingsPanel = document.getElementById('settings-panel');
         const timeSettingDisplay = document.getElementById('time-setting-display');
         const decreaseTimeBtn = document.getElementById('decrease-time');
         const increaseTimeBtn = document.getElementById('increase-time');
@@ -700,12 +698,12 @@
             gameState.timerId = null;
             
             quizContainers.forEach(main => main.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
-           document.querySelectorAll('input[data-answer]').forEach(i => {
-               i.disabled = true;
-               i.value = '';
-               i.className = '';
-           });
-           resetUsedAnswers();
+            document.querySelectorAll('input[data-answer]').forEach(i => {
+                i.disabled = true;
+                i.value = '';
+                i.className = '';
+            });
+            resetUsedAnswers();
             
             gameState.combo = 0;
             updateMushroomGrowth();
@@ -715,9 +713,8 @@
             showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             showAnswersBtn.disabled = false;
             resetBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-           forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-           document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-           modelNamesModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
             // Reset competency tab states
            document.querySelectorAll('.competency-tab.cleared')
@@ -789,20 +786,7 @@
             }
 
            const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
-
-           if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
-               modelNamesModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-               document
-                   .querySelectorAll('#model-names-modal .model-names')
-                   .forEach(sec => {
-                       const current = sec.dataset.subject === gameState.selectedSubject;
-                       sec.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !current);
-                       sec.querySelectorAll('input[data-answer]').forEach(i => (i.disabled = false));
-                       if (current) focusFirstInput(sec);
-                   });
-           } else if (activeSection) {
-               focusFirstInput(activeSection);
-           }
+           if (activeSection) focusFirstInput(activeSection);
             slotMachine.start();
        }
 
@@ -935,14 +919,10 @@
             const section = input.closest('section');
             const userAnswer = normalizeAnswer(input.value);
 
-            const isCompetency = gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY;
-            const isUnordered = section.classList.contains('unordered');
-            const isModelNames = section.classList.contains('model-names');
-
             let isCorrect = false;
             let displayAnswer = input.dataset.answer;
 
-            if (isCompetency || isUnordered) {
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
                 if (!usedAnswersMap.has(section)) usedAnswersMap.set(section, new Set());
                 const usedSet = usedAnswersMap.get(section);
 
@@ -951,11 +931,9 @@
                     const original = inp.dataset.answer.trim();
                     const normalized = normalizeAnswer(original);
                     answerMap.set(normalized, original);
-                    if (isCompetency) {
-                        const alias = normalized.replace(/역량$/, '');
-                        if (alias !== normalized) {
-                            answerMap.set(alias, original);
-                        }
+                    const alias = normalized.replace(/역량$/, '');
+                    if (alias !== normalized) {
+                        answerMap.set(alias, original);
                     }
                 });
 
@@ -1018,7 +996,7 @@
                     input.classList.remove(CONSTANTS.CSS_CLASSES.SHAKE);
                 }, { once: true });
 
-                if (isCompetency || isUnordered) {
+                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
 
@@ -1036,7 +1014,7 @@
                 }
             }
 
-            if (shouldAdvance && isSectionComplete(section) && !isModelNames) {
+            if (shouldAdvance && isSectionComplete(section)) {
                 if (checkStageClear(section)) {
                     if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
                         setTimeout(() => celebrateCompetencySection(section), 300);
@@ -1054,14 +1032,16 @@
             }
 
             if (shouldAdvance) {
-                const container = input.closest('main') || section;
-                const inputs = Array.from(container.querySelectorAll('input[data-answer]'));
-                const idx = inputs.indexOf(input);
-                for (let i = idx + 1; i < inputs.length; i++) {
-                    if (!inputs[i].disabled) {
-                        inputs[i].focus();
-                        inputs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        break;
+                const main = input.closest('main');
+                if (main) {
+                    const inputs = Array.from(main.querySelectorAll('input[data-answer]'));
+                    const idx = inputs.indexOf(input);
+                    for (let i = idx + 1; i < inputs.length; i++) {
+                        if (!inputs[i].disabled) {
+                            inputs[i].focus();
+                            inputs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            break;
+                        }
                     }
                 }
             }
@@ -1342,30 +1322,6 @@
                 }
             });
         });
-
-        document
-            .querySelectorAll('#model-names-modal .model-names')
-            .forEach(section => {
-                section.addEventListener('change', handleInputChange);
-                section.addEventListener('keydown', e => {
-                    if (e.key === 'Enter' && e.target.matches('input[data-answer]')) {
-                        handleInputChange({ target: e.target });
-                        if (e.target.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                            const inputs = Array.from(
-                                section.querySelectorAll('input[data-answer]')
-                            );
-                            const idx = inputs.indexOf(e.target);
-                            for (let i = idx + 1; i < inputs.length; i++) {
-                                if (!inputs[i].disabled) {
-                                    inputs[i].focus();
-                                    inputs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                });
-            });
         
         startGameBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', () => resetGame(true));
@@ -1378,16 +1334,10 @@
             fixSettingsPanelHeight();
         });
 
-       closeProgressModalBtn.addEventListener('click', () => {
-           progressModal.classList.remove('active');
-           showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-           resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-       });
-
-        closeModelNamesBtn.addEventListener('click', () => {
-            modelNamesModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-            const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
-            if (activeSection) focusFirstInput(activeSection);
+        closeProgressModalBtn.addEventListener('click', () => {
+            progressModal.classList.remove('active');
+            showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
         });
 
         scrapResultImageBtn.addEventListener('click', () => {
@@ -1466,21 +1416,6 @@
             } else {
                 document
                     .querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`)
-                    .forEach(input => {
-                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                            input.value = input.dataset.answer;
-                            input.classList.remove(
-                                CONSTANTS.CSS_CLASSES.INCORRECT,
-                                CONSTANTS.CSS_CLASSES.RETRYING
-                            );
-                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
-                        }
-                        input.disabled = true;
-                    });
-            }
-            if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
-                document
-                    .querySelectorAll(`#model-names-modal .model-names[data-subject="${gameState.selectedSubject}"] input[data-answer]`)
                     .forEach(input => {
                         if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
                             input.value = input.dataset.answer;
