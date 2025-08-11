@@ -280,11 +280,21 @@
                     )
                 );
             const pattern = ignoreParticleEui ? /[\s⋅·의]+/g : /[\s⋅·]+/g;
-            return str
+            const removeChevrons =
+                gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_MODEL;
+
+            let result = str
                 .replace(/\([^)]*\)/g, '')
                 .trim()
                 .replace(pattern, '')
                 .toLowerCase();
+
+            if (removeChevrons) {
+                result = result.replace(/>/g, '');
+            }
+
+            return result;
         }
 
         function typewriter(element, text) {
