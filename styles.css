@@ -6,7 +6,6 @@
       --accent: #533483;
       --text-light: #F0F0F0;
       --text-dark: #A0A0A0;
-      --pure-white: #FFFFFF;
       --correct: #39FF14; /* Neon Green */
       --incorrect: #FF5733; /* Bright Orange-Red */
       --retrying: #FFC300; /* Amber/Yellow for retry */
@@ -430,7 +429,7 @@ th input.sub-area-input {
 }
 
 td input.activity-input {
-  border: 3px solid var(--pure-white);
+  border: 3px solid var(--accent);
   background: var(--primary);
   font-weight: 800;
   color: var(--text-light);
