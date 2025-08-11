@@ -429,7 +429,7 @@ th input.sub-area-input {
 }
 
 td input.activity-input {
-  border: 3px solid #FFFFFF;
+  border: 3px solid var(--accent);
   background: var(--primary);
   font-weight: 800;
   color: var(--text-light);
