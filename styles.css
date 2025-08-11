@@ -435,6 +435,27 @@ td input.activity-input {
   color: var(--text-light);
 }
 
+td input.activity-input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+}
+
+td input.activity-input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+}
+
+td input.activity-input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+}
+
+td input.activity-input.revealed {
+  border-color: var(--revealed);
+  color: var(--revealed);
+  background: var(--bg-light);
+}
+
 td input.example-input {
   border: 2px dashed var(--text-dark);
   background: var(--bg-light);
