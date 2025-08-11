@@ -428,21 +428,6 @@ th input.sub-area-input {
   font-weight: 700;
 }
 
-/* Highlight specific PE sub-areas in Activity Examples */
-#activity-examples .sub-area-input[data-answer="기본 체력운동"],
-#activity-examples .sub-area-input[data-answer="건강 운동 및 생활습관"],
-#activity-examples .sub-area-input[data-answer="건강 체력 및 운동 체력"],
-#activity-examples .sub-area-input[data-answer="성장 및 안전 활동"],
-#activity-examples .sub-area-input[data-answer="기본 움직임의 기초 기술"],
-#activity-examples .sub-area-input[data-answer="스포츠 유형별 움직임 기술"],
-#activity-examples .sub-area-input[data-answer="기술형 스포츠 유형별 활동"],
-#activity-examples .sub-area-input[data-answer="전략형 스포츠 유형별 활동"],
-#activity-examples .sub-area-input[data-answer="생태형 스포츠 유형별 활동"],
-#activity-examples .sub-area-input[data-answer="기본 움직임의 기초 표현"],
-#activity-examples .sub-area-input[data-answer="기본 움직임의 표현 방법"] {
-  border-color: var(--primary);
-}
-
 td input.activity-input {
   border: 3px solid var(--accent);
   background: var(--primary);
