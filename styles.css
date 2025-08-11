@@ -484,6 +484,13 @@ td input.example-input {
   border-left: 5px dotted var(--primary);
 }
 
+td input.sub-step {
+  margin-left: 1rem;
+  width: calc(100% - 1rem);
+  border: 2px dashed var(--primary);
+  background: var(--bg-light);
+}
+
 td input.activity-input:not(:first-child) {
   margin-top: 1.5rem;
 }
