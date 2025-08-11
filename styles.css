@@ -428,6 +428,27 @@ th input.sub-area-input {
   font-weight: 700;
 }
 
+th input.sub-area-input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+}
+
+th input.sub-area-input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+}
+
+th input.sub-area-input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+}
+
+th input.sub-area-input.revealed {
+  color: var(--revealed);
+  border-color: var(--revealed);
+  background: var(--bg-light);
+}
+
 td input.activity-input {
   border: 3px solid var(--accent);
   background: var(--primary);
