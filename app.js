@@ -1276,6 +1276,9 @@
         });
 
         const competencyTabs = document.querySelector('.competency-tabs');
+        const COMPETENCY_SECTION_GROUPS = {
+            integrated: ['integrated', 'goodlife', 'sociality', 'joyful']
+        };
 
         if (competencyTabs) {
             competencyTabs.addEventListener('click', e => {
@@ -1285,10 +1288,16 @@
                 e.target.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                 const targetId = e.target.dataset.target;
                 document.querySelectorAll('#competency-quiz-main section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                    focusFirstInput(targetSection);
+                const sectionIds = COMPETENCY_SECTION_GROUPS[targetId] || [targetId];
+                sectionIds.forEach(id => {
+                    const targetSection = document.getElementById(id);
+                    if (targetSection) {
+                        targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    }
+                });
+                const firstSection = document.getElementById(sectionIds[0]);
+                if (firstSection) {
+                    focusFirstInput(firstSection);
                 }
             });
         }
