@@ -1200,6 +1200,17 @@ td input.activity-input:not(:first-child) {
     color: var(--bg-dark);
 }
 
+#competency-quiz-main .integrated-sections {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+#competency-quiz-main .integrated-sections section {
+    flex: 1;
+    min-width: 260px;
+}
+
 .inline-item {
   display: flex;
   align-items: center;
