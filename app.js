@@ -589,37 +589,53 @@
                 return;
             }
 
-            const currentSection = main.querySelector(`#${tabs[currentIndex].dataset.target}`);
-            tabs[currentIndex].classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-            if (currentSection) currentSection.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-
+            const currentTab = tabs[currentIndex];
             const nextTab = tabs[nextIndex];
-            nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-            const nextSection = main.querySelector(`#${nextTab.dataset.target}`);
-            if (nextSection) {
-                nextSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                if (nextTab.dataset.target === 'activity-examples') {
-                    const subTabs = nextSection.querySelector('.sub-tabs');
-                    if (subTabs) {
-                        const subBtns = subTabs.querySelectorAll('.tab');
-                        subBtns.forEach(b =>
-                            b.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE)
-                        );
-                        const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
-                        if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                    }
-                    nextSection
-                        .querySelectorAll('section')
-                        .forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                    const defaultSection = nextSection.querySelector('#activity-exercise');
-                    if (defaultSection) {
-                        defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                        focusFirstInput(defaultSection);
+
+            currentTab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                main
+                    .querySelectorAll('section')
+                    .forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                const nextIds = COMPETENCY_SECTION_GROUPS[nextTab.dataset.target] || [nextTab.dataset.target];
+                nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                nextIds.forEach(id => {
+                    const targetSection = main.querySelector(`#${id}`);
+                    if (targetSection) targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                });
+                const firstSection = main.querySelector(`#${nextIds[0]}`);
+                if (firstSection) focusFirstInput(firstSection);
+            } else {
+                const currentSection = main.querySelector(`#${currentTab.dataset.target}`);
+                if (currentSection) currentSection.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+
+                nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                const nextSection = main.querySelector(`#${nextTab.dataset.target}`);
+                if (nextSection) {
+                    nextSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    if (nextTab.dataset.target === 'activity-examples') {
+                        const subTabs = nextSection.querySelector('.sub-tabs');
+                        if (subTabs) {
+                            const subBtns = subTabs.querySelectorAll('.tab');
+                            subBtns.forEach(b =>
+                                b.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE)
+                            );
+                            const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
+                            if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        }
+                        nextSection
+                            .querySelectorAll('section')
+                            .forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                        const defaultSection = nextSection.querySelector('#activity-exercise');
+                        if (defaultSection) {
+                            defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                            focusFirstInput(defaultSection);
+                        } else {
+                            focusFirstInput(nextSection);
+                        }
                     } else {
                         focusFirstInput(nextSection);
                     }
-                } else {
-                    focusFirstInput(nextSection);
                 }
             }
         }
@@ -873,34 +889,44 @@
         }
 
         function celebrateCompetencySection(sectionElement) {
-            const targetId = sectionElement.id;
-            const tabButton = document.querySelector(`.competency-tab[data-target="${targetId}"]`);
-            if (tabButton && !tabButton.classList.contains('cleared')) {
-                tabButton.classList.add('cleared');
-                playSound(clearAudio);
-                if (gameState.timerId !== null) {
-                    clearInterval(gameState.timerId);
-                    gameState.timerId = null;
-                }
-                const duration = 2000;
-                const animationEnd = Date.now() + duration;
-                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
-                function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-                const interval = setInterval(() => {
-                    const timeLeft = animationEnd - Date.now();
-                    if (timeLeft <= 0) return clearInterval(interval);
-                    const particleCount = 50 * (timeLeft / duration);
-                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-                }, 250);
-                setTimeout(() => {
-                    clearInterval(interval);
-                    advanceToNextStage(false);
-                    if (gameState.total > 0 && gameState.timerId === null) {
-                        gameState.timerId = setInterval(tick, 1000);
-                    }
-                }, duration);
+            const sectionId = sectionElement.id;
+            const tabId = SECTION_TO_COMPETENCY_TAB[sectionId] || sectionId;
+            const tabButton = document.querySelector(`.competency-tab[data-target="${tabId}"]`);
+            if (!tabButton || tabButton.classList.contains('cleared')) return;
+
+            const groupIds = COMPETENCY_SECTION_GROUPS[tabId];
+            if (groupIds) {
+                const allCleared = groupIds.every(id => {
+                    const sec = document.getElementById(id);
+                    return sec && checkStageClear(sec);
+                });
+                if (!allCleared) return;
             }
+
+            tabButton.classList.add('cleared');
+            playSound(clearAudio);
+            if (gameState.timerId !== null) {
+                clearInterval(gameState.timerId);
+                gameState.timerId = null;
+            }
+            const duration = 2000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            const interval = setInterval(() => {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                const particleCount = 50 * (timeLeft / duration);
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+            }, 250);
+            setTimeout(() => {
+                clearInterval(interval);
+                advanceToNextStage(false);
+                if (gameState.total > 0 && gameState.timerId === null) {
+                    gameState.timerId = setInterval(tick, 1000);
+                }
+            }, duration);
         }
 
         function revealCompetencyAnswers() {
@@ -1279,6 +1305,10 @@
         const COMPETENCY_SECTION_GROUPS = {
             integrated: ['integrated', 'goodlife', 'sociality', 'joyful']
         };
+        const SECTION_TO_COMPETENCY_TAB = {};
+        Object.entries(COMPETENCY_SECTION_GROUPS).forEach(([tabId, ids]) => {
+            ids.forEach(id => SECTION_TO_COMPETENCY_TAB[id] = tabId);
+        });
 
         if (competencyTabs) {
             competencyTabs.addEventListener('click', e => {
