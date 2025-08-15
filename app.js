@@ -868,7 +868,7 @@
                 gameState.timerId = null;
             }
 
-            const duration = 1 * 1000;
+            const duration = 500; // faster transition after stage clear
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
             function randomInRange(min, max) { return Math.random() * (max - min) + min; }
@@ -921,7 +921,7 @@
                 clearInterval(gameState.timerId);
                 gameState.timerId = null;
             }
-            const duration = 2000;
+            const duration = 1000; // faster transition after competency clear
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
             function randomInRange(min, max) { return Math.random() * (max - min) + min; }
