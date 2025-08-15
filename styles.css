@@ -1125,7 +1125,7 @@ td input.activity-input:not(:first-child) {
 
 /* Competency Section Enhancements */
 
-#competency-quiz-main.competency-ui .accordion-header {
+.competency-ui .accordion-header {
     width: 100%;
     text-align: left;
     padding: 1.2rem;
@@ -1140,78 +1140,78 @@ td input.activity-input:not(:first-child) {
     margin-top: 1rem;
 }
 
-#competency-quiz-main.competency-ui .accordion-header::after {
+.competency-ui .accordion-header::after {
     content: '\25BC';
     position: absolute;
     right: 1rem;
     transition: transform 0.3s;
 }
 
-#competency-quiz-main.competency-ui .accordion-header[aria-expanded="true"]::after {
+.competency-ui .accordion-header[aria-expanded="true"]::after {
     transform: rotate(180deg);
 }
 
-#competency-quiz-main.competency-ui .grade-container {
+.competency-ui .grade-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 2rem;
 }
 
-#competency-quiz-main.competency-ui .grade-container > div {
+.competency-ui .grade-container > div {
     border-color: var(--accent);
 }
 
-#competency-quiz-main.competency-ui th {
+.competency-ui th {
     color: var(--primary);
 }
 
-#competency-quiz-main .competency-tab-wrapper {
+.competency-ui .competency-tab-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
 }
 
-#competency-quiz-main .competency-tabs {
+.competency-ui .competency-tabs {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 3rem;
 }
 
-#competency-quiz-main .competency-column {
+.competency-ui .competency-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
 }
 
-#competency-quiz-main .competency-column .column-title {
+.competency-ui .competency-column .column-title {
     font-weight: 700;
 }
-#competency-quiz-main .competency-tab {
+.competency-ui .competency-tab {
     flex: 0 0 auto;
     padding: 0.8rem 1.4rem;
     font-size: 1.4rem;
     line-height: 1.2;
     white-space: nowrap;
 }
-#competency-quiz-main .competency-tab.cleared {
+.competency-ui .competency-tab.cleared {
     background: var(--correct);
     color: var(--bg-dark);
 }
 
-#competency-quiz-main .integrated-sections {
+.competency-ui .integrated-sections {
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
 }
 
-#competency-quiz-main .integrated-sections section {
+.competency-ui .integrated-sections section {
     flex: 1;
     min-width: 260px;
 }
 
-#competency-quiz-main .integrated-sections section:first-child {
+.competency-ui .integrated-sections section:first-child {
     flex: 0 0 100%;
 }
 
