@@ -693,10 +693,10 @@ td input.activity-input:not(:first-child) {
         height: 0;
     }
 
-    /* Arrange topic buttons in two rows with three per row */
+    /* Arrange topic buttons in two rows with two per row */
     .topic-selector {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
     .topic-btn {
         width: 100%;
