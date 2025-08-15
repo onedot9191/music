@@ -1083,7 +1083,7 @@
                         if (gameState.total > 0 && gameState.timerId === null) {
                             gameState.timerId = setInterval(tick, 1000);
                         }
-                    }, 300);
+                    }, 800); // match stage clear timing
                 }
             }
 
