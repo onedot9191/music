@@ -73,7 +73,9 @@
             HARD_CORE_DURATION: 60,
             HARD_CORE_TIME_BONUS: 5,
             RANDOM_ANIMATION_DURATION: 2000,
-            RANDOM_ANIMATION_INTERVAL: 100
+            RANDOM_ANIMATION_INTERVAL: 100,
+            STAGE_CLEAR_DURATION: 300,
+            NEXT_STAGE_DELAY: 550
         };
 
         const SUBJECT_NAMES = {
@@ -870,7 +872,7 @@
                 gameState.timerId = null;
             }
 
-            const duration = 500; // faster transition after stage clear
+            const duration = CONSTANTS.STAGE_CLEAR_DURATION; // faster transition after stage clear
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
             function randomInRange(min, max) { return Math.random() * (max - min) + min; }
@@ -1072,10 +1074,11 @@
 
             if (shouldAdvance && isSectionComplete(section)) {
                 if (checkStageClear(section)) {
+                    const delay = CONSTANTS.NEXT_STAGE_DELAY - CONSTANTS.STAGE_CLEAR_DURATION;
                     if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
-                        setTimeout(() => celebrateCompetencySection(section), 300);
+                        setTimeout(() => celebrateCompetencySection(section), delay);
                     } else {
-                        setTimeout(showStageClear, 300);
+                        setTimeout(showStageClear, delay);
                     }
                 } else {
                     setTimeout(() => {
@@ -1083,7 +1086,7 @@
                         if (gameState.total > 0 && gameState.timerId === null) {
                             gameState.timerId = setInterval(tick, 1000);
                         }
-                    }, 800); // match stage clear timing
+                    }, CONSTANTS.NEXT_STAGE_DELAY);
                 }
             }
 
