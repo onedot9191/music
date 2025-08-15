@@ -39,12 +39,14 @@
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
                 MORAL_COURSE: 'moral-course',
-                COMPETENCY: "competency",
+                COMPETENCY: 'competency',
+                AREA: 'area',
                 RANDOM: 'random'
             },
             TOPICS: {
                 CURRICULUM: 'curriculum',
                 COMPETENCY: 'competency',
+                AREA: 'area',
                 MODEL: 'model',
                 COURSE: 'course',
                 BASIC: 'basic',
@@ -96,12 +98,14 @@
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
-            [CONSTANTS.SUBJECTS.COMPETENCY]: '역량'
+            [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
+            [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
 
         const TOPIC_NAMES = {
             [CONSTANTS.TOPICS.CURRICULUM]: '내체표',
             [CONSTANTS.TOPICS.COMPETENCY]: '역량',
+            [CONSTANTS.TOPICS.AREA]: '영역',
             [CONSTANTS.TOPICS.MODEL]: '모형',
             [CONSTANTS.TOPICS.COURSE]: '교육과정',
             [CONSTANTS.TOPICS.BASIC]: '기본이론',
@@ -121,7 +125,12 @@
             typingInterval: null
         };
 
-        // Used to keep track of which answers have been matched in competency sections
+        const SPECIAL_SUBJECTS = new Set([
+            CONSTANTS.SUBJECTS.COMPETENCY,
+            CONSTANTS.SUBJECTS.AREA
+        ]);
+
+        // Used to keep track of which answers have been matched in competency/area sections
         let usedAnswersMap = new WeakMap();
 
         // --- DOM Elements ---
@@ -593,11 +602,12 @@
             const nextTab = tabs[nextIndex];
 
             currentTab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+            if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                 main
                     .querySelectorAll('section')
                     .forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                const nextIds = COMPETENCY_SECTION_GROUPS[nextTab.dataset.target] || [nextTab.dataset.target];
+                const sectionGroups = SECTION_GROUPS[gameState.selectedSubject] || {};
+                const nextIds = sectionGroups[nextTab.dataset.target] || [nextTab.dataset.target];
                 nextTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                 nextIds.forEach(id => {
                     const targetSection = main.querySelector(`#${id}`);
@@ -890,11 +900,13 @@
 
         function celebrateCompetencySection(sectionElement) {
             const sectionId = sectionElement.id;
-            const tabId = SECTION_TO_COMPETENCY_TAB[sectionId] || sectionId;
-            const tabButton = document.querySelector(`.competency-tab[data-target="${tabId}"]`);
+            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            const sectionGroups = SECTION_GROUPS[gameState.selectedSubject] || {};
+            const tabId = Object.keys(sectionGroups).find(key => sectionGroups[key].includes(sectionId)) || sectionId;
+            const tabButton = main.querySelector(`.competency-tab[data-target="${tabId}"]`);
             if (!tabButton || tabButton.classList.contains('cleared')) return;
 
-            const groupIds = COMPETENCY_SECTION_GROUPS[tabId];
+            const groupIds = sectionGroups[tabId];
             if (groupIds) {
                 const allCleared = groupIds.every(id => {
                     const sec = document.getElementById(id);
@@ -964,7 +976,7 @@
             let isCorrect = false;
             let displayAnswer = input.dataset.answer;
 
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+            if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                 if (!usedAnswersMap.has(section)) usedAnswersMap.set(section, new Set());
                 const usedSet = usedAnswersMap.get(section);
 
@@ -1038,7 +1050,7 @@
                     input.classList.remove(CONSTANTS.CSS_CLASSES.SHAKE);
                 }, { once: true });
 
-                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
 
@@ -1058,7 +1070,7 @@
 
             if (shouldAdvance && isSectionComplete(section)) {
                 if (checkStageClear(section)) {
-                    if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+                    if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                         setTimeout(() => celebrateCompetencySection(section), 300);
                     } else {
                         setTimeout(showStageClear, 300);
@@ -1133,7 +1145,9 @@
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-                gameState.selectedSubject = CONSTANTS.SUBJECTS.COMPETENCY;
+                gameState.selectedSubject = topic === CONSTANTS.TOPICS.COMPETENCY
+                    ? CONSTANTS.SUBJECTS.COMPETENCY
+                    : CONSTANTS.SUBJECTS.AREA;
             }
             updateStartModalUI();
         });
@@ -1301,24 +1315,24 @@
             });
         });
 
-        const competencyTabs = document.querySelector('.competency-tabs');
-        const COMPETENCY_SECTION_GROUPS = {
-            integrated: ['integrated', 'goodlife', 'sociality', 'joyful']
+        const SECTION_GROUPS = {
+            [CONSTANTS.SUBJECTS.COMPETENCY]: {
+                integrated: ['integrated', 'goodlife', 'sociality', 'joyful']
+            }
         };
-        const SECTION_TO_COMPETENCY_TAB = {};
-        Object.entries(COMPETENCY_SECTION_GROUPS).forEach(([tabId, ids]) => {
-            ids.forEach(id => SECTION_TO_COMPETENCY_TAB[id] = tabId);
-        });
 
-        if (competencyTabs) {
-            competencyTabs.addEventListener('click', e => {
+        document.querySelectorAll('.competency-tabs').forEach(tabs => {
+            tabs.addEventListener('click', e => {
                 if (!e.target.matches('.competency-tab')) return;
                 playSound(clickAudio);
-                document.querySelectorAll('.competency-tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                tabs.querySelectorAll('.competency-tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                 e.target.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                 const targetId = e.target.dataset.target;
-                document.querySelectorAll('#competency-quiz-main section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                const sectionIds = COMPETENCY_SECTION_GROUPS[targetId] || [targetId];
+                const main = tabs.closest('main');
+                const subject = main ? main.id.replace('-quiz-main', '') : '';
+                const sectionGroups = SECTION_GROUPS[subject] || {};
+                main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                const sectionIds = sectionGroups[targetId] || [targetId];
                 sectionIds.forEach(id => {
                     const targetSection = document.getElementById(id);
                     if (targetSection) {
@@ -1330,7 +1344,7 @@
                     focusFirstInput(firstSection);
                 }
             });
-        }
+        });
         
         function toggleAccordion(header) {
             const accordion = header.closest('.accordion');
@@ -1466,7 +1480,7 @@
         });
 
         showAnswersBtn.addEventListener('click', () => {
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.COMPETENCY) {
+            if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                 revealCompetencyAnswers();
             } else {
                 document
