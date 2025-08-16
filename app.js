@@ -151,6 +151,7 @@
         const progressModal = document.getElementById('progress-modal');
         const closeProgressModalBtn = document.getElementById('close-progress-modal-btn');
         const scrapResultImageBtn = document.getElementById('scrap-result-image-btn');
+        const scrapResultImageBtnTop = document.getElementById('scrap-result-image-btn-top');
         const startModal = document.getElementById('start-modal');
         const guideModal = document.getElementById('guide-modal');
         const closeGuideBtn = document.getElementById('close-guide-btn');
@@ -758,6 +759,7 @@
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             showAnswersBtn.disabled = false;
+            scrapResultImageBtnTop.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             resetBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             forceQuitBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             document.getElementById('timer-container').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -1411,11 +1413,16 @@
         closeProgressModalBtn.addEventListener('click', () => {
             progressModal.classList.remove('active');
             showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
         });
 
-        scrapResultImageBtn.addEventListener('click', () => {
+        const handleScrapResultImage = () => {
             const modalContent = document.querySelector('#progress-modal .modal-content');
+            const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
+            if (wasHidden) {
+                progressModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            }
             html2canvas(modalContent)
                 .then(async canvas => {
                     if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
@@ -1465,8 +1472,17 @@
                 })
                 .catch(() => {
                     alert('이미지 캡처에 실패했습니다.');
+                })
+                .finally(() => {
+                    if (wasHidden) {
+                        progressModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    }
                 });
-        });
+        };
+
+        [scrapResultImageBtn, scrapResultImageBtnTop].forEach(btn =>
+            btn.addEventListener('click', handleScrapResultImage)
+        );
 
         decreaseTimeBtn.addEventListener('click', () => {
             playSound(clickAudio);
