@@ -40,6 +40,7 @@
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
                 MORAL_COURSE: 'moral-course',
+                MORAL_PRINCIPLES: 'moral-principles',
                 COMPETENCY: 'competency',
                 AREA: 'area',
                 RANDOM: 'random'
@@ -51,7 +52,8 @@
                 MODEL: 'model',
                 COURSE: 'course',
                 BASIC: 'basic',
-                ACHIEVEMENT: 'achievement'
+                ACHIEVEMENT: 'achievement',
+                MORAL: 'moral'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -102,6 +104,7 @@
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
+            [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
@@ -113,7 +116,8 @@
             [CONSTANTS.TOPICS.MODEL]: '모형',
             [CONSTANTS.TOPICS.COURSE]: '교육과정',
             [CONSTANTS.TOPICS.BASIC]: '기본이론',
-            [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준'
+            [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준',
+            [CONSTANTS.TOPICS.MORAL]: '도덕'
         };
 
         // --- GAME STATE ---
@@ -503,7 +507,8 @@
                 topic === CONSTANTS.TOPICS.MODEL ||
                 topic === CONSTANTS.TOPICS.COURSE ||
                 topic === CONSTANTS.TOPICS.BASIC ||
-                topic === CONSTANTS.TOPICS.ACHIEVEMENT
+                topic === CONSTANTS.TOPICS.ACHIEVEMENT ||
+                topic === CONSTANTS.TOPICS.MORAL
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => {
@@ -1130,7 +1135,8 @@
                 topic === CONSTANTS.TOPICS.MODEL ||
                 topic === CONSTANTS.TOPICS.COURSE ||
                 topic === CONSTANTS.TOPICS.BASIC ||
-                topic === CONSTANTS.TOPICS.ACHIEVEMENT
+                topic === CONSTANTS.TOPICS.ACHIEVEMENT ||
+                topic === CONSTANTS.TOPICS.MORAL
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
@@ -1143,6 +1149,8 @@
                     defaultSubject = CONSTANTS.SUBJECTS.ENGLISH;
                 } else if (topic === CONSTANTS.TOPICS.ACHIEVEMENT) {
                     defaultSubject = CONSTANTS.SUBJECTS.SCIENCE_STD;
+                } else if (topic === CONSTANTS.TOPICS.MORAL) {
+                    defaultSubject = CONSTANTS.SUBJECTS.MORAL_PRINCIPLES;
                 } else {
                     defaultSubject = CONSTANTS.SUBJECTS.MUSIC;
                 }
