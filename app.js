@@ -958,23 +958,46 @@
             document
                 .querySelectorAll(`#${gameState.selectedSubject}-quiz-main section`)
                 .forEach(section => {
-                    const inputs = section.querySelectorAll('input[data-answer]');
-                    const usedSet = usedAnswersMap.get(section) || new Set();
-                    const answers = Array.from(inputs).map(i => i.dataset.answer);
-                    const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
-                    let idx = 0;
-                    inputs.forEach(input => {
-                        input.classList.remove(
-                            CONSTANTS.CSS_CLASSES.INCORRECT,
-                            CONSTANTS.CSS_CLASSES.RETRYING
-                        );
-                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                            input.value = remaining[idx] ?? input.dataset.answer;
-                            idx++;
-                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
-                        }
-                        input.disabled = true;
-                    });
+                    const groups = section.querySelectorAll('[data-group]');
+                    if (groups.length > 0) {
+                        groups.forEach(group => {
+                            const inputs = group.querySelectorAll('input[data-answer]');
+                            const usedSet = usedAnswersMap.get(group) || new Set();
+                            const answers = Array.from(inputs).map(i => i.dataset.answer);
+                            const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                            let idx = 0;
+                            inputs.forEach(input => {
+                                input.classList.remove(
+                                    CONSTANTS.CSS_CLASSES.INCORRECT,
+                                    CONSTANTS.CSS_CLASSES.RETRYING
+                                );
+                                if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                                    input.value = remaining[idx] ?? input.dataset.answer;
+                                    idx++;
+                                    input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                                }
+                                input.disabled = true;
+                            });
+                        });
+                    } else {
+                        const inputs = section.querySelectorAll('input[data-answer]');
+                        const usedSet = usedAnswersMap.get(section) || new Set();
+                        const answers = Array.from(inputs).map(i => i.dataset.answer);
+                        const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                        let idx = 0;
+                        inputs.forEach(input => {
+                            input.classList.remove(
+                                CONSTANTS.CSS_CLASSES.INCORRECT,
+                                CONSTANTS.CSS_CLASSES.RETRYING
+                            );
+                            if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                                input.value = remaining[idx] ?? input.dataset.answer;
+                                idx++;
+                                input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                            }
+                            input.disabled = true;
+                        });
+                    }
                 });
         }
 
@@ -989,11 +1012,12 @@
             let displayAnswer = input.dataset.answer;
 
             if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
-                if (!usedAnswersMap.has(section)) usedAnswersMap.set(section, new Set());
-                const usedSet = usedAnswersMap.get(section);
+                const group = input.closest('[data-group]') || section;
+                if (!usedAnswersMap.has(group)) usedAnswersMap.set(group, new Set());
+                const usedSet = usedAnswersMap.get(group);
 
                 const answerMap = new Map();
-                section.querySelectorAll('input[data-answer]').forEach(inp => {
+                group.querySelectorAll('input[data-answer]').forEach(inp => {
                     const original = inp.dataset.answer.trim();
                     const normalized = normalizeAnswer(original);
                     answerMap.set(normalized, original);
