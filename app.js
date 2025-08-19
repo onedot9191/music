@@ -40,7 +40,6 @@
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
                 MORAL_COURSE: 'moral-course',
-                MORAL_METHOD: 'moral-method',
                 COMPETENCY: 'competency',
                 AREA: 'area',
                 RANDOM: 'random'
@@ -52,8 +51,7 @@
                 MODEL: 'model',
                 COURSE: 'course',
                 BASIC: 'basic',
-                ACHIEVEMENT: 'achievement',
-                PRINCIPLE_METHOD: 'principle-method'
+                ACHIEVEMENT: 'achievement'
             },
             MODES: {
                 NORMAL: 'normal',
@@ -104,7 +102,6 @@
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
-            [CONSTANTS.SUBJECTS.MORAL_METHOD]: '도덕(원리와 방법)',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
@@ -116,8 +113,7 @@
             [CONSTANTS.TOPICS.MODEL]: '모형',
             [CONSTANTS.TOPICS.COURSE]: '교육과정',
             [CONSTANTS.TOPICS.BASIC]: '기본이론',
-            [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준',
-            [CONSTANTS.TOPICS.PRINCIPLE_METHOD]: '원리와 방법'
+            [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준'
         };
 
         // --- GAME STATE ---
@@ -460,7 +456,7 @@
        }
 
        function adjustBasicTopicInputWidths() {
-            if (![CONSTANTS.TOPICS.BASIC, CONSTANTS.TOPICS.PRINCIPLE_METHOD].includes(gameState.selectedTopic)) return;
+            if (gameState.selectedTopic !== CONSTANTS.TOPICS.BASIC) return;
             const mainId = `${gameState.selectedSubject}-quiz-main`;
             document
                 .querySelectorAll(`#${mainId} input[data-answer]`)
