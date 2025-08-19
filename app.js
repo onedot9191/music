@@ -1341,12 +1341,12 @@
                 main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                 const sectionIds = sectionGroups[targetId] || [targetId];
                 sectionIds.forEach(id => {
-                    const targetSection = document.getElementById(id);
+                    const targetSection = main.querySelector(`#${id}`);
                     if (targetSection) {
                         targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
                     }
                 });
-                const firstSection = document.getElementById(sectionIds[0]);
+                const firstSection = main.querySelector(`#${sectionIds[0]}`);
                 if (firstSection) {
                     focusFirstInput(firstSection);
                 }
