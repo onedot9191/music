@@ -135,7 +135,8 @@
 
         const SPECIAL_SUBJECTS = new Set([
             CONSTANTS.SUBJECTS.COMPETENCY,
-            CONSTANTS.SUBJECTS.AREA
+            CONSTANTS.SUBJECTS.AREA,
+            CONSTANTS.SUBJECTS.MORAL_PRINCIPLES
         ]);
 
         // Used to keep track of which answers have been matched in competency/area sections
