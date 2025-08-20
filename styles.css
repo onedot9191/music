@@ -534,8 +534,33 @@ td input.activity-input.revealed {
 td input.example-input {
   border: 2px dashed var(--text-dark);
   background: var(--bg-light);
-  margin-left: 1rem;
-  border-left: 5px dotted var(--primary);
+  margin-left: 0;
+  border-left: none;
+}
+
+td input.example-input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+  border-style: solid;
+}
+
+td input.example-input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+  border-style: solid;
+}
+
+td input.example-input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+  border-style: solid;
+}
+
+td input.example-input.revealed {
+  border-color: var(--revealed);
+  color: var(--revealed);
+  background: var(--bg-light);
+  border-style: solid;
 }
 
 td input.sub-step {
