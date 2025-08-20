@@ -760,7 +760,7 @@
             
             gameState.combo = 0;
             updateMushroomGrowth();
-            headerTitle.textContent = '아웃풋을 해보자';
+            headerTitle.textContent = '아웃풋';
             headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
             showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
