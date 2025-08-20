@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
   <title>아웃풋</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,17 +31,18 @@
   </style>
 </head>
 <body>
-  <header>
+  <a href="#main-content" class="skip-link">본문 바로가기</a>
+  <header role="banner">
     <div class="hud-left">
         <h1 id="header-title">아웃풋</h1>
-        <div id="combo-counter" class="hidden"></div>
+        <div id="combo-counter" class="hidden" aria-live="polite"></div>
     </div>
     <div class="hud-center">
         <div id="timer-container" class="kitsch-box hidden">
             <div id="time">15:00</div>
             <div id="bar"><div></div></div>
         </div>
-        <div id="slot-machine" class="slot-machine hidden">
+        <div id="slot-machine" class="slot-machine hidden" aria-hidden="true">
             <div class="reel">?</div>
             <div class="reel">?</div>
             <div class="reel">?</div>
@@ -53,6 +55,7 @@
       <button id="reset-btn" class="btn hidden">처음으로</button>
     </div>
   </header>
+  <div id="main-content" tabindex="-1"></div>
   <main id="music-quiz-main" class="hidden">
     <div class="tabs">
       <div class="tab active" data-target="performance">연주</div>
@@ -4550,14 +4553,14 @@
       </div>
   </div>
 
-  <div id="stage-clear-modal" class="modal-overlay">
+  <div id="stage-clear-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="stage-clear-title">
     <div class="modal-content">
-      <h2>Stage Clear!</h2>
+      <h2 id="stage-clear-title">Stage Clear!</h2>
       <p>축하합니다! 이 영역을 마스터했습니다!</p>
     </div>
   </div>
   
-  <div id="progress-modal" class="modal-overlay">
+  <div id="progress-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="result-title">
       <div class="modal-content">
           <div id="result-character-container">
               <div id="modal-character-placeholder"></div>
@@ -4586,9 +4589,9 @@
       </div>
   </div>
   
-  <div id="guide-modal" class="modal-overlay">
+  <div id="guide-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="guide-title">
       <div class="modal-content">
-          <h3>HOW TO PLAY</h3>
+          <h3 id="guide-title">HOW TO PLAY</h3>
           <div class="guide-steps">
               <div class="guide-step">
                   <div class="guide-label">STEP 1</div>
@@ -4613,9 +4616,10 @@
       </div>
   </div>
 
-  <div id="start-modal" class="modal-overlay">
+  <div id="start-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="start-modal-title">
         <div class="modal-boxes">
             <div id="settings-panel" class="modal-content">
+                <h2 id="start-modal-title" class="sr-only">게임 시작 설정</h2>
             <h2>주제 선택</h2>
             <div class="topic-selector">
                 <button class="btn topic-btn selected" data-topic="curriculum">내체표</button>
