@@ -180,6 +180,29 @@
         const slotMachineEl = document.getElementById('slot-machine');
         const slotReels = slotMachineEl.querySelectorAll('.reel');
         
+        // --- Modal focus helpers ---
+        let lastFocusedElement = null;
+        function focusModal(modalEl) {
+            const content = modalEl.querySelector('.modal-content');
+            if (!content) return;
+            if (!content.hasAttribute('tabindex')) {
+                content.setAttribute('tabindex', '-1');
+            }
+            content.focus({ preventScroll: true });
+        }
+        function openModal(modalEl) {
+            lastFocusedElement = document.activeElement;
+            modalEl.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            focusModal(modalEl);
+        }
+        function closeModal(modalEl) {
+            modalEl.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            if (lastFocusedElement && document.body.contains(lastFocusedElement)) {
+                try { lastFocusedElement.focus({ preventScroll: true }); } catch (_) {}
+            }
+            lastFocusedElement = null;
+        }
+
         // --- Audio ---
         const SFX_VOLUME = 0.2;
 
@@ -335,6 +358,11 @@
                 }
             }, 50);
         }
+
+        // Respect reduced motion preference
+        const PREFERS_REDUCED_MOTION =
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         // --- UI UPDATE FUNCTIONS ---
         function updateTimeSettingDisplay() {
@@ -709,7 +737,7 @@
             speechBubble.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             typewriter(resultDialogue, feedback.dialogue);
             
-            progressModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+            openModal(progressModal);
         }
 
         // --- GAME LOGIC FUNCTIONS ---
@@ -775,7 +803,7 @@
                .forEach(tab => tab.classList.remove('cleared'));
 
            if (showStartModal) {
-               startModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+               openModal(startModal);
                updateStartModalUI();
                adjustCreativeInputWidths();
                adjustEnglishInputWidths();
@@ -789,7 +817,7 @@
 
         function startGame() {
             playSound(startAudio);
-            startModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+            closeModal(startModal);
             
             headerTitle.textContent =
                 SUBJECT_NAMES[gameState.selectedSubject] || '퀴즈';
@@ -872,7 +900,7 @@
 
        function showStageClear() {
            playSound(clearAudio);
-           stageClearModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+           openModal(stageClearModal);
            setCharacterState('cheer', 5000);
 
             if (gameState.timerId !== null) {
@@ -881,20 +909,23 @@
             }
 
             const duration = CONSTANTS.STAGE_CLEAR_DURATION; // faster transition after stage clear
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-            const interval = setInterval(() => {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                const particleCount = 50 * (timeLeft / duration);
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-            }, 250);
+            let interval = null;
+            if (!PREFERS_REDUCED_MOTION) {
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
+                function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+                interval = setInterval(() => {
+                    const timeLeft = animationEnd - Date.now();
+                    if (timeLeft <= 0) return clearInterval(interval);
+                    const particleCount = 50 * (timeLeft / duration);
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                }, 250);
+            }
 
             setTimeout(() => {
-                clearInterval(interval);
-                stageClearModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+                if (interval) clearInterval(interval);
+                closeModal(stageClearModal);
                 advanceToNextStage(false);
                 if (gameState.total > 0 && gameState.timerId === null) {
                     gameState.timerId = setInterval(tick, 1000);
@@ -934,18 +965,21 @@
                 gameState.timerId = null;
             }
             const duration = 1000; // faster transition after competency clear
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-            const interval = setInterval(() => {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                const particleCount = 50 * (timeLeft / duration);
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-                confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-            }, 250);
+            let interval = null;
+            if (!PREFERS_REDUCED_MOTION) {
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 201 };
+                function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+                interval = setInterval(() => {
+                    const timeLeft = animationEnd - Date.now();
+                    if (timeLeft <= 0) return clearInterval(interval);
+                    const particleCount = 50 * (timeLeft / duration);
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                }, 250);
+            }
             setTimeout(() => {
-                clearInterval(interval);
+                if (interval) clearInterval(interval);
                 advanceToNextStage(false);
                 if (gameState.total > 0 && gameState.timerId === null) {
                     gameState.timerId = setInterval(tick, 1000);
@@ -1437,14 +1471,14 @@
         forceQuitBtn.addEventListener('click', () => { if(gameState.timerId) { gameState.total = 0; tick(); } });
         
         closeGuideBtn.addEventListener('click', () => {
-            guideModal.classList.remove('active');
-            startModal.classList.add('active');
+            closeModal(guideModal);
+            openModal(startModal);
             updateStartModalUI();
             fixSettingsPanelHeight();
         });
 
         closeProgressModalBtn.addEventListener('click', () => {
-            progressModal.classList.remove('active');
+            closeModal(progressModal);
             showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -1454,7 +1488,7 @@
             const modalContent = document.querySelector('#progress-modal .modal-content');
             const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
             if (wasHidden) {
-                progressModal.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                openModal(progressModal);
             }
             html2canvas(modalContent)
                 .then(async canvas => {
@@ -1508,7 +1542,7 @@
                 })
                 .finally(() => {
                     if (wasHidden) {
-                        progressModal.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        closeModal(progressModal);
                     }
                 });
         };
@@ -1562,7 +1596,7 @@
             resetGame(false); // Reset state without showing any modal
             adjustCreativeInputWidths();
             updateStartModalUI();
-            guideModal.classList.add('active'); // Always show guide on page load
+            openModal(guideModal); // Always show guide on page load
         }
 
         initializeApp();
