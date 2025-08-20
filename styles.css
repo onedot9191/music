@@ -40,6 +40,62 @@ body {
   font-weight: 400;
 }
 
+/* Global UX enhancements */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 12rem; /* keep focused content clear of fixed header */
+}
+
+/* Accessible skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 0.8rem 1.2rem;
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 0;
+  outline: 3px solid var(--revealed);
+  outline-offset: 2px;
+}
+
+/* Focus visible rings for keyboard users */
+.btn:focus-visible,
+.tab:focus-visible,
+input:focus-visible,
+.slot-machine .reel:focus-visible,
+.competency-tab:focus-visible {
+  outline: 3px solid var(--revealed);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto;
+  }
+}
+
+/* Visually hidden utility for screen reader only text */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 #combo-counter {
   font-family: var(--font-display);
 }
@@ -804,7 +860,7 @@ td input.activity-input:not(:first-child) {
 /* Arrange topic buttons in two rows with up to four per row */
 .topic-selector {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 .topic-btn {
   width: 100%;
