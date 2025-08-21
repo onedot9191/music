@@ -4476,6 +4476,7 @@
     <div class="tabs">
       <div class="tab active" data-target="stage-name">단계명</div>
       <div class="tab" data-target="lowenfeld">로웬펠드</div>
+      <div class="tab" data-target="gardner">가드너</div>
     </div>
     <section id="stage-name" class="active">
       <h2>단계명</h2>
@@ -4518,7 +4519,87 @@
     </section>
     <section id="lowenfeld">
       <h2>로웬펠드</h2>
-      <div class="grade-container"><div><table><tbody><tr><td></td></tr></tbody></table></div></div>
+      <div class="grade-container"><div><table><tbody><tr><td>
+        <ul class="assessment-list">
+          <li>로웬펠드의 <input class="fit-answer" data-answer="표현 능력 발달 단계" aria-label="표현 능력 발달 단계" placeholder="정답"></li>
+          <li>난화기 <input class="fit-answer" data-answer="특징" aria-label="특징" placeholder="정답">
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="무질서한 난화기" aria-label="무질서한 난화기" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="조절하는 난화기" aria-label="조절하는 난화기" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="명명하는 난화기" aria-label="명명하는 난화기" placeholder="정답"></li>
+            </ul>
+          </li>
+          <li>전도식기 <input class="fit-answer" data-answer="특징" aria-label="특징" placeholder="정답">
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="두족인의 표현" aria-label="두족인의 표현" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="자기중심적 표현" aria-label="자기중심적 표현" placeholder="정답"></li>
+            </ul>
+          </li>
+          <li>표현 발달(도식기→또래집단기→의사실기)
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="도식적 표현" aria-label="도식적 표현" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="도식적 표현과 사실적 표현의 과도기" aria-label="도식적 표현과 사실적 표현의 과도기" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="사실적 표현" aria-label="사실적 표현" placeholder="정답"></li>
+            </ul>
+          </li>
+          <li>도식기 <input class="fit-answer" data-answer="특징" aria-label="특징" placeholder="정답">
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="투영적 표현" aria-label="투영적 표현" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="기저선" aria-label="기저선" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="시공간의 동시 표현" aria-label="시공간의 동시 표현" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="전개도식표현" aria-label="전개도식표현" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="중앙원근법적 표현" aria-label="중앙원근법적 표현" placeholder="정답"></li>
+            </ul>
+          </li>
+          <li>또래집단기 <input class="fit-answer" data-answer="특징" aria-label="특징" placeholder="정답">
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="또래와의 상호작용" aria-label="또래와의 상호작용" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="중첩의 표현" aria-label="중첩의 표현" placeholder="정답"></li>
+            </ul>
+          </li>
+          <li>또래집단기 교사 지도
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="오감을 통한 관찰" aria-label="오감을 통한 관찰" placeholder="정답"></li>
+            </ul>
+          </li>
+          <li>의사실기 <input class="fit-answer" data-answer="특징" aria-label="특징" placeholder="정답">
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="시각형(객관적, 사실적 표현)" aria-label="시각형(객관적, 사실적 표현)" placeholder="정답" style="min-width:22ch;"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="촉각형(주관적, 감정적 표현)" aria-label="촉각형(주관적, 감정적 표현)" placeholder="정답" style="min-width:22ch;"></li>
+            </ul>
+          </li>
+          <li>결정기 <input class="fit-answer" data-answer="특징" aria-label="특징" placeholder="정답">
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="중간형(시각형과 촉각형 복합적)" aria-label="중간형(시각형과 촉각형 복합적)" placeholder="정답" style="min-width:22ch;"></li>
+            </ul>
+          </li>
+        </ul>
+      </td></tr></tbody></table></div></div>
+    </section>
+    <section id="gardner">
+      <h2>가드너</h2>
+      <div class="grade-container"><div><table><tbody><tr><td>
+        <ul class="assessment-list">
+          <li>가드너의 <input class="fit-answer" data-answer="감상 능력 발달 단계" aria-label="감상 능력 발달 단계" placeholder="정답"></li>
+          <li>사실적 단계 (관점/관심)
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="사실지향적 관점" aria-label="사실지향적 관점" placeholder="정답"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="주제(에 대한 관심)" aria-label="주제(에 대한 관심)" placeholder="정답" style="min-width:15ch;"></li>
+            </ul>
+          </li>
+          <li>사실적 단계 교사 지도
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="사실주의적 고정관념 깨기" aria-label="사실주의적 고정관념 깨기" placeholder="정답" style="min-width:18ch;"></li>
+            </ul>
+          </li>
+          <li>탈 사실적 단계 (관심x2)
+            <ul class="sub-list">
+              <li class="inline-item"><input class="fit-answer" data-answer="표현양식(에 대한 관심)" aria-label="표현양식(에 대한 관심)" placeholder="정답" style="min-width:18ch;"></li>
+              <li class="inline-item"><input class="fit-answer" data-answer="재료와 기법(에 대한 관심)" aria-label="재료와 기법(에 대한 관심)" placeholder="정답" style="min-width:18ch;"></li>
+            </ul>
+          </li>
+        </ul>
+      </td></tr></tbody></table></div></div>
     </section>
   </main>
   <!-- art basic main end -->
