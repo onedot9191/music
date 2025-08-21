@@ -25,6 +25,17 @@
   font-size: 10px; /* Base font size for rem units */
 }
 
+/* Start modal: ensure first row lists four primary topics in order */
+#start-modal .topic-selector {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 900px) {
+  #start-modal .topic-selector {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -367,6 +378,18 @@ main,
   transform: translateY(3px);
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
+/* Blur titles for disabled sections in Practical model */
+/* Generic blur for disabled tabs across all model subjects */
+.tabs .tab.practical-disabled {
+  filter: blur(8px);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Generic blur for disabled sections across all model subjects */
+section.practical-section-disabled {
+  filter: blur(8px);
+}
 
 .accordion {
   display: flex;
@@ -561,6 +584,64 @@ input.sub-area-input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
   background: var(--bg-light);
+}
+
+/* Fix overlap and unify UI in PE > 신체활동 예시 */
+#pe-quiz-main #activity-examples table {
+  table-layout: fixed; /* keep wide second column for inputs */
+}
+#pe-quiz-main #activity-examples th.sub-area-cell {
+  width: 20rem; /* narrower than before to free space for right column */
+}
+#pe-quiz-main #activity-examples th.sub-area-cell,
+#pe-quiz-main #activity-examples td {
+  vertical-align: top;
+}
+#pe-quiz-main #activity-examples td {
+  display: flex; /* ensure column layout fills full width */
+  flex-direction: column;
+}
+#pe-quiz-main #activity-examples .activity-group {
+  width: 100%; /* groups span entire td width */
+}
+#pe-quiz-main #activity-examples .activity-group {
+  display: flex;
+  flex-direction: column; /* place activity first, examples below */
+}
+#pe-quiz-main #activity-examples .activity-group > .activity-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.8rem; /* separate from examples */
+}
+#pe-quiz-main #activity-examples .activity-group > .example-input {
+  width: auto;
+}
+#pe-quiz-main #activity-examples th.sub-area-cell .sub-area-input {
+  display: block;
+  width: 100%;
+  transition: all 0.2s ease; /* match other inputs */
+}
+/* Make '세부영역' look identical to '신체활동 예시' */
+#pe-quiz-main #activity-examples input.sub-area-input {
+  padding: 1.2rem; /* match td input default */
+  font-size: 1.4rem; /* match td input default */
+  border: 3px solid var(--accent); /* same as activity-input */
+  background: var(--primary); /* same as activity-input */
+  color: var(--text-light);
+  font-weight: 800;
+}
+/* Ensure state colors are clearly visible for sub-area inputs */
+#pe-quiz-main #activity-examples input.sub-area-input.correct {
+  border-color: var(--correct);
+}
+#pe-quiz-main #activity-examples input.sub-area-input.incorrect {
+  border-color: var(--incorrect);
+}
+#pe-quiz-main #activity-examples input.sub-area-input.retrying {
+  border-color: var(--retrying);
+}
+#pe-quiz-main #activity-examples input.sub-area-input.revealed {
+  border-color: var(--revealed);
 }
 
 td input.activity-input {
@@ -1846,4 +1927,138 @@ td input.activity-input:not(:first-child) {
 
 #moral .grade-container > div {
   padding: 1rem;
+}
+
+/* Art Basic (미술 기본이론) readability + input width normalization */
+#art-basic-quiz-main .tabs {
+  margin-bottom: 1.6rem;
+}
+
+#art-basic-quiz-main h2 {
+  margin: 1.2rem 0 2rem;
+  padding: 1.2rem;
+}
+
+#art-basic-quiz-main .grade-container > div {
+  padding: 1.2rem;
+}
+
+#art-basic-quiz-main table {
+  border-spacing: 0 0.8rem;
+}
+
+#art-basic-quiz-main td {
+  gap: 0.6rem;
+}
+#art-basic-quiz-main td input {
+  width: auto; /* prevent 100% width inside Art Basic */
+}
+
+#art-basic-quiz-main .assessment-list,
+#art-basic-quiz-main .sub-list {
+  list-style: none;
+  margin-left: 0;
+  gap: 0.6rem;
+}
+
+#art-basic-quiz-main .inline-item {
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+}
+
+/* Unify blanks width across Art Basic; override scattered inline min-widths */
+#art-basic-quiz-main .inline-item input.fit-answer {
+  width: 20ch !important;
+  min-width: 20ch !important;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Apply same width even when input is not wrapped by .inline-item */
+#art-basic-quiz-main input.fit-answer {
+  width: 20ch !important;
+  min-width: 20ch !important;
+  max-width: 100%;
+  text-align: center;
+}
+
+#art-basic-quiz-main .sub-list .inline-item input.fit-answer {
+  width: 20ch !important;
+  min-width: 20ch !important;
+}
+
+/* Multi-column card layout for Art Basic lists */
+#art-basic-quiz-main .assessment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+
+#art-basic-quiz-main .assessment-list > li {
+  background: var(--bg-light);
+  border: 2px solid var(--secondary);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+}
+
+#art-basic-quiz-main .sub-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
+  gap: 0.6rem 1rem;
+  margin-left: 0;
+}
+
+#art-basic-quiz-main .sub-list .inline-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+/* Integrated Model combined section layout */
+#integrated-model-quiz-main #integrated-all td {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(12ch, 1fr));
+  gap: 0.6rem 1rem; /* row-gap, col-gap */
+  align-items: start;
+}
+#integrated-model-quiz-main #integrated-all td input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  text-align: center;
+}
+
+/* Mini reveal button (2nd wrong attempt) */
+.reveal-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.mini-reveal-btn {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--secondary);
+  background: var(--bg-light);
+  color: var(--text-dark);
+  border-radius: 4px;
+  cursor: pointer;
+  display: none; /* 기본 숨김 */
+  z-index: 2;
+}
+.reveal-wrapper > input.incorrect + .mini-reveal-btn {
+  display: inline-block; /* 2차 오답(빨간 테두리)일 때만 노출 */
+}
+.mini-reveal-btn:hover {
+  background: var(--secondary);
+  color: var(--text-light);
+}
+
+/* Practical model title modal removed */
+
+@media (max-width: 520px) {
+  #integrated-model-quiz-main #integrated-all td {
+    grid-template-columns: 1fr; /* 작은 화면에서는 1열 */
+  }
 }
