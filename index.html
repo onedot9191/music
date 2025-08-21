@@ -1051,7 +1051,8 @@
   </main>
   <main id="ethics-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="roleplay">역할놀이</div>
+      <div class="tab active" data-target="ethics-title">타이틀</div>
+      <div class="tab" data-target="roleplay">역할놀이</div>
       <div class="tab" data-target="concept-analysis">개념 분석</div>
       <div class="tab" data-target="value-analysis">가치 분석</div>
       <div class="tab" data-target="conflict-resolution">가치 갈등 해결</div>
@@ -1063,7 +1064,26 @@
       <div class="tab" data-target="group-inquiry">집단 탐구</div>
       <div class="tab" data-target="p4c">철학적 탐구 공동체</div>
     </div>
-    <section id="roleplay" class="active">
+    <section id="ethics-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="ethics-title">
+          <input data-answer="역할놀이 수업모형" aria-label="역할놀이 수업모형" placeholder="정답">
+          <input data-answer="개념 분석 수업모형" aria-label="개념 분석 수업모형" placeholder="정답">
+          <input data-answer="가치 분석 수업모형" aria-label="가치 분석 수업모형" placeholder="정답">
+          <input data-answer="가치 갈등 해결 수업모형" aria-label="가치 갈등 해결 수업모형" placeholder="정답">
+          <input data-answer="가치 명료화 수업모형" aria-label="가치 명료화 수업모형" placeholder="정답">
+          <input data-answer="합리적 의사 결정 수업모형" aria-label="합리적 의사 결정 수업모형" placeholder="정답">
+          <input data-answer="도덕적 토론 수업모형" aria-label="도덕적 토론 수업모형" placeholder="정답">
+          <input data-answer="도덕 이야기 수업모형" aria-label="도덕 이야기 수업모형" placeholder="정답">
+          <input data-answer="경험 학습 수업모형" aria-label="경험 학습 수업모형" placeholder="정답">
+          <input data-answer="집단 탐구 수업모형" aria-label="집단 탐구 수업모형" placeholder="정답">
+          <input data-answer="철학적 탐구 공동체 수업모형" aria-label="철학적 탐구 공동체 수업모형" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="ethics-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="roleplay">
       <h2>역할놀이 수업모형</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="역할놀이 준비" aria-label="역할놀이 준비" placeholder="단계명">
@@ -1218,6 +1238,7 @@
   </main>
   <main id="practical-quiz-main" class="hidden">
     <div class="tabs">
+      <div class="tab active" data-target="practical-title">타이틀</div>
       <div class="tab active" data-target="problem-solving">문제 해결</div>
       <div class="tab" data-target="project">프로젝트</div>
       <div class="tab" data-target="practice-centered">실습 중심</div>
@@ -1226,7 +1247,24 @@
       <div class="tab" data-target="practical-problem">실천적 문제 중심 학습</div>
       <div class="tab" data-target="technical-problem-solving">기술적 문제해결 과정</div>
     </div>
-    <section id="problem-solving" class="active">
+    <section id="practical-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="practical-title">
+          <input data-answer="문제 해결 교수·학습 방법" aria-label="문제 해결 교수·학습 방법" placeholder="정답">
+          <input data-answer="프로젝트 교수·학습 방법" aria-label="프로젝트 교수·학습 방법" placeholder="정답">
+          <input data-answer="실습 중심 교수·학습 방법" aria-label="실습 중심 교수·학습 방법" placeholder="정답">
+          <input data-answer="협동 학습 교수·학습 방법" aria-label="협동 학습 교수·학습 방법" placeholder="정답">
+          <input data-answer="홈 프로젝트 모형 (가정 실습형)" aria-label="홈 프로젝트 모형 (가정 실습형)" placeholder="정답">
+          <input data-answer="실천적 문제 중심 학습" aria-label="실천적 문제 중심 학습" placeholder="정답">
+          <input data-answer="기술적 문제해결 과정" aria-label="기술적 문제해결 과정" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;">
+        <button id="practical-title-next-btn" class="btn">다음으로</button>
+      </div>
+    </section>
+    <section id="problem-solving">
       <h2>문제 해결 교수·학습 방법</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="문제 인식" aria-label="문제 인식" placeholder="단계명">
@@ -1304,7 +1342,8 @@
   </main>
   <main id="social-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="attribute">속성 모형</div>
+      <div class="tab active" data-target="social-title">타이틀</div>
+      <div class="tab" data-target="attribute">속성 모형</div>
       <div class="tab" data-target="prototype">원형모형</div>
       <div class="tab" data-target="context">상황모형</div>
       <div class="tab" data-target="inquiry-mc">탐구학습(마시알라스)</div>
@@ -1317,7 +1356,25 @@
       <div class="tab" data-target="jigsaw2">직소Ⅱ</div>
       <div class="tab" data-target="stad">STAD</div>
     </div>
-    <section id="attribute" class="active">
+    <section id="social-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="social-title">
+          <input data-answer="속성 모형 (개념학습모형)" aria-label="속성 모형 (개념학습모형)" placeholder="정답">
+          <input data-answer="원형 모형 (개념학습모형)" aria-label="원형 모형 (개념학습모형)" placeholder="정답">
+          <input data-answer="상황 모형 (개념학습모형)" aria-label="상황 모형 (개념학습모형)" placeholder="정답">
+          <input data-answer="탐구학습모형" aria-label="탐구학습모형" placeholder="정답">
+          <input data-answer="문제해결학습모형" aria-label="문제해결학습모형" placeholder="정답">
+          <input data-answer="합리적 의사결정 모형" aria-label="합리적 의사결정 모형" placeholder="정답">
+          <input data-answer="의사결정 매트릭스 모형" aria-label="의사결정 매트릭스 모형" placeholder="정답">
+          <input data-answer="논쟁문제 학습모형" aria-label="논쟁문제 학습모형" placeholder="정답">
+          <input data-answer="직소2 (협동학습모형)" aria-label="직소2 (협동학습모형)" placeholder="정답">
+          <input data-answer="STAD (협동학습모형)" aria-label="STAD (협동학습모형)" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="social-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="attribute">
       <h2>속성 모형 (개념학습모형)</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="문제 제기" aria-label="문제 제기" placeholder="단계명">
@@ -1452,7 +1509,8 @@
   </main>
   <main id="science-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="experience-learning">경험 학습 모형</div>
+      <div class="tab active" data-target="science-title">타이틀</div>
+      <div class="tab" data-target="experience-learning">경험 학습 모형</div>
       <div class="tab" data-target="discovery-learning">발견 학습 모형</div>
       <div class="tab" data-target="inquiry-learning">탐구 학습 모형</div>
       <div class="tab" data-target="learning-cycle">순환 학습 모형</div>
@@ -1461,7 +1519,23 @@
       <div class="tab" data-target="conceptual-change">개념 변화 학습 모형</div>
       <div class="tab" data-target="sts-learning">STS 학습 모형</div>
     </div>
-    <section id="experience-learning" class="active">
+    <section id="science-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="science-title">
+          <input data-answer="경험 학습 모형" aria-label="경험 학습 모형" placeholder="정답">
+          <input data-answer="발견 학습 모형" aria-label="발견 학습 모형" placeholder="정답">
+          <input data-answer="탐구 학습 모형" aria-label="탐구 학습 모형" placeholder="정답">
+          <input data-answer="순환 학습 모형" aria-label="순환 학습 모형" placeholder="정답">
+          <input data-answer="POE" aria-label="POE" placeholder="정답">
+          <input data-answer="5E" aria-label="5E" placeholder="정답">
+          <input data-answer="개념 변화 학습 모형" aria-label="개념 변화 학습 모형" placeholder="정답">
+          <input data-answer="STS 학습 모형" aria-label="STS 학습 모형" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="science-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="experience-learning">
       <h2>경험 학습 모형</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="자유 탐색" aria-label="자유 탐색" placeholder="단계명">
@@ -1542,7 +1616,8 @@
   </main>
   <main id="korean-model-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="direct-instruction">직접교수</div>
+      <div class="tab active" data-target="korean-title">타이틀</div>
+      <div class="tab" data-target="direct-instruction">직접교수</div>
       <div class="tab" data-target="problem-solving">문제해결 학습</div>
       <div class="tab" data-target="creativity">창의성계발 학습</div>
       <div class="tab" data-target="knowledge-inquiry">지식 탐구 학습</div>
@@ -1551,7 +1626,23 @@
       <div class="tab" data-target="value-inquiry">가치 탐구 학습</div>
       <div class="tab" data-target="discussion">토의 토론 학습</div>
     </div>
-    <section id="direct-instruction" class="active">
+    <section id="korean-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="korean-title">
+          <input data-answer="직접교수 모형" aria-label="직접교수 모형" placeholder="정답">
+          <input data-answer="문제해결 학습모형" aria-label="문제해결 학습모형" placeholder="정답">
+          <input data-answer="창의성계발 학습모형" aria-label="창의성계발 학습모형" placeholder="정답">
+          <input data-answer="지식 탐구 학습 모형" aria-label="지식 탐구 학습 모형" placeholder="정답">
+          <input data-answer="반응 중심 학습 모형" aria-label="반응 중심 학습 모형" placeholder="정답">
+          <input data-answer="역할 수행 학습 모형" aria-label="역할 수행 학습 모형" placeholder="정답">
+          <input data-answer="가치 탐구 학습 모형" aria-label="가치 탐구 학습 모형" placeholder="정답">
+          <input data-answer="토의 토론 학습 모형" aria-label="토의 토론 학습 모형" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="korean-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="direct-instruction">
       <h2>직접교수 모형</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="설명하기" aria-label="설명하기" placeholder="단계명">
@@ -1626,7 +1717,8 @@
   </main>
   <main id="pe-model-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="direct-instruction-pe">직접교수</div>
+      <div class="tab active" data-target="pe-title">타이틀</div>
+      <div class="tab" data-target="direct-instruction-pe">직접교수</div>
       <div class="tab" data-target="inquiry-pe">탐구수업</div>
       <div class="tab" data-target="peer-teaching-pe">동료교수</div>
       <div class="tab" data-target="individualized-pe">개별화수업</div>
@@ -1635,7 +1727,23 @@
       <div class="tab" data-target="sport-education-pe">스포츠교육</div>
       <div class="tab" data-target="psr-pe">개인적사회적책임감</div>
     </div>
-    <section id="direct-instruction-pe" class="active">
+    <section id="pe-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="pe-title">
+          <input data-answer="직접교수모형" aria-label="직접교수모형" placeholder="정답">
+          <input data-answer="탐구수업모형" aria-label="탐구수업모형" placeholder="정답">
+          <input data-answer="동료교수모형" aria-label="동료교수모형" placeholder="정답">
+          <input data-answer="개별화수업모형" aria-label="개별화수업모형" placeholder="정답">
+          <input data-answer="협동학습모형" aria-label="협동학습모형" placeholder="정답">
+          <input data-answer="이해중심게임수업모형" aria-label="이해중심게임수업모형" placeholder="정답">
+          <input data-answer="스포츠교육모형" aria-label="스포츠교육모형" placeholder="정답">
+          <input data-answer="개인적사회적책임감모형" aria-label="개인적사회적책임감모형" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="pe-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="direct-instruction-pe">
       <h2>직접교수모형</h2>
       <div class="grade-container"><div><table><tbody>
         <tr><th>주제</th><td>
@@ -1770,12 +1878,25 @@
   </main>
   <main id="art-model-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="inductive-art">귀납적 사고법</div>
+      <div class="tab active" data-target="art-title">타이틀</div>
+      <div class="tab" data-target="inductive-art">귀납적 사고법</div>
       <div class="tab" data-target="creative-problem-art">창의적 문제 해결법</div>
       <div class="tab" data-target="reaction-centered-art">반응 중심 학습법</div>
       <div class="tab" data-target="direct-instruction-art">직접 교수법</div>
     </div>
-    <section id="inductive-art" class="active">
+    <section id="art-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="art-title">
+          <input data-answer="귀납적 사고법" aria-label="귀납적 사고법" placeholder="정답">
+          <input data-answer="창의적 문제 해결법" aria-label="창의적 문제 해결법" placeholder="정답">
+          <input data-answer="반응 중심 학습법" aria-label="반응 중심 학습법" placeholder="정답">
+          <input data-answer="직접 교수법" aria-label="직접 교수법" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="art-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="inductive-art">
       <h2>귀납적 사고법</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="문제 인식" aria-label="문제 인식" placeholder="단계명">
@@ -1818,13 +1939,27 @@
   </main>
   <main id="math-model-quiz-main" class="hidden">
     <div class="tabs">
-      <div class="tab active" data-target="concept-formation-math">개념 학습 모형 (개념 형성)</div>
+      <div class="tab active" data-target="math-title">타이틀</div>
+      <div class="tab" data-target="concept-formation-math">개념 학습 모형 (개념 형성)</div>
       <div class="tab" data-target="concept-attribute-math">개념 학습 모형 (속성)</div>
       <div class="tab" data-target="inductive-reasoning-math">귀납 추론 학습</div>
       <div class="tab" data-target="problem-solving-math">문제 해결 학습</div>
       <div class="tab" data-target="principle-inquiry-math">원리 탐구 학습</div>
     </div>
-    <section id="concept-formation-math" class="active">
+    <section id="math-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr><th>모형명</th><td class="two-col-answers" data-group="math-title">
+          <input data-answer="개념 형성 모형 (개념 학습 모형)" aria-label="개념 형성 모형 (개념 학습 모형)" placeholder="정답">
+          <input data-answer="속성 모형 (개념 학습 모형)" aria-label="속성 모형 (개념 학습 모형)" placeholder="정답">
+          <input data-answer="귀납 추론 학습 모형" aria-label="귀납 추론 학습 모형" placeholder="정답">
+          <input data-answer="문제해결학습 모형" aria-label="문제해결학습 모형" placeholder="정답">
+          <input data-answer="원리 탐구 학습 모형" aria-label="원리 탐구 학습 모형" placeholder="정답">
+        </td></tr>
+      </tbody></table></div></div>
+      <div style="text-align:center; margin-top: 1rem;"><button id="math-title-next-btn" class="btn">다음으로</button></div>
+    </section>
+    <section id="concept-formation-math">
       <h2>개념 학습 모형 (개념 형성)</h2>
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
         <input data-answer="범례 제시 및 범례 분류하기" aria-label="범례 제시 및 범례 분류하기" placeholder="단계명">
@@ -1873,6 +2008,104 @@
         <input data-answer="수학적 원리의 형식화" aria-label="수학적 원리의 형식화" placeholder="단계명">
         <input data-answer="수학적 원리 익히기 및 적용하기" aria-label="수학적 원리 익히기 및 적용하기" placeholder="단계명">
       </td></tr></tbody></table></div></div>
+    </section>
+  </main>
+  <main id="integrated-model-quiz-main" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-target="integrated-title">타이틀</div>
+      <div class="tab" data-target="integrated-features">특징</div>
+    </div>
+    <section id="integrated-title" class="active">
+      <h2>타이틀</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr>
+          <th>유형</th>
+          <td class="two-col-answers">
+            <input data-answer="이야기 모형" aria-label="이야기 모형" placeholder="타이틀">
+            <input data-answer="성취기준 출발형" aria-label="성취기준 출발형" placeholder="타이틀">
+            <input data-answer="학생 요구형" aria-label="학생 요구형" placeholder="타이틀">
+            <input data-answer="학습 기능 숙달형" aria-label="학습 기능 숙달형" placeholder="타이틀">
+            <input data-answer="문제 해결형" aria-label="문제 해결형" placeholder="타이틀">
+            <input data-answer="학교 행사형" aria-label="학교 행사형" placeholder="타이틀">
+            <input data-answer="이벤트형" aria-label="이벤트형" placeholder="타이틀">
+            <input data-answer="장소 기반형" aria-label="장소 기반형" placeholder="타이틀">
+            <input data-answer="프로젝트형" aria-label="프로젝트형" placeholder="타이틀">
+          </td>
+        </tr>
+      </tbody></table></div></div>
+    </section>
+    <section id="integrated-features">
+      <h2>특징</h2>
+      <div class="grade-container"><div><table><tbody>
+        <tr>
+          <th>이야기 모형</th>
+          <td>
+            <input data-answer="이야기 열기" aria-label="이야기 열기" placeholder="단계명">
+            <input data-answer="이야기 하기" aria-label="이야기 하기" placeholder="단계명">
+            <input data-answer="함께 골라요" aria-label="함께 골라요" placeholder="세부 단계">
+            <input data-answer="함께 만들어요" aria-label="함께 만들어요" placeholder="세부 단계">
+            <input data-answer="이야기 맺기" aria-label="이야기 맺기" placeholder="단계명">
+          </td>
+        </tr>
+        <tr>
+          <th>성취기준 출발형</th>
+          <td>
+            <input data-answer="교사 주도" aria-label="교사 주도" placeholder="특징">
+            <input data-answer="교사들이 통상적으로 접근하는 방식" aria-label="교사들이 통상적으로 접근하는 방식" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>학생 요구형</th>
+          <td>
+            <input data-answer="학생 주도" aria-label="학생 주도" placeholder="특징">
+            <input data-answer="학생 맞춤형 수업" aria-label="학생 맞춤형 수업" placeholder="특징">
+            <input data-answer="학생은 수업 내용을 제안하는 역할" aria-label="학생은 수업 내용을 제안하는 역할" placeholder="특징">
+            <input data-answer="교사는 성취기준과 연결하는 역할" aria-label="교사는 성취기준과 연결하는 역할" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>학습 기능 숙달형</th>
+          <td>
+            <input data-answer="교과 학습 확산" aria-label="교과 학습 확산" placeholder="특징">
+            <input data-answer="초등학교에서 접근이 쉬움" aria-label="초등학교에서 접근이 쉬움" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>문제 해결형</th>
+          <td>
+            <input data-answer="문제해결 능력 함양" aria-label="문제해결 능력 함양" placeholder="특징">
+            <input data-answer="관련 역량 함양" aria-label="관련 역량 함양" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>학교 행사형</th>
+          <td>
+            <input data-answer="현실성이 높음" aria-label="현실성이 높음" placeholder="특징">
+            <input data-answer="학교 행사와 교과 수업을 동시 진행" aria-label="학교 행사와 교과 수업을 동시 진행" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>이벤트형</th>
+          <td>
+            <input data-answer="교과 내용을 특별한 날과 맥락화" aria-label="교과 내용을 특별한 날과 맥락화" placeholder="특징">
+            <input data-answer="학생은 삶과 앎을 통합" aria-label="학생은 삶과 앎을 통합" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>장소 기반형</th>
+          <td>
+            <input data-answer="교육 내용의 지역화" aria-label="교육 내용의 지역화" placeholder="특징">
+            <input data-answer="지역에 대한 소속감" aria-label="지역에 대한 소속감" placeholder="특징">
+          </td>
+        </tr>
+        <tr>
+          <th>프로젝트형</th>
+          <td>
+            <input data-answer="학생 주체성 강화" aria-label="학생 주체성 강화" placeholder="특징">
+            <input data-answer="학습에 대한 책임과 몰입 강화" aria-label="학습에 대한 책임과 몰입 강화" placeholder="특징">
+          </td>
+        </tr>
+      </tbody></table></div></div>
     </section>
   </main>
   <main id="science-std-quiz-main" class="hidden">
@@ -4860,6 +5093,8 @@
     </div>
   </div>
   
+  
+  
   <div id="progress-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="result-title">
       <div class="modal-content">
           <div id="result-character-container">
@@ -4947,6 +5182,7 @@
                 <button class="btn subject-btn" data-subject="english" data-topic="basic">영어</button>
                 <button class="btn subject-btn" data-subject="art-basic" data-topic="basic">미술</button>
                 <button class="btn subject-btn" data-subject="practical" data-topic="model">실과</button>
+                <button class="btn subject-btn" data-subject="integrated-model" data-topic="model">통합</button>
                 <button class="btn subject-btn" data-subject="pe-model" data-topic="model">체육</button>
                 <button class="btn subject-btn" data-subject="ethics" data-topic="model">도덕</button>
                 <button class="btn subject-btn" data-subject="korean-model" data-topic="model">국어</button>
