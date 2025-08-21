@@ -952,7 +952,7 @@
             const groupIds = sectionGroups[tabId];
             if (groupIds) {
                 const allCleared = groupIds.every(id => {
-                    const sec = document.getElementById(id);
+                    const sec = main.querySelector(`#${id}`);
                     return sec && checkStageClear(sec);
                 });
                 if (!allCleared) return;
