@@ -436,7 +436,7 @@ td {
 th {
   padding-right: 1.5rem;
   color: var(--text-dark);
-  width: 1%; /* Prevent th from taking too much space */
+  min-width: 8rem; /* Ensure header text is fully visible */
   white-space: nowrap;
 }
 
