@@ -27,6 +27,7 @@
                 PE: 'pe',
                 PE_LITE: 'pe-lite',
                 PE_MODEL: 'pe-model',
+                INTEGRATED_MODEL: 'integrated-model',
                 ART_MODEL: 'art-model',
                 ART_BASIC: 'art-basic',
                 ENGLISH: 'english',
@@ -94,6 +95,7 @@
             [CONSTANTS.SUBJECTS.PE]: '체육',
             [CONSTANTS.SUBJECTS.PE_LITE]: '체육(lite)',
             [CONSTANTS.SUBJECTS.PE_MODEL]: '체육',
+            [CONSTANTS.SUBJECTS.INTEGRATED_MODEL]: '통합',
             [CONSTANTS.SUBJECTS.ART_MODEL]: '미술',
             [CONSTANTS.SUBJECTS.ART_BASIC]: '미술',
             [CONSTANTS.SUBJECTS.ENGLISH]: '영어',
@@ -850,6 +852,56 @@
             }
             adjustBasicTopicInputWidths();
             
+            // Practical model: start with only Title enabled
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL && gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
+                const main = document.getElementById('practical-quiz-main');
+                if (main) {
+                    main.querySelectorAll('section').forEach(sec => {
+                        if (sec.id !== 'practical-title') {
+                            sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = true);
+                            sec.style.opacity = '0.2';
+                            sec.style.pointerEvents = 'none';
+                            sec.classList.add('practical-section-disabled');
+                        }
+                    });
+                    const tabs = main.querySelectorAll('.tabs .tab');
+                    tabs.forEach(tab => {
+                        if (tab.dataset.target !== 'practical-title') tab.classList.add('practical-disabled');
+                    });
+                }
+            }
+
+            // Apply gating for other model subjects similar to Practical
+            if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
+                const configs = [
+                    { subject: CONSTANTS.SUBJECTS.PE_MODEL, mainId: 'pe-model-quiz-main', titleId: 'pe-title' },
+                    { subject: CONSTANTS.SUBJECTS.ETHICS, mainId: 'ethics-quiz-main', titleId: 'ethics-title' },
+                    { subject: CONSTANTS.SUBJECTS.KOREAN_MODEL, mainId: 'korean-model-quiz-main', titleId: 'korean-title' },
+                    { subject: CONSTANTS.SUBJECTS.ART_MODEL, mainId: 'art-model-quiz-main', titleId: 'art-title' },
+                    { subject: CONSTANTS.SUBJECTS.MATH_MODEL, mainId: 'math-model-quiz-main', titleId: 'math-title' },
+                    { subject: CONSTANTS.SUBJECTS.SOCIAL, mainId: 'social-quiz-main', titleId: 'social-title' },
+                    { subject: CONSTANTS.SUBJECTS.SCIENCE, mainId: 'science-quiz-main', titleId: 'science-title' }
+                ];
+                const cfg = configs.find(c => c.subject === gameState.selectedSubject);
+                if (cfg) {
+                    const main = document.getElementById(cfg.mainId);
+                    if (main) {
+                        main.querySelectorAll('section').forEach(sec => {
+                            if (sec.id !== cfg.titleId) {
+                                sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = true);
+                                sec.style.opacity = '0.2';
+                                sec.style.pointerEvents = 'none';
+                                sec.classList.add('practical-section-disabled');
+                            }
+                        });
+                        const tabs = main.querySelectorAll('.tabs .tab');
+                        tabs.forEach(tab => {
+                            if (tab.dataset.target !== cfg.titleId) tab.classList.add('practical-disabled');
+                        });
+                    }
+                }
+            }
+            
             forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
@@ -887,6 +939,16 @@
                 )
             );
         }
+        // Close practical title modal
+        (function() {
+            const btn = document.getElementById('close-practical-model-title-modal');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    const modal = document.getElementById('practical-model-title-modal');
+                    if (modal) closeModal(modal);
+                });
+            }
+        })();
 
         function isSectionComplete(sectionElement) {
             const inputs = sectionElement.querySelectorAll('input[data-answer]');
@@ -1036,6 +1098,7 @@
                                 input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
                             }
                             input.disabled = true;
+
                         });
                     }
                 });
@@ -1047,11 +1110,17 @@
 
             const section = input.closest('section');
             const userAnswer = normalizeAnswer(input.value);
+            const stripModelWord = (str) => str.replace(/모형/g, '').replace(/\s+/g, ' ').trim();
 
             let isCorrect = false;
             let displayAnswer = input.dataset.answer;
 
-            if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
+            if (
+                SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
+                isIntegratedTitle(input) ||
+                isPracticalTitle(input) ||
+                isGenericModelTitle(input)
+            ) {
                 const group = input.closest('[data-group]') || section;
                 if (!usedAnswersMap.has(group)) usedAnswersMap.set(group, new Set());
                 const usedSet = usedAnswersMap.get(group);
@@ -1065,10 +1134,19 @@
                     if (alias !== normalized) {
                         answerMap.set(alias, original);
                     }
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
+                        const modelAlias = stripModelWord(normalized);
+                        if (modelAlias && modelAlias !== normalized) {
+                            answerMap.set(modelAlias, original);
+                        }
+                    }
                 });
 
-                if (answerMap.has(userAnswer)) {
-                    const canonical = answerMap.get(userAnswer);
+                const candidate = answerMap.has(userAnswer)
+                    ? userAnswer
+                    : (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL ? stripModelWord(userAnswer) : null);
+                if (candidate && answerMap.has(candidate)) {
+                    const canonical = answerMap.get(candidate);
                     const canonicalNorm = normalizeAnswer(canonical);
                     if (!usedSet.has(canonicalNorm)) {
                         isCorrect = true;
@@ -1081,6 +1159,17 @@
                 if (userAnswer === correctAnswer) {
                     isCorrect = true;
                     displayAnswer = input.dataset.answer;
+                } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
+                    const userNoModel = stripModelWord(userAnswer);
+                    const correctNoModel = stripModelWord(correctAnswer);
+                    if (
+                        userAnswer === correctNoModel ||
+                        userNoModel === correctAnswer ||
+                        userNoModel === correctNoModel
+                    ) {
+                        isCorrect = true;
+                        displayAnswer = input.dataset.answer;
+                    }
                 }
             }
 
@@ -1126,7 +1215,12 @@
                     input.classList.remove(CONSTANTS.CSS_CLASSES.SHAKE);
                 }, { once: true });
 
-                if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
+                if (
+                    SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
+                    isIntegratedTitle(input) ||
+                    isPracticalTitle(input) ||
+                    isGenericModelTitle(input)
+                ) {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
 
@@ -1134,9 +1228,23 @@
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
                     input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
 
-                    input.value = input.dataset.answer;
-                    input.disabled = true;
-                    shouldAdvance = true;
+                    if (isInIntegratedModel(input) && !isIntegratedTitle(input)) {
+                        // 통합 과목: 2차 오답 시 빨간색(incorrect) 유지 + 답 공개 + 버튼 제공
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+                        shouldAdvance = true;
+                        showRevealButtonForIntegrated(input);
+                    } else if (isInArtBasic(input)) {
+                        // 미술-기본이론: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+                        shouldAdvance = true;
+                        showRevealButtonForIntegrated(input);
+                    } else {
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+                        shouldAdvance = true;
+                    }
 
                 } else {
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
@@ -1183,6 +1291,125 @@
                     tick();
                 } else {
                     handleGameOver();
+                }
+            }
+        }
+
+        function isInIntegratedModel(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'integrated-model-quiz-main';
+        }
+
+        function isInArtBasic(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'art-basic-quiz-main';
+        }
+
+        function isIntegratedTitle(el) {
+            const section = el.closest('section');
+            return !!section && section.id === 'integrated-title';
+        }
+
+        function isPracticalTitle(el) {
+            const section = el.closest('section');
+            return !!section && section.id === 'practical-title';
+        }
+
+        function isGenericModelTitle(el) {
+            const section = el.closest('section');
+            if (!section) return false;
+            // Allow order-independent scoring for all newly added model titles
+            return (
+                section.id === 'pe-title' ||
+                section.id === 'ethics-title' ||
+                section.id === 'art-title' ||
+                section.id === 'math-title' ||
+                section.id === 'science-title' ||
+                section.id === 'social-title' ||
+                section.id === 'korean-title'
+            );
+        }
+
+        function showRevealButtonForIntegrated(input) {
+            // Wrap input to position the button at bottom-right
+            if (!input.parentElement.classList.contains('reveal-wrapper')) {
+                const wrapper = document.createElement('span');
+                wrapper.className = 'reveal-wrapper';
+                input.parentElement.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+            }
+            // Avoid duplicating button
+            const wrapperEl = input.parentElement;
+            let btn = wrapperEl.querySelector('.mini-reveal-btn');
+            if (!btn) {
+                btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'mini-reveal-btn';
+                btn.textContent = '정답';
+                btn.title = '정답 보기';
+                btn.addEventListener('click', () => {
+                    markCorrectAndAdvance(input);
+                    btn.remove();
+                }, { once: true });
+                wrapperEl.appendChild(btn);
+            }
+        }
+
+        function markCorrectAndAdvance(input) {
+            const section = input.closest('section');
+            playSound(successAudio);
+            input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
+            input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+            input.value = input.dataset.answer;
+            input.disabled = true;
+
+            gameState.combo++;
+            setCharacterState('happy');
+            updateMushroomGrowth();
+            slotMachine.stopNext();
+            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
+                timeEl.textContent = formatTime(gameState.total);
+            }
+            if (gameState.combo > 1) {
+                headerTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                comboCounter.textContent = `COMBO x${gameState.combo}`;
+                comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.COMBO_POP);
+                void comboCounter.offsetWidth;
+                comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
+            }
+
+            let shouldAdvance = true;
+            if (shouldAdvance && isSectionComplete(section)) {
+                if (checkStageClear(section)) {
+                    const delay = CONSTANTS.NEXT_STAGE_DELAY - CONSTANTS.STAGE_CLEAR_DURATION;
+                    if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
+                        setTimeout(() => celebrateCompetencySection(section), delay);
+                    } else {
+                        setTimeout(showStageClear, delay);
+                    }
+                } else {
+                    setTimeout(() => {
+                        advanceToNextStage(false);
+                        if (gameState.total > 0 && gameState.timerId === null) {
+                            gameState.timerId = setInterval(tick, 1000);
+                        }
+                    }, CONSTANTS.NEXT_STAGE_DELAY);
+                }
+            }
+
+            // Focus next available input
+            const main = input.closest('main');
+            if (main) {
+                const inputs = Array.from(main.querySelectorAll('input[data-answer]'));
+                const idx = inputs.indexOf(input);
+                for (let i = idx + 1; i < inputs.length; i++) {
+                    if (!inputs[i].disabled) {
+                        inputs[i].focus();
+                        inputs[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        break;
+                    }
                 }
             }
         }
@@ -1306,60 +1533,98 @@
                 const main = e.target.closest('main');
                 tabsContainer.querySelectorAll('.tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
                 e.target.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                if (main) {
-                    const targetId = e.target.dataset.target;
-                    main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                    const targetSection = main.querySelector(`#${targetId}`);
-                    if (targetSection) {
-                        targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                        focusFirstInput(targetSection);
+                if (!main) return;
+
+                const targetId = e.target.dataset.target;
+                main.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                const targetSection = main.querySelector(`#${targetId}`);
+                if (targetSection) {
+                    targetSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    focusFirstInput(targetSection);
+                }
+
+                // Generic gating for other model subjects when Title tab is selected
+                const genericConfigs = [
+                    { mainId: 'pe-model-quiz-main', titleId: 'pe-title' },
+                    { mainId: 'ethics-quiz-main', titleId: 'ethics-title' },
+                    { mainId: 'korean-model-quiz-main', titleId: 'korean-title' },
+                    { mainId: 'art-model-quiz-main', titleId: 'art-title' },
+                    { mainId: 'math-model-quiz-main', titleId: 'math-title' },
+                    { mainId: 'social-quiz-main', titleId: 'social-title' },
+                    { mainId: 'science-quiz-main', titleId: 'science-title' }
+                ];
+                const found = genericConfigs.find(c => main.id === c.mainId);
+                if (found) {
+                    const isTitle = targetId === found.titleId;
+                    main.querySelectorAll('section').forEach(sec => {
+                        if (sec.id !== found.titleId) {
+                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = isTitle);
+                            sec.style.opacity = isTitle ? '0.2' : '';
+                            sec.style.pointerEvents = isTitle ? 'none' : '';
+                            sec.classList.toggle('practical-section-disabled', isTitle);
+                        }
+                    });
+                    const tabs = tabsContainer.querySelectorAll('.tab');
+                    tabs.forEach(tab => {
+                        if (tab.dataset.target !== found.titleId) {
+                            tab.classList.toggle('practical-disabled', isTitle);
+                        }
+                    });
+                }
+
+                if (
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
+                ) {
+                    adjustCreativeInputWidths();
+                }
+
+                if (targetId === 'activity-examples' && targetSection) {
+                    const subTabs = targetSection.querySelector('.sub-tabs');
+                    if (subTabs) {
+                        const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
+                        subTabs.querySelectorAll('.tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                        if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                    }
+                    targetSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
+                    const defaultSection = targetSection.querySelector('#activity-exercise');
+                    if (defaultSection) {
+                        defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
+                        focusFirstInput(defaultSection);
                         if (
-                            gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.CREATIVE ||
-                            gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.OVERVIEW ||
-                            gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
-                            gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.MORAL_COURSE ||
-                            gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.SCIENCE_STD ||
-                            gameState.selectedSubject ===
-                                CONSTANTS.SUBJECTS.PRACTICAL_STD
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
                         ) {
                             adjustCreativeInputWidths();
                         }
-                        if (targetId === 'activity-examples') {
-                            const subTabs = targetSection.querySelector('.sub-tabs');
-                            if (subTabs) {
-                                const defaultTab = subTabs.querySelector('[data-target="activity-exercise"]');
-                                subTabs.querySelectorAll('.tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                                if (defaultTab) defaultTab.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                            }
-                            targetSection.querySelectorAll('section').forEach(sec => sec.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
-                            const defaultSection = targetSection.querySelector('#activity-exercise');
-                            if (defaultSection) {
-                                defaultSection.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-                                focusFirstInput(defaultSection);
-                                if (
-                                    gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.CREATIVE ||
-                                    gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.OVERVIEW ||
-                                    gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
-                                    gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.MORAL_COURSE ||
-                                    gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.SCIENCE_STD ||
-                                    gameState.selectedSubject ===
-                                        CONSTANTS.SUBJECTS.PRACTICAL_STD
-                                ) {
-                                    adjustCreativeInputWidths();
-                                }
-                            }
-                        }
                     }
+                }
+
+                // Practical model: when Title is selected, disable other sections and blur tabs
+                if (main.id === 'practical-quiz-main') {
+                    const isTitle = targetId === 'practical-title';
+                    main.querySelectorAll('section').forEach(sec => {
+                        if (sec.id !== 'practical-title') {
+                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = isTitle);
+                            sec.style.opacity = isTitle ? '0.2' : '';
+                            sec.style.pointerEvents = isTitle ? 'none' : '';
+                            sec.classList.toggle('practical-section-disabled', isTitle);
+                        }
+                    });
+                    const tabs = tabsContainer.querySelectorAll('.tab');
+                    tabs.forEach(tab => {
+                        if (tab.dataset.target !== 'practical-title') {
+                            tab.classList.toggle('practical-disabled', isTitle);
+                        }
+                    });
                 }
             });
         });
@@ -1450,15 +1715,14 @@
             });
         });
 
-        quizContainers.forEach(main => {
-            main.addEventListener('change', handleInputChange);
-            main.addEventListener('keydown', e => {
+        const attachInputHandlers = root => {
+            root.addEventListener('change', handleInputChange);
+            root.addEventListener('keydown', e => {
                 if (e.key === 'Enter' && e.target.matches('input[data-answer]')) {
                     handleInputChange({ target: e.target });
                     if (e.target.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                        const inputs = Array.from(
-                            main.querySelectorAll('input[data-answer]')
-                        );
+                        const container = e.target.closest('main, .modal-content') || root;
+                        const inputs = Array.from(container.querySelectorAll('input[data-answer]'));
                         const idx = inputs.indexOf(e.target);
                         for (let i = idx + 1; i < inputs.length; i++) {
                             if (!inputs[i].disabled) {
@@ -1470,7 +1734,11 @@
                     }
                 }
             });
-        });
+        };
+
+        quizContainers.forEach(main => attachInputHandlers(main));
+
+        // modal removed; no extra handlers
         
         startGameBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', () => resetGame(true));
@@ -1595,6 +1863,134 @@
             // 결과 창이 즉시 표시되지 않도록 진행 상태를 확인하지 않는다.
         });
 
+        (function() {
+            const btn = document.getElementById('practical-title-next-btn');
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                // Reveal only the Title section answers for Practical model
+                const titleSection = document.querySelector('#practical-quiz-main #practical-title');
+                if (titleSection) {
+                    const normalize = str => normalizeAnswer(str);
+                    const groups = titleSection.querySelectorAll('[data-group]');
+                    if (groups.length > 0) {
+                        groups.forEach(group => {
+                            const inputs = group.querySelectorAll('input[data-answer]');
+                            const usedSet = usedAnswersMap.get(group) || new Set();
+                            const answers = Array.from(inputs).map(i => i.dataset.answer);
+                            const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                            let idx = 0;
+                            inputs.forEach(input => {
+                                input.classList.remove(
+                                    CONSTANTS.CSS_CLASSES.INCORRECT,
+                                    CONSTANTS.CSS_CLASSES.RETRYING
+                                );
+                                if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                                    input.value = remaining[idx] ?? input.dataset.answer;
+                                    idx++;
+                                    input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                                }
+                                input.disabled = true;
+                            });
+                        });
+                    } else {
+                        titleSection.querySelectorAll('input[data-answer]').forEach(input => {
+                            input.classList.remove(
+                                CONSTANTS.CSS_CLASSES.INCORRECT,
+                                CONSTANTS.CSS_CLASSES.RETRYING
+                            );
+                            input.value = input.dataset.answer;
+                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                            input.disabled = true;
+                        });
+                    }
+                }
+
+                // Enable other sections and unblur tabs
+                const main = document.getElementById('practical-quiz-main');
+                if (main) {
+                    main.querySelectorAll('section').forEach(sec => {
+                        if (sec.id !== 'practical-title') {
+                            sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = false);
+                            sec.style.opacity = '';
+                            sec.style.pointerEvents = '';
+                        }
+                    });
+                    const tabs = main.querySelectorAll('.tabs .tab');
+                    tabs.forEach(tab => tab.classList.remove('practical-disabled'));
+                }
+            });
+        })();
+
+        // Generic '다음으로' for model subjects
+        (function() {
+            const cfgs = [
+                { mainId: 'pe-model-quiz-main', titleId: 'pe-title', btnId: 'pe-title-next-btn' },
+                { mainId: 'ethics-quiz-main', titleId: 'ethics-title', btnId: 'ethics-title-next-btn' },
+                { mainId: 'korean-model-quiz-main', titleId: 'korean-title', btnId: 'korean-title-next-btn' },
+                { mainId: 'art-model-quiz-main', titleId: 'art-title', btnId: 'art-title-next-btn' },
+                { mainId: 'math-model-quiz-main', titleId: 'math-title', btnId: 'math-title-next-btn' },
+                { mainId: 'social-quiz-main', titleId: 'social-title', btnId: 'social-title-next-btn' },
+                { mainId: 'science-quiz-main', titleId: 'science-title', btnId: 'science-title-next-btn' }
+            ];
+            cfgs.forEach(cfg => {
+                const btn = document.getElementById(cfg.btnId);
+                if (!btn) return;
+                btn.addEventListener('click', () => {
+                    const titleSection = document.querySelector(`#${cfg.mainId} #${cfg.titleId}`);
+                    if (titleSection) {
+                        const normalize = str => normalizeAnswer(str);
+                        const groups = titleSection.querySelectorAll('[data-group]');
+                        if (groups.length > 0) {
+                            groups.forEach(group => {
+                                const inputs = group.querySelectorAll('input[data-answer]');
+                                const usedSet = usedAnswersMap.get(group) || new Set();
+                                const answers = Array.from(inputs).map(i => i.dataset.answer);
+                                const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                                let idx = 0;
+                                inputs.forEach(input => {
+                                    input.classList.remove(
+                                        CONSTANTS.CSS_CLASSES.INCORRECT,
+                                        CONSTANTS.CSS_CLASSES.RETRYING
+                                    );
+                                    if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                                        input.value = remaining[idx] ?? input.dataset.answer;
+                                        idx++;
+                                        input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                                    }
+                                    input.disabled = true;
+                                });
+                            });
+                        } else {
+                            titleSection.querySelectorAll('input[data-answer]').forEach(input => {
+                                input.classList.remove(
+                                    CONSTANTS.CSS_CLASSES.INCORRECT,
+                                    CONSTANTS.CSS_CLASSES.RETRYING
+                                );
+                                input.value = input.dataset.answer;
+                                input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                                input.disabled = true;
+                            });
+                        }
+                    }
+
+                    // Enable other sections and unblur tabs
+                    const main = document.getElementById(cfg.mainId);
+                    if (main) {
+                        main.querySelectorAll('section').forEach(sec => {
+                            if (sec.id !== cfg.titleId) {
+                                sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = false);
+                                sec.style.opacity = '';
+                                sec.style.pointerEvents = '';
+                                sec.classList.remove('practical-section-disabled');
+                            }
+                        });
+                        const tabs = main.querySelectorAll('.tabs .tab');
+                        tabs.forEach(tab => tab.classList.remove('practical-disabled'));
+                    }
+                });
+            });
+        })();
+
         // --- INITIAL SETUP ---
         function initializeApp() {
             gameState.selectedTopic = CONSTANTS.TOPICS.CURRICULUM;
@@ -1607,3 +2003,4 @@
 
         initializeApp();
     });
+
