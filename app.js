@@ -951,11 +951,11 @@
 
             const groupIds = sectionGroups[tabId];
             if (groupIds) {
-                const allCompleted = groupIds.every(id => {
+                const allCleared = groupIds.every(id => {
                     const sec = document.getElementById(id);
-                    return sec && isSectionComplete(sec);
+                    return sec && checkStageClear(sec);
                 });
-                if (!allCompleted) return;
+                if (!allCleared) return;
             }
 
             tabButton.classList.add('cleared');
@@ -1148,13 +1148,9 @@
                     }
                 } else {
                     setTimeout(() => {
-                        if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
-                            celebrateCompetencySection(section);
-                        } else {
-                            advanceToNextStage(false);
-                            if (gameState.total > 0 && gameState.timerId === null) {
-                                gameState.timerId = setInterval(tick, 1000);
-                            }
+                        advanceToNextStage(false);
+                        if (gameState.total > 0 && gameState.timerId === null) {
+                            gameState.timerId = setInterval(tick, 1000);
                         }
                     }, CONSTANTS.NEXT_STAGE_DELAY);
                 }
