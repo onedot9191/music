@@ -556,92 +556,131 @@ th.sub-area-cell {
 /* Make sub-area inputs styled consistently regardless of container */
 input.sub-area-input {
   width: 100%;
-  padding: 2rem 2.6rem;
-  font-size: 2.2rem;
-  border: 4px double var(--accent);
-  background: var(--secondary);
+  padding: 1.2rem;
+  font-size: 1.4rem;
+  border: 3px solid var(--accent);
+  background: var(--primary);
   color: var(--text-light);
-  border-radius: 8px;
-  font-weight: 700;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-input.sub-area-input.correct {
-  border-color: var(--correct);
-  color: var(--correct);
+/* Universal sub-area input state styles - CRITICAL OVERRIDE */
+.sub-area-input.correct,
+input.sub-area-input.correct,
+th.sub-area-cell .sub-area-input.correct {
+  border: 3px solid #39ff14 !important;
+  color: #39ff14 !important;
+  background: rgba(57, 255, 20, 0.3) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.5) !important;
 }
 
-input.sub-area-input.incorrect {
-  border-color: var(--incorrect);
-  color: var(--incorrect);
+.sub-area-input.incorrect,
+input.sub-area-input.incorrect,
+th.sub-area-cell .sub-area-input.incorrect {
+  border: 3px solid #ff5733 !important;
+  color: #ff5733 !important;
+  background: rgba(255, 87, 51, 0.3) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 8px rgba(255, 87, 51, 0.5) !important;
 }
 
-input.sub-area-input.retrying {
-  border-color: var(--retrying);
-  color: var(--retrying);
+.sub-area-input.retrying,
+input.sub-area-input.retrying,
+th.sub-area-cell .sub-area-input.retrying {
+  border: 3px solid #ffc300 !important;
+  color: #ffc300 !important;
+  background: rgba(255, 195, 0, 0.3) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 8px rgba(255, 195, 0, 0.5) !important;
 }
 
-input.sub-area-input.revealed {
-  color: var(--revealed);
-  border-color: var(--revealed);
-  background: var(--bg-light);
+.sub-area-input.revealed,
+input.sub-area-input.revealed,
+th.sub-area-cell .sub-area-input.revealed {
+  border: 3px solid #00ffff !important;
+  color: #00ffff !important;
+  background: rgba(0, 255, 255, 0.3) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5) !important;
 }
 
-/* Fix overlap and unify UI in PE > 신체활동 예시 */
-#pe-quiz-main #activity-examples table {
+/* Fix overlap and unify UI in PE > 신체활동 예시 and Physical Activity */
+#pe-quiz-main #activity-examples table,
+#physical-activity-quiz-main table {
   table-layout: fixed; /* keep wide second column for inputs */
 }
-#pe-quiz-main #activity-examples th.sub-area-cell {
+#pe-quiz-main #activity-examples th.sub-area-cell,
+#physical-activity-quiz-main th.sub-area-cell {
   width: 20rem; /* narrower than before to free space for right column */
 }
 #pe-quiz-main #activity-examples th.sub-area-cell,
-#pe-quiz-main #activity-examples td {
+#pe-quiz-main #activity-examples td,
+#physical-activity-quiz-main th.sub-area-cell,
+#physical-activity-quiz-main td {
   vertical-align: top;
 }
-#pe-quiz-main #activity-examples td {
+#pe-quiz-main #activity-examples td,
+#physical-activity-quiz-main td {
   display: flex; /* ensure column layout fills full width */
   flex-direction: column;
 }
-#pe-quiz-main #activity-examples .activity-group {
+#pe-quiz-main #activity-examples .activity-group,
+#physical-activity-quiz-main .activity-group {
   width: 100%; /* groups span entire td width */
 }
-#pe-quiz-main #activity-examples .activity-group {
+#pe-quiz-main #activity-examples .activity-group,
+#physical-activity-quiz-main .activity-group {
   display: flex;
   flex-direction: column; /* place activity first, examples below */
 }
-#pe-quiz-main #activity-examples .activity-group > .activity-input {
+#pe-quiz-main #activity-examples .activity-group > .activity-input,
+#physical-activity-quiz-main .activity-group > .activity-input {
   display: block;
   width: 100%;
   margin-bottom: 0.8rem; /* separate from examples */
 }
-#pe-quiz-main #activity-examples .activity-group > .example-input {
+#pe-quiz-main #activity-examples .activity-group > .example-input,
+#physical-activity-quiz-main .activity-group > .example-input {
   width: auto;
 }
-#pe-quiz-main #activity-examples th.sub-area-cell .sub-area-input {
+#pe-quiz-main #activity-examples th.sub-area-cell .sub-area-input,
+#physical-activity-quiz-main th.sub-area-cell .sub-area-input {
   display: block;
   width: 100%;
   transition: all 0.2s ease; /* match other inputs */
 }
-/* Make '세부영역' look identical to '신체활동 예시' */
-#pe-quiz-main #activity-examples input.sub-area-input {
-  padding: 1.2rem; /* match td input default */
-  font-size: 1.4rem; /* match td input default */
-  border: 3px solid var(--accent); /* same as activity-input */
-  background: var(--primary); /* same as activity-input */
-  color: var(--text-light);
-  font-weight: 800;
+/* Physical activity sections use consistent base styling */
+/* Ensure state colors are clearly visible for sub-area inputs - High specificity */
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.correct,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.correct {
+  border-color: var(--correct) !important;
+  color: var(--correct) !important;
+  background: rgba(57, 255, 20, 0.2) !important;
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.3) !important;
 }
-/* Ensure state colors are clearly visible for sub-area inputs */
-#pe-quiz-main #activity-examples input.sub-area-input.correct {
-  border-color: var(--correct);
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.incorrect,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.incorrect {
+  border-color: var(--incorrect) !important;
+  color: var(--incorrect) !important;
+  background: rgba(255, 87, 51, 0.2) !important;
+  box-shadow: 0 0 8px rgba(255, 87, 51, 0.3) !important;
 }
-#pe-quiz-main #activity-examples input.sub-area-input.incorrect {
-  border-color: var(--incorrect);
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.retrying,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.retrying {
+  border-color: var(--retrying) !important;
+  color: var(--retrying) !important;
+  background: rgba(255, 195, 0, 0.2) !important;
+  box-shadow: 0 0 8px rgba(255, 195, 0, 0.3) !important;
 }
-#pe-quiz-main #activity-examples input.sub-area-input.retrying {
-  border-color: var(--retrying);
-}
-#pe-quiz-main #activity-examples input.sub-area-input.revealed {
-  border-color: var(--revealed);
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.revealed,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.revealed {
+  border-color: var(--revealed) !important;
+  color: var(--revealed) !important;
+  background: rgba(0, 255, 255, 0.2) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3) !important;
 }
 
 td input.activity-input {
@@ -721,6 +760,7 @@ td input.activity-input:not(:first-child) {
   padding: 1rem;
   border: 2px dashed var(--secondary);
   border-radius: 8px;
+  margin-bottom: 1rem; /* prevent overlap with next group */
 }
 
 .activity-group .activity-input {
@@ -738,6 +778,24 @@ td input.activity-input:not(:first-child) {
 
 .activity-group + .activity-group {
   margin-top: 1.5rem;
+}
+
+/* Additional improvements for physical activity sections */
+#physical-activity-quiz-main .activity-group .example-input {
+  margin: 0.2rem;
+  flex: 0 1 auto;
+  min-width: 8ch;
+  max-width: 15ch;
+  font-size: 1.1rem;
+}
+
+#physical-activity-quiz-main .activity-group {
+  margin-bottom: 1.5rem;
+  padding: 1.2rem;
+}
+
+#physical-activity-quiz-main td {
+  padding: 1rem;
 }
 
 .grade-container table tr:not(:last-child) > * {
@@ -2336,9 +2394,39 @@ td input.activity-input:not(:first-child) {
 }
 #integrated-model-quiz-main #integrated-all td input {
   width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  text-align: center;
+}
+
+/* CRITICAL: Sub-area input color override - HIGHEST SPECIFICITY */
+[id*="quiz-main"] th.sub-area-cell input.sub-area-input.correct,
+[id*="quiz-main"] input.sub-area-input.correct {
+  border-color: #39ff14 !important;
+  color: #39ff14 !important;
+  background-color: rgba(57, 255, 20, 0.25) !important;
+  text-shadow: 0 0 4px rgba(57, 255, 20, 0.5) !important;
+}
+
+[id*="quiz-main"] th.sub-area-cell input.sub-area-input.incorrect,
+[id*="quiz-main"] input.sub-area-input.incorrect {
+  border-color: #ff5733 !important;
+  color: #ff5733 !important;
+  background-color: rgba(255, 87, 51, 0.25) !important;
+  text-shadow: 0 0 4px rgba(255, 87, 51, 0.5) !important;
+}
+
+[id*="quiz-main"] th.sub-area-cell input.sub-area-input.retrying,
+[id*="quiz-main"] input.sub-area-input.retrying {
+  border-color: #ffc300 !important;
+  color: #ffc300 !important;
+  background-color: rgba(255, 195, 0, 0.25) !important;
+  text-shadow: 0 0 4px rgba(255, 195, 0, 0.5) !important;
+}
+
+[id*="quiz-main"] th.sub-area-cell input.sub-area-input.revealed,
+[id*="quiz-main"] input.sub-area-input.revealed {
+  border-color: #00ffff !important;
+  color: #00ffff !important;
+  background-color: rgba(0, 255, 255, 0.25) !important;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.5) !important;
 }
 
 /* Mini reveal button (2nd wrong attempt) */
