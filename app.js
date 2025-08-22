@@ -958,12 +958,14 @@
         }
 
         function isQuizComplete() {
-            const inputs = document.querySelectorAll(
-                `#${gameState.selectedSubject}-quiz-main input[data-answer]`
-            );
-            return (
-                inputs.length > 0 && [...inputs].every(input => input.disabled)
-            );
+            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            if (!main) return false;
+            // If there are any gated sections with remaining inputs, quiz is not complete
+            const gatedInputs = main.querySelectorAll('section.practical-section-disabled input[data-answer]');
+            if (gatedInputs.length > 0) return false;
+
+            const inputs = Array.from(main.querySelectorAll('input[data-answer]'));
+            return inputs.length > 0 && inputs.every(input => input.disabled);
         }
 
        function showStageClear() {
@@ -1254,6 +1256,11 @@
 
             if (shouldAdvance && isSectionComplete(section)) {
                 if (checkStageClear(section)) {
+                    // If the cleared section is a model Title, unlock other sections immediately
+                    const cfg = getCurrentModelConfig();
+                    if (cfg && section.id === cfg.titleId) {
+                        unlockOtherModelSections(cfg.mainId, cfg.titleId);
+                    }
                     const delay = CONSTANTS.NEXT_STAGE_DELAY - CONSTANTS.STAGE_CLEAR_DURATION;
                     if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                         setTimeout(() => celebrateCompetencySection(section), delay);
@@ -1330,6 +1337,37 @@
             );
         }
 
+        function getCurrentModelConfig() {
+            if (gameState.selectedTopic !== CONSTANTS.TOPICS.MODEL) return null;
+            const map = {
+                [CONSTANTS.SUBJECTS.PRACTICAL]: { mainId: 'practical-quiz-main', titleId: 'practical-title' },
+                [CONSTANTS.SUBJECTS.PE_MODEL]: { mainId: 'pe-model-quiz-main', titleId: 'pe-title' },
+                [CONSTANTS.SUBJECTS.ETHICS]: { mainId: 'ethics-quiz-main', titleId: 'ethics-title' },
+                [CONSTANTS.SUBJECTS.KOREAN_MODEL]: { mainId: 'korean-model-quiz-main', titleId: 'korean-title' },
+                [CONSTANTS.SUBJECTS.ART_MODEL]: { mainId: 'art-model-quiz-main', titleId: 'art-title' },
+                [CONSTANTS.SUBJECTS.MATH_MODEL]: { mainId: 'math-model-quiz-main', titleId: 'math-title' },
+                [CONSTANTS.SUBJECTS.SOCIAL]: { mainId: 'social-quiz-main', titleId: 'social-title' },
+                [CONSTANTS.SUBJECTS.SCIENCE]: { mainId: 'science-quiz-main', titleId: 'science-title' }
+            };
+            return map[gameState.selectedSubject] || null;
+        }
+
+        function unlockOtherModelSections(mainId, titleId) {
+            const main = document.getElementById(mainId);
+            if (!main) return;
+            main.dataset.titleCleared = 'true';
+            main.querySelectorAll('section').forEach(sec => {
+                if (sec.id !== titleId) {
+                    sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = false);
+                    sec.style.opacity = '';
+                    sec.style.pointerEvents = '';
+                    sec.classList.remove('practical-section-disabled');
+                }
+            });
+            const tabs = main.querySelectorAll('.tabs .tab');
+            tabs.forEach(tab => tab.classList.remove('practical-disabled'));
+        }
+
         function showRevealButtonForIntegrated(input) {
             // Wrap input to position the button at bottom-right
             if (!input.parentElement.classList.contains('reveal-wrapper')) {
@@ -1383,6 +1421,10 @@
             let shouldAdvance = true;
             if (shouldAdvance && isSectionComplete(section)) {
                 if (checkStageClear(section)) {
+                    const cfg = getCurrentModelConfig();
+                    if (cfg && section.id === cfg.titleId) {
+                        unlockOtherModelSections(cfg.mainId, cfg.titleId);
+                    }
                     const delay = CONSTANTS.NEXT_STAGE_DELAY - CONSTANTS.STAGE_CLEAR_DURATION;
                     if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
                         setTimeout(() => celebrateCompetencySection(section), delay);
@@ -1556,18 +1598,20 @@
                 const found = genericConfigs.find(c => main.id === c.mainId);
                 if (found) {
                     const isTitle = targetId === found.titleId;
+                    const alreadyCleared = tabsContainer.closest('main')?.dataset.titleCleared === 'true';
                     main.querySelectorAll('section').forEach(sec => {
                         if (sec.id !== found.titleId) {
-                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = isTitle);
-                            sec.style.opacity = isTitle ? '0.2' : '';
-                            sec.style.pointerEvents = isTitle ? 'none' : '';
-                            sec.classList.toggle('practical-section-disabled', isTitle);
+                            const shouldGate = isTitle && !alreadyCleared;
+                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = shouldGate);
+                            sec.style.opacity = shouldGate ? '0.2' : '';
+                            sec.style.pointerEvents = shouldGate ? 'none' : '';
+                            sec.classList.toggle('practical-section-disabled', shouldGate);
                         }
                     });
                     const tabs = tabsContainer.querySelectorAll('.tab');
                     tabs.forEach(tab => {
                         if (tab.dataset.target !== found.titleId) {
-                            tab.classList.toggle('practical-disabled', isTitle);
+                            tab.classList.toggle('practical-disabled', isTitle && !alreadyCleared);
                         }
                     });
                 }
@@ -1611,18 +1655,20 @@
                 // Practical model: when Title is selected, disable other sections and blur tabs
                 if (main.id === 'practical-quiz-main') {
                     const isTitle = targetId === 'practical-title';
+                    const alreadyCleared = main.dataset.titleCleared === 'true';
                     main.querySelectorAll('section').forEach(sec => {
                         if (sec.id !== 'practical-title') {
-                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = isTitle);
-                            sec.style.opacity = isTitle ? '0.2' : '';
-                            sec.style.pointerEvents = isTitle ? 'none' : '';
-                            sec.classList.toggle('practical-section-disabled', isTitle);
+                            const shouldGate = isTitle && !alreadyCleared;
+                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = shouldGate);
+                            sec.style.opacity = shouldGate ? '0.2' : '';
+                            sec.style.pointerEvents = shouldGate ? 'none' : '';
+                            sec.classList.toggle('practical-section-disabled', shouldGate);
                         }
                     });
                     const tabs = tabsContainer.querySelectorAll('.tab');
                     tabs.forEach(tab => {
                         if (tab.dataset.target !== 'practical-title') {
-                            tab.classList.toggle('practical-disabled', isTitle);
+                            tab.classList.toggle('practical-disabled', isTitle && !alreadyCleared);
                         }
                     });
                 }
@@ -1913,6 +1959,7 @@
                             sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = false);
                             sec.style.opacity = '';
                             sec.style.pointerEvents = '';
+                            sec.classList.remove('practical-section-disabled');
                         }
                     });
                     const tabs = main.querySelectorAll('.tabs .tab');
