@@ -1767,14 +1767,18 @@ td input.activity-input:not(:first-child) {
   color: var(--accent);
 }
 #creative-quiz-main .creative-question {
-  display: block; /* allow natural inline flow around inputs */
-  line-height: 1.8; /* more breathing room for multi-line questions */
+  display: block;
+  line-height: 2.2; /* 줄 간격 확대 */
   font-size: 2rem;
   font-weight: 500;
-  overflow-wrap: anywhere; /* prevent long text from breaking layout */
-  padding-bottom: 2rem;
-  border-bottom: 2px dashed var(--secondary);
-  margin-bottom: 3rem; /* extra spacing between questions */
+  overflow-wrap: anywhere; /* handle long questions gracefully */
+  padding: 2.5rem; /* 상하좌우 패딩 추가 */
+  background: var(--bg-light); /* 배경색 추가 */
+  border: 2px solid var(--secondary);
+  border-radius: 12px; /* 모서리 둥글게 */
+  margin-bottom: 2.5rem; /* 문단 간 간격 조정 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  position: relative;
 }
 #overview-quiz-main .overview-question,
 #integrated-course-quiz-main .overview-question,
@@ -1782,57 +1786,133 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question {
   display: block;
-  line-height: 1.8;
+  line-height: 2.2; /* 줄 간격 확대 */
   font-size: 2rem;
   font-weight: 500;
   overflow-wrap: anywhere; /* handle long questions gracefully */
-  padding-bottom: 2rem;
-  border-bottom: 2px dashed var(--secondary);
-  margin-bottom: 3rem;
+  padding: 2.5rem; /* 상하좌우 패딩 추가 */
+  background: var(--bg-light); /* 배경색 추가 */
+  border: 2px solid var(--secondary);
+  border-radius: 12px; /* 모서리 둥글게 */
+  margin-bottom: 2.5rem; /* 문단 간 간격 조정 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  position: relative;
 }
 #creative-quiz-main .creative-question:last-child {
-  border-bottom: none;
+  margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
 }
 #overview-quiz-main .overview-question:last-child,
 #integrated-course-quiz-main .overview-question:last-child,
 #moral-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child {
-  border-bottom: none;
+  margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
+}
+
+
+
+/* 모바일 반응형 디자인 개선 */
+@media (max-width: 768px) {
+  #creative-quiz-main .creative-question,
+  #overview-quiz-main .overview-question,
+  #integrated-course-quiz-main .overview-question,
+  #moral-course-quiz-main .overview-question,
+  #science-std-quiz-main .overview-question,
+  #practical-std-quiz-main .overview-question {
+    padding: 2rem 1.5rem; /* 모바일에서 패딩 조정 */
+    font-size: 1.7rem; /* 모바일에서 폰트 크기 조정 */
+    line-height: 2; /* 줄 간격 조정 */
+  }
+  
+  #creative-quiz-main .creative-question input,
+  #overview-quiz-main .overview-question input,
+  #integrated-course-quiz-main .overview-question input,
+  #moral-course-quiz-main .overview-question input,
+  #science-std-quiz-main .overview-question input,
+  #practical-std-quiz-main .overview-question input {
+    font-size: 1.6rem; /* 모바일에서 입력 필드 폰트 크기 */
+    padding: 0.5rem 0.8rem; /* 모바일에서 패딩 조정 */
+    margin: 0.2rem 0.4rem; /* 모바일에서 마진 조정 */
+    min-width: 8ch; /* 모바일에서 최소 너비 조정 */
+  }
+  
+  /* 창체 영역과 활동 모바일 최적화 */
+  #creative-quiz-main .assessment-list {
+    grid-template-columns: 1fr; /* 모바일에서 단일 열 */
+    gap: 1.5rem;
+  }
+  
+  #creative-quiz-main .sub-list {
+    grid-template-columns: 1fr; /* 모바일에서 하위 목록도 단일 열 */
+    gap: 0.5rem;
+  }
+  
+  /* 모바일에서 입력 필드 크기 조정 */
+  #creative-quiz-main .assessment-list > li > input.fit-answer:first-child {
+    min-width: 200px;
+    font-size: 1.6rem;
+  }
+  
+  #creative-quiz-main .assessment-list > li > ul > li > input.fit-answer:first-child {
+    width: 140px !important;
+    min-width: 140px !important;
+    font-size: 1.3rem;
+  }
+  
+  #creative-quiz-main .assessment-list input.fit-answer {
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+    min-width: 100px !important;
+    max-width: 120px !important;
+  }
+  
+  #creative-quiz-main .sub-list .inline-item input.fit-answer {
+    min-width: 120px !important;
+    font-size: 1.2rem;
+  }
+
 }
 #creative-quiz-main .creative-question input {
-  font-size: 2rem;
-  padding: 0.2rem 0.4rem;
-  margin: 0 0.4rem;
-  border: none;
-  border-bottom: 2px solid var(--text-dark); /* subtle gray border */
-  background: transparent;
-  color: var(--text-light);
+  font-size: 1.9rem;
+  padding: 0.6rem 1rem; /* 패딩 확대 */
+  margin: 0 0.6rem; /* 좌우 마진 확대 */
+  border: 2px solid var(--secondary); /* 테두리 강화 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  background: var(--bg-light); /* 테마 호환 배경색 */
+  color: var(--text-light); /* 테마 호환 텍스트 색상 */
   text-align: center;
   width: auto;
-  min-width: 8ch;
+  min-width: 10ch; /* 최소 너비 확대 */
+  max-width: 100%;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 내부 그림자 */
+  transition: all 0.2s ease; /* 부드러운 전환 효과 */
 }
 #overview-quiz-main .overview-question input,
 #integrated-course-quiz-main .overview-question input,
 #moral-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input {
-  font-size: 2rem;
-  padding: 0.2rem 0.4rem;
-  margin: 0 0.4rem;
-  border: none;
-  border-bottom: 2px solid var(--text-dark); /* subtle gray border */
-  background: transparent;
-  color: var(--text-light);
+  font-size: 1.9rem;
+  padding: 0.6rem 1rem; /* 패딩 확대 */
+  margin: 0 0.6rem; /* 좌우 마진 확대 */
+  border: 2px solid var(--secondary); /* 테두리 강화 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  background: var(--bg-light); /* 테마 호환 배경색 */
+  color: var(--text-light); /* 테마 호환 텍스트 색상 */
   text-align: center;
   width: auto;
-  min-width: 8ch;
+  min-width: 10ch; /* 최소 너비 확대 */
   max-width: 100%;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 내부 그림자 */
+  transition: all 0.2s ease; /* 부드러운 전환 효과 */
 }
 
 #creative-quiz-main .creative-question input:focus {
   outline: none;
   border-color: var(--primary);
+  background: var(--bg-light); /* 포커스 시에도 테마 배경색 유지 */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 외부 글로우 효과 */
+  transform: translateY(-1px); /* 미세한 상승 효과 */
 }
 #overview-quiz-main .overview-question input:focus,
 #integrated-course-quiz-main .overview-question input:focus,
@@ -1841,11 +1921,16 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
+  background: var(--bg-light); /* 포커스 시에도 테마 배경색 유지 */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 외부 글로우 효과 */
+  transform: translateY(-1px); /* 미세한 상승 효과 */
 }
 
 #creative-quiz-main .creative-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
+  background: rgba(46, 204, 113, 0.1); /* 성공 배경색 */
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 #overview-quiz-main .overview-question input.correct,
 #integrated-course-quiz-main .overview-question input.correct,
@@ -1854,11 +1939,15 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
+  background: rgba(46, 204, 113, 0.1); /* 성공 배경색 */
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
 #creative-quiz-main .creative-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
+  background: rgba(231, 76, 60, 0.1); /* 오답 배경색 */
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 #overview-quiz-main .overview-question input.incorrect,
 #integrated-course-quiz-main .overview-question input.incorrect,
@@ -1867,11 +1956,15 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
+  background: rgba(231, 76, 60, 0.1); /* 오답 배경색 */
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 
 #creative-quiz-main .creative-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
+  background: rgba(243, 156, 18, 0.1); /* 재시도 배경색 */
+  box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2);
 }
 #overview-quiz-main .overview-question input.retrying,
 #integrated-course-quiz-main .overview-question input.retrying,
@@ -1885,6 +1978,8 @@ td input.activity-input:not(:first-child) {
 #creative-quiz-main .creative-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
+  background: rgba(142, 68, 173, 0.1); /* 정답 공개 배경색 */
+  box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
 }
 #overview-quiz-main .overview-question input.revealed,
 #integrated-course-quiz-main .overview-question input.revealed,
@@ -1966,6 +2061,49 @@ td input.activity-input:not(:first-child) {
   flex-wrap: nowrap;
 }
 
+/* 창체 영역과 활동 섹션의 입력 필드 최적화 */
+/* 2차 레벨: 중간 카테고리 입력 필드 */
+#creative-quiz-main .assessment-list > li > ul > li > input.fit-answer:first-child {
+  width: 180px !important;
+  min-width: 180px !important;
+  max-width: 180px !important;
+  padding: 0.6rem 1rem;
+  margin: 0.3rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--text-light);
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+/* 3차 레벨: 세부 항목 입력 필드 */
+#creative-quiz-main .assessment-list input.fit-answer {
+  width: auto !important;
+  min-width: 120px !important;
+  max-width: 160px !important;
+  padding: 0.4rem 0.6rem;
+  margin: 0.2rem 0.3rem;
+  font-size: 1.3rem;
+  border: 1px solid var(--text-dark);
+  border-radius: 4px;
+  background: var(--secondary);
+  color: var(--text-light);
+  text-align: center;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+#creative-quiz-main .assessment-list input.fit-answer:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
 /* Unify blanks width across Art Basic; override scattered inline min-widths */
 #art-basic-quiz-main .inline-item input.fit-answer {
   width: 20ch !important;
@@ -1985,6 +2123,182 @@ td input.activity-input:not(:first-child) {
 #art-basic-quiz-main .sub-list .inline-item input.fit-answer {
   width: 20ch !important;
   min-width: 20ch !important;
+}
+
+/* 창체 영역과 활동 섹션의 다열 카드 레이아웃 */
+#creative-quiz-main .assessment-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3개 영역을 동일한 비율로 */
+  gap: 1.5rem;
+  margin: 2rem 0;
+  align-items: start; /* 높이가 다를 때 상단 정렬 */
+}
+
+#creative-quiz-main .assessment-list > li {
+  background: var(--bg-light);
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+#creative-quiz-main .assessment-list > li:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+#creative-quiz-main .assessment-list > li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 8px 8px 0 0;
+}
+
+#creative-quiz-main .assessment-list > li > input.fit-answer:first-child {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-light);
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: none;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  min-width: 250px;
+}
+
+/* 창체 하위 목록 스타일 */
+#creative-quiz-main .sub-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 0.5rem 0;
+  list-style: none;
+  align-items: start;
+}
+
+/* 중간 카테고리 제목 (자율활동, 자치활동) - 별도 배경 */
+#creative-quiz-main .assessment-list > li > ul > li > input.fit-answer:first-child {
+  background: var(--accent);
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 1.5rem;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* 세부 항목들의 그룹 배경 (주제탐구, 적응활동, 봉사활동이 함께) */
+#creative-quiz-main .assessment-list > li > ul > li > ul.sub-list {
+  background: var(--bg-dark);
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 0;
+  transition: all 0.2s ease;
+}
+
+#creative-quiz-main .assessment-list > li > ul > li > ul.sub-list:hover {
+  background: var(--bg-light);
+  border-color: var(--primary);
+  box-shadow: 0 2px 6px rgba(233, 69, 96, 0.2);
+}
+
+/* 상위 카테고리 그룹 (자율활동, 자치활동 전체 그룹) */
+#creative-quiz-main .assessment-list > li > ul > li {
+  background: transparent; /* 상위 그룹은 배경 없음 */
+  border: none;
+  padding: 0;
+  margin-bottom: 2rem; /* 자율활동과 자치활동 사이 간격 */
+}
+
+/* 세부 항목들의 컨테이너 */
+#creative-quiz-main .sub-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  list-style: none;
+  align-items: start;
+}
+
+/* 세부 항목들 (주제탐구활동, 적응활동 등) - 개별 배경 제거 */
+#creative-quiz-main .sub-list .inline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: transparent; /* 배경 제거 */
+  border: none; /* 테두리 제거 */
+  border-radius: 0;
+  padding: 0.5rem;
+  min-height: auto;
+  height: auto;
+  transition: all 0.2s ease;
+  justify-content: flex-start;
+}
+
+/* 개별 항목 호버 효과 제거 - 그룹 단위로만 호버 */
+
+#creative-quiz-main .sub-list .inline-item input.fit-answer {
+  width: 100% !important;
+  min-width: 120px !important;
+  max-width: 100% !important;
+  margin: 0.2rem 0;
+  font-size: 1.2rem;
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: all 0.2s ease;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+#creative-quiz-main .sub-list .inline-item input.fit-answer:focus {
+  border-color: var(--primary);
+  background: var(--bg-light);
+  box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.3);
+  outline: none;
+}
+
+/* 예시 텍스트 스타일 */
+#creative-quiz-main .example-text {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  font-style: italic;
+  margin-top: 0.3rem;
+  display: block;
+  opacity: 0.7;
+}
+
+#creative-quiz-main .example-text input.fit-answer {
+  display: inline-block;
+  width: auto !important;
+  min-width: 80px !important;
+  max-width: 120px !important;
+  margin: 0 0.3rem;
+  font-size: 1.1rem;
+  font-style: normal;
+  background: var(--bg-dark);
+  border: 1px solid var(--text-dark);
+  color: var(--text-dark);
+  padding: 0.3rem 0.5rem;
+  opacity: 0.8;
 }
 
 /* Multi-column card layout for Art Basic lists */
@@ -2056,6 +2370,19 @@ td input.activity-input:not(:first-child) {
 }
 
 /* Practical model title modal removed */
+
+/* 태블릿 반응형 (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  #creative-quiz-main .assessment-list {
+    grid-template-columns: repeat(2, 1fr); /* 태블릿에서 2열 */
+    gap: 1.5rem;
+  }
+  
+  #creative-quiz-main .sub-list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+  }
+}
 
 @media (max-width: 520px) {
   #integrated-model-quiz-main #integrated-all td {
