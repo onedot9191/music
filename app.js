@@ -46,6 +46,7 @@
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
+                PHYSICAL_ACTIVITY: 'physical-activity',
                 COMPETENCY: 'competency',
                 AREA: 'area',
                 RANDOM: 'random'
@@ -115,6 +116,7 @@
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
+            [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동예시',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
@@ -539,6 +541,7 @@
 
        function updateStartModalUI() {
             const subjectButtons = subjectSelector.querySelectorAll('.btn');
+            const randomBtn = document.getElementById('random-subject-btn');
             const topic = gameState.selectedTopic;
 
             if (
@@ -556,6 +559,14 @@
                     btn.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !visible);
                     btn.disabled = false;
                 });
+                
+                // '기타' 주제일 때 랜덤 버튼 숨기기
+                if (topic === CONSTANTS.TOPICS.MORAL) {
+                    randomBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                } else {
+                    randomBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                }
+                
                 curriculumBreak.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.CURRICULUM);
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
