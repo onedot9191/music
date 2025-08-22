@@ -1242,6 +1242,12 @@
                         input.disabled = true;
                         shouldAdvance = true;
                         showRevealButtonForIntegrated(input);
+                    } else if (isInCourseOverview(input) || isInCourseCreative(input)) {
+                        // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+                        shouldAdvance = true;
+                        showRevealButtonForIntegrated(input);
                     } else {
                         input.value = input.dataset.answer;
                         input.disabled = true;
@@ -1310,6 +1316,16 @@
         function isInArtBasic(el) {
             const main = el.closest('main');
             return !!main && main.id === 'art-basic-quiz-main';
+        }
+
+        function isInCourseOverview(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'overview-quiz-main';
+        }
+
+        function isInCourseCreative(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'creative-quiz-main';
         }
 
         function isIntegratedTitle(el) {
