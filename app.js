@@ -45,6 +45,7 @@
                 INTEGRATED_COURSE: 'integrated-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
+                MUSIC_ELEMENTS: 'music-elements',
                 COMPETENCY: 'competency',
                 AREA: 'area',
                 RANDOM: 'random'
@@ -113,6 +114,7 @@
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
+            [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
@@ -125,7 +127,7 @@
             [CONSTANTS.TOPICS.COURSE]: '교육과정',
             [CONSTANTS.TOPICS.BASIC]: '기본이론',
             [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준',
-            [CONSTANTS.TOPICS.MORAL]: '도덕'
+            [CONSTANTS.TOPICS.MORAL]: '기타'
         };
 
         // --- GAME STATE ---
@@ -829,11 +831,28 @@
             
             headerTitle.textContent =
                 SUBJECT_NAMES[gameState.selectedSubject] || '퀴즈';
-           const mainEl = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+           
+           // Determine the correct main element based on topic and subject
+           let mainId;
+           if (gameState.selectedTopic === CONSTANTS.TOPICS.BASIC) {
+               if (gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC) {
+                   mainId = 'music-basic-quiz-main';
+               } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH) {
+                   mainId = 'english-quiz-main';
+               } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_BASIC) {
+                   mainId = 'art-basic-quiz-main';
+               } else {
+                   mainId = `${gameState.selectedSubject}-quiz-main`;
+               }
+           } else {
+               mainId = `${gameState.selectedSubject}-quiz-main`;
+           }
+           
+           const mainEl = document.getElementById(mainId);
            mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
            resetToFirstStage(gameState.selectedSubject);
 
-           document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = false);
+           document.querySelectorAll(`#${mainId} input[data-answer]`).forEach(i => i.disabled = false);
             if (
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
