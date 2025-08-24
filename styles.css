@@ -553,6 +553,26 @@ td input.shake {
   }
 }
 
+/* Correct answer subtle pulse (distinct from wrong shake) */
+td input.correct.correct-pulse {
+  animation: correct-pulse 420ms ease-out;
+}
+
+@keyframes correct-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
+  }
+  40% {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.45);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
+  }
+}
+
 th.sub-area-cell {
   min-width: 22rem;
 }
