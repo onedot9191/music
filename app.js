@@ -116,7 +116,7 @@
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
-            [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동예시',
+            [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
@@ -180,6 +180,7 @@
         const topicSelector = document.querySelector('.topic-selector');
         const subjectSelector = document.querySelector('.subject-selector');
         const curriculumBreak = document.getElementById('curriculum-break');
+        const modelBreak = document.getElementById('model-break');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
         const speechBubble = document.querySelector('.speech-bubble');
@@ -192,6 +193,90 @@
         const slotMachineEl = document.getElementById('slot-machine');
         const slotReels = slotMachineEl.querySelectorAll('.reel');
         
+        // --- Overview (총론) 계층 들여쓰기 적용 ---
+        function applyOverviewHierarchyIndentation() {
+            const overviewMain = document.getElementById('overview-quiz-main');
+            if (!overviewMain) return;
+            const items = overviewMain.querySelectorAll('.overview-question');
+            items.forEach((el) => {
+                const textStart = (el.textContent || '').trim();
+                const sectionEl = el.closest('section');
+                const inDesignSection = sectionEl && sectionEl.id === 'design';
+                const inStandardSection = sectionEl && sectionEl.id === 'standard';
+                let inStandardElementaryBlock = false;
+                if (inStandardSection) {
+                    const block = el.closest('.creative-block');
+                    if (block) {
+                        const titleEl = block.querySelector('.outline-title');
+                        if (titleEl && (titleEl.textContent || '').trim().startsWith('2. 초등학교')) {
+                            inStandardElementaryBlock = true;
+                        }
+                    }
+                }
+
+                // 섹션 II(설계와 운영) 전용 규칙:
+                // - 상위: '가.' '나.' 등 한글+'.' 시작은 왼쪽 정렬
+                // - 하위: '1)' '2)' 또는 '①' 등은 들여쓰기
+                // 그 외 섹션은 기존 규칙 유지
+                let isSub;
+                if (inDesignSection) {
+                    const isTopKoreanDot = /^[가-힣]\./.test(textStart);
+                    const isNumericOrCircled = /^(?:[0-9]{1,3}[)]|[①-⑳])/.test(textStart);
+                    // '가.' 형태면 상위, 숫자/원형 숫자면 하위, 그 외 기본 상위
+                    isSub = !isTopKoreanDot && isNumericOrCircled;
+                    // 강조(보라 테두리): 가., 나., 다., 라. 등 상위 항목만
+                    // 단, "4. 모든 학생을 위한 교육기회의 제공" 블록은 제외
+                    let excludeEmphasis = false;
+                    const designBlock = el.closest('.creative-block');
+                    if (designBlock) {
+                        const titleEl = designBlock.querySelector('.outline-title');
+                        const titleText = (titleEl && titleEl.textContent) ? titleEl.textContent.trim() : '';
+                        if (titleText.startsWith('4.') || titleText.includes('모든 학생을 위한 교육기회의 제공')) {
+                            excludeEmphasis = true;
+                        }
+                    }
+                    if (isTopKoreanDot && !excludeEmphasis) {
+                        el.classList.add('design-emphasis');
+                    } else {
+                        el.classList.remove('design-emphasis');
+                    }
+                } else if (inStandardElementaryBlock) {
+                    // III-2. 초등학교 전용 규칙:
+                    // - 상위: '1)' '2)' ... 숫자 괄호 → 왼쪽 정렬
+                    // - 하위: '가)' '나)' ... 한글 괄호, '①' 등 원형 숫자 → 들여쓰기
+                    const isTopNumericParen = /^[0-9]{1,3}[)]/.test(textStart);
+                    const isKoreanParen = /^[가-힣][)]/.test(textStart);
+                    const isCircledNumeric = /^[①-⑳]/.test(textStart);
+                    isSub = !isTopNumericParen && (isKoreanParen || isCircledNumeric);
+                } else {
+                    // 기존 전역 규칙 (괄호/숫자/한글 기호로 시작하면 하위)
+                    isSub = /^(?:\[[^\]]+\]|[0-9]{1,3}[.)]|[가-힣]{1}[.)]|[①-⑳])/.test(textStart);
+                    // 다른 섹션들에는 디자인 강조 제거
+                    el.classList.remove('design-emphasis');
+                }
+
+                el.classList.remove('overview-top', 'overview-sub');
+                el.classList.add(isSub ? 'overview-sub' : 'overview-top');
+
+                // III-2. 초등학교의 상위 숫자항목(1),2),...) 강조 표시
+                if (inStandardElementaryBlock && /^[0-9]{1,3}[)]/.test(textStart)) {
+                    el.classList.add('standard-emphasis');
+                } else {
+                    el.classList.remove('standard-emphasis');
+                }
+            });
+        }
+
+        // 초기 적용
+        applyOverviewHierarchyIndentation();
+        // 총론 내부 탭 클릭 시 재적용
+        const overviewTabs = document.querySelector('#overview-quiz-main .tabs');
+        if (overviewTabs) {
+            overviewTabs.addEventListener('click', () => {
+                requestAnimationFrame(applyOverviewHierarchyIndentation);
+            });
+        }
+
         // --- Modal focus helpers ---
         let lastFocusedElement = null;
         function focusModal(modalEl) {
@@ -568,10 +653,17 @@
                 }
                 
                 curriculumBreak.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.CURRICULUM);
+                if (modelBreak) modelBreak.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.MODEL);
+                // show grouped subject button segments only for model topic
+                document.querySelectorAll('.subject-btn-group').forEach(g => {
+                    g.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.MODEL);
+                });
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 subjectButtons.forEach(btn => { btn.disabled = true; });
                 curriculumBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                if (modelBreak) modelBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                document.querySelectorAll('.subject-btn-group').forEach(g => g.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
             }
             renderHeatmap(getDailyStats(30));
         }
