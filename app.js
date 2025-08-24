@@ -75,7 +75,8 @@
                 IS_SELECTING: 'is-selecting',
                 ACTIVE: 'active',
                 COMBO_POP: 'combo-pop',
-                SHAKE: 'shake'
+                SHAKE: 'shake',
+                CORRECT_PULSE: 'correct-pulse'
             },
             DEFAULT_DURATION: 900,
             HARD_CORE_DURATION: 60,
@@ -1302,6 +1303,13 @@
                 playSound(successAudio);
                 input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT, CONSTANTS.CSS_CLASSES.RETRYING);
                 input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+                // add a brief pulse distinct from wrong shake
+                input.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT_PULSE);
+                void input.offsetWidth;
+                input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT_PULSE);
+                input.addEventListener('animationend', () => {
+                    input.classList.remove(CONSTANTS.CSS_CLASSES.CORRECT_PULSE);
+                }, { once: true });
                 input.value = displayAnswer;
                 input.disabled = true;
                 shouldAdvance = true;
@@ -1324,6 +1332,8 @@
                     void comboCounter.offsetWidth;
                     comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
                 }
+                // 정답 파티클 (무음): 입력 주위로 작은 네온 점 터짐
+                spawnTypingParticles(input, '#39ff14');
                 
             } else {
                 gameState.combo = 0;
@@ -1338,6 +1348,8 @@
                 input.addEventListener('animationend', () => {
                     input.classList.remove(CONSTANTS.CSS_CLASSES.SHAKE);
                 }, { once: true });
+                // 오답 파티클 (무음): 붉은 점 소량 흩뿌림
+                spawnTypingParticles(input, '#ff5733');
 
                 if (
                     SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
@@ -1919,6 +1931,33 @@
                 }
             });
         };
+
+        // 무음 파티클 유틸: 입력 주위로 작은 점들을 흩뿌려 시각적 만족감 강화
+        function spawnTypingParticles(inputEl, color) {
+            try {
+                const rect = inputEl.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const num = 6;
+                for (let i = 0; i < num; i++) {
+                    const p = document.createElement('span');
+                    p.className = 'typing-particle';
+                    p.style.backgroundColor = color;
+                    p.style.left = `${cx}px`;
+                    p.style.top = `${cy}px`;
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = 8 + Math.random() * 18;
+                    const dx = Math.cos(angle) * dist;
+                    const dy = Math.sin(angle) * dist;
+                    p.style.setProperty('--tx', `${dx.toFixed(1)}px`);
+                    p.style.setProperty('--ty', `${dy.toFixed(1)}px`);
+                    document.body.appendChild(p);
+                    p.addEventListener('animationend', () => {
+                        if (p && p.parentNode) p.parentNode.removeChild(p);
+                    }, { once: true });
+                }
+            } catch (_) { /* no-op */ }
+        }
 
         quizContainers.forEach(main => attachInputHandlers(main));
 
