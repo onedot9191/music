@@ -774,6 +774,14 @@ td input.sub-step {
   background: var(--bg-light);
 }
 
+/* Ensure dashed sub-step inputs in PSR (개인적⋅사회적 책임감 지도 모형) section */
+#psr-pe td input.sub-step,
+#psr-pe td input[placeholder="단계 설명"] {
+  border-style: dashed;
+  border-color: var(--primary);
+  background: var(--bg-light);
+}
+
 td input.activity-input:not(:first-child) {
   margin-top: 1.5rem;
 }
@@ -1882,7 +1890,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question,
 #moral-course-quiz-main .overview-question,
 #science-std-quiz-main .overview-question,
-#practical-std-quiz-main .overview-question {
+#practical-std-quiz-main .overview-question,
+#practical-quiz-main .overview-question {
   display: block;
   line-height: 2.2; /* 줄 간격 확대 */
   font-size: 2rem;
@@ -1909,7 +1918,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question:last-child,
 #moral-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
-#practical-std-quiz-main .overview-question:last-child {
+#practical-std-quiz-main .overview-question:last-child,
+#practical-quiz-main .overview-question:last-child {
   margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
 }
 
@@ -1930,7 +1940,8 @@ td input.activity-input:not(:first-child) {
   #integrated-course-quiz-main .overview-question,
   #moral-course-quiz-main .overview-question,
   #science-std-quiz-main .overview-question,
-  #practical-std-quiz-main .overview-question {
+  #practical-std-quiz-main .overview-question,
+  #practical-quiz-main .overview-question {
     padding: 2rem 1.5rem; /* 모바일에서 패딩 조정 */
     font-size: 1.7rem; /* 모바일에서 폰트 크기 조정 */
     line-height: 2; /* 줄 간격 조정 */
@@ -1941,7 +1952,8 @@ td input.activity-input:not(:first-child) {
   #integrated-course-quiz-main .overview-question input,
   #moral-course-quiz-main .overview-question input,
   #science-std-quiz-main .overview-question input,
-  #practical-std-quiz-main .overview-question input {
+  #practical-std-quiz-main .overview-question input,
+  #practical-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바일에서 입력 필드 폰트 크기 */
     padding: 0.5rem 0.8rem; /* 모바일에서 패딩 조정 */
     margin: 0.2rem 0.4rem; /* 모바일에서 마진 조정 */
@@ -2003,7 +2015,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question input,
 #moral-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
-#practical-std-quiz-main .overview-question input {
+#practical-std-quiz-main .overview-question input,
+#practical-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem; /* 패딩 확대 */
   margin: 0 0.6rem; /* 좌우 마진 확대 */
@@ -2019,6 +2032,64 @@ td input.activity-input:not(:first-child) {
   transition: all 0.2s ease; /* 부드러운 전환 효과 */
 }
 
+/* 실과 모형: 인라인 빈칸과 카드 크기 축소 (총론 대비) */
+#practical-quiz-main .overview-question {
+  padding: 1.6rem; /* 카드 패딩 축소 */
+  font-size: 1.7rem; /* 문장 폰트 축소 */
+  line-height: 2; /* 줄 간격 약간 축소 */
+}
+#practical-quiz-main .overview-question input {
+  font-size: 1.6rem; /* 인풋 폰트 축소 */
+  padding: 0.4rem 0.7rem; /* 인풋 패딩 축소 */
+  min-width: 5ch; /* 살짝 여유 */
+  margin: 0 0.4rem; /* 좌우 마진 축소 */
+}
+
+/* 기술적 문제해결과정 세부 내용: 2열 레이아웃 */
+#practical-quiz-main #technical-problem-solving-detail td {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 1rem 1.5rem;
+}
+@media (max-width: 768px) {
+  #practical-quiz-main #technical-problem-solving-detail td {
+    grid-template-columns: 1fr; /* 모바일 1열 */
+  }
+}
+
+/* 문장형 항목의 줄바꿈과 밀도 개선 */
+#practical-quiz-main #technical-problem-solving-detail .overview-question {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin: 0; /* td gap 사용 */
+}
+
+/* 짧은/중간 길이 인풋 폭 축소 옵션 */
+#practical-quiz-main #technical-problem-solving-detail .overview-question input.fit-sm {
+  width: auto;
+  min-width: 5ch;
+}
+#practical-quiz-main #technical-problem-solving-detail .overview-question input.fit-md {
+  width: auto;
+  min-width: 10ch;
+}
+
+@media (max-width: 768px) {
+  #practical-quiz-main .overview-question {
+    padding: 1.2rem; /* 모바일에서 더 컴팩트 */
+    font-size: 1.55rem;
+    line-height: 1.9;
+  }
+  #practical-quiz-main .overview-question input {
+    font-size: 1.45rem;
+    padding: 0.35rem 0.6rem;
+    min-width: 4ch; /* 모바일도 약간 여유 */
+    margin: 0 0.35rem;
+  }
+}
+
 #creative-quiz-main .creative-question input:focus {
   outline: none;
   border-color: var(--primary);
@@ -2030,7 +2101,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question input:focus,
 #moral-course-quiz-main .overview-question input:focus,
 #science-std-quiz-main .overview-question input:focus,
-#practical-std-quiz-main .overview-question input:focus {
+#practical-std-quiz-main .overview-question input:focus,
+#practical-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
   background: var(--bg-light); /* 포커스 시에도 테마 배경색 유지 */
@@ -2048,7 +2120,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question input.correct,
 #moral-course-quiz-main .overview-question input.correct,
 #science-std-quiz-main .overview-question input.correct,
-#practical-std-quiz-main .overview-question input.correct {
+#practical-std-quiz-main .overview-question input.correct,
+#practical-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
   background: rgba(46, 204, 113, 0.1); /* 성공 배경색 */
@@ -2065,7 +2138,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question input.incorrect,
 #moral-course-quiz-main .overview-question input.incorrect,
 #science-std-quiz-main .overview-question input.incorrect,
-#practical-std-quiz-main .overview-question input.incorrect {
+#practical-std-quiz-main .overview-question input.incorrect,
+#practical-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
   background: rgba(231, 76, 60, 0.1); /* 오답 배경색 */
@@ -2082,7 +2156,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question input.retrying,
 #moral-course-quiz-main .overview-question input.retrying,
 #science-std-quiz-main .overview-question input.retrying,
-#practical-std-quiz-main .overview-question input.retrying {
+#practical-std-quiz-main .overview-question input.retrying,
+#practical-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
 }
@@ -2097,7 +2172,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .overview-question input.revealed,
 #moral-course-quiz-main .overview-question input.revealed,
 #science-std-quiz-main .overview-question input.revealed,
-#practical-std-quiz-main .overview-question input.revealed {
+#practical-std-quiz-main .overview-question input.revealed,
+#practical-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
 }
@@ -2530,4 +2606,64 @@ td input.activity-input:not(:first-child) {
   #integrated-model-quiz-main #integrated-all td {
     grid-template-columns: 1fr; /* 작은 화면에서는 1열 */
   }
+}
+
+/* Model: 단계명 vs 세부 단계 테두리 스타일 구분 */
+input[placeholder="단계명"] {
+  border-width: 2px;
+  border-style: solid;
+}
+input[placeholder="세부 단계"] {
+  border-width: 1px;
+  border-style: dashed;
+}
+
+/* Moral: 가치 분석 수업모형 '검사이름/검사 이름'도 세부 단계처럼 점선 표기 */
+#moral-course-quiz-main input[placeholder="검사이름"],
+#moral-course-quiz-main input[placeholder="검사 이름"] {
+  border-width: 1px !important;
+  border-style: dashed !important;
+}
+
+/* Moral: 세부 단계가 테마 기본 테두리에 덮이지 않도록 우선순위 보강 */
+#moral-course-quiz-main input[placeholder="세부 단계"] {
+  border-width: 1px !important;
+  border-style: dashed !important;
+}
+
+/* Moral: '검사'를 포함한 placeholder(검사 이름 등) 점선 처리 */
+#moral-course-quiz-main input[placeholder*="검사"] {
+  border-width: 1px !important;
+  border-style: dashed !important;
+}
+
+/* Practical(실과): 기술적 문제해결 과정의 하위 단계 점선 처리 */
+#practical-quiz-main #technical-problem-solving input.sub-step,
+#practical-quiz-main #technical-problem-solving input[placeholder="하위 단계"],
+#practical-quiz-main #technical-problem-solving ul.sub-list .inline-item input[placeholder="활동"] {
+  border-width: 1px !important;
+  border-style: dashed !important;
+}
+
+/* Practical: 기술적 문제해결 과정 하위 단계 칩 리스트 레이아웃 */
+#practical-quiz-main #technical-problem-solving .sub-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.6rem;
+  margin: 0.6rem 0 1rem 0;
+  list-style: none;
+}
+#practical-quiz-main #technical-problem-solving .sub-list .inline-item input.fit-answer {
+  width: auto;
+  min-width: 120px;
+  max-width: 100%;
+}
+
+/* Global fallback: '검사 이름' 류 필드가 어느 섹션이든 점선 유지 */
+input[placeholder="검사 이름"],
+input[placeholder="검사이름"],
+input[placeholder*="검사 "],
+input[placeholder*="검사" i] {
+  border-width: 1px !important;
+  border-style: dashed !important;
 }
