@@ -1836,7 +1836,8 @@ td input.activity-input:not(:first-child) {
   border-radius: 8px;
 }
 #science-std-quiz-main .achievement-block,
-#practical-std-quiz-main .achievement-block {
+#practical-std-quiz-main .achievement-block,
+#math-operation-quiz-main .achievement-block {
   margin: 3rem 0 2rem;
   padding: 1rem;
   background: var(--bg-light);
@@ -1844,7 +1845,8 @@ td input.activity-input:not(:first-child) {
   border-radius: 8px;
   position: relative;
 }
-#science-std-quiz-main .achievement-block::before {
+#science-std-quiz-main .achievement-block::before,
+#math-operation-quiz-main .achievement-block::before {
   content: '';
   position: absolute;
   top: -3px;
@@ -1868,7 +1870,8 @@ td input.activity-input:not(:first-child) {
   color: var(--primary);
 }
 #science-std-quiz-main .outline-title,
-#practical-std-quiz-main .outline-title {
+#practical-std-quiz-main .outline-title,
+#math-operation-quiz-main .outline-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -1927,6 +1930,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question,
 #science-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question,
+#math-operation-quiz-main .overview-question,
 #practical-quiz-main .overview-question {
   display: block;
   line-height: 2.2; /* 줄 간격 확대 */
@@ -1955,6 +1959,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child,
+#math-operation-quiz-main .overview-question:last-child,
 #practical-quiz-main .overview-question:last-child {
   margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
 }
@@ -1977,7 +1982,8 @@ td input.activity-input:not(:first-child) {
   #moral-course-quiz-main .overview-question,
   #science-std-quiz-main .overview-question,
   #practical-std-quiz-main .overview-question,
-  #practical-quiz-main .overview-question {
+#math-operation-quiz-main .overview-question,
+#practical-quiz-main .overview-question {
     padding: 2rem 1.5rem; /* 모바일에서 패딩 조정 */
     font-size: 1.7rem; /* 모바일에서 폰트 크기 조정 */
     line-height: 2; /* 줄 간격 조정 */
@@ -1989,7 +1995,8 @@ td input.activity-input:not(:first-child) {
   #moral-course-quiz-main .overview-question input,
   #science-std-quiz-main .overview-question input,
   #practical-std-quiz-main .overview-question input,
-  #practical-quiz-main .overview-question input {
+#math-operation-quiz-main .overview-question input,
+#practical-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바일에서 입력 필드 폰트 크기 */
     padding: 0.5rem 0.8rem; /* 모바일에서 패딩 조정 */
     margin: 0.2rem 0.4rem; /* 모바일에서 마진 조정 */
@@ -2052,6 +2059,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input,
+#math-operation-quiz-main .overview-question input,
 #practical-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem; /* 패딩 확대 */
@@ -2138,6 +2146,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input:focus,
 #science-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus,
+#math-operation-quiz-main .overview-question input:focus,
 #practical-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
@@ -2157,6 +2166,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.correct,
 #science-std-quiz-main .overview-question input.correct,
 #practical-std-quiz-main .overview-question input.correct,
+#math-operation-quiz-main .overview-question input.correct,
 #practical-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
@@ -2175,6 +2185,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.incorrect,
 #science-std-quiz-main .overview-question input.incorrect,
 #practical-std-quiz-main .overview-question input.incorrect,
+#math-operation-quiz-main .overview-question input.incorrect,
 #practical-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
@@ -2193,6 +2204,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.retrying,
 #science-std-quiz-main .overview-question input.retrying,
 #practical-std-quiz-main .overview-question input.retrying,
+#math-operation-quiz-main .overview-question input.retrying,
 #practical-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
@@ -2209,6 +2221,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.revealed,
 #science-std-quiz-main .overview-question input.revealed,
 #practical-std-quiz-main .overview-question input.revealed,
+#math-operation-quiz-main .overview-question input.revealed,
 #practical-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
@@ -2642,6 +2655,17 @@ td input.activity-input:not(:first-child) {
   #integrated-model-quiz-main #integrated-all td {
     grid-template-columns: 1fr; /* 작은 화면에서는 1열 */
   }
+  
+  /* Math Operation 모바일 최적화 */
+  #math-operation-quiz-main .tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  #math-operation-quiz-main .tab {
+    padding: 0.6rem 1rem;
+    font-size: 1.4rem;
+  }
 }
 
 /* Model: 단계명 vs 세부 단계 테두리 스타일 구분 */
@@ -2693,6 +2717,39 @@ input[placeholder="세부 단계"] {
   width: auto;
   min-width: 120px;
   max-width: 100%;
+}
+
+/* Math Operation: 수와 연산 과목 스타일 */
+#math-operation-quiz-main .tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 1rem;
+}
+
+#math-operation-quiz-main .tab {
+  padding: 0.8rem 1.5rem;
+  background: var(--bg-light);
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  color: var(--text-dark);
+}
+
+#math-operation-quiz-main .tab:hover {
+  background: var(--secondary);
+  color: var(--text-light);
+  transform: translateY(-2px);
+}
+
+#math-operation-quiz-main .tab.active {
+  background: var(--primary);
+  color: var(--text-light);
+  border-color: var(--primary);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
 /* Global fallback: '검사 이름' 류 필드가 어느 섹션이든 점선 유지 */
