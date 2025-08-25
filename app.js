@@ -133,6 +133,66 @@
             [CONSTANTS.TOPICS.MORAL]: '기타'
         };
 
+        // --- Auto width for blanks (fit to answer length) ---
+        // Measure text width using a canvas with the same font as the input element
+        function measureTextWidthForElement(text, element) {
+            const canvas = measureTextWidthForElement._canvas || (measureTextWidthForElement._canvas = document.createElement('canvas'));
+            const context = canvas.getContext('2d');
+            const cs = getComputedStyle(element);
+            // Build a reasonable font shorthand for canvas
+            const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+            context.font = font;
+            const metrics = context.measureText(text || '');
+            return metrics.width;
+        }
+
+        function getAnswerCandidates(input) {
+            const answers = [];
+            const dataAnswer = input.getAttribute('data-answer');
+            if (dataAnswer) answers.push(dataAnswer.trim());
+            const accept = input.getAttribute('data-accept') || input.getAttribute('data-alias') || input.getAttribute('data-aliases');
+            if (accept) accept.split(',').forEach(s => { const t = s.trim(); if (t) answers.push(t); });
+            return answers.length ? answers : [''];
+        }
+
+        function getLongestReferenceText(input) {
+            const answers = getAnswerCandidates(input);
+            return answers.reduce((longest, current) => current.length > longest.length ? current : longest, '');
+        }
+
+        function setInputWidthToText(input, text) {
+            const cs = getComputedStyle(input);
+            const padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+            const border = (parseFloat(cs.borderLeftWidth) || 0) + (parseFloat(cs.borderRightWidth) || 0);
+            const extra = 16; // slightly more breathing room
+            const textWidth = measureTextWidthForElement(text, input);
+            const widthPx = Math.ceil(textWidth + padding + border + extra);
+            input.style.width = `${widthPx}px`;
+        }
+
+        function applyAutoWidthForContainer(container) {
+            if (!container) return;
+            const inputs = container.querySelectorAll('.overview-question input[data-answer]');
+            inputs.forEach(input => {
+                const reference = getLongestReferenceText(input);
+                const resize = () => {
+                    const base = reference;
+                    const dynamic = input.value && input.value.length > base.length ? input.value : base;
+                    setInputWidthToText(input, dynamic);
+                };
+                resize();
+                input.addEventListener('input', resize);
+            });
+        }
+
+        function initAutoWidthPractical() {
+            const practicalMain = document.getElementById('practical-quiz-main');
+            applyAutoWidthForContainer(practicalMain);
+        }
+
+        // Defer until rendering is settled
+        requestAnimationFrame(() => { initAutoWidthPractical(); });
+
         // --- GAME STATE ---
         const gameState = {
             duration: CONSTANTS.DEFAULT_DURATION,
@@ -957,6 +1017,7 @@
            resetToFirstStage(gameState.selectedSubject);
 
            document.querySelectorAll(`#${mainId} input[data-answer]`).forEach(i => i.disabled = false);
+           if (mainEl) delete mainEl.dataset.answersRevealed;
             if (
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
@@ -1382,6 +1443,15 @@
                         input.disabled = true;
                         shouldAdvance = true;
                         showRevealButtonForIntegrated(input);
+                    } else if (
+                        gameState.selectedTopic !== CONSTANTS.TOPICS.CURRICULUM &&
+                        gameState.selectedTopic !== CONSTANTS.TOPICS.COMPETENCY &&
+                        gameState.selectedTopic !== CONSTANTS.TOPICS.MORAL
+                    ) {
+                        input.value = input.dataset.answer;
+                        input.disabled = true;
+                        shouldAdvance = true;
+                        showRevealButtonForIntegrated(input);
                     } else {
                         input.value = input.dataset.answer;
                         input.disabled = true;
@@ -1752,7 +1822,14 @@
                     main.querySelectorAll('section').forEach(sec => {
                         if (sec.id !== found.titleId) {
                             const shouldGate = isTitle && !alreadyCleared;
-                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = shouldGate);
+                            const answersRevealed = main.dataset.answersRevealed === 'true';
+                            sec.querySelectorAll('input[data-answer]').forEach(inp => {
+                                if (answersRevealed) {
+                                    inp.disabled = true;
+                                } else {
+                                    inp.disabled = shouldGate;
+                                }
+                            });
                             sec.style.opacity = shouldGate ? '0.2' : '';
                             sec.style.pointerEvents = shouldGate ? 'none' : '';
                             sec.classList.toggle('practical-section-disabled', shouldGate);
@@ -1806,10 +1883,17 @@
                 if (main.id === 'practical-quiz-main') {
                     const isTitle = targetId === 'practical-title';
                     const alreadyCleared = main.dataset.titleCleared === 'true';
+                    const answersRevealed = main.dataset.answersRevealed === 'true';
                     main.querySelectorAll('section').forEach(sec => {
                         if (sec.id !== 'practical-title') {
                             const shouldGate = isTitle && !alreadyCleared;
-                            sec.querySelectorAll('input[data-answer]').forEach(inp => inp.disabled = shouldGate);
+                            sec.querySelectorAll('input[data-answer]').forEach(inp => {
+                                if (answersRevealed) {
+                                    inp.disabled = true;
+                                } else {
+                                    inp.disabled = shouldGate;
+                                }
+                            });
                             sec.style.opacity = shouldGate ? '0.2' : '';
                             sec.style.pointerEvents = shouldGate ? 'none' : '';
                             sec.classList.toggle('practical-section-disabled', shouldGate);
@@ -2065,7 +2149,10 @@
         });
 
         showAnswersBtn.addEventListener('click', () => {
-            if (SPECIAL_SUBJECTS.has(gameState.selectedSubject)) {
+            if (
+                SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
+                (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL && gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_MODEL)
+            ) {
                 revealCompetencyAnswers();
             } else {
                 document
@@ -2082,6 +2169,8 @@
                         input.disabled = true;
                     });
             }
+            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            if (main) main.dataset.answersRevealed = 'true';
             showAnswersBtn.disabled = true;
             // 결과 창이 즉시 표시되지 않도록 진행 상태를 확인하지 않는다.
         });
