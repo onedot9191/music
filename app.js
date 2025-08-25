@@ -627,6 +627,64 @@
                 });
        }
 
+       // 과학 성취기준: '탐구 활동' 제목과 그 다음 항목들을 하나의 박스로 래핑
+       function wrapScienceInquiryActivities() {
+            const main = document.getElementById('science-std-quiz-main');
+            if (!main) return;
+            // 이미 처리되었다면 재실행 방지
+            if (main.dataset.inquiryWrapped === 'true') return;
+
+            const blocks = main.querySelectorAll('.achievement-block');
+            
+            // # 표기가 있는 outline-title을 주제로 표시
+            main.querySelectorAll('.outline-title').forEach(title => {
+                if (title.textContent.trim().startsWith('#')) {
+                    title.setAttribute('data-is-topic', 'true');
+                }
+            });
+            
+            // 블록 사이 구분선 추가
+            blocks.forEach((block, idx) => {
+                if (idx === 0) return; // 첫 블록 앞은 생략
+                const divider = document.createElement('div');
+                divider.className = 'topic-divider';
+                block.parentNode.insertBefore(divider, block);
+            });
+            blocks.forEach(block => {
+                // 블록 내의 모든 overview-question을 순회하며 '탐구 활동'을 찾음
+                const questions = Array.from(block.querySelectorAll('.overview-question'));
+                for (let i = 0; i < questions.length; i++) {
+                    const el = questions[i];
+                    const text = el.textContent.replace(/\s+/g, '').replace(/[<>]/g, '').trim();
+                    if (text === '탐구활동') {
+                        // 표기 변경: "탐구 활동" -> "<탐구 활동>"
+                        el.textContent = '<탐구 활동>';
+                        // 새 래퍼 생성
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'activity-box';
+
+                        // '탐구 활동' 제목과 뒤따르는 항목(다음 outline-title 전까지)을 이동
+                        el.parentNode.insertBefore(wrapper, el);
+                        wrapper.appendChild(el);
+
+                        // 다음 형제들을 outline-title이나 achievement-block 끝을 만나기 전까지 수집
+                        let sibling = wrapper.nextElementSibling;
+                        while (sibling && !sibling.classList.contains('outline-title')) {
+                            const next = sibling.nextElementSibling;
+                            if (sibling.classList.contains('overview-question')) {
+                                wrapper.appendChild(sibling);
+                            } else {
+                                break;
+                            }
+                            sibling = next;
+                        }
+                    }
+                }
+            });
+
+            main.dataset.inquiryWrapped = 'true';
+       }
+
        function adjustEnglishInputWidths() {
             document
                 .querySelectorAll('#english-quiz-main input[data-answer]')
@@ -1027,6 +1085,9 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
             ) {
+                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD) {
+                    wrapScienceInquiryActivities();
+                }
                 adjustCreativeInputWidths();
             } else if (
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH &&
