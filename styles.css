@@ -1952,7 +1952,9 @@ td input.activity-input:not(:first-child) {
 }
 
 /* III > 2. 초등학교: 상위 숫자항목 강조 */
-#overview-quiz-main #standard .standard-emphasis {
+#overview-quiz-main #standard .standard-emphasis,
+#math-core-idea .standard-emphasis,
+#math-teaching-competency .standard-emphasis {
   border-color: var(--accent) !important; /* 보라색 테두리 */
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
 }
