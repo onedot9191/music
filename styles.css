@@ -1931,7 +1931,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question,
 #math-operation-quiz-main .overview-question,
-#practical-quiz-main .overview-question {
+#practical-quiz-main .overview-question,
+#math-course-quiz-main .overview-question {
   display: block;
   line-height: 2.2; /* 줄 간격 확대 */
   font-size: 2rem;
@@ -1960,7 +1961,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child,
 #math-operation-quiz-main .overview-question:last-child,
-#practical-quiz-main .overview-question:last-child {
+#practical-quiz-main .overview-question:last-child,
+#math-course-quiz-main .overview-question:last-child {
   margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
 }
 
@@ -1982,8 +1984,9 @@ td input.activity-input:not(:first-child) {
   #moral-course-quiz-main .overview-question,
   #science-std-quiz-main .overview-question,
   #practical-std-quiz-main .overview-question,
-#math-operation-quiz-main .overview-question,
-#practical-quiz-main .overview-question {
+  #math-operation-quiz-main .overview-question,
+  #practical-quiz-main .overview-question,
+  #math-course-quiz-main .overview-question {
     padding: 2rem 1.5rem; /* 모바일에서 패딩 조정 */
     font-size: 1.7rem; /* 모바일에서 폰트 크기 조정 */
     line-height: 2; /* 줄 간격 조정 */
@@ -1995,8 +1998,9 @@ td input.activity-input:not(:first-child) {
   #moral-course-quiz-main .overview-question input,
   #science-std-quiz-main .overview-question input,
   #practical-std-quiz-main .overview-question input,
-#math-operation-quiz-main .overview-question input,
-#practical-quiz-main .overview-question input {
+  #math-operation-quiz-main .overview-question input,
+  #practical-quiz-main .overview-question input,
+  #math-course-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바일에서 입력 필드 폰트 크기 */
     padding: 0.5rem 0.8rem; /* 모바일에서 패딩 조정 */
     margin: 0.2rem 0.4rem; /* 모바일에서 마진 조정 */
@@ -2060,7 +2064,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input,
 #math-operation-quiz-main .overview-question input,
-#practical-quiz-main .overview-question input {
+#practical-quiz-main .overview-question input,
+#math-course-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem; /* 패딩 확대 */
   margin: 0 0.6rem; /* 좌우 마진 확대 */
@@ -2147,7 +2152,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus,
 #math-operation-quiz-main .overview-question input:focus,
-#practical-quiz-main .overview-question input:focus {
+#practical-quiz-main .overview-question input:focus,
+#math-course-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
   background: var(--bg-light); /* 포커스 시에도 테마 배경색 유지 */
@@ -2167,7 +2173,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input.correct,
 #practical-std-quiz-main .overview-question input.correct,
 #math-operation-quiz-main .overview-question input.correct,
-#practical-quiz-main .overview-question input.correct {
+#practical-quiz-main .overview-question input.correct,
+#math-course-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
   background: rgba(46, 204, 113, 0.1); /* 성공 배경색 */
@@ -2186,7 +2193,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input.incorrect,
 #practical-std-quiz-main .overview-question input.incorrect,
 #math-operation-quiz-main .overview-question input.incorrect,
-#practical-quiz-main .overview-question input.incorrect {
+#practical-quiz-main .overview-question input.incorrect,
+#math-course-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
   background: rgba(231, 76, 60, 0.1); /* 오답 배경색 */
@@ -2205,7 +2213,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input.retrying,
 #practical-std-quiz-main .overview-question input.retrying,
 #math-operation-quiz-main .overview-question input.retrying,
-#practical-quiz-main .overview-question input.retrying {
+#practical-quiz-main .overview-question input.retrying,
+#math-course-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
 }
@@ -2222,7 +2231,8 @@ td input.activity-input:not(:first-child) {
 #science-std-quiz-main .overview-question input.revealed,
 #practical-std-quiz-main .overview-question input.revealed,
 #math-operation-quiz-main .overview-question input.revealed,
-#practical-quiz-main .overview-question input.revealed {
+#practical-quiz-main .overview-question input.revealed,
+#math-course-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
 }
