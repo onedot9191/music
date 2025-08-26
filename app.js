@@ -44,6 +44,7 @@
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
+                SOCIAL_COURSE: 'social-course',
                 MATH_COURSE: 'math-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
@@ -117,6 +118,7 @@
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
+            [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
             [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
@@ -1095,8 +1097,8 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
-                                CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
@@ -1524,7 +1526,7 @@
                         input.disabled = true;
                         shouldAdvance = true;
                         showRevealButtonForIntegrated(input);
-                    } else if (isInCourseOverview(input) || isInCourseCreative(input)) {
+                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input)) {
                         // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
                         input.value = input.dataset.answer;
                         input.disabled = true;
@@ -1617,6 +1619,11 @@
         function isInCourseCreative(el) {
             const main = el.closest('main');
             return !!main && main.id === 'creative-quiz-main';
+        }
+
+        function isInCourseSocial(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'social-course-quiz-main';
         }
 
         function isIntegratedTitle(el) {
@@ -1934,6 +1941,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
@@ -1959,6 +1967,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
@@ -2020,6 +2029,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
