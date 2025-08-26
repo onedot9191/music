@@ -1730,6 +1730,30 @@ td input.activity-input:not(:first-child) {
   width: 100%;
 }
 
+/* English: 기능별 언어 지도는 항상 1열(세로) 배치 */
+#english-quiz-main #functional .grade-container {
+  flex-direction: column;
+}
+#english-quiz-main #functional .grade-container > div {
+  flex: none;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* English: 요소별 언어 지도 - 첫 블록(Culture)은 단독 행으로 분리 배치 */
+#english-quiz-main #element .grade-container > div:first-child {
+  flex: none;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* English: 활동 중심 수업 - 'Chant & Song'은 단독 행으로 분리 배치 */
+#english-quiz-main #activity .grade-container > div:first-child {
+  flex: none;
+  width: 100%;
+  min-width: 100%;
+}
+
 .inline-answers {
   display: flex;
   flex-wrap: wrap;
@@ -1818,7 +1842,141 @@ td input.activity-input:not(:first-child) {
   padding-left: 1rem;
 }
 
+/* English: Full redesign for readability & hierarchy (전면 개편) */
+/* 1) 리스트 기본값 리셋 및 간격 확장 */
+#english-quiz-main .assessment-list,
+#english-quiz-main .sub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#english-quiz-main .assessment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* 기존 하단 분리선 제거 (카드화로 대체) */
+#english-quiz-main .assessment-list > li:not(:last-child) {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* 2) 최상위 항목: 카드 형태 + 좌측 가이드 라인 */
+#english-quiz-main .assessment-list > li {
+  background: var(--bg-light);
+  border: 2px solid var(--secondary);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 1.2rem 1.2rem 1.2rem 1.4rem;
+}
+
+/* 3) 하위 항목: 좌측 가이드 + 들여쓰기 확장 */
+#english-quiz-main .sub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* 하위 항목 세로 간격 확대 */
+  border-left: 2px dashed var(--secondary);
+  padding-left: 1.2rem;
+}
+#english-quiz-main .sub-list .sub-list {
+  border-left: 2px dotted var(--text-dark);
+  padding-left: 1.2rem;
+}
+#english-quiz-main .sub-list .sub-list .sub-list {
+  border-left: 2px dotted rgba(255, 255, 255, 0.25);
+  padding-left: 1.2rem;
+}
+
+/* 4) 문장/인라인 그룹 간격 및 행간 확장 */
+#english-quiz-main li,
+#english-quiz-main .inline-item {
+  line-height: 1.9;
+}
+#english-quiz-main .inline-item {
+  gap: 1.4rem; /* 가로 간격 증가 */
+  row-gap: 1.6rem; /* 줄바꿈 시 세로 간격 추가 확대 */
+}
+
+/* 5) 입력칸(빈칸) 재설계: 여백/줄간격/정렬 개선, 위계별 크기 차등 */
+#english-quiz-main input.fit-answer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.8rem;
+  margin: 0.5rem 0.6rem; /* 위·아래 여백 추가 확대 */
+  padding-bottom: 0.6rem; /* 내부 아래 여백 확보(배지 겹침 방지) */
+  line-height: 1.9;
+  background: var(--bg-light);
+  border-radius: 8px;
+}
+
+/* → 순서 표기 가독성: 화살표와 좌우 항목은 줄바꿈 없이 붙여서 표시 */
+#english-quiz-main .arrow-seq {
+  white-space: nowrap;
+}
+
+/* 줄바꿈 시에도 화살표가 윗줄 끝에 남지 않도록 →를 앞 항목과 묶어줌 */
+#english-quiz-main .arrow-keep {
+  white-space: nowrap;
+}
+
+/* 미니 정답 배지 사용 시 입력칸 내부 공간 확보 */
+#english-quiz-main .reveal-wrapper input.fit-answer {
+  padding-right: 2.6rem; /* 배지 폭만큼 우측 여유 */
+}
+
+/* 레벨별 차등: 상위일수록 크게/두껍게/넓게 */
+#english-quiz-main .assessment-list > li input.fit-answer {
+  font-size: 1.6rem;
+  font-weight: 800;
+  min-width: 18ch;
+  border-width: 3px;
+}
+#english-quiz-main .sub-list > li input.fit-answer {
+  font-size: 1.45rem;
+  font-weight: 700;
+  min-width: 14ch;
+}
+#english-quiz-main .sub-list .sub-list > li input.fit-answer {
+  font-size: 1.35rem;
+  font-weight: 600;
+  min-width: 12ch;
+}
+#english-quiz-main .sub-list .sub-list .sub-list > li input.fit-answer {
+  font-size: 1.25rem;
+  font-weight: 600;
+  min-width: 10ch;
+}
+
 /* Creative subject readability tweaks */
+
+/* English: 기본이론 계층 가독성 강화 (도트 마커 제외) */
+/* 레벨별 세로 가이드 굵기 차등 */
+#english-quiz-main .sub-list {
+  border-left-width: 3px; /* 1차 레벨 */
+}
+#english-quiz-main .sub-list .sub-list {
+  border-left-width: 2px; /* 2차 레벨 */
+}
+#english-quiz-main .sub-list .sub-list .sub-list {
+  border-left-width: 1px; /* 3차 레벨 */
+}
+
+/* 들여쓰기 확대: 상위에서 하위로 갈수록 여백 누적 */
+#english-quiz-main .assessment-list > li > .sub-list {
+  padding-left: 1.4rem;
+}
+#english-quiz-main .sub-list > li > .sub-list {
+  padding-left: 1.2rem;
+}
+
+/* 문장+빈칸 흐름 정돈: 기준선 정렬 */
+#english-quiz-main .inline-item {
+  align-items: baseline;
+}
 #creative-quiz-main .creative-block {
   margin-bottom: 2rem;
   padding: 1rem;
