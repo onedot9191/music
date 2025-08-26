@@ -1775,13 +1775,29 @@
         }
 
         // --- EVENT LISTENERS ---
-        topicSelector.addEventListener('click', e => {
+        document.querySelector('.topic-selector').addEventListener('click', e => {
             if (!e.target.matches('.btn')) return;
             playSound(clickAudio);
             document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
             e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
             const topic = e.target.dataset.topic;
             gameState.selectedTopic = topic;
+            
+            // 기본이론 주제 선택 시 특별한 시각적 효과 적용
+            if (topic === CONSTANTS.TOPICS.BASIC) {
+                document.querySelectorAll('.subject-btn').forEach(btn => {
+                    if (btn.dataset.topic === 'basic') {
+                        btn.classList.add('basic-topic-highlight');
+                    } else {
+                        btn.classList.remove('basic-topic-highlight');
+                    }
+                });
+            } else {
+                document.querySelectorAll('.subject-btn').forEach(btn => {
+                    btn.classList.remove('basic-topic-highlight');
+                });
+            }
+            
             if (
                 topic === CONSTANTS.TOPICS.CURRICULUM ||
                 topic === CONSTANTS.TOPICS.MODEL ||
