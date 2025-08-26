@@ -488,8 +488,19 @@
                 gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_MODEL;
 
-            let result = str
-                .replace(/\([^)]*\)/g, '')
+            // '기타' 주제 '음악요소'의 경우 괄호 내용을 제거하지 않음
+            const shouldRemoveParentheses = !(
+                gameState.selectedTopic === CONSTANTS.TOPICS.MORAL && 
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS
+            );
+
+            let result = str;
+            
+            if (shouldRemoveParentheses) {
+                result = result.replace(/\([^)]*\)/g, '');
+            }
+            
+            result = result
                 .trim()
                 .replace(pattern, '')
                 .toLowerCase();
@@ -1406,7 +1417,16 @@
                 }
             } else {
                 const correctAnswer = normalizeAnswer(input.dataset.answer);
-                if (userAnswer === correctAnswer) {
+                
+                // '기타' 주제 '음악요소'의 경우 괄호 내용까지 정확히 입력해야 함
+                if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL && 
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS) {
+                    // 괄호 내용까지 정확히 입력해야 정답으로 처리
+                    if (userAnswer === correctAnswer) {
+                        isCorrect = true;
+                        displayAnswer = input.dataset.answer;
+                    }
+                } else if (userAnswer === correctAnswer) {
                     isCorrect = true;
                     displayAnswer = input.dataset.answer;
                 } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
