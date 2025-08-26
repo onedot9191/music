@@ -2089,6 +2089,10 @@ td input.activity-input:not(:first-child) {
   transition: all 0.2s ease; /* 부드러운 전환 효과 */
 }
 
+#social-course-quiz-main .overview-question input {
+  min-width: 5ch;
+}
+
 /* 실과 모형: 인라인 빈칸과 카드 크기 축소 (총론 대비) */
 #practical-quiz-main .overview-question {
   padding: 1.6rem; /* 카드 패딩 축소 */

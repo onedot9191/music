@@ -191,13 +191,15 @@
             });
         }
 
-        function initAutoWidthPractical() {
-            const practicalMain = document.getElementById('practical-quiz-main');
-            applyAutoWidthForContainer(practicalMain);
+        function initAutoWidthCourse() {
+            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main'].forEach(id => {
+                const container = document.getElementById(id);
+                applyAutoWidthForContainer(container);
+            });
         }
 
         // Defer until rendering is settled
-        requestAnimationFrame(() => { initAutoWidthPractical(); });
+        requestAnimationFrame(() => { initAutoWidthCourse(); });
 
         // --- GAME STATE ---
         const gameState = {
