@@ -44,6 +44,7 @@
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
                 INTEGRATED_COURSE: 'integrated-course',
+                MATH_COURSE: 'math-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
@@ -116,6 +117,7 @@
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
+            [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
@@ -1093,6 +1095,7 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                                 CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
@@ -1931,6 +1934,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
@@ -1955,6 +1959,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
@@ -2015,6 +2020,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
