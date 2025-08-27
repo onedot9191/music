@@ -430,12 +430,12 @@
         }
 
         function updateHeatmapTitle(stats) {
-            const title = document.getElementById('heatmap-title');
-            if (!title) return;
+            const countEl = document.getElementById('heatmap-count');
+            if (!countEl) return;
             const todayKey = formatDateKey();
             const today = stats.find(s => s.date === todayKey);
             const count = today ? today.count : 0;
-            title.textContent = `오늘 푼 빈칸 ${count}개`;
+            countEl.textContent = String(count);
         }
 
        function renderHeatmap(stats) {
@@ -464,6 +464,35 @@
                 container.appendChild(cell);
             });
             updateHeatmapTitle(stats);
+            renderDDay();
+        }
+
+        // --- D-DAY ---
+        function calculateDDayText(targetDate) {
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const target = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+            const diffDays = Math.floor((target - today) / msPerDay);
+            if (diffDays === 0) return 'D-Day';
+            if (diffDays > 0) return `D-${diffDays}`;
+            return `D+${Math.abs(diffDays)}`;
+        }
+
+        function renderDDay() {
+            const el = document.getElementById('dday');
+            if (!el) return;
+            // 11월 8일을 기준. 이미 지났다면 내년 11월 8일 기준으로 표기
+            const now = new Date();
+            const year = now.getFullYear();
+            let target = new Date(year, 10, 8); // 0-based: 10 => November
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (target < today) {
+                target = new Date(year + 1, 10, 8);
+            }
+            const text = calculateDDayText(target);
+            el.textContent = text;
         }
 
         function playSound(audioElement) {
