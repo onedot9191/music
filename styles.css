@@ -1261,6 +1261,98 @@ td input.activity-input:not(:first-child) {
   letter-spacing: 1px;
 }
 
+/* D-Day Race (D-100 트랙) */
+#dday-race {
+  position: relative;
+  margin-top: 0.8rem;
+  height: 64px; /* 전체 크기 상향 */
+}
+#dday-race::before { content: none; }
+.dday-track-labels { display: none; }
+.dday-runner {
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+}
+.dday-runner canvas { width: 48px; height: 48px; image-rendering: pixelated; image-rendering: crisp-edges; }
+
+/* finish flag */
+.dday-finish-flag {
+  position: absolute;
+  display: none; /* 피니시 마커 제거 */
+}
+
+/* minimal ticks at 0/50/100 */
+.dday-tick {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 14px;
+  background: rgba(255,255,255,0.25);
+}
+
+/* 중앙 주로 선 */
+.dday-line {
+  position: absolute;
+  left: 0;
+  right: 0; /* 끝까지 */
+  top: 50%;
+  height: 3px; /* 두껍게 */
+  transform: translateY(-50%);
+  background: var(--secondary);
+  z-index: 0;
+}
+
+/* 진행 채움선 */
+.dday-progress {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 3px; /* 라인과 동일 두께 */
+  transform: translateY(-50%);
+  background: var(--primary);
+  width: 0;
+  z-index: 1; /* 베이스선 위로 */
+}
+
+/* 좌/우 라벨 */
+.dday-label {
+  position: absolute;
+  top: calc(50% + 8px);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
+.dday-label.left { left: 0; }
+.dday-label.right { right: 0; }
+
+/* 퍼센트 칩 */
+.dday-percent,
+.dday-chip {
+  position: absolute;
+  top: calc(50% - 46px); /* 러너 위로 더 높게 */
+  transform: translateX(-50%);
+  background: var(--bg-dark);
+  border: 3px solid var(--primary);
+  color: var(--text-light);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.1rem; /* 칩 크게 */
+  line-height: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  #dday-race { height: 48px; }
+  .dday-runner { width: 30px; height: 30px; }
+  .dday-runner .mushroom { width: 30px; height: 30px; }
+}
+
 /* Character Assistant Styles */
 #character-assistant {
   position: fixed;
