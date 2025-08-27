@@ -47,6 +47,7 @@
                 INTEGRATED_COURSE: 'integrated-course',
                 SOCIAL_COURSE: 'social-course',
                 MATH_COURSE: 'math-course',
+                SCIENCE_COURSE: 'science-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
@@ -122,13 +123,13 @@
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
             [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
+            [CONSTANTS.SUBJECTS.SCIENCE_COURSE]: '과학',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
             [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
-            [CONSTANTS.SUBJECTS.AREA]: '영역',
-            'science-course': '과학'
+            [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
 
         const TOPIC_NAMES = {
