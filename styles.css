@@ -17,7 +17,8 @@
 
   /* Typography */
   --font-base: 'Noto Sans KR', sans-serif;
-  --font-display: 'Press Start 2P', cursive;
+  --font-display: 'Galmuri9', 'Galmuri11', 'Press Start 2P', cursive;
+  --font-mono: 'Galmuri9', monospace;
 
   /* Spacing scale */
   --space-xs: 0.4rem; /* 4px */
@@ -153,6 +154,11 @@ header {
   gap: 1.5rem;
 }
 
+/* Top-right header buttons use display font */
+.hud-right .btn {
+  font-family: var(--font-display);
+}
+
 header h1 {
   font-family: var(--font-display);
   font-size: 2.2rem;
@@ -169,7 +175,7 @@ header h1 {
 }
 
 #time {
-  font-family: 'Source Code Pro', monospace;
+  font-family: var(--font-mono);
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--text-light);
@@ -895,7 +901,7 @@ td input.activity-input:not(:first-child) {
 }
 #guide-modal h3 {
   text-align: center;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
   color: var(--correct);
   margin-bottom: 3rem;
   font-size: 2.4rem;
@@ -917,7 +923,7 @@ td input.activity-input:not(:first-child) {
   padding-bottom: 0;
 }
 .guide-label {
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
   color: var(--primary);
   font-size: 1.4rem;
   flex-shrink: 0;
@@ -943,7 +949,7 @@ td input.activity-input:not(:first-child) {
 #close-guide-btn {
   display: block;
   margin: 2.5rem auto 0;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
 }
 #result-info {
   display: flex;
@@ -1004,7 +1010,13 @@ td input.activity-input:not(:first-child) {
   font-size: 1.6rem;
   min-width: 3rem;
   text-align: right;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
+}
+
+/* Result modal: force all content to use display font (Galmuri9) */
+#progress-modal .modal-content,
+#progress-modal .modal-content * {
+  font-family: var(--font-display) !important;
 }
 
 .result-buttons {
@@ -1017,6 +1029,7 @@ td input.activity-input:not(:first-child) {
 
 .result-buttons .btn {
   width: 12rem;
+  font-family: var(--font-display);
 }
 
 .time-setter,
@@ -1061,7 +1074,7 @@ td input.activity-input:not(:first-child) {
   width: 100%;
 }
 #time-setting-display {
-  font-family: 'Source Code Pro', monospace;
+  font-family: var(--font-mono);
   font-size: 3rem;
   color: var(--text-light);
   width: 8ch;
@@ -1076,6 +1089,14 @@ td input.activity-input:not(:first-child) {
 .topic-btn,
 #random-subject-btn {
   font-size: 1.6rem;
+}
+.subject-btn,
+.mode-btn,
+.topic-btn,
+#random-subject-btn,
+#start-game-btn,
+.time-control-btn {
+  font-family: var(--font-display);
 }
 .subject-btn.selected,
 .mode-btn.selected,
@@ -1346,7 +1367,7 @@ td input.activity-input:not(:first-child) {
   color: var(--text-light);
   padding: 4px 10px;
   border-radius: 6px;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
   font-size: 1.1rem; /* 칩 크게 */
   line-height: 1;
   pointer-events: none;
@@ -1726,7 +1747,7 @@ td input.activity-input:not(:first-child) {
 #result-title {
   font-size: 2.5rem !important;
   margin-bottom: 1rem !important;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-display);
   color: var(--primary);
   text-shadow: 3px 3px 0 var(--secondary);
 }
