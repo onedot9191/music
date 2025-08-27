@@ -429,6 +429,15 @@
             return result;
         }
 
+        function updateHeatmapTitle(stats) {
+            const title = document.getElementById('heatmap-title');
+            if (!title) return;
+            const todayKey = formatDateKey();
+            const today = stats.find(s => s.date === todayKey);
+            const count = today ? today.count : 0;
+            title.textContent = `오늘 푼 빈칸 ${count}개`;
+        }
+
        function renderHeatmap(stats) {
            const container = document.getElementById('activity-heatmap');
            if (!container) return;
@@ -454,6 +463,7 @@
                 cell.title = `${date}: ${count}`;
                 container.appendChild(cell);
             });
+            updateHeatmapTitle(stats);
         }
 
         function playSound(audioElement) {
@@ -805,7 +815,9 @@
                 if (modelBreak) modelBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn-group').forEach(g => g.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
             }
-            renderHeatmap(getDailyStats(30));
+            const stats = getDailyStats(30);
+            renderHeatmap(stats);
+            updateHeatmapTitle(stats);
         }
 
         function setCharacterState(state, duration = 1500) {
@@ -949,6 +961,8 @@
             const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
             saveDailyStats(correctCount);
+            // 히트맵 제목(오늘 푼 빈칸 수) 즉시 갱신
+            updateHeatmapTitle(getDailyStats(30));
 
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('total-count').textContent = totalCount;
@@ -1488,6 +1502,10 @@
                 }
                 // 정답 파티클 (무음): 입력 주위로 작은 네온 점 터짐
                 spawnTypingParticles(input, '#39ff14');
+                // 콤보 5, 10, 15...마다 미니 컨페티
+                if (gameState.combo >= 5 && gameState.combo % 5 === 0) {
+                    spawnComboConfetti(input);
+                }
                 
             } else {
                 gameState.combo = 0;
@@ -2160,6 +2178,35 @@
                     document.body.appendChild(p);
                     p.addEventListener('animationend', () => {
                         if (p && p.parentNode) p.parentNode.removeChild(p);
+                    }, { once: true });
+                }
+            } catch (_) { /* no-op */ }
+        }
+
+        // 콤보 보상: 5연속마다 미니 컨페티 (네온/화이트 톤, 무음, 그라디언트 없음)
+        function spawnComboConfetti(inputEl, colors = ['#39ff14', '#00ffff', '#ffffff']) {
+            try {
+                const rect = inputEl.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const num = 12;
+                for (let i = 0; i < num; i++) {
+                    const s = document.createElement('span');
+                    s.className = 'confetti-piece';
+                    s.style.backgroundColor = colors[i % colors.length];
+                    s.style.left = `${cx}px`;
+                    s.style.top = `${cy}px`;
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 40 + Math.random() * 60;
+                    const dx = Math.cos(angle) * speed;
+                    const dy = Math.sin(angle) * speed - 20;
+                    const rot = (Math.random() * 360 - 180).toFixed(1);
+                    s.style.setProperty('--dx', `${dx.toFixed(1)}px`);
+                    s.style.setProperty('--dy', `${dy.toFixed(1)}px`);
+                    s.style.setProperty('--dr', `${rot}deg`);
+                    document.body.appendChild(s);
+                    s.addEventListener('animationend', () => {
+                        if (s && s.parentNode) s.parentNode.removeChild(s);
                     }, { once: true });
                 }
             } catch (_) { /* no-op */ }
