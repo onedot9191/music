@@ -470,6 +470,7 @@
         }
 
         // --- D-DAY ---
+        let ddayRaceResizeObserver = null;
         function calculateDDayText(targetDate) {
             const msPerDay = 24 * 60 * 60 * 1000;
             const today = new Date();
@@ -485,6 +486,18 @@
             const el = document.getElementById('dday');
             const race = document.getElementById('dday-race');
             if (!el) return;
+            // 크기 변화에 반응하여 재계산하도록 관찰자 설정
+            if (race && !race.dataset.observed) {
+                try { if (ddayRaceResizeObserver) ddayRaceResizeObserver.disconnect(); } catch (_) {}
+                try {
+                    ddayRaceResizeObserver = new ResizeObserver(() => {
+                        // 다음 프레임에서 안전하게 위치 재계산
+                        requestAnimationFrame(() => renderDDay());
+                    });
+                    ddayRaceResizeObserver.observe(race);
+                    race.dataset.observed = 'true';
+                } catch (_) { /* ResizeObserver 미지원 시 무시 */ }
+            }
             // 11월 8일 기준. 이미 지났다면 내년 11월 8일 기준
             const now = new Date();
             const year = now.getFullYear();
@@ -506,6 +519,11 @@
                 const start = new Date(target);
                 start.setDate(start.getDate() - 100);
                 const clamped = Math.max(0, Math.min(1, (today - start) / (100 * MS_PER_DAY)));
+
+                // 아직 레이아웃이 잡히지 않아 너비가 0이면 다음 기회로 미룸(ResizeObserver가 재호출)
+                if (race.clientWidth === 0) {
+                    return;
+                }
 
                 // 최초 렌더 시 구조 구성
                 if (!race.dataset.initialized) {
