@@ -127,7 +127,8 @@
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
             [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
-            [CONSTANTS.SUBJECTS.AREA]: '영역'
+            [CONSTANTS.SUBJECTS.AREA]: '영역',
+            'science-course': '과학'
         };
 
         const TOPIC_NAMES = {
@@ -194,7 +195,7 @@
         }
 
         function initAutoWidthCourse() {
-            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main'].forEach(id => {
+            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main'].forEach(id => {
                 const container = document.getElementById(id);
                 applyAutoWidthForContainer(container);
             });
@@ -481,8 +482,9 @@
 
         function renderDDay() {
             const el = document.getElementById('dday');
+            const race = document.getElementById('dday-race');
             if (!el) return;
-            // 11월 8일을 기준. 이미 지났다면 내년 11월 8일 기준으로 표기
+            // 11월 8일 기준. 이미 지났다면 내년 11월 8일 기준
             const now = new Date();
             const year = now.getFullYear();
             let target = new Date(year, 10, 8); // 0-based: 10 => November
@@ -491,8 +493,128 @@
             if (target < today) {
                 target = new Date(year + 1, 10, 8);
             }
+
+            // 텍스트 D-Day 표시
+            // 상단 텍스트 제거 요청에 따라 숨김 처리
             const text = calculateDDayText(target);
-            el.textContent = text;
+            el.textContent = '';
+
+            // 경주 트랙 업데이트 (D-100 기준 진행도)
+            if (race) {
+                const MS_PER_DAY = 24 * 60 * 60 * 1000;
+                const start = new Date(target);
+                start.setDate(start.getDate() - 100);
+                const clamped = Math.max(0, Math.min(1, (today - start) / (100 * MS_PER_DAY)));
+
+                // 최초 렌더 시 구조 구성
+                if (!race.dataset.initialized) {
+                    race.innerHTML = '';
+                    // 중앙 주로 선 + 진행선
+                    const line = document.createElement('div');
+                    line.className = 'dday-line';
+                    const progress = document.createElement('div');
+                    progress.className = 'dday-progress';
+                    // minimal ticks
+                    const tick0 = document.createElement('div');
+                    tick0.className = 'dday-tick';
+                    tick0.style.left = '0';
+                    const tick50 = document.createElement('div');
+                    tick50.className = 'dday-tick';
+                    tick50.style.left = 'calc(50% - 1px)';
+                    const tick100 = document.createElement('div');
+                    tick100.className = 'dday-tick';
+                    tick100.style.right = '0';
+
+                    const runner = document.createElement('div');
+                    runner.className = 'dday-runner';
+                    runner.style.transition = 'left 0.4s ease';
+                    runner.setAttribute('aria-hidden', 'true');
+                    // 픽셀 버섯 캔버스 (해상도 상승: 굵고 선명하게)
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 20; // 논리 픽셀
+                    canvas.height = 20;
+                    const ctx = canvas.getContext('2d');
+                    // 픽셀 아트 그리기 함수
+                    const drawPixelMushroom = (c) => {
+                        // clear
+                        c.clearRect(0,0,20,20);
+                        const fill = (x,y,w,h,color) => {
+                            ctx.fillStyle = color; ctx.fillRect(x,y,w,h);
+                        };
+                        // stem (베이지)
+                        fill(7,11,6,6,'#f4e3c3');
+                        // cap (빨강)
+                        fill(4,6,12,5,'#d9534f');
+                        fill(5,5,10,2,'#d9534f');
+                        // outline (검정)
+                        ctx.fillStyle = '#000';
+                        // 상단/측면 윤곽
+                        ctx.fillRect(5,5,10,1);
+                        ctx.fillRect(4,6,1,5);
+                        ctx.fillRect(16,6,1,5);
+                        ctx.fillRect(6,11,8,1); // 캡 하단 림
+                        // stem 윤곽
+                        ctx.fillRect(7,11,1,6);
+                        ctx.fillRect(12,11,1,6);
+                        ctx.fillRect(7,17,6,1);
+                        // dots (하양)
+                        fill(6,7,3,2,'#fff');
+                        fill(12,7,3,2,'#fff');
+                        // eyes (검정)
+                        fill(8,13,1,2,'#000');
+                        fill(11,13,1,2,'#000');
+                    };
+                    drawPixelMushroom(ctx);
+                    runner.appendChild(canvas);
+
+                    const finish = document.createElement('div');
+                    finish.className = 'dday-finish-flag';
+
+                    // 좌/우 라벨과 퍼센트 칩
+                    const leftLabel = document.createElement('div');
+                    leftLabel.className = 'dday-label left';
+                    leftLabel.textContent = 'D-100';
+                    const rightLabel = document.createElement('div');
+                    rightLabel.className = 'dday-label right';
+                    rightLabel.textContent = 'D-Day';
+                    const ddayChip = document.createElement('div');
+                    ddayChip.className = 'dday-chip';
+                    ddayChip.textContent = text;
+
+                    race.appendChild(line);
+                    race.appendChild(progress);
+                    race.appendChild(tick0);
+                    race.appendChild(tick50);
+                    race.appendChild(tick100);
+                    race.appendChild(runner);
+                    race.appendChild(finish);
+                    race.appendChild(leftLabel);
+                    race.appendChild(rightLabel);
+                    race.appendChild(ddayChip);
+                    race.dataset.initialized = 'true';
+                }
+
+                const runnerEl = race.querySelector('.dday-runner');
+                const progressEl = race.querySelector('.dday-progress');
+                const chipEl = race.querySelector('.dday-chip');
+                const rightLabelEl = race.querySelector('.dday-label.right');
+                const percent = clamped * 100;
+                // 실제 트랙 너비 기준 픽셀 위치 계산
+                const finishOffset = 0; // 끝까지 사용
+                const range = Math.max(0, race.clientWidth - finishOffset);
+                const pos = Math.round((percent / 100) * range);
+                runnerEl.style.left = `${pos}px`;
+                if (progressEl) progressEl.style.width = `${pos}px`;
+                if (chipEl) {
+                    // 칩 내용: D-Day 텍스트 유지
+                    chipEl.textContent = text;
+                    // 칩을 러너 위 중앙에 배치, 살짝 위로 스타일에서 올려둠
+                    let chipX = pos; // 중앙 정렬(translateX(-50%)) 적용됨
+                    chipEl.style.left = `${chipX}px`;
+                }
+                // D-Day 라벨은 CSS에서 right:0 고정, 줄바꿈 방지 처리
+                race.setAttribute('aria-label', `디데이 경주 진행도 ${Math.round(percent)}%`);
+            }
         }
 
         function playSound(audioElement) {
