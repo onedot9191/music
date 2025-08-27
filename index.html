@@ -12053,12 +12053,19 @@
 
         </div>
 
-        <div id="heatmap-panel" class="modal-content">
+        <div id="heatmap-group">
+            <div id="heatmap-panel" class="modal-content">
 
-            <h2 id="heatmap-title">오늘 푼 빈칸 0개</h2>
+                <h2 id="heatmap-title"><span class="heatmap-label">오늘 푼 빈칸</span> <span id="heatmap-count">0</span>개</h2>
 
-            <div id="activity-heatmap"></div>
+                <div id="activity-heatmap"></div>
+            
+            </div>
 
+            <div id="dday-panel" class="modal-content" aria-live="polite">
+                <h2 class="sr-only">디데이</h2>
+                <div id="dday"></div>
+            </div>
         </div>
 
         </div>
