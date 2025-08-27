@@ -1,5 +1,5 @@
 #overview-quiz-main #design .design-emphasis {
-  border-color: var(--accent) !important; /* 보라색 테두리 */
+  border-color: var(--accent) !important; /* 보라???�두�?*/
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
 }
 :root {
@@ -631,7 +631,7 @@ th.sub-area-cell .sub-area-input.revealed {
   box-shadow: 0 0 8px rgba(0, 255, 255, 0.5) !important;
 }
 
-/* Fix overlap and unify UI in PE > 신체활동 예시 and Physical Activity */
+/* Fix overlap and unify UI in PE > ?�체?�동 ?�시 and Physical Activity */
 #pe-quiz-main #activity-examples table,
 #physical-activity-quiz-main table {
   table-layout: fixed; /* keep wide second column for inputs */
@@ -774,9 +774,9 @@ td input.sub-step {
   background: var(--bg-light);
 }
 
-/* Ensure dashed sub-step inputs in PSR (개인적⋅사회적 책임감 지도 모형) section */
+/* Ensure dashed sub-step inputs in PSR (개인?�⋅?�회??책임�?지??모형) section */
 #psr-pe td input.sub-step,
-#psr-pe td input[placeholder="단계 설명"] {
+#psr-pe td input[placeholder="?�계 ?�명"] {
   border-style: dashed;
   border-color: var(--primary);
   background: var(--bg-light);
@@ -1088,7 +1088,7 @@ td input.activity-input:not(:first-child) {
   transition: all 0.1s ease-in-out;
 }
 #random-subject-btn {
-  background-color: #524360; /* 채도가 낮은 보라색 */
+  background-color: #524360; /* 채도가 ??? 보라??*/
 }
 
 #start-game-btn {
@@ -1122,32 +1122,45 @@ td input.activity-input:not(:first-child) {
 
 /* Activity Heatmap */
 #activity-heatmap {
+  /* Minimal, GitHub-like grid */
+  --heatmap-cell-size: 14px;
+  --heatmap-gap: 6px;
+  --heatmap-neutral: #2b233a; /* 퍼플 기운의 중립 배경 */
+  --heatmap-l1: #ffe6f1; /* 옅은 핑크 */
+  --heatmap-l2: #f5b3d9; /* 연한 핑크 */
+  --heatmap-l3: #cf7acb; /* 보랏빛 핑크 */
+  --heatmap-l4: #6f54c7; /* 진한 퍼플 */
+
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  justify-items: center;
+  grid-template-columns: repeat(7, var(--heatmap-cell-size));
+  grid-auto-rows: var(--heatmap-cell-size);
+  gap: var(--heatmap-gap);
+  justify-content: center;
   margin: 1rem auto 0;
 }
 .heatmap-cell {
-  width: 20px;
-  height: 20px;
-  background: #333;
-  border-radius: 4px;
+  width: var(--heatmap-cell-size);
+  height: var(--heatmap-cell-size);
+  background: var(--heatmap-neutral);
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.06s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
-.heatmap-cell.level-1 {
-  background: #d1f2d6;
+.heatmap-cell:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.28);
 }
-.heatmap-cell.level-2 {
-  background: #a3e4b6;
+.heatmap-cell:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
-.heatmap-cell.level-3 {
-  background: #6fcf97;
-}
-.heatmap-cell.level-4 {
-  background: #4c9f70;
-}
+.heatmap-cell.level-1 { background: var(--heatmap-l1); }
+.heatmap-cell.level-2 { background: var(--heatmap-l2); }
+.heatmap-cell.level-3 { background: var(--heatmap-l3); }
+.heatmap-cell.level-4 { background: var(--heatmap-l4); }
 .heatmap-cell.empty {
   background: transparent;
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 /* Heatmap panel placement next to settings */
@@ -1172,6 +1185,7 @@ td input.activity-input:not(:first-child) {
   font-size: 1.6rem;
   font-family: 'Noto Sans KR', sans-serif;
   word-break: keep-all;
+  color: #6f54c7; /* 퍼플/핑크 팔레트와 조화 */
 }
 
 /* Character Assistant Styles */
@@ -1730,7 +1744,7 @@ td input.activity-input:not(:first-child) {
   width: 100%;
 }
 
-/* English: 기능별 언어 지도는 항상 1열(세로) 배치 */
+/* English: 기능�??�어 지?�는 ??�� 1???�로) 배치 */
 #english-quiz-main #functional .grade-container {
   flex-direction: column;
 }
@@ -1740,14 +1754,14 @@ td input.activity-input:not(:first-child) {
   min-width: 100%;
 }
 
-/* English: 요소별 언어 지도 - 첫 블록(Culture)은 단독 행으로 분리 배치 */
+/* English: ?�소�??�어 지??- �?블록(Culture)?� ?�독 ?�으�?분리 배치 */
 #english-quiz-main #element .grade-container > div:first-child {
   flex: none;
   width: 100%;
   min-width: 100%;
 }
 
-/* English: 활동 중심 수업 - 'Chant & Song'은 단독 행으로 분리 배치 */
+/* English: ?�동 중심 ?�업 - 'Chant & Song'?� ?�독 ?�으�?분리 배치 */
 #english-quiz-main #activity .grade-container > div:first-child {
   flex: none;
   width: 100%;
@@ -1842,8 +1856,8 @@ td input.activity-input:not(:first-child) {
   padding-left: 1rem;
 }
 
-/* English: Full redesign for readability & hierarchy (전면 개편) */
-/* 1) 리스트 기본값 리셋 및 간격 확장 */
+/* English: Full redesign for readability & hierarchy (?�면 개편) */
+/* 1) 리스??기본�?리셋 �?간격 ?�장 */
 #english-quiz-main .assessment-list,
 #english-quiz-main .sub-list {
   list-style: none;
@@ -1857,14 +1871,14 @@ td input.activity-input:not(:first-child) {
   gap: 1.4rem;
 }
 
-/* 기존 하단 분리선 제거 (카드화로 대체) */
+/* 기존 ?�단 분리???�거 (카드?�로 ?��? */
 #english-quiz-main .assessment-list > li:not(:last-child) {
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
-/* 2) 최상위 항목: 카드 형태 + 좌측 가이드 라인 */
+/* 2) 최상????��: 카드 ?�태 + 좌측 가?�드 ?�인 */
 #english-quiz-main .assessment-list > li {
   background: var(--bg-light);
   border: 2px solid var(--secondary);
@@ -1873,11 +1887,11 @@ td input.activity-input:not(:first-child) {
   padding: 1.2rem 1.2rem 1.2rem 1.4rem;
 }
 
-/* 3) 하위 항목: 좌측 가이드 + 들여쓰기 확장 */
+/* 3) ?�위 ??��: 좌측 가?�드 + ?�여?�기 ?�장 */
 #english-quiz-main .sub-list {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem; /* 하위 항목 세로 간격 확대 */
+  gap: 1.2rem; /* ?�위 ??�� ?�로 간격 ?��? */
   border-left: 2px dashed var(--secondary);
   padding-left: 1.2rem;
 }
@@ -1890,45 +1904,45 @@ td input.activity-input:not(:first-child) {
   padding-left: 1.2rem;
 }
 
-/* 4) 문장/인라인 그룹 간격 및 행간 확장 */
+/* 4) 문장/?�라??그룹 간격 �??�간 ?�장 */
 #english-quiz-main li,
 #english-quiz-main .inline-item {
   line-height: 1.9;
 }
 #english-quiz-main .inline-item {
-  gap: 1.4rem; /* 가로 간격 증가 */
-  row-gap: 1.6rem; /* 줄바꿈 시 세로 간격 추가 확대 */
+  gap: 1.4rem; /* 가�?간격 증�? */
+  row-gap: 1.6rem; /* 줄바�????�로 간격 추�? ?��? */
 }
 
-/* 5) 입력칸(빈칸) 재설계: 여백/줄간격/정렬 개선, 위계별 크기 차등 */
+/* 5) ?�력�?빈칸) ?�설�? ?�백/줄간�??�렬 개선, ?�계�??�기 차등 */
 #english-quiz-main input.fit-answer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.5rem 0.8rem;
-  margin: 0.5rem 0.6rem; /* 위·아래 여백 추가 확대 */
-  padding-bottom: 0.6rem; /* 내부 아래 여백 확보(배지 겹침 방지) */
+  margin: 0.5rem 0.6rem; /* ?�·아???�백 추�? ?��? */
+  padding-bottom: 0.6rem; /* ?��? ?�래 ?�백 ?�보(배�? 겹침 방�?) */
   line-height: 1.9;
   background: var(--bg-light);
   border-radius: 8px;
 }
 
-/* → 순서 표기 가독성: 화살표와 좌우 항목은 줄바꿈 없이 붙여서 표시 */
+/* ???�서 ?�기 가?�성: ?�살?��? 좌우 ??��?� 줄바�??�이 붙여???�시 */
 #english-quiz-main .arrow-seq {
   white-space: nowrap;
 }
 
-/* 줄바꿈 시에도 화살표가 윗줄 끝에 남지 않도록 →를 앞 항목과 묶어줌 */
+/* 줄바�??�에???�살?��? ?�줄 ?�에 ?��? ?�도�??��? ????���?묶어�?*/
 #english-quiz-main .arrow-keep {
   white-space: nowrap;
 }
 
-/* 미니 정답 배지 사용 시 입력칸 내부 공간 확보 */
+/* 미니 ?�답 배�? ?�용 ???�력�??��? 공간 ?�보 */
 #english-quiz-main .reveal-wrapper input.fit-answer {
-  padding-right: 2.6rem; /* 배지 폭만큼 우측 여유 */
+  padding-right: 2.6rem; /* 배�? ??��???�측 ?�유 */
 }
 
-/* 레벨별 차등: 상위일수록 크게/두껍게/넓게 */
+/* ?�벨�?차등: ?�위?�수�??�게/?�껍�??�게 */
 #english-quiz-main .assessment-list > li input.fit-answer {
   font-size: 1.6rem;
   font-weight: 800;
@@ -1953,19 +1967,19 @@ td input.activity-input:not(:first-child) {
 
 /* Creative subject readability tweaks */
 
-/* English: 기본이론 계층 가독성 강화 (도트 마커 제외) */
-/* 레벨별 세로 가이드 굵기 차등 */
+/* English: 기본?�론 계층 가?�성 강화 (?�트 마커 ?�외) */
+/* ?�벨�??�로 가?�드 굵기 차등 */
 #english-quiz-main .sub-list {
-  border-left-width: 3px; /* 1차 레벨 */
+  border-left-width: 3px; /* 1�??�벨 */
 }
 #english-quiz-main .sub-list .sub-list {
-  border-left-width: 2px; /* 2차 레벨 */
+  border-left-width: 2px; /* 2�??�벨 */
 }
 #english-quiz-main .sub-list .sub-list .sub-list {
-  border-left-width: 1px; /* 3차 레벨 */
+  border-left-width: 1px; /* 3�??�벨 */
 }
 
-/* 들여쓰기 확대: 상위에서 하위로 갈수록 여백 누적 */
+/* ?�여?�기 ?��?: ?�위?�서 ?�위�?갈수�??�백 ?�적 */
 #english-quiz-main .assessment-list > li > .sub-list {
   padding-left: 1.4rem;
 }
@@ -1973,7 +1987,7 @@ td input.activity-input:not(:first-child) {
   padding-left: 1.2rem;
 }
 
-/* 문장+빈칸 흐름 정돈: 기준선 정렬 */
+/* 문장+빈칸 ?�름 ?�돈: 기�????�렬 */
 #english-quiz-main .inline-item {
   align-items: baseline;
 }
@@ -2037,7 +2051,7 @@ td input.activity-input:not(:first-child) {
   color: #ff5555;
 }
 
-/* 과학 섹션 주제 제목 크기 상향 - # 표기가 있는 것만 */
+/* 과학 ?�션 주제 ?�목 ?�기 ?�향 - # ?�기가 ?�는 것만 */
 #science-std-quiz-main .outline-title[data-is-topic="true"] {
   font-size: 2.6rem;
 }
@@ -2074,16 +2088,16 @@ td input.activity-input:not(:first-child) {
 }
 #creative-quiz-main .creative-question {
   display: block;
-  line-height: 2.2; /* 줄 간격 확대 */
+  line-height: 2.2; /* �?간격 ?��? */
   font-size: 2rem;
   font-weight: 500;
   overflow-wrap: anywhere; /* handle long questions gracefully */
-  padding: 2.5rem; /* 상하좌우 패딩 추가 */
-  background: var(--bg-light); /* 배경색 추가 */
+  padding: 2.5rem; /* ?�하좌우 ?�딩 추�? */
+  background: var(--bg-light); /* 배경??추�? */
   border: 2px solid var(--secondary);
-  border-radius: 12px; /* 모서리 둥글게 */
-  margin-bottom: 2.5rem; /* 문단 간 간격 조정 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 12px; /* 모서�??��?�?*/
+  margin-bottom: 2.5rem; /* 문단 �?간격 조정 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림???�과 */
   position: relative;
 }
 #overview-quiz-main .overview-question,
@@ -2096,28 +2110,28 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question,
 #math-course-quiz-main .overview-question {
   display: block;
-  line-height: 2.2; /* 줄 간격 확대 */
+  line-height: 2.2; /* �?간격 ?��? */
   font-size: 2rem;
   font-weight: 500;
   overflow-wrap: anywhere; /* handle long questions gracefully */
-  padding: 2.5rem; /* 상하좌우 패딩 추가 */
-  background: var(--bg-light); /* 배경색 추가 */
+  padding: 2.5rem; /* ?�하좌우 ?�딩 추�? */
+  background: var(--bg-light); /* 배경??추�? */
   border: 2px solid var(--secondary);
-  border-radius: 12px; /* 모서리 둥글게 */
-  margin-bottom: 2.5rem; /* 문단 간 간격 조정 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 12px; /* 모서�??��?�?*/
+  margin-bottom: 2.5rem; /* 문단 �?간격 조정 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림???�과 */
   position: relative;
 }
 
-/* III > 2. 초등학교: 상위 숫자항목 강조 */
+/* III > 2. 초등?�교: ?�위 ?�자??�� 강조 */
 #overview-quiz-main #standard .standard-emphasis,
 #math-core-idea .standard-emphasis,
 #math-teaching-competency .standard-emphasis {
-  border-color: var(--accent) !important; /* 보라색 테두리 */
+  border-color: var(--accent) !important; /* 보라???�두�?*/
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
 }
 #creative-quiz-main .creative-question:last-child {
-  margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
+  margin-bottom: 1rem; /* 마�?�?문단???�단 ?�백 조정 */
 }
 #overview-quiz-main .overview-question:last-child,
 #integrated-course-quiz-main .overview-question:last-child,
@@ -2128,10 +2142,10 @@ td input.activity-input:not(:first-child) {
 #math-operation-quiz-main .overview-question:last-child,
 #practical-quiz-main .overview-question:last-child,
 #math-course-quiz-main .overview-question:last-child {
-  margin-bottom: 1rem; /* 마지막 문단의 하단 여백 조정 */
+  margin-bottom: 1rem; /* 마�?�?문단???�단 ?�백 조정 */
 }
 
-/* Overview (총론) 계층 들여쓰기 */
+/* Overview (총론) 계층 ?�여?�기 */
 #overview-quiz-main .overview-question.overview-top {
   margin-left: 0;
 }
@@ -2141,7 +2155,7 @@ td input.activity-input:not(:first-child) {
 
 
 
-/* 모바일 반응형 디자인 개선 */
+/* 모바??반응???�자??개선 */
 @media (max-width: 768px) {
   #creative-quiz-main .creative-question,
   #overview-quiz-main .overview-question,
@@ -2153,9 +2167,9 @@ td input.activity-input:not(:first-child) {
   #math-operation-quiz-main .overview-question,
   #practical-quiz-main .overview-question,
   #math-course-quiz-main .overview-question {
-    padding: 2rem 1.5rem; /* 모바일에서 패딩 조정 */
-    font-size: 1.7rem; /* 모바일에서 폰트 크기 조정 */
-    line-height: 2; /* 줄 간격 조정 */
+    padding: 2rem 1.5rem; /* 모바?�에???�딩 조정 */
+    font-size: 1.7rem; /* 모바?�에???�트 ?�기 조정 */
+    line-height: 2; /* �?간격 조정 */
   }
   
   #creative-quiz-main .creative-question input,
@@ -2168,24 +2182,24 @@ td input.activity-input:not(:first-child) {
   #math-operation-quiz-main .overview-question input,
   #practical-quiz-main .overview-question input,
   #math-course-quiz-main .overview-question input {
-    font-size: 1.6rem; /* 모바일에서 입력 필드 폰트 크기 */
-    padding: 0.5rem 0.8rem; /* 모바일에서 패딩 조정 */
-    margin: 0.2rem 0.4rem; /* 모바일에서 마진 조정 */
-    min-width: 8ch; /* 모바일에서 최소 너비 조정 */
+    font-size: 1.6rem; /* 모바?�에???�력 ?�드 ?�트 ?�기 */
+    padding: 0.5rem 0.8rem; /* 모바?�에???�딩 조정 */
+    margin: 0.2rem 0.4rem; /* 모바?�에??마진 조정 */
+    min-width: 8ch; /* 모바?�에??최소 ?�비 조정 */
   }
   
-  /* 창체 영역과 활동 모바일 최적화 */
+  /* 창체 ?�역�??�동 모바??최적??*/
   #creative-quiz-main .assessment-list {
-    grid-template-columns: 1fr; /* 모바일에서 단일 열 */
+    grid-template-columns: 1fr; /* 모바?�에???�일 ??*/
     gap: 1.5rem;
   }
   
   #creative-quiz-main .sub-list {
-    grid-template-columns: 1fr; /* 모바일에서 하위 목록도 단일 열 */
+    grid-template-columns: 1fr; /* 모바?�에???�위 목록???�일 ??*/
     gap: 0.5rem;
   }
   
-  /* 모바일에서 입력 필드 크기 조정 */
+  /* 모바?�에???�력 ?�드 ?�기 조정 */
   #creative-quiz-main .assessment-list > li > input.fit-answer:first-child {
     min-width: 200px;
     font-size: 1.6rem;
@@ -2212,18 +2226,18 @@ td input.activity-input:not(:first-child) {
 }
 #creative-quiz-main .creative-question input {
   font-size: 1.9rem;
-  padding: 0.6rem 1rem; /* 패딩 확대 */
-  margin: 0 0.6rem; /* 좌우 마진 확대 */
-  border: 2px solid var(--secondary); /* 테두리 강화 */
-  border-radius: 8px; /* 모서리 둥글게 */
-  background: var(--bg-light); /* 테마 호환 배경색 */
-  color: var(--text-light); /* 테마 호환 텍스트 색상 */
+  padding: 0.6rem 1rem; /* ?�딩 ?��? */
+  margin: 0 0.6rem; /* 좌우 마진 ?��? */
+  border: 2px solid var(--secondary); /* ?�두�?강화 */
+  border-radius: 8px; /* 모서�??��?�?*/
+  background: var(--bg-light); /* ?�마 ?�환 배경??*/
+  color: var(--text-light); /* ?�마 ?�환 ?�스???�상 */
   text-align: center;
   width: auto;
-  min-width: 10ch; /* 최소 너비 확대 */
+  min-width: 10ch; /* 최소 ?�비 ?��? */
   max-width: 100%;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 내부 그림자 */
-  transition: all 0.2s ease; /* 부드러운 전환 효과 */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 그림??*/
+  transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
 }
 #overview-quiz-main .overview-question input,
 #integrated-course-quiz-main .overview-question input,
@@ -2235,38 +2249,38 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input,
 #math-course-quiz-main .overview-question input {
   font-size: 1.9rem;
-  padding: 0.6rem 1rem; /* 패딩 확대 */
-  margin: 0 0.6rem; /* 좌우 마진 확대 */
-  border: 2px solid var(--secondary); /* 테두리 강화 */
-  border-radius: 8px; /* 모서리 둥글게 */
-  background: var(--bg-light); /* 테마 호환 배경색 */
-  color: var(--text-light); /* 테마 호환 텍스트 색상 */
+  padding: 0.6rem 1rem; /* ?�딩 ?��? */
+  margin: 0 0.6rem; /* 좌우 마진 ?��? */
+  border: 2px solid var(--secondary); /* ?�두�?강화 */
+  border-radius: 8px; /* 모서�??��?�?*/
+  background: var(--bg-light); /* ?�마 ?�환 배경??*/
+  color: var(--text-light); /* ?�마 ?�환 ?�스???�상 */
   text-align: center;
   width: auto;
-  min-width: 10ch; /* 최소 너비 확대 */
+  min-width: 10ch; /* 최소 ?�비 ?��? */
   max-width: 100%;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 내부 그림자 */
-  transition: all 0.2s ease; /* 부드러운 전환 효과 */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 그림??*/
+  transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
 }
 
 #social-course-quiz-main .overview-question input {
   min-width: 5ch;
 }
 
-/* 실과 모형: 인라인 빈칸과 카드 크기 축소 (총론 대비) */
+/* ?�과 모형: ?�라??빈칸�?카드 ?�기 축소 (총론 ?��? */
 #practical-quiz-main .overview-question {
-  padding: 1.6rem; /* 카드 패딩 축소 */
-  font-size: 1.7rem; /* 문장 폰트 축소 */
-  line-height: 2; /* 줄 간격 약간 축소 */
+  padding: 1.6rem; /* 카드 ?�딩 축소 */
+  font-size: 1.7rem; /* 문장 ?�트 축소 */
+  line-height: 2; /* �?간격 ?�간 축소 */
 }
 #practical-quiz-main .overview-question input {
-  font-size: 1.6rem; /* 인풋 폰트 축소 */
-  padding: 0.4rem 0.7rem; /* 인풋 패딩 축소 */
-  min-width: 5ch; /* 살짝 여유 */
+  font-size: 1.6rem; /* ?�풋 ?�트 축소 */
+  padding: 0.4rem 0.7rem; /* ?�풋 ?�딩 축소 */
+  min-width: 5ch; /* ?�짝 ?�유 */
   margin: 0 0.4rem; /* 좌우 마진 축소 */
 }
 
-/* 기술적 문제해결과정 세부 내용: 2열 레이아웃 */
+/* 기술??문제?�결과정 ?��? ?�용: 2???�이?�웃 */
 #practical-quiz-main #technical-problem-solving-detail td {
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
@@ -2274,20 +2288,20 @@ td input.activity-input:not(:first-child) {
 }
 @media (max-width: 768px) {
   #practical-quiz-main #technical-problem-solving-detail td {
-    grid-template-columns: 1fr; /* 모바일 1열 */
+    grid-template-columns: 1fr; /* 모바??1??*/
   }
 }
 
-/* 문장형 항목의 줄바꿈과 밀도 개선 */
+/* 문장????��??줄바꿈과 밀??개선 */
 #practical-quiz-main #technical-problem-solving-detail .overview-question {
   display: inline-flex;
   align-items: baseline;
   gap: .6rem;
   flex-wrap: wrap;
-  margin: 0; /* td gap 사용 */
+  margin: 0; /* td gap ?�용 */
 }
 
-/* 짧은/중간 길이 인풋 폭 축소 옵션 */
+/* 짧�?/중간 길이 ?�풋 ??축소 ?�션 */
 #practical-quiz-main #technical-problem-solving-detail .overview-question input.fit-sm {
   width: auto;
   min-width: 5ch;
@@ -2299,14 +2313,14 @@ td input.activity-input:not(:first-child) {
 
 @media (max-width: 768px) {
   #practical-quiz-main .overview-question {
-    padding: 1.2rem; /* 모바일에서 더 컴팩트 */
+    padding: 1.2rem; /* 모바?�에????컴팩??*/
     font-size: 1.55rem;
     line-height: 1.9;
   }
   #practical-quiz-main .overview-question input {
     font-size: 1.45rem;
     padding: 0.35rem 0.6rem;
-    min-width: 4ch; /* 모바일도 약간 여유 */
+    min-width: 4ch; /* 모바?�도 ?�간 ?�유 */
     margin: 0 0.35rem;
   }
 }
@@ -2314,9 +2328,9 @@ td input.activity-input:not(:first-child) {
 #creative-quiz-main .creative-question input:focus {
   outline: none;
   border-color: var(--primary);
-  background: var(--bg-light); /* 포커스 시에도 테마 배경색 유지 */
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 외부 글로우 효과 */
-  transform: translateY(-1px); /* 미세한 상승 효과 */
+  background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 글로우 ?�과 */
+  transform: translateY(-1px); /* 미세???�승 ?�과 */
 }
 #overview-quiz-main .overview-question input:focus,
 #integrated-course-quiz-main .overview-question input:focus,
@@ -2329,15 +2343,15 @@ td input.activity-input:not(:first-child) {
 #math-course-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
-  background: var(--bg-light); /* 포커스 시에도 테마 배경색 유지 */
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 외부 글로우 효과 */
-  transform: translateY(-1px); /* 미세한 상승 효과 */
+  background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 글로우 ?�과 */
+  transform: translateY(-1px); /* 미세???�승 ?�과 */
 }
 
 #creative-quiz-main .creative-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
-  background: rgba(46, 204, 113, 0.1); /* 성공 배경색 */
+  background: rgba(46, 204, 113, 0.1); /* ?�공 배경??*/
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 #overview-quiz-main .overview-question input.correct,
@@ -2351,14 +2365,14 @@ td input.activity-input:not(:first-child) {
 #math-course-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
-  background: rgba(46, 204, 113, 0.1); /* 성공 배경색 */
+  background: rgba(46, 204, 113, 0.1); /* ?�공 배경??*/
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
 #creative-quiz-main .creative-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
-  background: rgba(231, 76, 60, 0.1); /* 오답 배경색 */
+  background: rgba(231, 76, 60, 0.1); /* ?�답 배경??*/
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 #overview-quiz-main .overview-question input.incorrect,
@@ -2372,14 +2386,14 @@ td input.activity-input:not(:first-child) {
 #math-course-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
-  background: rgba(231, 76, 60, 0.1); /* 오답 배경색 */
+  background: rgba(231, 76, 60, 0.1); /* ?�답 배경??*/
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 
 #creative-quiz-main .creative-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
-  background: rgba(243, 156, 18, 0.1); /* 재시도 배경색 */
+  background: rgba(243, 156, 18, 0.1); /* ?�시??배경??*/
   box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2);
 }
 #overview-quiz-main .overview-question input.retrying,
@@ -2398,7 +2412,7 @@ td input.activity-input:not(:first-child) {
 #creative-quiz-main .creative-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
-  background: rgba(142, 68, 173, 0.1); /* 정답 공개 배경색 */
+  background: rgba(142, 68, 173, 0.1); /* ?�답 공개 배경??*/
   box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
 }
 #overview-quiz-main .overview-question input.revealed,
@@ -2448,7 +2462,7 @@ td input.activity-input:not(:first-child) {
   padding: 1rem;
 }
 
-/* Art Basic (미술 기본이론) readability + input width normalization */
+/* Art Basic (미술 기본?�론) readability + input width normalization */
 #art-basic-quiz-main .tabs {
   margin-bottom: 1.6rem;
 }
@@ -2485,8 +2499,8 @@ td input.activity-input:not(:first-child) {
   flex-wrap: nowrap;
 }
 
-/* 창체 영역과 활동 섹션의 입력 필드 최적화 */
-/* 2차 레벨: 중간 카테고리 입력 필드 */
+/* 창체 ?�역�??�동 ?�션???�력 ?�드 최적??*/
+/* 2�??�벨: 중간 카테고리 ?�력 ?�드 */
 #creative-quiz-main .assessment-list > li > ul > li > input.fit-answer:first-child {
   width: 180px !important;
   min-width: 180px !important;
@@ -2504,7 +2518,7 @@ td input.activity-input:not(:first-child) {
   transition: all 0.2s ease;
 }
 
-/* 3차 레벨: 세부 항목 입력 필드 */
+/* 3�??�벨: ?��? ??�� ?�력 ?�드 */
 #creative-quiz-main .assessment-list input.fit-answer {
   width: auto !important;
   min-width: 120px !important;
@@ -2549,13 +2563,13 @@ td input.activity-input:not(:first-child) {
   min-width: 20ch !important;
 }
 
-/* 창체 영역과 활동 섹션의 다열 카드 레이아웃 */
+/* 창체 ?�역�??�동 ?�션???�열 카드 ?�이?�웃 */
 #creative-quiz-main .assessment-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3개 영역을 동일한 비율로 */
+  grid-template-columns: repeat(3, 1fr); /* 3�??�역???�일??비율�?*/
   gap: 1.5rem;
   margin: 2rem 0;
-  align-items: start; /* 높이가 다를 때 상단 정렬 */
+  align-items: start; /* ?�이가 ?��? ???�단 ?�렬 */
 }
 
 #creative-quiz-main .assessment-list > li {
@@ -2601,7 +2615,7 @@ td input.activity-input:not(:first-child) {
   min-width: 250px;
 }
 
-/* 창체 하위 목록 스타일 */
+/* 창체 ?�위 목록 ?��???*/
 #creative-quiz-main .sub-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -2611,7 +2625,7 @@ td input.activity-input:not(:first-child) {
   align-items: start;
 }
 
-/* 중간 카테고리 제목 (자율활동, 자치활동) - 별도 배경 */
+/* 중간 카테고리 ?�목 (?�율?�동, ?�치?�동) - 별도 배경 */
 #creative-quiz-main .assessment-list > li > ul > li > input.fit-answer:first-child {
   background: var(--accent);
   color: var(--text-light);
@@ -2626,7 +2640,7 @@ td input.activity-input:not(:first-child) {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* 세부 항목들의 그룹 배경 (주제탐구, 적응활동, 봉사활동이 함께) */
+/* ?��? ??��?�의 그룹 배경 (주제?�구, ?�응?�동, 봉사?�동???�께) */
 #creative-quiz-main .assessment-list > li > ul > li > ul.sub-list {
   background: var(--bg-dark);
   border: 1px solid var(--secondary);
@@ -2642,15 +2656,15 @@ td input.activity-input:not(:first-child) {
   box-shadow: 0 2px 6px rgba(233, 69, 96, 0.2);
 }
 
-/* 상위 카테고리 그룹 (자율활동, 자치활동 전체 그룹) */
+/* ?�위 카테고리 그룹 (?�율?�동, ?�치?�동 ?�체 그룹) */
 #creative-quiz-main .assessment-list > li > ul > li {
-  background: transparent; /* 상위 그룹은 배경 없음 */
+  background: transparent; /* ?�위 그룹?� 배경 ?�음 */
   border: none;
   padding: 0;
-  margin-bottom: 2rem; /* 자율활동과 자치활동 사이 간격 */
+  margin-bottom: 2rem; /* ?�율?�동�??�치?�동 ?�이 간격 */
 }
 
-/* 세부 항목들의 컨테이너 */
+/* ?��? ??��?�의 컨테?�너 */
 #creative-quiz-main .sub-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -2660,13 +2674,13 @@ td input.activity-input:not(:first-child) {
   align-items: start;
 }
 
-/* 세부 항목들 (주제탐구활동, 적응활동 등) - 개별 배경 제거 */
+/* ?��? ??��??(주제?�구?�동, ?�응?�동 ?? - 개별 배경 ?�거 */
 #creative-quiz-main .sub-list .inline-item {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  background: transparent; /* 배경 제거 */
-  border: none; /* 테두리 제거 */
+  background: transparent; /* 배경 ?�거 */
+  border: none; /* ?�두�??�거 */
   border-radius: 0;
   padding: 0.5rem;
   min-height: auto;
@@ -2675,7 +2689,7 @@ td input.activity-input:not(:first-child) {
   justify-content: flex-start;
 }
 
-/* 개별 항목 호버 효과 제거 - 그룹 단위로만 호버 */
+/* 개별 ??�� ?�버 ?�과 ?�거 - 그룹 ?�위로만 ?�버 */
 
 #creative-quiz-main .sub-list .inline-item input.fit-answer {
   width: 100% !important;
@@ -2700,7 +2714,7 @@ td input.activity-input:not(:first-child) {
   outline: none;
 }
 
-/* 예시 텍스트 스타일 */
+/* ?�시 ?�스???��???*/
 #creative-quiz-main .example-text {
   font-size: 1.2rem;
   color: var(--text-dark);
@@ -2812,11 +2826,11 @@ td input.activity-input:not(:first-child) {
   color: var(--text-dark);
   border-radius: 4px;
   cursor: pointer;
-  display: none; /* 기본 숨김 */
+  display: none; /* 기본 ?��? */
   z-index: 2;
 }
 .reveal-wrapper > input.incorrect + .mini-reveal-btn {
-  display: inline-block; /* 2차 오답(빨간 테두리)일 때만 노출 */
+  display: inline-block; /* 2�??�답(빨간 ?�두�????�만 ?�출 */
 }
 .mini-reveal-btn:hover {
   background: var(--secondary);
@@ -2825,10 +2839,10 @@ td input.activity-input:not(:first-child) {
 
 /* Practical model title modal removed */
 
-/* 태블릿 반응형 (768px - 1024px) */
+/* ?�블�?반응??(768px - 1024px) */
 @media (max-width: 1024px) and (min-width: 769px) {
   #creative-quiz-main .assessment-list {
-    grid-template-columns: repeat(2, 1fr); /* 태블릿에서 2열 */
+    grid-template-columns: repeat(2, 1fr); /* ?�블릿에??2??*/
     gap: 1.5rem;
   }
   
@@ -2840,10 +2854,10 @@ td input.activity-input:not(:first-child) {
 
 @media (max-width: 520px) {
   #integrated-model-quiz-main #integrated-all td {
-    grid-template-columns: 1fr; /* 작은 화면에서는 1열 */
+    grid-template-columns: 1fr; /* ?��? ?�면?�서??1??*/
   }
   
-  /* Math Operation 모바일 최적화 */
+  /* Math Operation 모바??최적??*/
   #math-operation-quiz-main .tabs {
     flex-direction: column;
     gap: 0.5rem;
@@ -2892,7 +2906,7 @@ input[placeholder="세부 단계"] {
   border-style: dashed !important;
 }
 
-/* Practical: 기술적 문제해결 과정 하위 단계 칩 리스트 레이아웃 */
+/* Practical: 기술??문제?�결 과정 ?�위 ?�계 �?리스???�이?�웃 */
 #practical-quiz-main #technical-problem-solving .sub-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -2906,7 +2920,7 @@ input[placeholder="세부 단계"] {
   max-width: 100%;
 }
 
-/* Math Operation: 수와 연산 과목 스타일 */
+/* Math Operation: ?��? ?�산 과목 ?��???*/
 #math-operation-quiz-main .tabs {
   display: flex;
   gap: 1rem;
@@ -2946,4 +2960,40 @@ input[placeholder*="검사 "],
 input[placeholder*="검사" i] {
   border-width: 1px !important;
   border-style: dashed !important;
+}
+
+/* Typing particles (정답/오답 무음 파티클) */
+.typing-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: typing-pop 450ms ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes typing-pop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9) translate(0, 0); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1) translate(var(--tx), var(--ty)); }
+}
+
+/* Mini confetti (콤보 보상) */
+.confetti-piece {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: confetti-pop 600ms ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes confetti-pop {
+  0% { opacity: 0; transform: translate(-50%, -50%) translate(0, 0) rotate(0); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(var(--dr)); }
 }
