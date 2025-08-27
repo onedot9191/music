@@ -1123,8 +1123,8 @@ td input.activity-input:not(:first-child) {
 /* Activity Heatmap */
 #activity-heatmap {
   /* Minimal, GitHub-like grid */
-  --heatmap-cell-size: 14px;
-  --heatmap-gap: 6px;
+  --heatmap-cell-size: 18px;
+  --heatmap-gap: 8px;
   --heatmap-neutral: #2b233a; /* 퍼플 기운의 중립 배경 */
   --heatmap-l1: #ffe6f1; /* 옅은 핑크 */
   --heatmap-l2: #f5b3d9; /* 연한 핑크 */
@@ -1168,6 +1168,7 @@ td input.activity-input:not(:first-child) {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 #settings-panel {
   width: 600px;
@@ -1180,12 +1181,84 @@ td input.activity-input:not(:first-child) {
   text-align: center;
   flex-shrink: 0;
 }
+#heatmap-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 260px;
+}
+
+/* Responsive: stack panels and allow full width on small screens */
+@media (max-width: 900px) {
+  #settings-panel {
+    width: 100%;
+    max-width: none;
+  }
+  #heatmap-group,
+  #heatmap-panel,
+  #dday-panel {
+    max-width: none;
+    width: 100%;
+  }
+  #heatmap-panel,
+  #dday-panel {
+    box-sizing: border-box;
+  }
+  #activity-heatmap {
+    --heatmap-cell-size: 16px;
+    --heatmap-gap: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  #activity-heatmap {
+    --heatmap-cell-size: 14px;
+    --heatmap-gap: 5px;
+  }
+  #dday {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  #activity-heatmap {
+    --heatmap-cell-size: 12px;
+    --heatmap-gap: 4px;
+  }
+  #dday {
+    font-size: 1.8rem;
+  }
+}
+
+/* If screen space is insufficient, hide heatmap and D-Day to prioritize buttons */
+@media (max-width: 900px), (max-height: 750px) {
+  #heatmap-group {
+    display: none !important;
+  }
+}
+#dday-panel {
+  max-width: 260px;
+  text-align: center;
+  flex-shrink: 0;
+}
 #heatmap-panel h2 {
   margin-bottom: 1rem;
-  font-size: 1.6rem;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 2.2rem;
+  font-family: var(--font-display);
   word-break: keep-all;
-  color: #6f54c7; /* 퍼플/핑크 팔레트와 조화 */
+  color: var(--primary);
+}
+
+/* Heatmap title: emphasize label in red */
+#heatmap-panel .heatmap-label { color: var(--primary); font-weight: 700; }
+#heatmap-panel #heatmap-count { color: var(--primary); font-weight: 700; }
+
+/* D-Day display below heatmap */
+#dday {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--primary);
+  letter-spacing: 1px;
 }
 
 /* Character Assistant Styles */
