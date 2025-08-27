@@ -793,7 +793,7 @@
        }
 
        function adjustCreativeInputWidths() {
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer]')
+           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -1700,7 +1700,7 @@
                         input.disabled = true;
                         shouldAdvance = true;
                         showRevealButtonForIntegrated(input);
-                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input)) {
+                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input)) {
                         // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
                         input.value = input.dataset.answer;
                         input.disabled = true;
@@ -1798,6 +1798,11 @@
         function isInCourseSocial(el) {
             const main = el.closest('main');
             return !!main && main.id === 'social-course-quiz-main';
+        }
+
+        function isInCourseScience(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'science-course-quiz-main';
         }
 
         function isIntegratedTitle(el) {
