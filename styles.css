@@ -59,6 +59,7 @@ body {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 12rem; /* keep focused content clear of fixed header */
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Accessible skip link */
@@ -427,7 +428,7 @@ h2 {
 }
 .grade-container > div {
   flex: 1;
-  min-width: 320px;
+  min-width: 280px;
   background: var(--bg-light);
   border: 3px solid var(--primary);
   padding: 2rem;
@@ -463,8 +464,8 @@ td {
 th {
   padding-right: 1.5rem;
   color: var(--text-dark);
-  min-width: 8rem; /* Ensure header text is fully visible */
-  width: 12rem; /* Reduce header column width so inputs can expand */
+  min-width: 7rem; /* Ensure header text is fully visible */
+  width: 11rem; /* Reduce header column width so inputs can expand */
   white-space: nowrap;
 }
 
@@ -955,7 +956,7 @@ td input.activity-input:not(:first-child) {
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 #result-info p {
   font-size: 1.6rem;
@@ -1059,7 +1060,7 @@ td input.activity-input:not(:first-child) {
   font-family: 'Source Code Pro', monospace;
   font-size: 3rem;
   color: var(--text-light);
-  width: 120px;
+  width: 8ch;
   text-align: center;
 }
 .time-control-btn {
@@ -1731,6 +1732,10 @@ td input.activity-input:not(:first-child) {
   :root {
     font-size: 8px;
   }
+  /* Avoid horizontal scroll due to large fixed widths */
+  body {
+    overflow-x: hidden;
+  }
   header {
     padding: 1rem;
     flex-direction: column;
@@ -1757,7 +1762,7 @@ td input.activity-input:not(:first-child) {
     flex-wrap: wrap;
   }
   .tab {
-    flex-basis: 45%;
+    flex-basis: 48%;
   }
   .grade-container {
     flex-direction: column;
@@ -3174,4 +3179,36 @@ input[placeholder*="검사" i] {
   0% { opacity: 0; transform: translate(-50%, -50%) translate(0, 0) rotate(0); }
   15% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(var(--dr)); }
+}
+
+/* ------------------------------------------------------------
+   Mobile responsive baseline enhancements
+   - Fluid media elements
+   - Prevent iOS Safari input zoom (font-size >= 16px)
+   - Ensure comfortable touch targets for buttons/tabs
+------------------------------------------------------------ */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+iframe {
+  max-width: 100%;
+}
+
+/* iOS Safari: prevent auto-zoom on focus when font-size < 16px */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea, button {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Guarantee minimum tap target height */
+  .btn, .tab {
+    min-height: 44px;
+  }
+  /* Keep controls readable without triggering zoom */
+  input, select, textarea, button {
+    font-size: 16px;
+  }
 }
