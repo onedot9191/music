@@ -2057,8 +2057,18 @@ td input.activity-input:not(:first-child) {
   min-width: 100%;
 }
 
-/* English: ?�동 중심 ?�업 - 'Chant & Song'?� ?�독 ?�으�?분리 배치 */
+/* English: 활동 중심 수업 - 'Chant & Song'을 독립 열으로 분리 배치 */
 #english-quiz-main #activity .grade-container > div:first-child {
+  flex: none;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* English: 모든 섹션을 1열 배치로 설정 */
+#english-quiz-main .grade-container {
+  flex-direction: column;
+}
+#english-quiz-main .grade-container > div {
   flex: none;
   width: 100%;
   min-width: 100%;
