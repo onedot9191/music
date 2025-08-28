@@ -1,0 +1,294 @@
+/* === MODAL STYLES ===
+   모달창과 오버레이 관련 스타일을 정의합니다. */
+
+/* === 모달 오버레이 === */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* === 모달 컨텐츠 === */
+.modal-content {
+  background: var(--bg-light);
+  padding: var(--space-lg) var(--space-xl);
+  text-align: center;
+  border: 4px solid var(--primary);
+  box-shadow: 10px 10px 0px var(--secondary);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  width: 90%;
+  max-width: 600px;
+  border-radius: var(--space-md);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-content h2 {
+  color: var(--primary);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-display);
+}
+
+.modal-content p {
+  font-family: var(--font-base);
+  color: var(--text-light);
+  font-size: 1.8rem;
+  margin-bottom: 2.5rem;
+}
+
+/* === 가이드 모달 === */
+#guide-modal .modal-content {
+  text-align: left;
+  padding: 3rem 3.5rem;
+}
+
+#guide-modal h3 {
+  text-align: center;
+  font-family: var(--font-display);
+  color: var(--correct);
+  margin-bottom: 3rem;
+  font-size: 2.4rem;
+}
+
+.guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px dotted var(--secondary);
+}
+
+.guide-steps .guide-step:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.guide-label {
+  font-family: var(--font-display);
+  color: var(--primary);
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.guide-text {
+  font-size: 1.6rem;
+  line-height: 1.7;
+}
+
+.guide-text strong {
+  color: var(--revealed);
+  font-weight: 700;
+}
+
+#guide-modal .tip {
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--text-dark);
+  margin-top: 3rem;
+  background: var(--secondary);
+  padding: var(--space-md);
+  border-radius: var(--space-sm);
+  border: 1px solid var(--primary);
+}
+
+/* === 시작 모달 === */
+#start-modal .modal-content {
+  max-width: 800px;
+}
+
+#start-modal .topic-selector {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 900px) {
+  #start-modal .topic-selector {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+  }
+}
+
+.subject-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+}
+
+.subject-btn-group {
+  display: inline-flex;
+  gap: 0;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.subject-btn-group .subject-btn {
+  border-radius: 0;
+  margin: 0;
+}
+
+.subject-btn-group .subject-btn + .subject-btn {
+  border-left: 2px solid var(--primary);
+}
+
+.subject-break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.topic-btn,
+.subject-btn,
+.mode-btn {
+  width: 100%;
+  font-size: 1.6rem;
+  font-family: var(--font-display);
+}
+
+.subject-btn.selected,
+.mode-btn.selected,
+.topic-btn.selected {
+  background: var(--primary);
+  color: var(--text-light);
+  transform: translateY(3px);
+  box-shadow: 3px 3px 0px var(--secondary);
+}
+
+.subject-btn.is-selecting {
+  background: var(--accent);
+  transform: scale(1.1) translateY(0);
+  box-shadow: 0 0 15px var(--accent);
+  transition: all 0.1s ease-in-out;
+}
+
+#random-subject-btn {
+  background-color: #524360;
+}
+
+#start-game-btn {
+  background-color: var(--primary);
+  color: var(--text-light);
+  padding: 1.2rem 2.5rem;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  font-family: var(--font-display);
+  animation: pulse-start-btn 2s infinite;
+}
+
+/* === 시간 설정 === */
+#time-setting-display {
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  color: var(--text-light);
+  width: 8ch;
+  text-align: center;
+}
+
+.time-control-btn {
+  font-size: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-display);
+}
+
+/* === 하드코어 모드 설명 === */
+#hard-core-description p {
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+/* === 진행률 모달 === */
+#progress-modal .modal-content {
+  max-width: 500px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: var(--bg-dark);
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: var(--space-md) 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.3s ease;
+}
+
+/* === 스테이지 클리어 모달 === */
+#stage-clear-modal .modal-content {
+  background: linear-gradient(135deg, var(--bg-light), var(--secondary));
+  border: 4px solid var(--correct);
+  box-shadow: 0 0 30px var(--correct);
+}
+
+#stage-clear-modal h2 {
+  color: var(--correct);
+  text-shadow: 2px 2px 0px var(--bg-dark);
+}
+
+/* === 모달 닫기 버튼 === */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-dark);
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--primary);
+}
+
+/* === 모달 내 버튼 그룹 === */
+.modal-buttons {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.modal-buttons .btn {
+  min-width: 120px;
+}
