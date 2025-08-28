@@ -14,20 +14,6 @@
   --incorrect: #ff5733; /* Bright Orange-Red */
   --retrying: #ffc300; /* Amber/Yellow for retry */
   --revealed: #00ffff; /* Cyan */
-  
-  /* Input state colors with opacity variants */
-  --correct-bg: rgba(57, 255, 20, 0.3);
-  --correct-bg-light: rgba(57, 255, 20, 0.2);
-  --correct-shadow: rgba(57, 255, 20, 0.5);
-  --incorrect-bg: rgba(255, 87, 51, 0.3);
-  --incorrect-bg-light: rgba(255, 87, 51, 0.2);
-  --incorrect-shadow: rgba(255, 87, 51, 0.5);
-  --retrying-bg: rgba(255, 195, 0, 0.3);
-  --retrying-bg-light: rgba(255, 195, 0, 0.2);
-  --retrying-shadow: rgba(255, 195, 0, 0.5);
-  --revealed-bg: rgba(0, 255, 255, 0.3);
-  --revealed-bg-light: rgba(0, 255, 255, 0.2);
-  --revealed-shadow: rgba(0, 255, 255, 0.5);
 
   /* Typography */
   --font-base: 'Noto Sans KR', sans-serif;
@@ -248,6 +234,10 @@ header h1 {
   }
 }
 
+.slot-machine.hidden {
+  display: none;
+}
+
 /* Flash reels when the slot machine hits a win */
 .slot-machine.win {
   animation: slot-win-rotate 1s ease-out;
@@ -320,6 +310,9 @@ header h1 {
   transform: translate(5px, 5px);
   box-shadow: 0px 0px 0px var(--secondary);
 }
+.btn.hidden {
+  display: none;
+}
 .btn:disabled {
   background: #444;
   color: #888;
@@ -349,33 +342,8 @@ header h1 {
     transform: scale(1);
   }
 }
-/* 통합된 hidden 클래스 */
-.hidden,
-.slot-machine.hidden,
-.btn.hidden {
+.hidden {
   display: none;
-}
-
-/* Competency 섹션 스타일 (HTML에서 이동) */
-#competency-quiz-main .competency-tabs {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-#competency-quiz-main .competency-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-#competency-quiz-main .competency-row .row-title,
-#area-quiz-main .competency-row .row-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-right: 1rem;
 }
 
 main,
@@ -629,45 +597,45 @@ input.sub-area-input {
   transition: all 0.3s ease;
 }
 
-/* 통합된 sub-area input 상태 스타일 */
+/* Universal sub-area input state styles - CRITICAL OVERRIDE */
 .sub-area-input.correct,
 input.sub-area-input.correct,
 th.sub-area-cell .sub-area-input.correct {
-  border: 3px solid var(--correct) !important;
-  color: var(--correct) !important;
-  background: var(--correct-bg) !important;
+  border: 3px solid #39ff14 !important;
+  color: #39ff14 !important;
+  background: rgba(57, 255, 20, 0.3) !important;
   font-weight: 700 !important;
-  box-shadow: 0 0 8px var(--correct-shadow) !important;
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.5) !important;
 }
 
 .sub-area-input.incorrect,
 input.sub-area-input.incorrect,
 th.sub-area-cell .sub-area-input.incorrect {
-  border: 3px solid var(--incorrect) !important;
-  color: var(--incorrect) !important;
-  background: var(--incorrect-bg) !important;
+  border: 3px solid #ff5733 !important;
+  color: #ff5733 !important;
+  background: rgba(255, 87, 51, 0.3) !important;
   font-weight: 700 !important;
-  box-shadow: 0 0 8px var(--incorrect-shadow) !important;
+  box-shadow: 0 0 8px rgba(255, 87, 51, 0.5) !important;
 }
 
 .sub-area-input.retrying,
 input.sub-area-input.retrying,
 th.sub-area-cell .sub-area-input.retrying {
-  border: 3px solid var(--retrying) !important;
-  color: var(--retrying) !important;
-  background: var(--retrying-bg) !important;
+  border: 3px solid #ffc300 !important;
+  color: #ffc300 !important;
+  background: rgba(255, 195, 0, 0.3) !important;
   font-weight: 700 !important;
-  box-shadow: 0 0 8px var(--retrying-shadow) !important;
+  box-shadow: 0 0 8px rgba(255, 195, 0, 0.5) !important;
 }
 
 .sub-area-input.revealed,
 input.sub-area-input.revealed,
 th.sub-area-cell .sub-area-input.revealed {
-  border: 3px solid var(--revealed) !important;
-  color: var(--revealed) !important;
-  background: var(--revealed-bg) !important;
+  border: 3px solid #00ffff !important;
+  color: #00ffff !important;
+  background: rgba(0, 255, 255, 0.3) !important;
   font-weight: 700 !important;
-  box-shadow: 0 0 8px var(--revealed-shadow) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5) !important;
 }
 
 /* Fix overlap and unify UI in PE > ?�체?�동 ?�시 and Physical Activity */
@@ -716,22 +684,34 @@ th.sub-area-cell .sub-area-input.revealed {
   transition: all 0.2s ease; /* match other inputs */
 }
 /* Physical activity sections use consistent base styling */
-/* PE-specific sub-area inputs - 더 연한 배경 사용 */
+/* Ensure state colors are clearly visible for sub-area inputs - High specificity */
 #pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.correct,
 #physical-activity-quiz-main th.sub-area-cell input.sub-area-input.correct {
-  background: var(--correct-bg-light) !important;
+  border-color: var(--correct) !important;
+  color: var(--correct) !important;
+  background: rgba(57, 255, 20, 0.2) !important;
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.3) !important;
 }
 #pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.incorrect,
 #physical-activity-quiz-main th.sub-area-cell input.sub-area-input.incorrect {
-  background: var(--incorrect-bg-light) !important;
+  border-color: var(--incorrect) !important;
+  color: var(--incorrect) !important;
+  background: rgba(255, 87, 51, 0.2) !important;
+  box-shadow: 0 0 8px rgba(255, 87, 51, 0.3) !important;
 }
 #pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.retrying,
 #physical-activity-quiz-main th.sub-area-cell input.sub-area-input.retrying {
-  background: var(--retrying-bg-light) !important;
+  border-color: var(--retrying) !important;
+  color: var(--retrying) !important;
+  background: rgba(255, 195, 0, 0.2) !important;
+  box-shadow: 0 0 8px rgba(255, 195, 0, 0.3) !important;
 }
 #pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.revealed,
 #physical-activity-quiz-main th.sub-area-cell input.sub-area-input.revealed {
-  background: var(--revealed-bg-light) !important;
+  border-color: var(--revealed) !important;
+  color: var(--revealed) !important;
+  background: rgba(0, 255, 255, 0.2) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3) !important;
 }
 
 td input.activity-input {
@@ -2549,22 +2529,46 @@ td input.activity-input:not(:first-child) {
   }
 
 }
-/* 공통 question input 스타일 */
-.creative-question input,
-.overview-question input {
+#creative-quiz-main .creative-question input {
   font-size: 1.9rem;
-  padding: 0.6rem 1rem;
-  margin: 0 0.6rem;
-  border: 2px solid var(--secondary);
-  border-radius: 8px;
-  background: var(--bg-light);
-  color: var(--text-light);
+  padding: 0.6rem 1rem; /* ?�딩 ?��? */
+  margin: 0 0.6rem; /* 좌우 마진 ?��? */
+  border: 2px solid var(--secondary); /* ?�두�?강화 */
+  border-radius: 8px; /* 모서�??��?�?*/
+  background: var(--bg-light); /* ?�마 ?�환 배경??*/
+  color: var(--text-light); /* ?�마 ?�환 ?�스???�상 */
   text-align: center;
   width: auto;
-  min-width: 10ch;
+  min-width: 10ch; /* 최소 ?�비 ?��? */
   max-width: 100%;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 그림??*/
+  transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
+}
+#overview-quiz-main .overview-question input,
+#integrated-course-quiz-main .overview-question input,
+#social-course-quiz-main .overview-question input,
+#moral-course-quiz-main .overview-question input,
+#science-course-quiz-main .overview-question input,
+#science-std-quiz-main .overview-question input,
+#practical-std-quiz-main .overview-question input,
+#math-operation-quiz-main .overview-question input,
+#practical-quiz-main .overview-question input,
+#math-course-quiz-main .overview-question input,
+#korean-model-quiz-main .overview-question input,
+#pe-model-quiz-main .overview-question input {
+  font-size: 1.9rem;
+  padding: 0.6rem 1rem; /* ?�딩 ?��? */
+  margin: 0 0.6rem; /* 좌우 마진 ?��? */
+  border: 2px solid var(--secondary); /* ?�두�?강화 */
+  border-radius: 8px; /* 모서�??��?�?*/
+  background: var(--bg-light); /* ?�마 ?�환 배경??*/
+  color: var(--text-light); /* ?�마 ?�환 ?�스???�상 */
+  text-align: center;
+  width: auto;
+  min-width: 10ch; /* 최소 ?�비 ?��? */
+  max-width: 100%;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 그림??*/
+  transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
 }
 
 #social-course-quiz-main .overview-question input {
@@ -2629,50 +2633,122 @@ td input.activity-input:not(:first-child) {
   }
 }
 
-/* 공통 question input focus 스타일 */
-.creative-question input:focus,
-.overview-question input:focus {
+#creative-quiz-main .creative-question input:focus {
   outline: none;
   border-color: var(--primary);
-  background: var(--bg-light);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
+  background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 글로우 ?�과 */
+  transform: translateY(-1px); /* 미세???�승 ?�과 */
+}
+#overview-quiz-main .overview-question input:focus,
+#integrated-course-quiz-main .overview-question input:focus,
+#social-course-quiz-main .overview-question input:focus,
+#moral-course-quiz-main .overview-question input:focus,
+#science-course-quiz-main .overview-question input:focus,
+#science-std-quiz-main .overview-question input:focus,
+#practical-std-quiz-main .overview-question input:focus,
+#math-operation-quiz-main .overview-question input:focus,
+#practical-quiz-main .overview-question input:focus,
+#math-course-quiz-main .overview-question input:focus,
+#korean-model-quiz-main .overview-question input:focus,
+#pe-model-quiz-main .overview-question input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 글로우 ?�과 */
+  transform: translateY(-1px); /* 미세???�승 ?�과 */
 }
 
-/* 공통 question input correct 상태 */
-.creative-question input.correct,
-.overview-question input.correct {
+#creative-quiz-main .creative-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
-  background: rgba(46, 204, 113, 0.1);
+  background: rgba(46, 204, 113, 0.1); /* ?�공 배경??*/
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+#overview-quiz-main .overview-question input.correct,
+#integrated-course-quiz-main .overview-question input.correct,
+#social-course-quiz-main .overview-question input.correct,
+#moral-course-quiz-main .overview-question input.correct,
+#science-course-quiz-main .overview-question input.correct,
+#science-std-quiz-main .overview-question input.correct,
+#practical-std-quiz-main .overview-question input.correct,
+#math-operation-quiz-main .overview-question input.correct,
+#practical-quiz-main .overview-question input.correct,
+#math-course-quiz-main .overview-question input.correct,
+#korean-model-quiz-main .overview-question input.correct,
+#pe-model-quiz-main .overview-question input.correct {
+  border-color: var(--correct);
+  color: var(--correct);
+  background: rgba(46, 204, 113, 0.1); /* ?�공 배경??*/
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
-/* 공통 question input incorrect 상태 */
-.creative-question input.incorrect,
-.overview-question input.incorrect {
+#creative-quiz-main .creative-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
-  background: rgba(231, 76, 60, 0.1);
+  background: rgba(231, 76, 60, 0.1); /* ?�답 배경??*/
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+#overview-quiz-main .overview-question input.incorrect,
+#integrated-course-quiz-main .overview-question input.incorrect,
+#social-course-quiz-main .overview-question input.incorrect,
+#moral-course-quiz-main .overview-question input.incorrect,
+#science-course-quiz-main .overview-question input.incorrect,
+#science-std-quiz-main .overview-question input.incorrect,
+#practical-std-quiz-main .overview-question input.incorrect,
+#math-operation-quiz-main .overview-question input.incorrect,
+#practical-quiz-main .overview-question input.incorrect,
+#math-course-quiz-main .overview-question input.incorrect,
+#korean-model-quiz-main .overview-question input.incorrect,
+#pe-model-quiz-main .overview-question input.incorrect {
+  border-color: var(--incorrect);
+  color: var(--incorrect);
+  background: rgba(231, 76, 60, 0.1); /* ?�답 배경??*/
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 
-/* 공통 question input retrying 상태 */
-.creative-question input.retrying,
-.overview-question input.retrying {
+#creative-quiz-main .creative-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
-  background: rgba(243, 156, 18, 0.1);
+  background: rgba(243, 156, 18, 0.1); /* ?�시??배경??*/
   box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2);
 }
+#overview-quiz-main .overview-question input.retrying,
+#integrated-course-quiz-main .overview-question input.retrying,
+#social-course-quiz-main .overview-question input.retrying,
+#moral-course-quiz-main .overview-question input.retrying,
+#science-course-quiz-main .overview-question input.retrying,
+#science-std-quiz-main .overview-question input.retrying,
+#practical-std-quiz-main .overview-question input.retrying,
+#math-operation-quiz-main .overview-question input.retrying,
+#practical-quiz-main .overview-question input.retrying,
+#math-course-quiz-main .overview-question input.retrying,
+#korean-model-quiz-main .overview-question input.retrying,
+#pe-model-quiz-main .overview-question input.retrying {
+  border-color: var(--retrying);
+  color: var(--retrying);
+}
 
-/* 공통 question input revealed 상태 */
-.creative-question input.revealed,
-.overview-question input.revealed {
+#creative-quiz-main .creative-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
-  background: rgba(142, 68, 173, 0.1);
+  background: rgba(142, 68, 173, 0.1); /* ?�답 공개 배경??*/
   box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+}
+#overview-quiz-main .overview-question input.revealed,
+#integrated-course-quiz-main .overview-question input.revealed,
+#social-course-quiz-main .overview-question input.revealed,
+#moral-course-quiz-main .overview-question input.revealed,
+#science-course-quiz-main .overview-question input.revealed,
+#science-std-quiz-main .overview-question input.revealed,
+#practical-std-quiz-main .overview-question input.revealed,
+#math-operation-quiz-main .overview-question input.revealed,
+#practical-quiz-main .overview-question input.revealed,
+#math-course-quiz-main .overview-question input.revealed,
+#korean-model-quiz-main .overview-question input.revealed,
+#pe-model-quiz-main .overview-question input.revealed {
+  color: var(--revealed);
+  border-color: var(--revealed);
 }
 
 /* Wider blanks for the PE (Back) teaching methods section
@@ -3023,25 +3099,37 @@ td input.activity-input:not(:first-child) {
   width: 100%;
 }
 
-/* CRITICAL: Sub-area input color override - 통합된 스타일에 text-shadow 추가 */
+/* CRITICAL: Sub-area input color override - HIGHEST SPECIFICITY */
 [id*="quiz-main"] th.sub-area-cell input.sub-area-input.correct,
 [id*="quiz-main"] input.sub-area-input.correct {
-  text-shadow: 0 0 4px var(--correct-shadow) !important;
+  border-color: #39ff14 !important;
+  color: #39ff14 !important;
+  background-color: rgba(57, 255, 20, 0.25) !important;
+  text-shadow: 0 0 4px rgba(57, 255, 20, 0.5) !important;
 }
 
 [id*="quiz-main"] th.sub-area-cell input.sub-area-input.incorrect,
 [id*="quiz-main"] input.sub-area-input.incorrect {
-  text-shadow: 0 0 4px var(--incorrect-shadow) !important;
+  border-color: #ff5733 !important;
+  color: #ff5733 !important;
+  background-color: rgba(255, 87, 51, 0.25) !important;
+  text-shadow: 0 0 4px rgba(255, 87, 51, 0.5) !important;
 }
 
 [id*="quiz-main"] th.sub-area-cell input.sub-area-input.retrying,
 [id*="quiz-main"] input.sub-area-input.retrying {
-  text-shadow: 0 0 4px var(--retrying-shadow) !important;
+  border-color: #ffc300 !important;
+  color: #ffc300 !important;
+  background-color: rgba(255, 195, 0, 0.25) !important;
+  text-shadow: 0 0 4px rgba(255, 195, 0, 0.5) !important;
 }
 
 [id*="quiz-main"] th.sub-area-cell input.sub-area-input.revealed,
 [id*="quiz-main"] input.sub-area-input.revealed {
-  text-shadow: 0 0 4px var(--revealed-shadow) !important;
+  border-color: #00ffff !important;
+  color: #00ffff !important;
+  background-color: rgba(0, 255, 255, 0.25) !important;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.5) !important;
 }
 
 /* Mini reveal button (2nd wrong attempt) */
