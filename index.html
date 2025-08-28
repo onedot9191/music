@@ -4222,9 +4222,9 @@
 
       <div class="tab" data-target="learning-cycle">순환 학습 모형</div>
 
-      <div class="tab" data-target="poe">POE</div>
-
       <div class="tab" data-target="five-e">5E</div>
+
+      <div class="tab" data-target="poe">POE</div>
 
       <div class="tab" data-target="conceptual-change">개념 변화 학습 모형</div>
 
@@ -4238,7 +4238,7 @@
 
       <div class="grade-container"><div><table><tbody>
 
-        <tr><th>모형명</th><td class="two-col-answers" data-group="science-title">
+        <tr><th>학습자 중심형</th><td class="two-col-answers" data-group="science-learner-centered" data-ignore-order="true">
 
           <input data-answer="경험 학습 모형" aria-label="경험 학습 모형" placeholder="정답">
 
@@ -4246,15 +4246,19 @@
 
           <input data-answer="탐구 학습 모형" aria-label="탐구 학습 모형" placeholder="정답">
 
-          <input data-answer="순환 학습 모형" aria-label="순환 학습 모형" placeholder="정답">
+          <input data-answer="STS 학습 모형" aria-label="STS 학습 모형" placeholder="정답">
 
-          <input data-answer="POE" aria-label="POE" placeholder="정답">
+        </td></tr>
+
+        <tr><th>학습자 지원형</th><td class="two-col-answers" data-group="science-learner-supported" data-ignore-order="true">
+
+          <input data-answer="순환 학습 모형" aria-label="순환 학습 모형" placeholder="정답">
 
           <input data-answer="5E" aria-label="5E" placeholder="정답">
 
-          <input data-answer="개념 변화 학습 모형" aria-label="개념 변화 학습 모형" placeholder="정답">
+          <input data-answer="POE" aria-label="POE" placeholder="정답">
 
-          <input data-answer="STS 학습 모형" aria-label="STS 학습 모형" placeholder="정답">
+          <input data-answer="개념 변화 학습 모형" aria-label="개념 변화 학습 모형" placeholder="정답">
 
         </td></tr>
 
@@ -4267,6 +4271,16 @@
     <section id="experience-learning">
 
       <h2>경험 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- <input data-answer="구체적이고 조작적인 감각 경험(오감) 중시" aria-label="구체적이고 조작적인 감각 경험(오감) 중시" placeholder="정답" style="width: 320px;"></div>
+
+        <div class="overview-question">- <input data-answer="기초 탐구 과정 기능 중시" aria-label="기초 탐구 과정 기능 중시" placeholder="정답" style="width: 200px;"></div>
+
+        <div class="overview-question">- <input data-answer="특정한 내용 목표 없음" aria-label="특정한 내용 목표 없음" placeholder="정답" style="width: 180px;"></div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
@@ -4285,6 +4299,24 @@
     <section id="discovery-learning">
 
       <h2>발견 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- <input data-answer="규칙성" aria-label="규칙성" placeholder="정답" style="width: 80px;"> 발견</div>
+
+        <div class="overview-question">- <input data-answer="귀납적" aria-label="귀납적" placeholder="정답" style="width: 80px;"> 탐구형태 → <input data-answer="일반화" aria-label="일반화" placeholder="정답" style="width: 80px;"> 도달</div>
+
+        <div class="overview-question">- <input data-answer="안내된" aria-label="안내된" placeholder="정답" style="width: 80px;"> 탐구형태 → <input data-answer="교사" aria-label="교사" placeholder="정답" style="width: 60px;"> 역할 중요</div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>교사 유의점</th><td>
+
+        <div class="overview-question">- Not <input data-answer="직접적 지식 전달" aria-label="직접적 지식 전달" placeholder="정답" style="width: 140px;"></div>
+
+        <div class="overview-question">- But <input data-answer="질문 기법" aria-label="질문 기법" placeholder="정답" style="width: 90px;">으로 규칙성 찾기 유도</div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
@@ -4306,6 +4338,20 @@
 
       <h2>탐구 학습 모형</h2>
 
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 같은 말: <input data-answer="가설검증 학습모형" aria-label="가설검증 학습모형" placeholder="정답" style="width: 180px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>유의점</th><td>
+
+        <div class="overview-question">- Not <input data-answer="비탐구적 요리책 활동" aria-label="비탐구적 요리책 활동" placeholder="정답" style="width: 180px;"></div>
+
+        <div class="overview-question">- But <input data-answer="능동적 참여" aria-label="능동적 참여" placeholder="정답" style="width: 100px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
         <input data-answer="탐색 및 문제 파악" aria-label="탐색 및 문제 파악" placeholder="단계명">
@@ -4313,6 +4359,12 @@
         <input data-answer="가설 설정" aria-label="가설 설정" placeholder="단계명">
 
         <input data-answer="실험 설계" aria-label="실험 설계" placeholder="단계명">
+
+        <div class="substeps" style="margin-left: 20px; border-left: 2px dashed var(--secondary); padding-left: 15px; margin-top: 10px; margin-bottom: 10px;">
+          <input data-answer="변인 확인(동정)" aria-label="변인 확인(동정)" placeholder="세부 단계명" style="border: 1px dashed var(--secondary);">
+          <input data-answer="(통제변인의) 통제 계획 수립" aria-label="(통제변인의) 통제 계획 수립" placeholder="세부 단계명" style="border: 1px dashed var(--secondary);">
+          <input data-answer="실험 조건 계획 (실험기구, 실험 절차)" aria-label="실험 조건 계획 (실험기구, 실험 절차)" placeholder="세부 단계명" style="border: 1px dashed var(--secondary);">
+        </div>
 
         <input data-answer="실험" aria-label="실험" placeholder="단계명">
 
@@ -4328,6 +4380,24 @@
 
       <h2>순환 학습 모형</h2>
 
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- <input data-answer="교사가 개념 도입" aria-label="교사가 개념 도입" placeholder="정답" style="width: 140px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>순환학습 종류</th><td>
+
+        <div class="overview-question">- 기준: <input data-answer="탐색" aria-label="탐색" placeholder="정답" style="width: 60px;"> 단계 활동 속성</div>
+
+        <div class="overview-question">① <input data-answer="서술적" aria-label="서술적" placeholder="정답" style="width: 80px;">: 단순히 자연을 관찰하여 그 속에서 간단한 <input data-answer="규칙" aria-label="규칙" placeholder="정답" style="width: 60px;">을 찾아냄</div>
+
+        <div class="overview-question">② <input data-answer="경험 귀추적" aria-label="경험 귀추적" placeholder="정답" style="width: 120px;">: <input data-answer="규칙성" aria-label="규칙성" placeholder="정답" style="width: 80px;">이 나타나는 <input data-answer="원인" aria-label="원인" placeholder="정답" style="width: 60px;">인 <input data-answer="가설" aria-label="가설" placeholder="정답" style="width: 60px;">을 제안</div>
+
+        <div class="overview-question">③ <input data-answer="가설 연역적" aria-label="가설 연역적" placeholder="정답" style="width: 120px;">: 제안한 <input data-answer="가설" aria-label="가설" placeholder="정답" style="width: 60px;">을 <input data-answer="검증" aria-label="검증" placeholder="정답" style="width: 60px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
         <input data-answer="탐색" aria-label="탐색" placeholder="단계명">
@@ -4335,6 +4405,32 @@
         <input data-answer="개념 도입" aria-label="개념 도입" placeholder="단계명">
 
         <input data-answer="개념 적용" aria-label="개념 적용" placeholder="단계명">
+
+      </td></tr></tbody></table></div></div>
+
+    </section>
+
+    <section id="five-e">
+
+      <h2>5E</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 이론: <input data-answer="구성주의" aria-label="구성주의" placeholder="정답" style="width: 100px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
+
+        <input data-answer="참여" aria-label="참여" placeholder="단계명">
+
+        <input data-answer="탐색" aria-label="탐색" placeholder="단계명">
+
+        <input data-answer="설명" aria-label="설명" placeholder="단계명">
+
+        <input data-answer="정교화" aria-label="정교화" placeholder="단계명">
+
+        <input data-answer="평가" aria-label="평가" placeholder="단계명">
 
       </td></tr></tbody></table></div></div>
 
@@ -4356,29 +4452,27 @@
 
     </section>
 
-    <section id="five-e">
-
-      <h2>5E</h2>
-
-      <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
-
-        <input data-answer="참여" aria-label="참여" placeholder="단계명">
-
-        <input data-answer="탐색" aria-label="탐색" placeholder="단계명">
-
-        <input data-answer="설명" aria-label="설명" placeholder="단계명">
-
-        <input data-answer="정교화" aria-label="정교화" placeholder="단계명">
-
-        <input data-answer="평가" aria-label="평가" placeholder="단계명">
-
-      </td></tr></tbody></table></div></div>
-
-    </section>
-
     <section id="conceptual-change">
 
       <h2>개념 변화 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- <input data-answer="오개념 수정" aria-label="오개념 수정" placeholder="정답" style="width: 100px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>개념 변화 조건</th><td>
+
+        <div class="overview-question">- <input data-answer="기존 개념 불만족" aria-label="기존 개념 불만족" placeholder="정답" style="width: 140px;"></div>
+
+        <div class="overview-question">- <input data-answer="새로운 개념 이해 가능" aria-label="새로운 개념 이해 가능" placeholder="정답" style="width: 170px;"></div>
+
+        <div class="overview-question">- <input data-answer="새로운 개념 타당" aria-label="새로운 개념 타당" placeholder="정답" style="width: 140px;"></div>
+
+        <div class="overview-question">- <input data-answer="새로운 개념 활용 가능" aria-label="새로운 개념 활용 가능" placeholder="정답" style="width: 170px;"></div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
@@ -4416,6 +4510,26 @@
     <section id="sts-learning">
 
       <h2>STS 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>목적</th><td>
+
+        <div class="overview-question">- <input data-answer="실천적 문제" aria-label="실천적 문제" placeholder="정답" style="width: 100px;">를 <input data-answer="해결" aria-label="해결" placeholder="정답" style="width: 60px;">할 수 있는 능력</div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>등장 배경</th><td>
+
+        <div class="overview-question">① <input data-answer="과학" aria-label="과학" placeholder="정답" style="width: 60px;">과 <input data-answer="과학 기술" aria-label="과학 기술" placeholder="정답" style="width: 90px;">만으로는 해결할 수 없는 사회문제</div>
+
+        <div class="overview-question">② 과학의 <input data-answer="학문적 본질" aria-label="학문적 본질" placeholder="정답" style="width: 100px;">보다는 <input data-answer="과학" aria-label="과학" placeholder="정답" style="width: 60px;">과 <input data-answer="과학 기술" aria-label="과학 기술" placeholder="정답" style="width: 90px;">로 인한 사회 문제에 더 영향을 받음</div>
+
+        <div class="overview-question">③ 과학 교육의 목표 = <input data-answer="개념과 이론" aria-label="개념과 이론" placeholder="정답" style="width: 100px;"> 중심 → <input data-answer="과학적 소양인" aria-label="과학적 소양인" placeholder="정답" style="width: 120px;"> 양성</div>
+
+        <div class="overview-question">④ <input data-answer="구성주의" aria-label="구성주의" placeholder="정답" style="width: 100px;">적 관점</div>
+
+        <div class="overview-question">⑤ <input data-answer="과학적 탐구와 문제해결" aria-label="과학적 탐구와 문제해결" placeholder="정답" style="width: 200px;"> 능력, <input data-answer="과학적 의사결정" aria-label="과학적 의사결정" placeholder="정답" style="width: 140px;"> 능력</div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
@@ -4539,6 +4653,26 @@
 
       <h2>창의성계발 학습모형</h2>
 
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 저학년 단계: <input data-answer="다양한" aria-label="다양한" placeholder="정답" style="width: 70px;"> 아이디어 만들기</div>
+
+        <div class="overview-question">- 고학년 단계: 아이디어를 <input data-answer="검증하고 다듬기" aria-label="검증하고 다듬기" placeholder="정답" style="width: 180px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
+      <div class="grade-container"><div><table><tbody><tr><th>창의성 구성 요소</th><td>
+
+        <div class="overview-question">- <input data-answer="유창성 (아이디어 개수)" aria-label="유창성 (아이디어 개수)" placeholder="정답" style="width: 250px;"></div>
+
+        <div class="overview-question">- <input data-answer="독창성" aria-label="독창성" placeholder="정답" style="width: 250px;"></div>
+
+        <div class="overview-question">- <input data-answer="융통성 (범주 전환 능력)" aria-label="융통성 (범주 전환 능력)" placeholder="정답" style="width: 250px;"></div>
+
+        <div class="overview-question">- <input data-answer="다양성 (범주의 개수)" aria-label="다양성 (범주의 개수)" placeholder="정답" style="width: 250px;"></div>
+
+      </td></tr></tbody></table></div></div>
+
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
         <input data-answer="문제 발견하기" aria-label="문제 발견하기" placeholder="단계명">
@@ -4556,6 +4690,14 @@
     <section id="knowledge-inquiry">
 
       <h2>지식 탐구 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 구체적인 국어 사용 <input data-answer="사례" aria-label="사례" placeholder="정답" style="width: 60px;">나 <input data-answer="자료" aria-label="자료" placeholder="정답" style="width: 60px;">를 검토하여 국어 생활에 <input data-answer="일반화" aria-label="일반화" placeholder="정답" style="width: 70px;">할 수 있는 <input data-answer="개념" aria-label="개념" placeholder="정답" style="width: 60px;">이나 <input data-answer="규칙" aria-label="규칙" placeholder="정답" style="width: 60px;"> 발견하는 데 초점</div>
+
+        <div class="overview-question">- <input data-answer="문법" aria-label="문법" placeholder="정답" style="width: 60px;"> 지식, <input data-answer="문학" aria-label="문학" placeholder="정답" style="width: 60px;"> 지식을 습득하는 데 유용</div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
@@ -4575,6 +4717,18 @@
 
       <h2>반응 중심 학습 모형</h2>
 
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 바탕 이론: <input data-answer="수용 이론 (반응 이론)" aria-label="수용 이론 (반응 이론)" placeholder="정답" style="width: 200px;"></div>
+
+        <div class="overview-question">- 장점: 학습자의 <input data-answer="반응 존중" aria-label="반응 존중" placeholder="정답" style="width: 90px;">, 다양하고 창의적인 반응 유도 → 학습자의 역동적인 <input data-answer="참여" aria-label="참여" placeholder="정답" style="width: 60px;">와 <input data-answer="흥미" aria-label="흥미" placeholder="정답" style="width: 60px;"> 유도</div>
+
+        <div class="overview-question">- 유의사항: <input data-answer="텍스트와 연결 고리가 없는" aria-label="텍스트와 연결 고리가 없는" placeholder="정답" style="width: 280px;"> 반응은 무의미</div>
+
+        <div class="overview-question">= <input data-answer="자기중심적" aria-label="자기중심적" placeholder="정답" style="width: 120px;">인 텍스트 이해, <input data-answer="해석의 무정부" aria-label="해석의 무정부" placeholder="정답" style="width: 140px;"> 상태 → <input data-answer="토의·토론" aria-label="토의·토론" placeholder="정답" style="width: 90px;"> 병행</div>
+
+      </td></tr></tbody></table></div></div>
+
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
         <input data-answer="반응 준비하기" aria-label="반응 준비하기" placeholder="단계명">
@@ -4592,6 +4746,12 @@
     <section id="role-performance">
 
       <h2>역할 수행 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 학습자는 <input data-answer="문제 상황" aria-label="문제 상황" placeholder="정답" style="width: 90px;">을 생각하고, 상황 속 <input data-answer="인물" aria-label="인물" placeholder="정답" style="width: 60px;">이 되어 보며, 그 <input data-answer="해결책" aria-label="해결책" placeholder="정답" style="width: 70px;">을 제시하는 과정을 거쳐 자신이 부딪힌 문제를 좀 더 효과적으로 <input data-answer="해결하는" aria-label="해결하는" placeholder="정답" style="width: 80px;"> 능력을 기를 수 있다.</div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
@@ -4611,6 +4771,14 @@
 
       <h2>가치 탐구 학습 모형</h2>
 
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 가치 ex. <input data-answer="인물" aria-label="인물" placeholder="정답" style="width: 60px;">의 가치관 / <input data-answer="서술자" aria-label="서술자" placeholder="정답" style="width: 70px;">의 관점</div>
+
+        <div class="overview-question">- 유의사항: 교사는 학습자에게 <input data-answer="한 가지 가치만" aria-label="한 가지 가치만" placeholder="정답" style="width: 120px;">을 <input data-answer="선택" aria-label="선택" placeholder="정답" style="width: 60px;">하도록 강요하지 말아야 한다.</div>
+
+      </td></tr></tbody></table></div></div>
+
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
         <input data-answer="문제 분석하기" aria-label="문제 분석하기" placeholder="단계명">
@@ -4628,6 +4796,14 @@
     <section id="discussion">
 
       <h2>토의 토론 학습 모형</h2>
+
+      <div class="grade-container"><div><table><tbody><tr><th>특징</th><td>
+
+        <div class="overview-question">- 토의: <input data-answer="문제해결" aria-label="문제해결" placeholder="정답" style="width: 80px;">을 위한 <input data-answer="협동적" aria-label="협동적" placeholder="정답" style="width: 70px;"> 의사소통</div>
+
+        <div class="overview-question">- 토론: <input data-answer="쟁점" aria-label="쟁점" placeholder="정답" style="width: 60px;">에 대한 <input data-answer="경쟁적" aria-label="경쟁적" placeholder="정답" style="width: 70px;"> 의사소통</div>
+
+      </td></tr></tbody></table></div></div>
 
       <div class="grade-container"><div><table><tbody><tr><th>단계</th><td>
 
