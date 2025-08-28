@@ -1,0 +1,286 @@
+/* === RESPONSIVE STYLES ===
+   다양한 화면 크기에 대한 반응형 스타일을 정의합니다. */
+
+/* === 모바일 우선 접근법 === */
+/* 기본 스타일은 모바일을 기준으로 작성되어 있습니다 */
+
+/* === 태블릿 (768px 이상) === */
+@media (min-width: 768px) {
+  /* 헤더 */
+  header {
+    padding: var(--space-md) var(--space-xl);
+  }
+  
+  header h1 {
+    font-size: 2.8rem;
+  }
+  
+  /* 메인 컨테이너 */
+  main, .container {
+    padding: 12rem var(--space-xl) var(--space-xl);
+  }
+  
+  /* 그리드 레이아웃 */
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* 탭 */
+  .tabs {
+    gap: 1.5rem;
+  }
+  
+  .tab {
+    font-size: 1.6rem;
+  }
+  
+  /* 모달 */
+  .modal-content {
+    width: 80%;
+    max-width: 700px;
+    padding: var(--space-xl) 4rem;
+  }
+  
+  /* 버튼 */
+  .btn {
+    font-size: 1.5rem;
+    padding: var(--space-md) var(--space-lg);
+  }
+}
+
+/* === 데스크톱 (1024px 이상) === */
+@media (min-width: 1024px) {
+  /* 메인 컨테이너 */
+  main, .container {
+    max-width: 1200px;
+    padding: 12rem var(--space-xl) var(--space-xl);
+  }
+  
+  /* 그리드 레이아웃 */
+  .grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid-4-responsive {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  /* 시작 모달 토픽 선택기 */
+  #start-modal .topic-selector {
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+  }
+  
+  /* 과목 선택기 */
+  .subject-selector {
+    gap: 1.5rem;
+  }
+  
+  /* 모달 */
+  .modal-content {
+    width: 70%;
+    max-width: 800px;
+  }
+  
+  #guide-modal .modal-content {
+    max-width: 900px;
+    padding: 4rem 5rem;
+  }
+}
+
+/* === 대형 데스크톱 (1440px 이상) === */
+@media (min-width: 1440px) {
+  /* 메인 컨테이너 */
+  main, .container {
+    max-width: 1400px;
+  }
+  
+  /* 폰트 크기 확대 */
+  header h1 {
+    font-size: 3.2rem;
+  }
+  
+  .modal-content h2 {
+    font-size: 3.6rem;
+  }
+  
+  /* 그리드 레이아웃 */
+  .grid-responsive {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .grid-6-responsive {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* === 초소형 디바이스 (480px 이하) === */
+@media (max-width: 480px) {
+  /* 헤더 */
+  header {
+    padding: var(--space-xs) var(--space-sm);
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  .hud-left,
+  .hud-center,
+  .hud-right {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+  }
+  
+  /* 메인 컨테이너 */
+  main, .container {
+    padding: 16rem var(--space-sm) var(--space-md);
+  }
+  
+  /* 탭 */
+  .tabs {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  .tab {
+    font-size: 1.4rem;
+    padding: var(--space-sm);
+  }
+  
+  /* 버튼 */
+  .btn {
+    font-size: 1.3rem;
+    padding: var(--space-sm);
+    white-space: normal;
+    text-align: center;
+  }
+  
+  /* 모달 */
+  .modal-content {
+    width: 95%;
+    padding: var(--space-lg);
+    margin: var(--space-sm);
+  }
+  
+  .modal-content h2 {
+    font-size: 2.4rem;
+  }
+  
+  .modal-content p {
+    font-size: 1.6rem;
+  }
+  
+  /* 시작 모달 */
+  #start-modal .topic-selector {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+  
+  .subject-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .subject-btn-group {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  /* 시간 설정 */
+  #time-setting-display {
+    font-size: 2.4rem;
+  }
+  
+  .time-control-btn {
+    font-size: 1.6rem;
+    padding: var(--space-sm) var(--space-md);
+  }
+}
+
+/* === 세로 방향 (높이가 낮은 화면) === */
+@media (max-height: 600px) {
+  header {
+    position: relative;
+  }
+  
+  main, .container {
+    padding-top: var(--space-lg);
+  }
+  
+  .modal-content {
+    max-height: 95vh;
+    padding: var(--space-md);
+  }
+  
+  .modal-content h2 {
+    font-size: 2.4rem;
+    margin-bottom: var(--space-sm);
+  }
+  
+  .guide-steps {
+    gap: var(--space-md);
+  }
+  
+  .guide-step {
+    padding-bottom: var(--space-sm);
+  }
+}
+
+/* === 가로 방향 (모바일 landscape) === */
+@media (orientation: landscape) and (max-height: 600px) {
+  .modal-content {
+    max-height: 90vh;
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  #start-modal .topic-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .subject-selector {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* === 고해상도 디스플레이 === */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* 고해상도 디스플레이를 위한 최적화 */
+  .btn {
+    border-width: 2px;
+  }
+  
+  .modal-content {
+    border-width: 3px;
+  }
+  
+  header {
+    border-bottom-width: 3px;
+  }
+}
+
+/* === 프린트 스타일 === */
+@media print {
+  header,
+  .btn,
+  .modal-overlay {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  main, .container {
+    padding: 0;
+    max-width: none;
+  }
+  
+  .card, .content {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
