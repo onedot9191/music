@@ -374,7 +374,7 @@
         }
 
         // --- Audio ---
-        const SFX_VOLUME = 0.2;
+        const SFX_VOLUME = 0.1;
 
         const successAudio = new Audio('./success.mp3');
         successAudio.preload = 'auto';
@@ -722,6 +722,88 @@
         const PREFERS_REDUCED_MOTION =
             typeof window.matchMedia === 'function' &&
             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Check if device is mobile (for disabling intensive effects)
+        const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+            window.innerWidth <= 768;
+
+        // --- PARTICLE EFFECTS ---
+        function spawnTypingParticles(element, color) {
+            // Skip particles on mobile devices to improve performance
+            if (IS_MOBILE || PREFERS_REDUCED_MOTION) {
+                return;
+            }
+
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Create 3-5 small particles
+            const particleCount = 3 + Math.floor(Math.random() * 3);
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'typing-particle';
+                particle.style.backgroundColor = color;
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                
+                // Random movement variables
+                const tx = (Math.random() - 0.5) * 100;
+                const ty = (Math.random() - 0.5) * 100;
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                
+                document.body.appendChild(particle);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 450);
+            }
+        }
+
+        function spawnComboConfetti(element) {
+            // Skip confetti on mobile devices to improve performance
+            if (IS_MOBILE || PREFERS_REDUCED_MOTION) {
+                return;
+            }
+
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Create small confetti pieces
+            const confettiCount = 8 + Math.floor(Math.random() * 6);
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffeaa7', '#dda0dd', '#98d8c8'];
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = centerX + 'px';
+                confetti.style.top = centerY + 'px';
+                
+                // Random movement and rotation
+                const dx = (Math.random() - 0.5) * 120;
+                const dy = (Math.random() - 0.5) * 120 - 30; // bias upward
+                const dr = (Math.random() - 0.5) * 720; // degrees
+                confetti.style.setProperty('--dx', dx + 'px');
+                confetti.style.setProperty('--dy', dy + 'px');
+                confetti.style.setProperty('--dr', dr + 'deg');
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 600);
+            }
+        }
 
         // --- UI UPDATE FUNCTIONS ---
         function updateTimeSettingDisplay() {
@@ -1576,6 +1658,8 @@
                 isGenericModelTitle(input)
             ) {
                 const group = input.closest('[data-group]') || section;
+                const ignoreOrder = group.hasAttribute('data-ignore-order');
+                
                 if (!usedAnswersMap.has(group)) usedAnswersMap.set(group, new Set());
                 const usedSet = usedAnswersMap.get(group);
 
@@ -1602,10 +1686,14 @@
                 if (candidate && answerMap.has(candidate)) {
                     const canonical = answerMap.get(candidate);
                     const canonicalNorm = normalizeAnswer(canonical);
-                    if (!usedSet.has(canonicalNorm)) {
+                    
+                    // data-ignore-order가 있으면 이미 사용된 답이라도 허용
+                    if (ignoreOrder || !usedSet.has(canonicalNorm)) {
                         isCorrect = true;
                         displayAnswer = canonical;
-                        usedSet.add(canonicalNorm);
+                        if (!ignoreOrder) {
+                            usedSet.add(canonicalNorm);
+                        }
                     }
                 }
             } else {
