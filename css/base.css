@@ -1,0 +1,172 @@
+/* === BASE STYLES ===
+   기본적인 HTML 요소들의 스타일과 전역 설정을 정의합니다. */
+
+/* 기존 스타일과 충돌 방지를 위해 기본 리셋 제거 */
+
+/* 기존 HTML & body 스타일과 충돌 방지를 위해 제거 */
+
+/* === 접근성 === */
+
+/* 스킵 링크 */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 0.8rem 1.2rem;
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 0;
+  outline: 3px solid var(--revealed);
+  outline-offset: 2px;
+}
+
+/* 키보드 사용자를 위한 포커스 링 */
+.btn:focus-visible,
+.tab:focus-visible,
+input:focus-visible,
+.slot-machine .reel:focus-visible,
+.competency-tab:focus-visible {
+  outline: 3px solid var(--revealed);
+  outline-offset: 2px;
+}
+
+/* 스크린 리더 전용 텍스트 */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* === 모션 감소 지원 === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto;
+  }
+}
+
+/* === 기본 타이포그래피 === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+}
+
+p {
+  margin-bottom: var(--space-md);
+}
+
+/* === 링크 === */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+/* === 폼 요소 === */
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"],
+textarea {
+  border: 2px solid var(--secondary);
+  border-radius: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus,
+textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+/* === 유틸리티 클래스 === */
+.hidden {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* === 플렉스 유틸리티 === */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* === 그리드 유틸리티 === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-md);
+}
+
+/* === 아이콘 === */
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: currentColor;
+}
