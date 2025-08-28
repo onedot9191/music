@@ -2369,7 +2369,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .outline-title,
 #social-course-quiz-main .outline-title,
 #moral-course-quiz-main .outline-title,
-#science-course-quiz-main .outline-title {
+#science-course-quiz-main .outline-title,
+#spelling-quiz-main .outline-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -2379,7 +2380,8 @@ td input.activity-input:not(:first-child) {
 #integrated-course-quiz-main .sub-title,
 #social-course-quiz-main .sub-title,
 #moral-course-quiz-main .sub-title,
-#science-course-quiz-main .sub-title {
+#science-course-quiz-main .sub-title,
+#spelling-quiz-main .sub-title {
   font-size: 1.8rem;
   font-weight: 600;
   margin: 1rem 0;
@@ -2408,7 +2410,8 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question,
 #math-operation-quiz-main .overview-question,
 #practical-quiz-main .overview-question,
-#math-course-quiz-main .overview-question {
+#math-course-quiz-main .overview-question,
+#spelling-quiz-main .overview-question {
   display: block;
   line-height: 2.2; /* �?간격 ?��? */
   font-size: 2rem;
@@ -2442,7 +2445,8 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question:last-child,
 #math-operation-quiz-main .overview-question:last-child,
 #practical-quiz-main .overview-question:last-child,
-#math-course-quiz-main .overview-question:last-child {
+#math-course-quiz-main .overview-question:last-child,
+#spelling-quiz-main .overview-question:last-child {
   margin-bottom: 1rem; /* 마�?�?문단???�단 ?�백 조정 */
 }
 
@@ -2468,7 +2472,8 @@ td input.activity-input:not(:first-child) {
   #practical-std-quiz-main .overview-question,
   #math-operation-quiz-main .overview-question,
   #practical-quiz-main .overview-question,
-  #math-course-quiz-main .overview-question {
+  #math-course-quiz-main .overview-question,
+  #spelling-quiz-main .overview-question {
     padding: 2rem 1.5rem; /* 모바?�에???�딩 조정 */
     font-size: 1.7rem; /* 모바?�에???�트 ?�기 조정 */
     line-height: 2; /* �?간격 조정 */
@@ -2486,7 +2491,8 @@ td input.activity-input:not(:first-child) {
   #practical-quiz-main .overview-question input,
   #math-course-quiz-main .overview-question input,
   #korean-model-quiz-main .overview-question input,
-  #pe-model-quiz-main .overview-question input {
+  #pe-model-quiz-main .overview-question input,
+  #spelling-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바?�에???�력 ?�드 ?�트 ?�기 */
     padding: 0.5rem 0.8rem; /* 모바?�에???�딩 조정 */
     margin: 0.2rem 0.4rem; /* 모바?�에??마진 조정 */
@@ -2555,7 +2561,8 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input,
 #math-course-quiz-main .overview-question input,
 #korean-model-quiz-main .overview-question input,
-#pe-model-quiz-main .overview-question input {
+#pe-model-quiz-main .overview-question input,
+#spelling-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem; /* ?�딩 ?��? */
   margin: 0 0.6rem; /* 좌우 마진 ?��? */
@@ -2651,7 +2658,8 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input:focus,
 #math-course-quiz-main .overview-question input:focus,
 #korean-model-quiz-main .overview-question input:focus,
-#pe-model-quiz-main .overview-question input:focus {
+#pe-model-quiz-main .overview-question input:focus,
+#spelling-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
   background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
@@ -2676,7 +2684,8 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input.correct,
 #math-course-quiz-main .overview-question input.correct,
 #korean-model-quiz-main .overview-question input.correct,
-#pe-model-quiz-main .overview-question input.correct {
+#pe-model-quiz-main .overview-question input.correct,
+#spelling-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
   background: rgba(46, 204, 113, 0.1); /* ?�공 배경??*/
@@ -2700,7 +2709,8 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input.incorrect,
 #math-course-quiz-main .overview-question input.incorrect,
 #korean-model-quiz-main .overview-question input.incorrect,
-#pe-model-quiz-main .overview-question input.incorrect {
+#pe-model-quiz-main .overview-question input.incorrect,
+#spelling-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
   background: rgba(231, 76, 60, 0.1); /* ?�답 배경??*/
@@ -2724,7 +2734,8 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input.retrying,
 #math-course-quiz-main .overview-question input.retrying,
 #korean-model-quiz-main .overview-question input.retrying,
-#pe-model-quiz-main .overview-question input.retrying {
+#pe-model-quiz-main .overview-question input.retrying,
+#spelling-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
 }
@@ -2746,7 +2757,8 @@ td input.activity-input:not(:first-child) {
 #practical-quiz-main .overview-question input.revealed,
 #math-course-quiz-main .overview-question input.revealed,
 #korean-model-quiz-main .overview-question input.revealed,
-#pe-model-quiz-main .overview-question input.revealed {
+#pe-model-quiz-main .overview-question input.revealed,
+#spelling-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
 }
