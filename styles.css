@@ -3358,6 +3358,67 @@ iframe {
   }
 }
 
+/* 달크로즈 섹션 전용 스타일 - 2열 배치 및 긴 답안들을 위한 레이아웃 최적화 */
+#dalcroze .grade-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+#dalcroze .grade-container > div {
+  min-width: 0; /* Grid에서 자동 크기 조정을 위해 */
+  width: 100%;
+}
+
+#dalcroze .assessment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+#dalcroze .inline-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+#dalcroze input.fit-answer {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  padding: 0.6rem 1rem;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 특별히 긴 답안들을 위한 스타일 */
+#dalcroze input.fit-answer[data-answer*="음악적 리듬을 몸동작으로 표현하는"],
+#dalcroze input.fit-answer[data-answer*="내청능력(악보를 읽고 음 떠올리는 능력)"],
+#dalcroze input.fit-answer[data-answer*="유리드 믹스, 솔페즈에서의"] {
+  font-size: 1.1rem;
+  padding: 0.8rem 1rem;
+  height: auto;
+  min-height: 2.5rem;
+}
+
+/* 달크로즈 섹션의 테이블 레이아웃 개선 */
+#dalcroze table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+#dalcroze td {
+  padding: 0.5rem;
+  vertical-align: top;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   /* Guarantee minimum tap target height */
   .btn, .tab {
@@ -3366,5 +3427,23 @@ iframe {
   /* Keep controls readable without triggering zoom */
   input, select, textarea, button {
     font-size: 16px;
+  }
+  
+  /* 달크로즈 모바일 반응형 */
+  #dalcroze .grade-container {
+    grid-template-columns: 1fr; /* 모바일에서는 1열 배치 */
+    gap: 1.5rem;
+  }
+  
+  #dalcroze input.fit-answer {
+    font-size: 1.1rem;
+    padding: 0.5rem 0.8rem;
+  }
+  
+  #dalcroze input.fit-answer[data-answer*="음악적 리듬을 몸동작으로 표현하는"],
+  #dalcroze input.fit-answer[data-answer*="내청능력(악보를 읽고 음 떠올리는 능력)"],
+  #dalcroze input.fit-answer[data-answer*="유리드 믹스, 솔페즈에서의"] {
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
   }
 }
