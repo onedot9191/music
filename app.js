@@ -486,30 +486,22 @@
         // --- Audio ---
         const SFX_VOLUME = 0.5;
 
-        const successAudio = new Audio('./success.mp3');
-        successAudio.preload = 'auto';
-        successAudio.volume = SFX_VOLUME * 0.6;
-        const timeupAudio = new Audio('./timeup.mp3');
-        timeupAudio.preload = 'auto';
-        timeupAudio.volume = SFX_VOLUME;
-        const startAudio = new Audio('./start.mp3');
-        startAudio.preload = 'auto';
-        startAudio.volume = SFX_VOLUME;
-        const failAudio = new Audio('./fail.mp3');
-        failAudio.preload = 'auto';
-        failAudio.volume = SFX_VOLUME;
-        const clearAudio = new Audio('./clear.mp3');
-        clearAudio.preload = 'auto';
-        clearAudio.volume = SFX_VOLUME;
-        const randomAudio = new Audio('./random.mp3');
-        randomAudio.preload = 'auto';
-        randomAudio.volume = SFX_VOLUME;
-        const clickAudio = new Audio('./click.mp3');
-        clickAudio.preload = 'auto';
-        clickAudio.volume = SFX_VOLUME;
-        const slotWinAudio = new Audio('./hit.mp3');
-        slotWinAudio.preload = 'auto';
-        slotWinAudio.volume = Math.min(1, SFX_VOLUME * 2);
+        // 오디오 파일들을 한 번에 설정하는 헬퍼 함수
+        function createAudio(src, volumeMultiplier = 1) {
+            const audio = new Audio(src);
+            audio.preload = 'auto';
+            audio.volume = SFX_VOLUME * volumeMultiplier;
+            return audio;
+        }
+
+        const successAudio = createAudio('./success.mp3', 0.6);
+        const timeupAudio = createAudio('./timeup.mp3', 1);
+        const startAudio = createAudio('./start.mp3', 1);
+        const failAudio = createAudio('./fail.mp3', 1);
+        const clearAudio = createAudio('./clear.mp3', 1);
+        const randomAudio = createAudio('./random.mp3', 1);
+        const clickAudio = createAudio('./click.mp3', 1);
+        const slotWinAudio = createAudio('./hit.mp3', 2);
         
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
@@ -1502,28 +1494,10 @@
             }
             adjustBasicTopicInputWidths();
             
-            // Practical model: start with only Title enabled
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL && gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
-                const main = document.getElementById('practical-quiz-main');
-                if (main) {
-                    main.querySelectorAll('section').forEach(sec => {
-                        if (sec.id !== 'practical-title') {
-                            sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = true);
-                            sec.style.opacity = '0.2';
-                            sec.style.pointerEvents = 'none';
-                            sec.classList.add('practical-section-disabled');
-                        }
-                    });
-                    const tabs = main.querySelectorAll('.tabs .tab');
-                    tabs.forEach(tab => {
-                        if (tab.dataset.target !== 'practical-title') tab.classList.add('practical-disabled');
-                    });
-                }
-            }
-
-            // Apply gating for other model subjects similar to Practical
+            // 모델 과목들의 section 비활성화 로직 통합
             if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
                 const configs = [
+                    { subject: CONSTANTS.SUBJECTS.PRACTICAL, mainId: 'practical-quiz-main', titleId: 'practical-title' },
                     { subject: CONSTANTS.SUBJECTS.PE_MODEL, mainId: 'pe-model-quiz-main', titleId: 'pe-title' },
                     { subject: CONSTANTS.SUBJECTS.ETHICS, mainId: 'ethics-quiz-main', titleId: 'ethics-title' },
                     { subject: CONSTANTS.SUBJECTS.KOREAN_MODEL, mainId: 'korean-model-quiz-main', titleId: 'korean-title' },
@@ -1532,10 +1506,12 @@
                     { subject: CONSTANTS.SUBJECTS.SOCIAL, mainId: 'social-quiz-main', titleId: 'social-title' },
                     { subject: CONSTANTS.SUBJECTS.SCIENCE, mainId: 'science-quiz-main', titleId: 'science-title' }
                 ];
+                
                 const cfg = configs.find(c => c.subject === gameState.selectedSubject);
                 if (cfg) {
                     const main = document.getElementById(cfg.mainId);
                     if (main) {
+                        // 섹션 비활성화
                         main.querySelectorAll('section').forEach(sec => {
                             if (sec.id !== cfg.titleId) {
                                 sec.querySelectorAll('input[data-answer]').forEach(i => i.disabled = true);
@@ -1544,8 +1520,8 @@
                                 sec.classList.add('practical-section-disabled');
                             }
                         });
-                        const tabs = main.querySelectorAll('.tabs .tab');
-                        tabs.forEach(tab => {
+                        // 탭 비활성화
+                        main.querySelectorAll('.tabs .tab').forEach(tab => {
                             if (tab.dataset.target !== cfg.titleId) tab.classList.add('practical-disabled');
                         });
                     }
