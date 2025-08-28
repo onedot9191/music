@@ -3321,6 +3321,22 @@ input[placeholder*="검사" i] {
   100% { opacity: 0; transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(var(--dr)); }
 }
 
+/* 모바일에서 파티클 효과 비활성화 */
+@media (max-width: 768px) {
+  .typing-particle,
+  .confetti-piece {
+    display: none !important;
+  }
+}
+
+/* 배터리 절약 모드나 저성능 기기에서 파티클 비활성화 */
+@media (prefers-reduced-motion: reduce) {
+  .typing-particle,
+  .confetti-piece {
+    display: none !important;
+  }
+}
+
 /* ------------------------------------------------------------
    Mobile responsive baseline enhancements
    - Fluid media elements
