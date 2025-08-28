@@ -777,8 +777,9 @@
                 (
                     gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM &&
                     (
-                        gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
-                        gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE
+                                        gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
+                (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
                     )
                 );
             const pattern = ignoreParticleEui ? /[\s⋅·의]+/g : /[\s⋅·]+/g;
@@ -1317,17 +1318,32 @@
         }
 
         function showProgress() {
-            const allInputs = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`);
-            const correctCount = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
-            const totalCount = allInputs.length;
-            const percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+            let correctCount, totalCount, percentage;
+            
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING) {
+                // 맞춤법 퀴즈의 경우, 이미 결과창에 누적된 값을 사용
+                const correctCountEl = document.getElementById('correct-count');
+                const totalCountEl = document.getElementById('total-count');
+                
+                correctCount = parseInt(correctCountEl.textContent) || 0;
+                totalCount = parseInt(totalCountEl.textContent) || 0;
+                percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+            } else {
+                // 일반 퀴즈의 경우 기존 방식 사용
+                const allInputs = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`);
+                correctCount = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
+                totalCount = allInputs.length;
+                percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
-            saveDailyStats(correctCount);
+                saveDailyStats(correctCount);
+                
+                document.getElementById('correct-count').textContent = correctCount;
+                document.getElementById('total-count').textContent = totalCount;
+            }
+            
             // 히트맵 제목(오늘 푼 빈칸 수) 즉시 갱신
             updateHeatmapTitle(getDailyStats(30));
 
-            document.getElementById('correct-count').textContent = correctCount;
-            document.getElementById('total-count').textContent = totalCount;
             resultProgress.style.width = `${percentage}%`;
             resultPercentage.textContent = `${percentage}%`;
 
@@ -1486,7 +1502,8 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION ||
+                (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
             ) {
                 if (gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD) {
                     wrapScienceInquiryActivities();
@@ -2380,7 +2397,8 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
-                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION ||
+                    (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
                 ) {
                     adjustCreativeInputWidths();
                 }
@@ -2406,7 +2424,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
-                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION ||
+                            (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
                         ) {
                             adjustCreativeInputWidths();
                         }
@@ -2467,7 +2486,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
-                            gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
+                            (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
                         ) {
                             adjustCreativeInputWidths();
                         }
@@ -3088,8 +3108,42 @@
             }
         }
 
+        function updateSpellingResultsToProgress() {
+            // 맞춤법 퀴즈 결과를 일반 결과창 시스템에 반영
+            const currentScore = gameState.spelling.score;
+            const totalQuestions = gameState.spelling.questions.length;
+            
+            // 일일 통계에 점수 추가 (saveDailyStats는 이미 존재하는 함수)
+            saveDailyStats(currentScore);
+            
+            // 히트맵 제목 갱신
+            updateHeatmapTitle(getDailyStats(30));
+            
+            // 결과창의 정답 개수와 총 문항 수 업데이트
+            const correctCountEl = document.getElementById('correct-count');
+            const totalCountEl = document.getElementById('total-count');
+            const resultProgress = document.getElementById('result-progress');
+            
+            if (correctCountEl && totalCountEl && resultProgress) {
+                // 기존 점수에 새로운 점수 누적
+                const currentCorrect = parseInt(correctCountEl.textContent) || 0;
+                const currentTotal = parseInt(totalCountEl.textContent) || 0;
+                
+                const newCorrect = currentCorrect + currentScore;
+                const newTotal = currentTotal + totalQuestions;
+                const newPercentage = newTotal > 0 ? Math.round((newCorrect / newTotal) * 100) : 0;
+                
+                correctCountEl.textContent = newCorrect;
+                totalCountEl.textContent = newTotal;
+                resultProgress.style.width = `${newPercentage}%`;
+            }
+        }
+
         function showSpellingRoundComplete() {
             const completedMessage = document.getElementById('spelling-completed-message');
+            
+            // 맞춤법 결과를 결과창에 반영
+            updateSpellingResultsToProgress();
             
             completedMessage.classList.remove('hidden');
             
@@ -3140,9 +3194,25 @@
             renderSpellingQuestion(firstQuestion);
         }
 
+        function isSpellingBlankMode() {
+            const spellingMain = document.getElementById('spelling-quiz-main');
+            if (!spellingMain) return false;
+            const activeTab = spellingMain.querySelector('.tabs .tab.active');
+            return activeTab && activeTab.dataset.target === 'spelling-blank';
+        }
+
         function initializeSpellingQuiz() {
-            // 데이터셋 선택 화면 보여주기
-            showSpellingDatasetSelection();
+            // 현재 활성화된 탭 확인
+            const spellingMain = document.getElementById('spelling-quiz-main');
+            const activeTab = spellingMain.querySelector('.tabs .tab.active');
+            
+            if (activeTab && activeTab.dataset.target === 'spelling-blank') {
+                // 빈칸 모드는 일반 입력 방식으로 처리 (총론과 동일)
+                return;
+            } else {
+                // 다지선다 모드는 기존 방식 유지
+                showSpellingDatasetSelection();
+            }
         }
 
         function showSpellingDatasetSelection() {
@@ -3164,6 +3234,15 @@
 
         function startSpellingQuizWithDataset(dataset) {
             gameState.spelling.selectedDataset = dataset;
+            
+            // 결과창 카운터 초기화
+            const correctCountEl = document.getElementById('correct-count');
+            const totalCountEl = document.getElementById('total-count');
+            const resultProgress = document.getElementById('result-progress');
+            
+            if (correctCountEl) correctCountEl.textContent = '0';
+            if (totalCountEl) totalCountEl.textContent = '0';
+            if (resultProgress) resultProgress.style.width = '0%';
             
             // 타이머 시작
             const timerContainer = document.getElementById('timer-container');
