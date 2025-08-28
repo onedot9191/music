@@ -3,15 +3,35 @@
         // --- AudioContext for Autoplay Policy ---
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
+        // 오디오 잠금 해제 시도 횟수 추적
+        let audioUnlockAttempts = 0;
+        const MAX_UNLOCK_ATTEMPTS = 3;
+
         function unlockAudio() {
+            audioUnlockAttempts++;
+            console.log(`Audio unlock attempt ${audioUnlockAttempts}`);
+            
             if (audioContext.state === 'suspended') {
-                audioContext.resume();
+                audioContext.resume().then(() => {
+                    console.log('AudioContext successfully resumed');
+                }).catch(err => {
+                    console.error('Failed to resume AudioContext:', err);
+                });
             }
-            document.body.removeEventListener('click', unlockAudio);
-            document.body.removeEventListener('touchend', unlockAudio);
+            
+            // 최대 시도 횟수에 도달하면 이벤트 리스너 제거
+            if (audioUnlockAttempts >= MAX_UNLOCK_ATTEMPTS) {
+                document.body.removeEventListener('click', unlockAudio);
+                document.body.removeEventListener('touchend', unlockAudio);
+                document.body.removeEventListener('keydown', unlockAudio);
+                console.log('Audio unlock event listeners removed after max attempts');
+            }
         }
+        
+        // 여러 사용자 상호작용 이벤트에 오디오 잠금 해제 바인딩
         document.body.addEventListener('click', unlockAudio);
         document.body.addEventListener('touchend', unlockAudio);
+        document.body.addEventListener('keydown', unlockAudio);
 
 
         // --- CONSTANTS ---
@@ -486,30 +506,33 @@
         // --- Audio ---
         const SFX_VOLUME = 0.5;
 
-        const successAudio = new Audio('./success.mp3');
-        successAudio.preload = 'auto';
-        successAudio.volume = SFX_VOLUME * 0.6;
-        const timeupAudio = new Audio('./timeup.mp3');
-        timeupAudio.preload = 'auto';
-        timeupAudio.volume = SFX_VOLUME;
-        const startAudio = new Audio('./start.mp3');
-        startAudio.preload = 'auto';
-        startAudio.volume = SFX_VOLUME;
-        const failAudio = new Audio('./fail.mp3');
-        failAudio.preload = 'auto';
-        failAudio.volume = SFX_VOLUME;
-        const clearAudio = new Audio('./clear.mp3');
-        clearAudio.preload = 'auto';
-        clearAudio.volume = SFX_VOLUME;
-        const randomAudio = new Audio('./random.mp3');
-        randomAudio.preload = 'auto';
-        randomAudio.volume = SFX_VOLUME;
-        const clickAudio = new Audio('./click.mp3');
-        clickAudio.preload = 'auto';
-        clickAudio.volume = SFX_VOLUME;
-        const slotWinAudio = new Audio('./hit.mp3');
-        slotWinAudio.preload = 'auto';
-        slotWinAudio.volume = Math.min(1, SFX_VOLUME * 2);
+        // 오디오 파일 초기화 함수
+        function createAudioElement(src, volume = SFX_VOLUME) {
+            const audio = new Audio(src);
+            audio.preload = 'auto';
+            audio.volume = volume;
+            
+            // 오디오 로딩 에러 처리
+            audio.addEventListener('error', (e) => {
+                console.error(`Failed to load audio file: ${src}`, e);
+            });
+            
+            // 오디오 로딩 완료 로그
+            audio.addEventListener('canplaythrough', () => {
+                console.log(`Audio file loaded: ${src}`);
+            });
+            
+            return audio;
+        }
+
+        const successAudio = createAudioElement('./success.mp3', SFX_VOLUME * 0.6);
+        const timeupAudio = createAudioElement('./timeup.mp3');
+        const startAudio = createAudioElement('./start.mp3');
+        const failAudio = createAudioElement('./fail.mp3');
+        const clearAudio = createAudioElement('./clear.mp3');
+        const randomAudio = createAudioElement('./random.mp3');
+        const clickAudio = createAudioElement('./click.mp3');
+        const slotWinAudio = createAudioElement('./hit.mp3', Math.min(1, SFX_VOLUME * 2));
         
         // --- UTILITY FUNCTIONS ---
         const fmt = n => String(n).padStart(2, '0');
@@ -753,18 +776,36 @@
             }
 
             const play = () => {
-                audioElement.currentTime = 0;
-                audioElement.play().catch(err => {
-                    console.error(`Audio playback failed for ${audioElement.src}:`, err);
-                });
+                try {
+                    audioElement.currentTime = 0;
+                    const playPromise = audioElement.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            console.error(`Audio playback failed for ${audioElement.src}:`, err);
+                            // 브라우저에서 자동재생이 차단된 경우를 위한 추가 처리
+                            if (err.name === 'NotAllowedError') {
+                                console.warn('Audio autoplay was prevented. User interaction may be required.');
+                            }
+                        });
+                    }
+                } catch (err) {
+                    console.error(`Error playing audio ${audioElement.src}:`, err);
+                }
             };
 
+            // AudioContext 상태 확인 및 복구
             if (audioContext.state === 'suspended') {
                 audioContext
                     .resume()
-                    .then(play)
+                    .then(() => {
+                        console.log('AudioContext resumed successfully');
+                        play();
+                    })
                     .catch(err => {
                         console.warn('Failed to resume AudioContext:', err);
+                        // AudioContext 복구에 실패해도 일반 재생 시도
+                        play();
                     });
             } else {
                 play();
@@ -1100,7 +1141,7 @@
 
        function adjustBasicTopicInputWidths() {
             if (gameState.selectedTopic !== CONSTANTS.TOPICS.BASIC) return;
-            const mainId = `${gameState.selectedSubject}-quiz-main`;
+            const mainId = getMainElementId();
             document
                 .querySelectorAll(`#${mainId} input[data-answer]`)
                 .forEach(input => {
@@ -1248,7 +1289,8 @@
         }
 
         function advanceToNextStage(showProgressIfNoNext = true) {
-            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            const mainId = getMainElementId();
+            const main = document.getElementById(mainId);
             if (!main) return;
             const tabs = Array.from(main.querySelector('.tabs').querySelectorAll('.tab'));
             const currentIndex = tabs.findIndex(t =>
@@ -1330,8 +1372,9 @@
                 percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
             } else {
                 // 일반 퀴즈의 경우 기존 방식 사용
-                const allInputs = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`);
-                correctCount = document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
+                const mainId = getMainElementId();
+                const allInputs = document.querySelectorAll(`#${mainId} input[data-answer]`);
+                correctCount = document.querySelectorAll(`#${mainId} input.${CONSTANTS.CSS_CLASSES.CORRECT}`).length;
                 totalCount = allInputs.length;
                 percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
@@ -1389,7 +1432,8 @@
         function handleGameOver() {
             clearInterval(gameState.timerId);
             gameState.timerId = null;
-            document.querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`).forEach(i => i.disabled = true);
+            const mainId = getMainElementId();
+            document.querySelectorAll(`#${mainId} input[data-answer]`).forEach(i => i.disabled = true);
             playSound(timeupAudio);
             
             gameState.combo = 0;
@@ -1592,7 +1636,8 @@
                 character.classList.add('devil-mode');
             }
 
-           const activeSection = document.querySelector(`#${gameState.selectedSubject}-quiz-main section.active`);
+           // 올바른 메인 요소 ID 사용 (이미 위에서 선언됨)
+           const activeSection = document.querySelector(`#${mainId} section.active`);
            if (activeSection) focusFirstInput(activeSection);
             slotMachine.start();
        }
@@ -1697,7 +1742,8 @@
 
         function celebrateCompetencySection(sectionElement) {
             const sectionId = sectionElement.id;
-            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            const mainId = getMainElementId();
+            const main = document.getElementById(mainId);
             const sectionGroups = SECTION_GROUPS[gameState.selectedSubject] || {};
             const tabId = Object.keys(sectionGroups).find(key => sectionGroups[key].includes(sectionId)) || sectionId;
             const tabButton = main.querySelector(`.competency-tab[data-target="${tabId}"]`);
@@ -1743,8 +1789,9 @@
 
         function revealCompetencyAnswers() {
             const normalize = str => normalizeAnswer(str);
+            const mainId = getMainElementId();
             document
-                .querySelectorAll(`#${gameState.selectedSubject}-quiz-main section`)
+                .querySelectorAll(`#${mainId} section`)
                 .forEach(section => {
                     const groups = section.querySelectorAll('[data-group]');
                     if (groups.length > 0) {
@@ -2740,8 +2787,9 @@
             ) {
                 revealCompetencyAnswers();
             } else {
+                const mainId = getMainElementId();
                 document
-                    .querySelectorAll(`#${gameState.selectedSubject}-quiz-main input[data-answer]`)
+                    .querySelectorAll(`#${mainId} input[data-answer]`)
                     .forEach(input => {
                         if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
                             input.value = input.dataset.answer;
@@ -2754,7 +2802,8 @@
                         input.disabled = true;
                     });
             }
-            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            const mainId = getMainElementId();
+            const main = document.getElementById(mainId);
             if (main) main.dataset.answersRevealed = 'true';
             showAnswersBtn.disabled = true;
             // 결과 창이 즉시 표시되지 않도록 진행 상태를 확인하지 않는다.
