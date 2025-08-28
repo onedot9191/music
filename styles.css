@@ -1377,6 +1377,107 @@ td input.activity-input:not(:first-child) {
   #dday-race { height: 48px; }
   .dday-runner { width: 30px; height: 30px; }
   .dday-runner .mushroom { width: 30px; height: 30px; }
+  
+  /* 모바일에서 캐릭터 어시스턴트 크기 조정 */
+  #character-assistant {
+    width: 60px;
+    height: 60px;
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+/* 더 작은 모바일 화면을 위한 추가 조정 */
+@media (max-width: 480px) {
+  #character-assistant {
+    width: 50px;
+    height: 50px;
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  /* 캐릭터 내부 요소들 크기 조정 */
+  #character-assistant .mushroom-cap .dot {
+    width: 8px;
+    height: 8px;
+    border: 1px solid #000;
+  }
+  
+  #character-assistant .character-eye {
+    width: 4px;
+    height: 5px;
+  }
+}
+
+/* 매우 작은 화면 (iPhone SE 등)을 위한 최소 크기 조정 */
+@media (max-width: 375px) {
+  #character-assistant {
+    width: 40px;
+    height: 40px;
+    bottom: 8px;
+    right: 8px;
+  }
+  
+  /* 더 작은 내부 요소들 */
+  #character-assistant .mushroom-cap .dot {
+    width: 6px;
+    height: 6px;
+    border: 1px solid #000;
+  }
+  
+  #character-assistant .character-eye {
+    width: 3px;
+    height: 4px;
+  }
+  
+  #character-assistant .mushroom-cap {
+    border: 2px solid #000;
+  }
+  
+  #character-assistant .mushroom-stem {
+    border: 2px solid #000;
+    border-bottom: none;
+  }
+}
+
+/* 모바일 가로 모드에서 캐릭터가 화면 밖으로 나가지 않도록 조정 */
+@media (max-height: 500px) and (orientation: landscape) {
+  #character-assistant {
+    width: 45px;
+    height: 45px;
+    bottom: 5px;
+    right: 5px;
+  }
+}
+
+/* 작은 높이에서는 캐릭터 크기를 더 줄임 */
+@media (max-height: 400px) {
+  #character-assistant {
+    width: 35px;
+    height: 35px;
+    bottom: 5px;
+    right: 5px;
+  }
+  
+  #character-assistant .mushroom-cap .dot {
+    width: 4px;
+    height: 4px;
+    border: 1px solid #000;
+  }
+  
+  #character-assistant .character-eye {
+    width: 2px;
+    height: 3px;
+  }
+  
+  #character-assistant .mushroom-cap,
+  #character-assistant .mushroom-stem {
+    border: 1px solid #000;
+  }
+  
+  #character-assistant .mushroom-stem {
+    border-bottom: none;
+  }
 }
 
 /* Character Assistant Styles */
@@ -2383,7 +2484,9 @@ td input.activity-input:not(:first-child) {
   #practical-std-quiz-main .overview-question input,
   #math-operation-quiz-main .overview-question input,
   #practical-quiz-main .overview-question input,
-  #math-course-quiz-main .overview-question input {
+  #math-course-quiz-main .overview-question input,
+  #korean-model-quiz-main .overview-question input,
+  #pe-model-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바?�에???�력 ?�드 ?�트 ?�기 */
     padding: 0.5rem 0.8rem; /* 모바?�에???�딩 조정 */
     margin: 0.2rem 0.4rem; /* 모바?�에??마진 조정 */
@@ -2450,7 +2553,9 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input,
 #math-operation-quiz-main .overview-question input,
 #practical-quiz-main .overview-question input,
-#math-course-quiz-main .overview-question input {
+#math-course-quiz-main .overview-question input,
+#korean-model-quiz-main .overview-question input,
+#pe-model-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem; /* ?�딩 ?��? */
   margin: 0 0.6rem; /* 좌우 마진 ?��? */
@@ -2544,7 +2649,9 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input:focus,
 #math-operation-quiz-main .overview-question input:focus,
 #practical-quiz-main .overview-question input:focus,
-#math-course-quiz-main .overview-question input:focus {
+#math-course-quiz-main .overview-question input:focus,
+#korean-model-quiz-main .overview-question input:focus,
+#pe-model-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
   background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
@@ -2567,7 +2674,9 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input.correct,
 #math-operation-quiz-main .overview-question input.correct,
 #practical-quiz-main .overview-question input.correct,
-#math-course-quiz-main .overview-question input.correct {
+#math-course-quiz-main .overview-question input.correct,
+#korean-model-quiz-main .overview-question input.correct,
+#pe-model-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
   background: rgba(46, 204, 113, 0.1); /* ?�공 배경??*/
@@ -2589,7 +2698,9 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input.incorrect,
 #math-operation-quiz-main .overview-question input.incorrect,
 #practical-quiz-main .overview-question input.incorrect,
-#math-course-quiz-main .overview-question input.incorrect {
+#math-course-quiz-main .overview-question input.incorrect,
+#korean-model-quiz-main .overview-question input.incorrect,
+#pe-model-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
   background: rgba(231, 76, 60, 0.1); /* ?�답 배경??*/
@@ -2611,7 +2722,9 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input.retrying,
 #math-operation-quiz-main .overview-question input.retrying,
 #practical-quiz-main .overview-question input.retrying,
-#math-course-quiz-main .overview-question input.retrying {
+#math-course-quiz-main .overview-question input.retrying,
+#korean-model-quiz-main .overview-question input.retrying,
+#pe-model-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
 }
@@ -2631,7 +2744,9 @@ td input.activity-input:not(:first-child) {
 #practical-std-quiz-main .overview-question input.revealed,
 #math-operation-quiz-main .overview-question input.revealed,
 #practical-quiz-main .overview-question input.revealed,
-#math-course-quiz-main .overview-question input.revealed {
+#math-course-quiz-main .overview-question input.revealed,
+#korean-model-quiz-main .overview-question input.revealed,
+#pe-model-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
 }
