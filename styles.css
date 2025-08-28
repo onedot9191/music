@@ -2578,9 +2578,18 @@ td input.activity-input:not(:first-child) {
   transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
 }
 
+/* 맞춤법 빈칸 섹션 - 우선순위를 높여서 적용 */
+#spelling-blank .overview-question input {
+  min-width: 6ch !important; /* 답안에 맞는 더 작은 너비 */
+  width: auto !important; /* 자동 너비 */
+  max-width: 12ch !important; /* 최대 너비 제한 */
+}
+
 #social-course-quiz-main .overview-question input {
   min-width: 5ch;
 }
+
+
 
 /* ?�과 모형: ?�라??빈칸�?카드 ?�기 축소 (총론 ?��? */
 #practical-quiz-main .overview-question {
@@ -3441,6 +3450,116 @@ iframe {
     font-size: 16px;
   }
   
+  /* 맞춤법 이지선다 모바일 최적화 */
+  #spelling-quiz-main h2 {
+    font-size: 2.2rem !important;
+    margin-bottom: var(--space-lg) !important;
+    letter-spacing: 0.1rem !important;
+    padding: 0 var(--space-md) !important;
+    text-align: center !important;
+  }
+  
+  .spelling-question {
+    font-size: 1.6rem !important;
+    line-height: 1.8 !important;
+    padding: 2.5rem 1.5rem !important;
+    margin-bottom: 2rem !important;
+    min-height: 150px !important;
+  }
+  
+  .spelling-question-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--space-lg) !important;
+    padding: var(--space-md) !important;
+    font-size: 1.6rem !important;
+    line-height: 1.7 !important;
+  }
+  
+  .spelling-choice-btn {
+    margin: var(--space-xs) var(--space-xs) !important;
+    padding: var(--space-lg) var(--space-md) !important;
+    font-size: 1.5rem !important;
+    min-width: 12rem !important;
+    min-height: 5rem !important;
+    line-height: 1.3 !important;
+    flex: 1 !important;
+    max-width: calc(50% - var(--space-sm)) !important;
+    
+    /* 모바일 터치 개선 */
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    touch-action: manipulation !important;
+    
+    /* 터치 반응성 개선 */
+    transition: all 0.2s ease !important;
+  }
+  
+  .spelling-choice-btn:active {
+    transform: translateY(-1px) scale(0.98) !important;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  }
+  
+  .spelling-choice-btn:hover {
+    transform: none !important; /* 모바일에서는 호버 효과 비활성화 */
+  }
+  
+  /* 데이터셋 선택 화면 모바일 최적화 */
+  .dataset-selection h3 {
+    font-size: 2rem !important;
+    margin-bottom: var(--space-lg) !important;
+    text-align: center !important;
+    padding: 0 var(--space-md) !important;
+  }
+  
+  .dataset-options {
+    gap: var(--space-md) !important;
+  }
+  
+  .dataset-btn {
+    padding: var(--space-lg) var(--space-md) !important;
+    min-height: 7rem !important;
+    touch-action: manipulation !important;
+  }
+  
+  .dataset-title {
+    font-size: 1.8rem !important;
+  }
+  
+  .dataset-description {
+    font-size: 1.4rem !important;
+  }
+  
+  /* 맞춤법 진행도 모바일 최적화 */
+  #spelling-progress-container {
+    padding: var(--space-md) !important;
+    margin-bottom: var(--space-lg) !important;
+  }
+
+  #spelling-progress-text {
+    font-size: 1.4rem !important;
+    margin-bottom: var(--space-sm) !important;
+    text-align: center !important;
+  }
+
+  #spelling-progress-bar {
+    height: 1rem !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  /* 뒤로가기 버튼 모바일 최적화 */
+  #spelling-back-btn {
+    margin-top: var(--space-lg) !important;
+    padding: var(--space-md) var(--space-lg) !important;
+    font-size: 1.4rem !important;
+    min-height: 5rem !important;
+    touch-action: manipulation !important;
+  }
+  
   /* 달크로즈 모바일 반응형 */
   #dalcroze .grade-container {
     grid-template-columns: 1fr; /* 모바일에서는 1열 배치 */
@@ -3458,4 +3577,11 @@ iframe {
     font-size: 1rem;
     padding: 0.6rem 0.8rem;
   }
+}
+
+/* 맞춤법 빈칸 섹션 강제 적용 - 파일 끝에서 최고 우선순위 */
+section#spelling-blank .overview-question input[data-answer] {
+  min-width: 6ch !important;
+  width: auto !important;
+  max-width: 12ch !important;
 }
