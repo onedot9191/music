@@ -1,0 +1,23 @@
+/* === CSS VARIABLES ===
+   모든 CSS 커스텀 프로퍼티(변수)들을 정의합니다. */
+
+/* 기존 :root 변수들과 중복되지 않도록 조건부 정의 */
+:root {
+  /* 기존에 정의되지 않은 경우에만 새로운 변수 추가 */
+}
+
+/* === 다크 테마 지원 ===
+   추후 테마 전환 기능을 위한 준비 */
+[data-theme="dark"] {
+  --bg-dark: #1a1a2e;
+  --bg-light: #16213e;
+  --text-light: #f0f0f0;
+  --text-dark: #a0a0a0;
+}
+
+[data-theme="light"] {
+  --bg-dark: #f8f9fa;
+  --bg-light: #ffffff;
+  --text-light: #212529;
+  --text-dark: #6c757d;
+}
