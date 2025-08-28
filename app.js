@@ -52,6 +52,7 @@
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
                 PHYSICAL_ACTIVITY: 'physical-activity',
+                SPELLING: 'spelling',
                 COMPETENCY: 'competency',
                 AREA: 'area',
                 RANDOM: 'random'
@@ -128,6 +129,7 @@
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
             [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
+            [CONSTANTS.SUBJECTS.SPELLING]: '맞춤법',
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
             [CONSTANTS.SUBJECTS.AREA]: '영역'
         };
@@ -142,6 +144,105 @@
             [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준',
             [CONSTANTS.TOPICS.MORAL]: '기타'
         };
+
+        // 맞춤법 데이터셋
+        // 기존 데이터셋 (22 지도서 수록)
+        const SPELLING_DATA_BASIC = [
+            { sentence: "민서가 비밀 편지 한 (권, 장)을 조심스럽게 꺼냈다.", answer: "장" },
+            { sentence: "동한아, 그 신기한 마법 연필 한 (그루, 자루)만 빌려줄래?", answer: "자루" },
+            { sentence: "상훈이의 스포츠카 한 (개, 대)가 하늘에서 멋지게 내려왔다.", answer: "대" },
+            { sentence: "희원이는 하늘을 나는 운동화 한 (채, 켤레)를 샀다.", answer: "켤레" },
+            { sentence: "먹방 유튜버 성훈이가 수박 한 (통, 개)을 5초 만에 먹었다.", answer: "통" },
+            { sentence: "다운이가 임금님 수라상에 금수저 한 (벌, 묶음)을 올렸다.", answer: "벌" },
+            { sentence: "패셔니스타 마노는 투명 망토 (한벌, 한 벌)을 새로 샀다.", answer: "한 벌" },
+            { sentence: "병현이는 좀비 학교를 (마치고, 맞히고) 겨우 탈출했다.", answer: "마치고" },
+            { sentence: "궁수 영민이가 눈을 감고 과녁 10점을 (맞추고, 맞히고) 환호했다.", answer: "맞히고" },
+            { sentence: "상현이는 현민이와 어젯밤 꾼 꿈을 서로 (맞추어, 맞히어) 보았다.", answer: "맞추어" },
+            { sentence: "명탐정 동한이가 마침내 범인을 (알아맞혔다, 알아맞췄다).", answer: "알아맞혔다" },
+            { sentence: "민서는 흙탕물에서 뒹군 발을 (깨끗히, 깨끗이) 씻었다.", answer: "깨끗이" },
+            { sentence: "상훈이는 치킨 배달을 마음 (느긋이, 느긋히) 기다렸다.", answer: "느긋이" },
+            { sentence: "희원아, 로봇처럼 줄을 (반듯이, 반듯히) 서야 해.", answer: "반듯이" },
+            { sentence: "성훈이는 팬케이크를 천장까지 (겹겹이, 겹겹히) 쌓아 올렸다.", answer: "겹겹이" },
+            { sentence: "닌자 다운이는 시간을 내어 (틈틈이, 틈틈히) 표창을 연습한다.", answer: "틈틈이" },
+            { sentence: "마노야, 화장실이 급해도 너무 (급히, 급이) 뛰지 마.", answer: "급히" },
+            { sentence: "병현이는 마법 주문을 (정확이, 정확히) 외워야 한다.", answer: "정확히" },
+            { sentence: "영민이는 공룡 중에서 (특히, 특이) 티라노사우루스를 좋아한다.", answer: "특히" },
+            { sentence: "상현이는 외계인에게 자기 생각을 (솔직이, 솔직히) 털어놓았다.", answer: "솔직히" },
+            { sentence: "폭탄 제거반 현민이는 선을 (꼼꼼이, 꼼꼼히) 살폈다.", answer: "꼼꼼히" },
+            { sentence: "동한이는 용돈이 다 떨어져 마음이 (쓸쓸이, 쓸쓸히) 느껴진다고 했다.", answer: "쓸쓸히" },
+            { sentence: "용사 민서는 용의 동굴에 잘 (다녀온 것 같아요, 다녀왔어요)라고 보고했다.", answer: "다녀왔어요" },
+            { sentence: "우주비행사 상훈이는 화성에서 별일 (없었던 것 같아요, 없었어요)라고 말했다.", answer: "없었어요" },
+            { sentence: "희원아, 조용한 도서관에서 랩을 하면 (안, 않) 돼.", answer: "안" },
+            { sentence: "성훈아, 상어가 있는 바다에 들어가지 (안아야, 않아야) 한다.", answer: "않아야" },
+            { sentence: "밤새 게임한 다운이 얼굴이 많이 (안돼, 안 돼) 보인다.", answer: "안돼" },
+            { sentence: "마노야, 쿨쿨 자는 사자 앞에서 떠들면 (안돼, 안 돼).", answer: "안 돼" },
+            { sentence: "병현이가 \"귀신의 집에서 내가 먼저 (나갈게, 나갈께)!\"라고 소리쳤다.", answer: "나갈게" },
+            { sentence: "슈퍼히어로 영민이가 \"지구는 제가 꼭 (지킬게요, 지킬께요)!\"라고 외쳤다.", answer: "지킬게요" },
+            { sentence: "상현이는 웃음을 (뿌린만큼, 뿌린 만큼) 행복을 거둔다고 믿는다.", answer: "뿌린 만큼" },
+            { sentence: "현민이는 (나무만큼, 나무 만큼) 키가 크고 싶어 한다.", answer: "나무만큼" },
+            { sentence: "마법사 동한이는 주문이 (생각한대로, 생각한 대로) 이루어질 거라고 믿었다.", answer: "생각한 대로" },
+            { sentence: "엉뚱한 화가 민서는 (민서대로, 민서 대로) 그림을 완성했다.", answer: "민서대로" },
+            { sentence: "좀비 세상에서 살아남은 사람은 상훈이와 희원이 (둘뿐이다, 둘 뿐이다).", answer: "둘뿐이다" },
+            { sentence: "요리사 성훈이는 (노력할뿐, 노력할 뿐) 맛은 보장 못 한다고 했다.", answer: "노력할 뿐" },
+            { sentence: "다운이가 로봇 마노를 가리키며 \"(애, 얘)는 내 비밀 친구야.\"라고 소개했다.", answer: "얘" },
+            { sentence: "병현이가 시끄러운 앵무새들에게 \"(애들아, 얘들아), 조용히 해 줄래?\"라고 말했다.", answer: "얘들아" },
+            { sentence: "영민이가 순간이동하는 친구를 보며 \"저기 가는 (쟤, 재)는 누구니?\"라고 물었다.", answer: "쟤" },
+            { sentence: "상현이가 발로 그린 그림을 보여주며 \"이것은 (쟤가, 제가) 그린 작품입니다.\"라고 말했다.", answer: "제가" },
+            { sentence: "현민이는 공룡이 쫓아오는 꿈을 꿔서 걱정이 (되서, 돼서) 잠을 설쳤다.", answer: "돼서" },
+            { sentence: "동한이가 100층짜리 젠가를 다 쌓고 \"이제 다 (됬다, 됐다)!\"라고 외쳤다.", answer: "됐다" }
+        ];
+
+        // 새로운 데이터셋 (15 지도서 수록 + 기타)
+        const SPELLING_DATA_EXTENDED = [
+            { sentence: "라면만 먹는 우리 형 병현이는 완전 (멋장이, 멋쟁이)야.", answer: "멋쟁이" },
+            { sentence: "용돈으로 벽지를 바르는 상현이는 미래의 (도배쟁이, 도배장이).", answer: "도배장이" },
+            { sentence: "다운이가 노래방에 있었(는대, 는데) 마이크가 터졌어.", answer: "는데" },
+            { sentence: "동한이 말이, 민서가 꿈에서 용을 봤(데, 대).", answer: "대" },
+            { sentence: "상훈이는 가위바위보(로서, 로써) 우주 평화를 지켰다.", answer: "로써" },
+            { sentence: "먹기 대회 챔피언(으로서, 으로써) 현민이는 위엄을 보였다.", answer: "으로서" },
+            { sentence: "영민이는 꿀벌을 피해 미친 듯이 (뛰었다, 뗬다).", answer: "뛰었다" },
+            { sentence: "앵무새가 상훈이의 빵점 시험지를 (할퀴었다, 할켰다).", answer: "할퀴었다" },
+            { sentence: "희원아, 숨쉬기도 힘드니 (쉬었다가, 셨다가) 하자.", answer: "쉬었다가" },
+            { sentence: "나무늘보 성훈이가 랩에 맞춰 춤을 (쳤다니, 췄다니)!", answer: "췄다니" },
+            { sentence: "마노야, 숨겨둔 치킨 위치 좀 알려 (조, 줘).", answer: "줘" },
+            { sentence: "병현아, 그 외계어 (좀, 쫌) 그만해.", answer: "좀" },
+            { sentence: "다운이는 라면을 (먹을려고, 먹으려고) 한강에 갔다.", answer: "먹으려고" },
+            { sentence: "동한이는 PC방에 (갈려고, 가려고) 숙제를 후다닥 끝냈다.", answer: "가려고" },
+            { sentence: "민서야, (이것, 이 것)은 내가 만든 100층 젠가야.", answer: "이것" },
+            { sentence: "목마른 상훈이에게 (마실것, 마실 것) 좀 주세요.", answer: "마실 것" },
+            { sentence: "내 통장 잔고를 정확히 (암, 앎)이 부자의 첫걸음이다.", answer: "앎" },
+            { sentence: "현민이는 바다에서 황금 조개 (껍데기를, 껍질을) 주웠다.", answer: "껍질을" },
+            { sentence: "영민이는 양파 (껍데기를, 껍질을) 까다가 펑펑 울었다.", answer: "껍질을" },
+            { sentence: "상현이는 더워서 (윗옷, 웃옷)만 입고 수건만 둘렀다.", answer: "윗옷" },
+            { sentence: "탐정 희원이는 변장용 아빠 (윗옷, 웃옷)을 걸쳤다.", answer: "웃옷" },
+            { sentence: "성훈이는 넥타이를 머리에 (매고, 메고) 파티에 갔다.", answer: "매고" },
+            { sentence: "마노는 기타를 등에 (매고, 메고) 노래하며 걸었다.", answer: "메고" },
+            { sentence: "병현이는 눅눅한 과자를 다리미로 (다린, 달인) 다음 먹었다.", answer: "달인" },
+            { sentence: "마녀 다운이는 솥에 개구리 다리를 (다리는, 달이는) 중이다.", answer: "달이는" },
+            { sentence: "동한이는 과거의 나에게 경고 편지를 (부쳤다, 붙였다).", answer: "부쳤다" },
+            { sentence: "민서는 상훈이 등에 '바보' 스티커를 (부쳤다, 붙였다).", answer: "붙였다" },
+            { sentence: "요리왕 상훈이는 벌레를 간장에 (조렸다, 졸였다).", answer: "졸였다" },
+            { sentence: "현민이는 공포 영화를 보며 심장을 (조렸다, 졸였다).", answer: "졸였다" },
+            { sentence: "로봇 춤을 추던 영민이는 다리가 (절여요, 저려요).", answer: "저려요" },
+            { sentence: "요리왕 상현이는 초콜릿을 소금에 (절이고, 저리고) 있다.", answer: "절이고" },
+            { sentence: "희원아, 지구 멸망은 (이따가, 있다가) 걱정하고 밥부터 먹자.", answer: "있다가" },
+            { sentence: "성훈이는 교실에 1분 (이따가, 있다가) 매점으로 튀어갔다.", answer: "있다가" },
+            { sentence: "유튜버 마노는 구독자를 100만으로 (늘리기로, 늘이기로) 결심했다.", answer: "늘리기로" },
+            { sentence: "병현이는 엿가락을 1미터까지 (늘리는, 늘이는) 데 성공했다.", answer: "늘이는" },
+            { sentence: "이 자리를 (빌려, 빌어) 제 개그가 썰렁했음을 사과합니다.", answer: "빌려" },
+            { sentence: "민서는 BTS 집에 잠시 (들렀다가, 들렸다가) 갈 거라고 했다.", answer: "들렀다가" },
+            { sentence: "현민이가 얼마나 배고팠(던지, 든지) 냉장고를 통째로 먹었다.", answer: "던지" },
+            { sentence: "피자를 먹(던지, 든지) 치킨을 먹(던지, 든지) 얼른 시켜.", answer: "든지" },
+            { sentence: "영민아, 내 월급날이 (몇 일이지, 며칠이지)?", answer: "며칠이지" },
+            { sentence: "첫사랑 상현이를 생각하면 마음이 (설레이게, 설레게) 한다.", answer: "설레게" },
+            { sentence: "희원아, 로또 1등 당첨되길 (바래, 바라).", answer: "바라" },
+            { sentence: "성훈이는 라면에 (알맞는, 알맞은) 물 양을 조절했다.", answer: "알맞은" },
+            { sentence: "마노는 오늘따라 (웬지, 왠지) 머리에 새가 앉을 것 같았다.", answer: "왠지" },
+            { sentence: "병현이는 코를 팠다. (그리고 나서, 그러고 나서) 손을 씻었다.", answer: "그러고 나서" }
+        ];
+
+        // 통합 데이터셋 (ALL)
+        const SPELLING_DATA_ALL = [...SPELLING_DATA_BASIC, ...SPELLING_DATA_EXTENDED];
 
         // --- Auto width for blanks (fit to answer length) ---
         // Measure text width using a canvas with the same font as the input element
@@ -215,7 +316,16 @@
             selectedTopic: CONSTANTS.TOPICS.CURRICULUM,
             gameMode: CONSTANTS.MODES.NORMAL,
             isRandomizing: false,
-            typingInterval: null
+            typingInterval: null,
+            // 맞춤법 관련 상태
+            spelling: {
+                questions: [],
+                currentQuestionIndex: 0,
+                score: 0,
+                answered: false,
+                roundCompleted: false,
+                selectedDataset: 'basic' // 기본값
+            }
         };
 
         const SPECIAL_SUBJECTS = new Set([
@@ -374,11 +484,11 @@
         }
 
         // --- Audio ---
-        const SFX_VOLUME = 0.1;
+        const SFX_VOLUME = 0.5;
 
         const successAudio = new Audio('./success.mp3');
         successAudio.preload = 'auto';
-        successAudio.volume = SFX_VOLUME;
+        successAudio.volume = SFX_VOLUME * 0.6;
         const timeupAudio = new Audio('./timeup.mp3');
         timeupAudio.preload = 'auto';
         timeupAudio.volume = SFX_VOLUME;
@@ -1307,6 +1417,23 @@
             
             gameState.combo = 0;
             updateMushroomGrowth();
+            
+            // 맞춤법 상태 초기화
+            gameState.spelling = {
+                questions: [],
+                currentQuestionIndex: 0,
+                score: 0,
+                answered: false,
+                roundCompleted: false,
+                selectedDataset: 'basic'
+            };
+            
+            // 맞춤법 문항 리스트 초기화
+            const questionsList = document.getElementById('spelling-questions-list');
+            if (questionsList) {
+                questionsList.innerHTML = '';
+            }
+            
             headerTitle.textContent = '아웃풋';
             headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -1342,20 +1469,7 @@
                 SUBJECT_NAMES[gameState.selectedSubject] || '퀴즈';
            
            // Determine the correct main element based on topic and subject
-           let mainId;
-           if (gameState.selectedTopic === CONSTANTS.TOPICS.BASIC) {
-               if (gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC) {
-                   mainId = 'music-basic-quiz-main';
-               } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH) {
-                   mainId = 'english-quiz-main';
-               } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_BASIC) {
-                   mainId = 'art-basic-quiz-main';
-               } else {
-                   mainId = `${gameState.selectedSubject}-quiz-main`;
-               }
-           } else {
-               mainId = `${gameState.selectedSubject}-quiz-main`;
-           }
+           const mainId = getMainElementId();
            
            const mainEl = document.getElementById(mainId);
            mainEl.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -1383,6 +1497,8 @@
                 gameState.selectedTopic === CONSTANTS.TOPICS.BASIC
             ) {
                 adjustEnglishInputWidths();
+            } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING) {
+                initializeSpellingQuiz();
             }
             adjustBasicTopicInputWidths();
             
@@ -1491,8 +1607,25 @@
             );
         }
 
+        function getMainElementId() {
+            // Determine the correct main element based on topic and subject
+            if (gameState.selectedTopic === CONSTANTS.TOPICS.BASIC) {
+                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC) {
+                    return 'music-basic-quiz-main';
+                } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH) {
+                    return 'english-quiz-main';
+                } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_BASIC) {
+                    return 'art-basic-quiz-main';
+                } else {
+                    return `${gameState.selectedSubject}-quiz-main`;
+                }
+            } else {
+                return `${gameState.selectedSubject}-quiz-main`;
+            }
+        }
+
         function isQuizComplete() {
-            const main = document.getElementById(`${gameState.selectedSubject}-quiz-main`);
+            const main = document.getElementById(getMainElementId());
             if (!main) return false;
             // If there are any gated sections with remaining inputs, quiz is not complete
             const gatedInputs = main.querySelectorAll('section.practical-section-disabled input[data-answer]');
@@ -2735,6 +2868,339 @@
                 });
             });
         })();
+
+        // --- 맞춤법 퀴즈 기능 ---
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function extractChoices(sentence) {
+            const match = sentence.match(/\(([^)]+)\)/);
+            if (!match) return null;
+            
+            const choicesText = match[1];
+            const choices = choicesText.split(',').map(c => c.trim());
+            
+            // 50% 확률로 선지 순서 뒤집기
+            if (Math.random() < 0.5) {
+                choices.reverse();
+            }
+            
+            return {
+                choices,
+                position: match.index,
+                fullMatch: match[0]
+            };
+        }
+
+        function renderSpellingQuestion(questionData) {
+            const questionsList = document.getElementById('spelling-questions-list');
+            const { sentence, answer } = questionData;
+            
+            const choiceData = extractChoices(sentence);
+            if (!choiceData) return;
+            
+            const { choices, position, fullMatch } = choiceData;
+            
+            // 괄호 앞부분 + 버튼들 + 괄호 뒷부분
+            const beforeParens = sentence.substring(0, position);
+            const afterParens = sentence.substring(position + fullMatch.length);
+            
+            // 새로운 문항 요소 생성
+            const questionItem = document.createElement('div');
+            questionItem.className = 'spelling-question-item current';
+            questionItem.dataset.questionIndex = gameState.spelling.currentQuestionIndex;
+            
+            questionItem.innerHTML = `
+                <div class="spelling-question-content">
+                    ${beforeParens}
+                    <button class="spelling-choice-btn" data-choice="${choices[0]}">${choices[0]}</button>
+                    <button class="spelling-choice-btn" data-choice="${choices[1]}">${choices[1]}</button>
+                    ${afterParens}
+                </div>
+            `;
+            
+            // 기존 현재 문항의 current 클래스 제거
+            const currentItems = questionsList.querySelectorAll('.spelling-question-item.current');
+            currentItems.forEach(item => item.classList.remove('current'));
+            
+            // 새 문항을 리스트 맨 위에 추가
+            questionsList.prepend(questionItem);
+            
+            // 버튼 이벤트 리스너 추가
+            const buttons = questionItem.querySelectorAll('.spelling-choice-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => handleSpellingChoice(button, answer, buttons, questionItem));
+            });
+            
+            // 자동 스크롤 제거 - 사용자가 직접 조작할 때까지 화면 고정
+        }
+
+        function handleSpellingChoice(clickedButton, correctAnswer, allButtons, questionItem) {
+            if (gameState.spelling.answered) return;
+            
+            gameState.spelling.answered = true;
+            const selectedChoice = clickedButton.dataset.choice;
+            const isCorrect = selectedChoice === correctAnswer;
+            
+            // 즉시 시각적 피드백
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.choice === correctAnswer) {
+                    btn.classList.add('correct-answer');
+                } else if (btn === clickedButton && !isCorrect) {
+                    btn.classList.add('wrong-answer');
+                }
+            });
+            
+            // 문항 전체에 피드백 애니메이션
+            if (isCorrect) {
+                questionItem.classList.add('answer-correct');
+            } else {
+                questionItem.classList.add('answer-wrong');
+            }
+            
+            // 문항을 answered 상태로 변경
+            questionItem.classList.add('answered');
+            questionItem.classList.remove('current');
+            
+            if (isCorrect) {
+                gameState.spelling.score++;
+                // 정답 효과 (즉시 실행)
+                playSound(successAudio);
+                gameState.combo++;
+                setCharacterState('happy', 1500);
+                if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                    gameState.total = Math.min(gameState.total + CONSTANTS.HARD_CORE_TIME_BONUS, CONSTANTS.HARD_CORE_DURATION);
+                }
+                // 콤보 시각적 피드백
+                showComboEffect();
+            } else {
+                // 오답 효과 (즉시 실행)
+                playSound(failAudio);
+                gameState.combo = 0;
+                setCharacterState('sad', 1500);
+            }
+            
+            updateMushroomGrowth();
+            
+            // 다음 문제로 빠르게 진행
+            setTimeout(() => {
+                nextSpellingQuestion();
+            }, 800);
+        }
+
+        function showComboEffect() {
+            if (gameState.combo > 1) {
+                const comboText = document.createElement('div');
+                comboText.textContent = `${gameState.combo} COMBO!`;
+                comboText.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 2rem;
+                    font-weight: 900;
+                    color: #FFD700;
+                    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+                    z-index: 9999;
+                    pointer-events: none;
+                    animation: comboFade 1s ease-out forwards;
+                `;
+                
+                document.body.appendChild(comboText);
+                
+                setTimeout(() => {
+                    if (comboText.parentNode) {
+                        comboText.parentNode.removeChild(comboText);
+                    }
+                }, 1000);
+            }
+        }
+
+        // 자동 스크롤 기능 비활성화 - 사용자가 직접 조작할 때까지 화면 고정
+        // function scrollToCurrentQuestion() {
+        //     const currentQuestion = document.querySelector('.spelling-question-item.current');
+        //     if (currentQuestion) {
+        //         // 현재 문항이 항상 첫 번째이므로 진행도 영역으로 스크롤
+        //         const progressElement = document.getElementById('spelling-progress-container');
+        //         if (progressElement) {
+        //             progressElement.scrollIntoView({ 
+        //                 behavior: 'smooth', 
+        //                 block: 'start'
+        //             });
+        //         }
+        //     } else {
+        //         // 현재 문항이 없으면 맨 위로 스크롤
+        //         const spellingContainer = document.getElementById('spelling-container');
+        //         if (spellingContainer) {
+        //             spellingContainer.scrollIntoView({ 
+        //                 behavior: 'smooth', 
+        //                 block: 'start'
+        //             });
+        //         }
+        //     }
+        // }
+
+        function updateSpellingProgress() {
+            const currentEl = document.getElementById('spelling-current-progress');
+            const totalEl = document.getElementById('spelling-total-questions');
+            const progressFill = document.getElementById('spelling-progress-fill');
+            
+            const currentProgress = gameState.spelling.currentQuestionIndex + 1;
+            const totalQuestions = gameState.spelling.questions.length;
+            const progressPercentage = (currentProgress / totalQuestions) * 100;
+            
+            currentEl.textContent = currentProgress;
+            totalEl.textContent = totalQuestions;
+            progressFill.style.width = `${progressPercentage}%`;
+        }
+
+        function nextSpellingQuestion() {
+            gameState.spelling.currentQuestionIndex++;
+            gameState.spelling.answered = false;
+            
+            // 진행도바는 풀이 진행 정도를 표시 (정답 여부 무관)
+            const progressContainer = document.getElementById('spelling-progress-container');
+            const progressFill = document.getElementById('spelling-progress-fill');
+            if (progressContainer && progressFill) {
+                progressContainer.classList.add('progress-increase');
+                progressFill.classList.add('fill-animation');
+                setTimeout(() => {
+                    progressContainer.classList.remove('progress-increase');
+                    progressFill.classList.remove('fill-animation');
+                }, 600);
+            }
+            updateSpellingProgress();
+
+            if (gameState.spelling.currentQuestionIndex >= gameState.spelling.questions.length) {
+                // 라운드 완료
+                showSpellingRoundComplete();
+            } else {
+                // 다음 문제 출제
+                const currentQuestion = gameState.spelling.questions[gameState.spelling.currentQuestionIndex];
+                renderSpellingQuestion(currentQuestion);
+            }
+        }
+
+        function showSpellingRoundComplete() {
+            const completedMessage = document.getElementById('spelling-completed-message');
+            
+            completedMessage.classList.remove('hidden');
+            
+            // 완료 메시지로 스크롤
+            completedMessage.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+            
+            // 1.2초 후 새 라운드 시작 (빠른 진행)
+            setTimeout(() => {
+                startNewSpellingRound();
+                completedMessage.classList.add('hidden');
+            }, 1200);
+        }
+
+        function startNewSpellingRound() {
+            // 기존 문항들 모두 제거
+            const questionsList = document.getElementById('spelling-questions-list');
+            questionsList.innerHTML = '';
+            
+            // 선택된 데이터셋에 따라 문항 설정
+            let selectedData;
+            switch (gameState.spelling.selectedDataset) {
+                case 'basic':
+                    selectedData = SPELLING_DATA_BASIC;
+                    break;
+                case 'extended':
+                    selectedData = SPELLING_DATA_EXTENDED;
+                    break;
+                case 'all':
+                    selectedData = SPELLING_DATA_ALL;
+                    break;
+                default:
+                    selectedData = SPELLING_DATA_BASIC;
+            }
+            
+            // 전체 문항 순서 새로 랜덤화
+            gameState.spelling.questions = shuffleArray(selectedData);
+            gameState.spelling.currentQuestionIndex = 0;
+            gameState.spelling.score = 0;
+            gameState.spelling.answered = false;
+            
+            updateSpellingProgress();
+            
+            // 첫 번째 문제 출제
+            const firstQuestion = gameState.spelling.questions[0];
+            renderSpellingQuestion(firstQuestion);
+        }
+
+        function initializeSpellingQuiz() {
+            // 데이터셋 선택 화면 보여주기
+            showSpellingDatasetSelection();
+        }
+
+        function showSpellingDatasetSelection() {
+            const selectionEl = document.getElementById('spelling-dataset-selection');
+            const containerEl = document.getElementById('spelling-container');
+            
+            selectionEl.classList.remove('hidden');
+            containerEl.classList.add('hidden');
+            
+            // 데이터셋 버튼 이벤트 리스너 추가
+            const datasetBtns = document.querySelectorAll('.dataset-btn');
+            datasetBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const dataset = btn.dataset.dataset;
+                    startSpellingQuizWithDataset(dataset);
+                });
+            });
+        }
+
+        function startSpellingQuizWithDataset(dataset) {
+            gameState.spelling.selectedDataset = dataset;
+            
+            // 타이머 시작
+            const timerContainer = document.getElementById('timer-container');
+            const timeEl = document.getElementById('time');
+            const barEl = document.querySelector('#bar > div');
+            
+            gameState.total = (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) ? CONSTANTS.HARD_CORE_DURATION : gameState.duration;
+            timerContainer.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            forceQuitBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            
+            timeEl.textContent = formatTime(gameState.total);
+            barEl.style.width = '100%';
+            if (gameState.timerId === null) {
+                gameState.timerId = setInterval(tick, 1000);
+            }
+            setCharacterState('idle');
+            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+                character.classList.add('devil-mode');
+            }
+            
+            // 선택 화면 숨기고 퀴즈 화면 보여주기
+            const selectionEl = document.getElementById('spelling-dataset-selection');
+            const containerEl = document.getElementById('spelling-container');
+            selectionEl.classList.add('hidden');
+            containerEl.classList.remove('hidden');
+            
+            // 뒤로가기 버튼 이벤트 리스너 추가
+            const backBtn = document.getElementById('spelling-back-btn');
+            backBtn.addEventListener('click', () => {
+                showSpellingDatasetSelection();
+            });
+            
+            // 첫 번째 라운드 시작
+            startNewSpellingRound();
+        }
 
         // --- INITIAL SETUP ---
         function initializeApp() {
