@@ -2956,9 +2956,71 @@
             const buttons = questionItem.querySelectorAll('.spelling-choice-btn');
             buttons.forEach(button => {
                 button.addEventListener('click', () => handleSpellingChoice(button, answer, buttons, questionItem));
+                
+                // 모바일 터치 개선을 위한 터치 이벤트 추가
+                if ('ontouchstart' in window) {
+                    button.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        button.style.transform = 'translateY(-1px) scale(0.98)';
+                    }, { passive: false });
+                    
+                    button.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        button.style.transform = '';
+                        // 터치 종료 시 클릭 이벤트 발생
+                        if (!gameState.spelling.answered) {
+                            handleSpellingChoice(button, answer, buttons, questionItem);
+                        }
+                    }, { passive: false });
+                    
+                    button.addEventListener('touchcancel', () => {
+                        button.style.transform = '';
+                    });
+                }
             });
             
+            // 키보드 네비게이션 설정
+            setupSpellingKeyboard(buttons, answer, questionItem);
+            
+            // 모바일에서 문항이 잘 보이도록 스크롤 조정
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    questionItem.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center',
+                        inline: 'nearest'
+                    });
+                }, 100);
+            }
+            
             // 자동 스크롤 제거 - 사용자가 직접 조작할 때까지 화면 고정
+        }
+
+        function setupSpellingKeyboard(buttons, correctAnswer, questionItem) {
+            const keyboardHandler = (event) => {
+                // 답이 이미 선택되었거나 빈칸 모드인 경우 무시
+                if (gameState.spelling.answered || isSpellingBlankMode()) return;
+                
+                // 현재 활성화된 문항인지 확인
+                const currentItem = document.querySelector('.spelling-question-item.current');
+                if (!currentItem || !currentItem.contains(buttons[0])) return;
+                
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    handleSpellingChoice(buttons[0], correctAnswer, buttons, questionItem);
+                } else if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    handleSpellingChoice(buttons[1], correctAnswer, buttons, questionItem);
+                }
+            };
+            
+            // 이벤트 리스너 추가
+            document.addEventListener('keydown', keyboardHandler);
+            
+            // 정리 함수를 questionItem에 저장
+            questionItem.keyboardCleanup = () => {
+                document.removeEventListener('keydown', keyboardHandler);
+            };
         }
 
         function handleSpellingChoice(clickedButton, correctAnswer, allButtons, questionItem) {
@@ -2967,6 +3029,11 @@
             gameState.spelling.answered = true;
             const selectedChoice = clickedButton.dataset.choice;
             const isCorrect = selectedChoice === correctAnswer;
+            
+            // 키보드 이벤트 리스너 정리
+            if (questionItem.keyboardCleanup) {
+                questionItem.keyboardCleanup();
+            }
             
             // 즉시 시각적 피드백
             allButtons.forEach(btn => {
@@ -3161,8 +3228,16 @@
         }
 
         function startNewSpellingRound() {
-            // 기존 문항들 모두 제거
+            // 기존 문항들의 키보드 이벤트 리스너 정리
             const questionsList = document.getElementById('spelling-questions-list');
+            const existingItems = questionsList.querySelectorAll('.spelling-question-item');
+            existingItems.forEach(item => {
+                if (item.keyboardCleanup) {
+                    item.keyboardCleanup();
+                }
+            });
+            
+            // 기존 문항들 모두 제거
             questionsList.innerHTML = '';
             
             // 선택된 데이터셋에 따라 문항 설정
