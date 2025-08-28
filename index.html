@@ -71,6 +71,525 @@
 
     }
 
+    /* 맞춤법 퀴즈 스타일 - 사이트 디자인 통합 */
+    #spelling-quiz-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem var(--space-lg) var(--space-xl) var(--space-lg);
+      min-height: calc(100vh - 12rem);
+      overflow-y: auto;
+      position: relative;
+      z-index: 1;
+      scroll-behavior: smooth;
+      scroll-padding-top: 6rem;
+      scroll-padding-bottom: var(--space-lg);
+    }
+
+    #spelling-quiz-main h2 {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      margin-top: 0;
+      color: var(--text-light);
+      font-weight: 700;
+      letter-spacing: 0.2rem;
+      position: relative;
+      padding-top: var(--space-lg);
+      line-height: 1.2;
+    }
+
+    .spelling-question {
+      font-size: 2rem;
+      line-height: 2.4;
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 4rem 3rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: keep-all;
+      word-wrap: break-word;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .spelling-question:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .spelling-choice-btn {
+      display: inline-block;
+      margin: 0 var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      background: linear-gradient(135deg, var(--primary) 0%, #c73650 100%);
+      border: 2px solid var(--primary);
+      border-radius: 0.8rem;
+      color: var(--text-light);
+      font-family: var(--font-base);
+      font-size: 1.6rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      vertical-align: middle;
+      min-width: 12rem;
+      text-align: center;
+      position: relative;
+      word-break: keep-all;
+      white-space: nowrap;
+      letter-spacing: 0.05rem;
+      line-height: 1.3;
+      flex-shrink: 0;
+      box-shadow: 
+        0 0.2rem 0.8rem rgba(233, 69, 96, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .spelling-choice-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #ff6b7a 0%, #e94560 100%);
+      border-color: #ff6b7a;
+      transform: translateY(-0.2rem) scale(1.02);
+      box-shadow: 
+        0 0.4rem 1.6rem rgba(233, 69, 96, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .spelling-choice-btn:active:not(:disabled) {
+      transform: translateY(-0.1rem) scale(1.01);
+      transition-duration: 0.1s;
+    }
+
+    .spelling-choice-btn:disabled {
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.8;
+    }
+
+    /* 즉시 피드백 애니메이션 - 차분한 스타일 */
+    .spelling-choice-btn.correct-answer {
+      background: var(--correct) !important;
+      border-color: var(--correct) !important;
+      color: var(--bg-dark) !important;
+      font-weight: 700 !important;
+      animation: correctPulse 0.4s ease-out;
+      box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .spelling-choice-btn.wrong-answer {
+      background: var(--incorrect) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--text-light) !important;
+      animation: wrongShake 0.4s ease-out;
+      box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3) !important;
+    }
+
+    @keyframes correctPulse {
+      0% { 
+        transform: scale(1);
+      }
+      50% { 
+        transform: scale(1.05);
+      }
+      100% { 
+        transform: scale(1);
+      }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .spelling-question-item.answer-correct {
+      animation: itemCorrect 0.6s ease-out;
+    }
+
+    .spelling-question-item.answer-wrong {
+      animation: itemWrong 0.5s ease-out;
+    }
+
+    @keyframes itemCorrect {
+      0% { border-color: var(--secondary); }
+      50% { border-color: var(--correct); }
+      100% { border-color: var(--secondary); }
+    }
+
+    @keyframes itemWrong {
+      0% { border-color: var(--secondary); }
+      50% { border-color: var(--incorrect); }
+      100% { border-color: var(--secondary); }
+    }
+
+    /* 진행도 증가 애니메이션 */
+    #spelling-progress-container.progress-increase {
+      animation: progressIncrease 0.4s ease-out;
+    }
+
+    @keyframes progressIncrease {
+      0% { transform: scale(1); }
+      50% { 
+        transform: scale(1.02);
+        border-color: var(--correct);
+      }
+      100% { 
+        transform: scale(1);
+        border-color: var(--accent);
+      }
+    }
+
+    /* 진행도 바 채우기 애니메이션 */
+    #spelling-progress-fill.fill-animation {
+      animation: fillPulse 0.6s ease-out;
+    }
+
+    @keyframes fillPulse {
+      0% { box-shadow: 0 0.1rem 0.3rem rgba(233, 69, 96, 0.3); }
+      50% { 
+        box-shadow: 
+          0 0.1rem 0.3rem rgba(233, 69, 96, 0.5),
+          0 0 1rem rgba(233, 69, 96, 0.3);
+      }
+      100% { box-shadow: 0 0.1rem 0.3rem rgba(233, 69, 96, 0.3); }
+    }
+
+    /* 데이터셋 선택 화면 스타일 */
+    .dataset-selection {
+      text-align: center;
+      padding: var(--space-xl);
+    }
+
+    .dataset-selection h3 {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      color: var(--text-light);
+      margin-bottom: var(--space-xl);
+      font-weight: 600;
+      letter-spacing: 0.1rem;
+    }
+
+    .dataset-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .dataset-btn {
+      background: linear-gradient(135deg, var(--bg-light) 0%, rgba(15, 52, 96, 0.8) 100%);
+      border: 2px solid var(--secondary);
+      border-radius: 1.2rem;
+      padding: var(--space-xl) var(--space-lg);
+      color: var(--text-light);
+      font-family: var(--font-base);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 0.4rem 1.6rem rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    .dataset-btn:hover {
+      transform: translateY(-0.2rem);
+      border-color: var(--primary);
+      box-shadow: 
+        0 0.6rem 2rem rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .dataset-btn:active {
+      transform: translateY(0);
+    }
+
+    .dataset-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      color: var(--primary);
+      letter-spacing: 0.05rem;
+    }
+
+    .dataset-description {
+      font-size: 1.4rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.4;
+    }
+
+    /* 뒤로가기 버튼 */
+    .back-btn {
+      margin-top: var(--space-xl);
+      padding: var(--space-md) var(--space-lg);
+      background: linear-gradient(135deg, var(--secondary) 0%, #2a5a8f 100%);
+      border: 2px solid var(--secondary);
+      border-radius: 0.8rem;
+      color: var(--text-light);
+      font-family: var(--font-base);
+      font-size: 1.4rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.2);
+    }
+
+    .back-btn:hover {
+      transform: translateY(-0.1rem);
+      box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.3);
+    }
+
+    /* 콤보 효과 애니메이션 */
+    @keyframes comboFade {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+    }
+
+    /* 호버 효과 빠른 반응 */
+    .spelling-choice-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .spelling-choice-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02) !important;
+      transition-duration: 0.15s !important;
+    }
+
+    #spelling-progress-container {
+      margin-bottom: var(--space-xl);
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--bg-light) 0%, var(--secondary) 100%);
+      border-radius: 1rem;
+      border: 2px solid var(--accent);
+      box-shadow: 
+        0 0.4rem 1.6rem rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    #spelling-progress-text {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: var(--space-md);
+      letter-spacing: 0.1rem;
+    }
+
+    #spelling-progress-bar {
+      width: 100%;
+      height: 1.2rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 0.6rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 0.2rem 0.4rem rgba(0, 0, 0, 0.3);
+    }
+
+    #spelling-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, #ff6b7a 100%);
+      border-radius: 0.6rem;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      box-shadow: 0 0.1rem 0.3rem rgba(233, 69, 96, 0.3);
+    }
+
+    #spelling-progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+      border-radius: 0.6rem 0.6rem 0 0;
+    }
+
+    #spelling-completed-message {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--correct);
+      padding: var(--space-xl) var(--space-lg);
+      background: linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(46, 204, 64, 0.05) 100%);
+      border-radius: 1.2rem;
+      border: 2px solid var(--correct);
+      box-shadow: 
+        0 0.4rem 1.6rem rgba(57, 255, 20, 0.2),
+        inset 0 1px 0 rgba(57, 255, 20, 0.1);
+      word-break: keep-all;
+    }
+
+    #spelling-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      width: 100%;
+    }
+
+    #spelling-questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .spelling-question-item {
+      background: linear-gradient(135deg, var(--bg-light) 0%, rgba(15, 52, 96, 0.8) 100%);
+      border-radius: 1.2rem;
+      border: 2px solid var(--secondary);
+      box-shadow: 
+        0 0.4rem 1.6rem rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: translateY(-var(--space-lg));
+      animation: slideInFromTop 0.5s ease-out forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+
+    .spelling-question-item.answered {
+      opacity: 0.6;
+      pointer-events: none;
+      filter: grayscale(0.3);
+    }
+
+    .spelling-question-item.current {
+      border-color: var(--accent);
+      box-shadow: 
+        0 0.6rem 2rem rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transform: scale(1.01);
+      z-index: 10;
+      position: relative;
+    }
+    
+
+
+    @keyframes slideInFromTop {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 기존 문항들이 아래로 밀려나는 효과 */
+    .spelling-question-item:not(.current) {
+      animation-delay: 0.1s;
+    }
+
+    .spelling-question-content {
+      font-family: var(--font-base);
+      font-size: 1.8rem;
+      line-height: 1.6;
+      text-align: center;
+      padding: var(--space-xl) var(--space-lg);
+      min-height: 16rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      color: var(--text-light);
+      letter-spacing: 0.02rem;
+      word-break: keep-all;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      #spelling-quiz-main {
+        padding: var(--space-xl) var(--space-md) var(--space-xl) var(--space-md);
+      }
+      
+      #spelling-quiz-main h2 {
+        font-size: 2.4rem;
+        margin-bottom: var(--space-lg);
+        letter-spacing: 0.15rem;
+      }
+      
+      .spelling-question-content {
+        font-size: 1.6rem;
+        padding: var(--space-lg) var(--space-md);
+        min-height: 14rem;
+        line-height: 1.5;
+        white-space: normal;
+        flex-wrap: wrap;
+        text-align: center;
+      }
+      
+      .spelling-choice-btn {
+        margin: 0 var(--space-xs);
+        padding: var(--space-sm) var(--space-md);
+        font-size: 1.4rem;
+        min-width: 10rem;
+      }
+      
+      #spelling-progress-container {
+        padding: var(--space-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      #spelling-progress-text {
+        font-size: 1.4rem;
+        margin-bottom: var(--space-sm);
+      }
+
+      #spelling-progress-bar {
+        height: 1rem;
+      }
+
+      .dataset-selection h3 {
+        font-size: 2rem;
+        margin-bottom: var(--space-lg);
+      }
+
+      .dataset-options {
+        gap: var(--space-md);
+      }
+
+      .dataset-btn {
+        padding: var(--space-lg) var(--space-md);
+      }
+
+      .dataset-title {
+        font-size: 1.8rem;
+      }
+
+      .dataset-description {
+        font-size: 1.3rem;
+      }
+    }
+
   </style>
 
 </head>
@@ -12182,6 +12701,50 @@
 
   </div>
 
+  <main id="spelling-quiz-main" class="hidden">
+    <section id="spelling" class="active">
+      <h2>맞춤법</h2>
+      
+      <!-- 데이터셋 선택 화면 -->
+      <div id="spelling-dataset-selection" class="dataset-selection">
+        <h3>문제 유형을 선택해주세요</h3>
+        <div class="dataset-options">
+          <button class="dataset-btn" data-dataset="basic">
+            <div class="dataset-title">22 데이터셋</div>
+            <div class="dataset-description">기본 맞춤법 문제 (41문항)</div>
+          </button>
+          <button class="dataset-btn" data-dataset="extended">
+            <div class="dataset-title">15 데이터셋</div>
+            <div class="dataset-description">추가 맞춤법 문제 (43문항)</div>
+          </button>
+          <button class="dataset-btn" data-dataset="all">
+            <div class="dataset-title">ALL</div>
+            <div class="dataset-description">모든 문제 통합 (84문항)</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 퀴즈 진행 화면 -->
+      <div id="spelling-container" class="hidden">
+        <div id="spelling-progress-container">
+          <div id="spelling-progress-text">
+            <span id="spelling-current-progress">0</span> / <span id="spelling-total-questions">0</span>
+          </div>
+          <div id="spelling-progress-bar">
+            <div id="spelling-progress-fill"></div>
+          </div>
+        </div>
+        <div id="spelling-questions-list">
+          <!-- 문항들이 여기에 쌓입니다 -->
+        </div>
+        <div id="spelling-completed-message" class="hidden">
+          <p>이번 라운드를 완료했습니다! 새로운 라운드를 시작합니다...</p>
+        </div>
+        <button id="spelling-back-btn" class="back-btn">선택 화면으로</button>
+      </div>
+    </section>
+  </main>
+
 
 
   <div id="start-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="start-modal-title">
@@ -12301,6 +12864,8 @@
                 <button class="btn subject-btn" data-subject="music-elements" data-topic="moral">음악요소</button>
 
                 <button class="btn subject-btn" data-subject="physical-activity" data-topic="moral">신체활동 예시</button>
+
+                <button class="btn subject-btn" data-subject="spelling" data-topic="moral">맞춤법</button>
 
             </div>
 
