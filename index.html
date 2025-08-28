@@ -21,7 +21,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
+  <!-- === 기존 스타일 (변경 없음) === -->
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- === 보완적 모듈 CSS (기존 스타일 보존) === -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
 
   <link rel="icon" href="favicon.ico">
 
@@ -12990,6 +12997,27 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
+  <!-- === 모듈화 지원 스크립트 (기존 코드와 병행) === -->
+  <script type="module">
+    // 모듈들을 별도 네임스페이스에 로드하여 기존 코드와 충돌 방지
+    try {
+      const modules = {
+        constants: await import('./modules/constants.js'),
+        audio: await import('./modules/audio.js'),
+        utils: await import('./modules/utils.js'),
+        timer: await import('./modules/timer.js'),
+        storage: await import('./modules/storage.js')
+      };
+      
+      // 개발자 도구에서 접근 가능하도록 전역 객체에 저장 (충돌 방지)
+      window._modules = modules;
+      console.log('✅ 모듈화 시스템 로드 완료 (기존 코드와 독립적으로 운영)');
+    } catch (error) {
+      console.log('ℹ️ 모듈 로드 실패 (기존 기능에 영향 없음):', error.message);
+    }
+  </script>
+  
+  <!-- === 기존 메인 애플리케이션 파일 (변경 없음) === -->
   <script src="app.js"></script>
 
 </body>
