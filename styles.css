@@ -194,7 +194,8 @@ header h1 {
 #bar > div {
   height: 100%;
   width: 100%;
-  background: var(--primary);
+  background: var(--primary) !important;
+  background-image: none !important;
   transition: width 1s linear;
   border-radius: 2px;
 }
@@ -528,14 +529,17 @@ td input:focus {
 td input.correct {
   border-color: var(--correct);
   color: var(--correct);
+  background: transparent;
 }
 td input.incorrect {
   border-color: var(--incorrect);
   color: var(--incorrect);
+  background: transparent;
 }
 td input.retrying {
   border-color: var(--retrying);
   color: var(--retrying);
+  background: transparent;
 }
 td input.revealed {
   color: var(--revealed);
@@ -560,11 +564,16 @@ td input.shake {
   }
 }
 
-/* Correct answer subtle pulse (distinct from wrong shake) */
+/* Correct answer subtle pulse (distinct from wrong shake) - COMPLETELY DISABLED */
 td input.correct.correct-pulse {
-  animation: correct-pulse 420ms ease-out;
+  /* animation: correct-pulse 420ms ease-out; */
+  animation: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
+/* DISABLED KEYFRAMES */
+/*
 @keyframes correct-pulse {
   0% {
     transform: scale(1);
@@ -579,6 +588,7 @@ td input.correct.correct-pulse {
     box-shadow: 0 0 0 rgba(57, 255, 20, 0);
   }
 }
+*/
 
 th.sub-area-cell {
   min-width: 22rem;
@@ -603,7 +613,7 @@ input.sub-area-input.correct,
 th.sub-area-cell .sub-area-input.correct {
   border: 3px solid #39ff14 !important;
   color: #39ff14 !important;
-  background: rgba(57, 255, 20, 0.3) !important;
+  background: transparent !important;
   font-weight: 700 !important;
   box-shadow: 0 0 8px rgba(57, 255, 20, 0.5) !important;
 }
@@ -613,7 +623,7 @@ input.sub-area-input.incorrect,
 th.sub-area-cell .sub-area-input.incorrect {
   border: 3px solid #ff5733 !important;
   color: #ff5733 !important;
-  background: rgba(255, 87, 51, 0.3) !important;
+  background: transparent !important;
   font-weight: 700 !important;
   box-shadow: 0 0 8px rgba(255, 87, 51, 0.5) !important;
 }
@@ -623,7 +633,7 @@ input.sub-area-input.retrying,
 th.sub-area-cell .sub-area-input.retrying {
   border: 3px solid #ffc300 !important;
   color: #ffc300 !important;
-  background: rgba(255, 195, 0, 0.3) !important;
+  background: transparent !important;
   font-weight: 700 !important;
   box-shadow: 0 0 8px rgba(255, 195, 0, 0.5) !important;
 }
