@@ -70,6 +70,7 @@
                 SOCIAL_COURSE: 'social-course',
                 MATH_COURSE: 'math-course',
                 SCIENCE_COURSE: 'science-course',
+                MUSIC_COURSE: 'music-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
@@ -149,6 +150,7 @@
             [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
             [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
             [CONSTANTS.SUBJECTS.SCIENCE_COURSE]: '과학',
+            [CONSTANTS.SUBJECTS.MUSIC_COURSE]: '음악',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
@@ -1547,6 +1549,7 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -2451,6 +2454,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -2479,6 +2483,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -2543,6 +2548,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
