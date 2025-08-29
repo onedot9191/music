@@ -2697,68 +2697,193 @@
             resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
         });
 
-        const handleScrapResultImage = () => {
+        // 디바이스 및 브라우저 감지 함수들
+        const isMobile = () => {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        };
+
+        const isSafari = () => {
+            return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        };
+
+        const isIOS = () => {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        };
+
+        // 클립보드 API 지원 확인
+        const supportsClipboardAPI = () => {
+            return navigator.clipboard && 
+                   navigator.clipboard.write && 
+                   window.ClipboardItem &&
+                   window.isSecureContext; // HTTPS 확인
+        };
+
+        // 이미지 다운로드 함수
+        const downloadImage = (canvas, filename = 'quiz-result.png') => {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        // Web Share API를 통한 이미지 공유 (모바일용)
+        const shareImage = async (canvas) => {
+            if (navigator.share && navigator.canShare) {
+                try {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const blob = await (await fetch(dataUrl)).blob();
+                    const file = new File([blob], 'quiz-result.png', { type: 'image/png' });
+                    
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            title: '퀴즈 결과',
+                            text: '퀴즈 결과를 공유합니다.',
+                            files: [file]
+                        });
+                        return true;
+                    }
+                } catch (err) {
+                    console.log('Share API failed:', err);
+                }
+            }
+            return false;
+        };
+
+        // 향상된 클립보드 복사 함수
+        const copyImageToClipboard = async (canvas) => {
+            // 방법 1: 최신 Clipboard API 시도 (크롬, 파이어폭스)
+            if (supportsClipboardAPI()) {
+                try {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const blob = await (await fetch(dataUrl)).blob();
+                    
+                    // Safari는 특별한 처리가 필요
+                    if (isSafari()) {
+                        // Safari에서는 ClipboardItem 생성자가 다를 수 있음
+                        await navigator.clipboard.write([
+                            new ClipboardItem({
+                                'image/png': blob
+                            })
+                        ]);
+                    } else {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({ [blob.type]: blob })
+                        ]);
+                    }
+                    return { success: true, method: 'clipboard-api' };
+                } catch (err) {
+                    console.log('Clipboard API failed:', err);
+                }
+            }
+
+            // 방법 2: 텍스트 형태로 Data URL 복사 시도
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    await navigator.clipboard.writeText(dataUrl);
+                    return { success: true, method: 'text-dataurl' };
+                } catch (err) {
+                    console.log('Text clipboard failed:', err);
+                }
+            }
+
+            // 방법 3: 레거시 방법 (텍스트만 가능)
+            try {
+                const dataUrl = canvas.toDataURL('image/png');
+                const textArea = document.createElement('textarea');
+                textArea.value = dataUrl;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                textArea.setSelectionRange(0, 99999);
+                
+                const success = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (success) {
+                    return { success: true, method: 'legacy-text' };
+                }
+            } catch (err) {
+                console.log('Legacy copy failed:', err);
+            }
+
+            return { success: false, method: 'none' };
+        };
+
+        const handleScrapResultImage = async () => {
             const modalContent = document.querySelector('#progress-modal .modal-content');
             const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
+            
             if (wasHidden) {
                 openModal(progressModal);
             }
-            html2canvas(modalContent)
-                .then(async canvas => {
-                    if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
-                        try {
-                            const dataUrl = canvas.toDataURL('image/png');
-                            const blob = await (await fetch(dataUrl)).blob();
-                            await navigator.clipboard.write([
-                                new ClipboardItem({ [blob.type]: blob })
-                            ]);
-                            alert('결과 이미지가 복사되었습니다!');
-                        } catch (err) {
-                            alert('이미지 복사에 실패했습니다.');
-                        }
-                    } else {
-                        const dataUrl = canvas.toDataURL('image/png');
-                        const hiddenDiv = document.createElement('div');
-                        hiddenDiv.contentEditable = true;
-                        hiddenDiv.style.position = 'fixed';
-                        hiddenDiv.style.top = '-10000px';
-                        const img = document.createElement('img');
-                        img.src = dataUrl;
-                        hiddenDiv.appendChild(img);
-                        document.body.appendChild(hiddenDiv);
 
-                        const range = document.createRange();
-                        range.selectNode(img);
-                        const selection = window.getSelection();
-                        selection.removeAllRanges();
-                        selection.addRange(range);
-
-                        let success = false;
-                        try {
-                            success = document.execCommand('copy');
-                        } catch (err) {
-                            success = false;
-                        }
-
-                        document.body.removeChild(hiddenDiv);
-                        selection.removeAllRanges();
-
-                        if (success) {
-                            alert('결과 이미지가 복사되었습니다!');
-                        } else {
-                            alert('이미지 복사에 실패했습니다.');
-                        }
-                    }
-                })
-                .catch(() => {
-                    alert('이미지 캡처에 실패했습니다.');
-                })
-                .finally(() => {
-                    if (wasHidden) {
-                        closeModal(progressModal);
-                    }
+            try {
+                const canvas = await html2canvas(modalContent, {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // 고해상도
+                    useCORS: true,
+                    allowTaint: false
                 });
+
+                // 모바일 환경에서는 공유 또는 다운로드 우선
+                if (isMobile()) {
+                    // Web Share API 시도 (모바일)
+                    const shareSuccess = await shareImage(canvas);
+                    if (shareSuccess) {
+                        alert('결과 이미지가 공유되었습니다!');
+                        return;
+                    }
+                    
+                    // 공유 실패시 다운로드
+                    downloadImage(canvas);
+                    alert('이미지가 다운로드되었습니다. 갤러리에서 확인하세요!');
+                    return;
+                }
+
+                // 데스크톱 환경에서는 클립보드 복사 시도
+                const copyResult = await copyImageToClipboard(canvas);
+                
+                if (copyResult.success) {
+                    if (copyResult.method === 'text-dataurl' || copyResult.method === 'legacy-text') {
+                        alert('이미지 데이터가 복사되었습니다!\n(일부 앱에서는 이미지로 붙여넣기가 안될 수 있습니다)');
+                    } else {
+                        alert('결과 이미지가 복사되었습니다!');
+                    }
+                } else {
+                    // 복사 실패시 다운로드로 대체
+                    downloadImage(canvas);
+                    alert('클립보드 복사에 실패했습니다.\n이미지를 다운로드했습니다!');
+                }
+
+            } catch (error) {
+                console.error('Image capture failed:', error);
+                alert('이미지 캡처에 실패했습니다. 다시 시도해주세요.');
+            } finally {
+                if (wasHidden) {
+                    closeModal(progressModal);
+                }
+            }
         };
+
+        // 버튼 텍스트를 환경에 맞게 업데이트
+        const updateCopyButtonText = () => {
+            const isMobileDevice = isMobile();
+            const buttonText = isMobileDevice ? '결과창 공유' : '결과창 복사';
+            
+            if (scrapResultImageBtn) {
+                scrapResultImageBtn.textContent = buttonText;
+            }
+            if (scrapResultImageBtnTop) {
+                scrapResultImageBtnTop.textContent = buttonText;
+            }
+        };
+
+        // 페이지 로드시 버튼 텍스트 업데이트
+        updateCopyButtonText();
 
         [scrapResultImageBtn, scrapResultImageBtnTop].forEach(btn =>
             btn.addEventListener('click', handleScrapResultImage)
