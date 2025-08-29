@@ -105,7 +105,7 @@
                 SHAKE: 'shake',
                 CORRECT_PULSE: 'correct-pulse'
             },
-            DEFAULT_DURATION: 900,
+            DEFAULT_DURATION: 1200,
             HARD_CORE_DURATION: 60,
             HARD_CORE_TIME_BONUS: 5,
             RANDOM_ANIMATION_DURATION: 2000,
