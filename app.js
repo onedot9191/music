@@ -65,6 +65,7 @@
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
+                ENGLISH_COURSE: 'english-course',
                 INTEGRATED_COURSE: 'integrated-course',
                 SOCIAL_COURSE: 'social-course',
                 MATH_COURSE: 'math-course',
@@ -143,6 +144,7 @@
             [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
+            [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
             [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
@@ -319,7 +321,7 @@
         }
 
         function initAutoWidthCourse() {
-            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main'].forEach(id => {
+            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main'].forEach(id => {
                 const container = document.getElementById(id);
                 applyAutoWidthForContainer(container);
             });
@@ -1047,7 +1049,7 @@
        }
 
        function adjustCreativeInputWidths() {
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer]')
+           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -2006,7 +2008,7 @@
                         input.disabled = true;
                         shouldAdvance = true;
                         showRevealButtonForIntegrated(input);
-                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input)) {
+                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input)) {
                         // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
                         input.value = input.dataset.answer;
                         input.disabled = true;
@@ -2109,6 +2111,11 @@
         function isInCourseScience(el) {
             const main = el.closest('main');
             return !!main && main.id === 'science-course-quiz-main';
+        }
+
+        function isInCourseEnglish(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'english-course-quiz-main';
         }
 
         function isIntegratedTitle(el) {
