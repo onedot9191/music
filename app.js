@@ -323,7 +323,7 @@
         }
 
         function initAutoWidthCourse() {
-            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main'].forEach(id => {
+            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'music-course-quiz-main'].forEach(id => {
                 const container = document.getElementById(id);
                 applyAutoWidthForContainer(container);
             });
@@ -1051,7 +1051,7 @@
        }
 
        function adjustCreativeInputWidths() {
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer]')
+           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -2010,13 +2010,13 @@
                         input.value = input.dataset.answer;
                         input.disabled = true;
                         shouldAdvance = true;
-                        showRevealButtonForIntegrated(input);
-                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input)) {
-                        // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
-                        input.value = input.dataset.answer;
-                        input.disabled = true;
-                        shouldAdvance = true;
-                        showRevealButtonForIntegrated(input);
+                    showRevealButtonForIntegrated(input);
+                } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input) || isInCourseMusic(input)) {
+                    // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+                    input.value = input.dataset.answer;
+                    input.disabled = true;
+                    shouldAdvance = true;
+                    showRevealButtonForIntegrated(input);
                     } else if (
                         gameState.selectedTopic !== CONSTANTS.TOPICS.CURRICULUM &&
                         gameState.selectedTopic !== CONSTANTS.TOPICS.COMPETENCY &&
@@ -2119,6 +2119,11 @@
         function isInCourseEnglish(el) {
             const main = el.closest('main');
             return !!main && main.id === 'english-course-quiz-main';
+        }
+
+        function isInCourseMusic(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'music-course-quiz-main';
         }
 
         function isIntegratedTitle(el) {
