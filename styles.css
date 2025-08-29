@@ -2403,7 +2403,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #integrated-course-quiz-main .creative-block,
 #social-course-quiz-main .creative-block,
 #moral-course-quiz-main .creative-block,
-#science-course-quiz-main .creative-block {
+#science-course-quiz-main .creative-block,
+#english-course-quiz-main .creative-block {
   margin-bottom: 2rem;
   padding: 1rem;
   background: var(--bg-light);
@@ -2479,6 +2480,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .outline-title,
 #moral-course-quiz-main .outline-title,
 #science-course-quiz-main .outline-title,
+#english-course-quiz-main .outline-title,
 #spelling-quiz-main .outline-title {
   font-size: 2rem;
   font-weight: 700;
@@ -2490,6 +2492,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .sub-title,
 #moral-course-quiz-main .sub-title,
 #science-course-quiz-main .sub-title,
+#english-course-quiz-main .sub-title,
 #spelling-quiz-main .sub-title {
   font-size: 1.8rem;
   font-weight: 600;
@@ -2515,6 +2518,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question,
 #moral-course-quiz-main .overview-question,
 #science-course-quiz-main .overview-question,
+#english-course-quiz-main .overview-question,
 #science-std-quiz-main .overview-question,
 #english-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question,
@@ -2551,6 +2555,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question:last-child,
 #moral-course-quiz-main .overview-question:last-child,
 #science-course-quiz-main .overview-question:last-child,
+#english-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
 #english-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child,
@@ -2579,6 +2584,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #social-course-quiz-main .overview-question,
   #moral-course-quiz-main .overview-question,
   #science-course-quiz-main .overview-question,
+  #english-course-quiz-main .overview-question,
   #science-std-quiz-main .overview-question,
   #english-std-quiz-main .overview-question,
   #practical-std-quiz-main .overview-question,
@@ -2597,6 +2603,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #social-course-quiz-main .overview-question input,
   #moral-course-quiz-main .overview-question input,
   #science-course-quiz-main .overview-question input,
+  #english-course-quiz-main .overview-question input,
   #science-std-quiz-main .overview-question input,
   #english-std-quiz-main .overview-question input,
   #practical-std-quiz-main .overview-question input,
@@ -2668,6 +2675,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question input,
 #moral-course-quiz-main .overview-question input,
 #science-course-quiz-main .overview-question input,
+#english-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
 #english-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input,
@@ -2775,6 +2783,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question input:focus,
 #moral-course-quiz-main .overview-question input:focus,
 #science-course-quiz-main .overview-question input:focus,
+#english-course-quiz-main .overview-question input:focus,
 #science-std-quiz-main .overview-question input:focus,
 #english-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus,
@@ -2802,6 +2811,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question input.correct,
 #moral-course-quiz-main .overview-question input.correct,
 #science-course-quiz-main .overview-question input.correct,
+#english-course-quiz-main .overview-question input.correct,
 #science-std-quiz-main .overview-question input.correct,
 #english-std-quiz-main .overview-question input.correct,
 #practical-std-quiz-main .overview-question input.correct,
@@ -2828,6 +2838,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question input.incorrect,
 #moral-course-quiz-main .overview-question input.incorrect,
 #science-course-quiz-main .overview-question input.incorrect,
+#english-course-quiz-main .overview-question input.incorrect,
 #science-std-quiz-main .overview-question input.incorrect,
 #english-std-quiz-main .overview-question input.incorrect,
 #practical-std-quiz-main .overview-question input.incorrect,
@@ -2854,6 +2865,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question input.retrying,
 #moral-course-quiz-main .overview-question input.retrying,
 #science-course-quiz-main .overview-question input.retrying,
+#english-course-quiz-main .overview-question input.retrying,
 #science-std-quiz-main .overview-question input.retrying,
 #english-std-quiz-main .overview-question input.retrying,
 #practical-std-quiz-main .overview-question input.retrying,
@@ -2878,6 +2890,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question input.revealed,
 #moral-course-quiz-main .overview-question input.revealed,
 #science-course-quiz-main .overview-question input.revealed,
+#english-course-quiz-main .overview-question input.revealed,
 #science-std-quiz-main .overview-question input.revealed,
 #english-std-quiz-main .overview-question input.revealed,
 #practical-std-quiz-main .overview-question input.revealed,
