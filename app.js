@@ -59,6 +59,7 @@
                 SOCIAL: 'social',
                 SCIENCE: 'science',
                 SCIENCE_STD: 'science-std',
+                ENGLISH_STD: 'english-std',
                 PRACTICAL_STD: 'practical-std',
                 MATH_OPERATION: 'math-operation',
                 PE_BACK: 'pe-back',
@@ -104,7 +105,7 @@
                 SHAKE: 'shake',
                 CORRECT_PULSE: 'correct-pulse'
             },
-            DEFAULT_DURATION: 900,
+            DEFAULT_DURATION: 1200,
             HARD_CORE_DURATION: 60,
             HARD_CORE_TIME_BONUS: 5,
             RANDOM_ANIMATION_DURATION: 2000,
@@ -136,6 +137,7 @@
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
             [CONSTANTS.SUBJECTS.SCIENCE_STD]: '과학',
+            [CONSTANTS.SUBJECTS.ENGLISH_STD]: '영어',
             [CONSTANTS.SUBJECTS.PRACTICAL_STD]: '실과',
             [CONSTANTS.SUBJECTS.MATH_OPERATION]: '수와 연산',
             [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
@@ -1045,7 +1047,7 @@
        }
 
        function adjustCreativeInputWidths() {
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer]')
+           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -1545,6 +1547,7 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION ||
                 (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
@@ -2443,6 +2446,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION ||
                     (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
@@ -2470,6 +2474,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_OPERATION ||
                             (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
@@ -2533,6 +2538,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.PRACTICAL_STD ||
                             (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
                         ) {
