@@ -2307,6 +2307,91 @@ td input.activity-input:not(:first-child) {
 #english-quiz-main .inline-item {
   align-items: baseline;
 }
+
+/* 영어 과목 스펠링 가독성 향상: 빈칸 내부 텍스트 크기 대폭 증가 */
+#english-quiz-main input.fit-answer {
+  font-size: 2.4rem !important; /* 기본 입력 필드 크기 대폭 증가 */
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+  padding: 1rem 1.2rem !important;
+  letter-spacing: 0.08em !important; /* 글자 간격 증가로 가독성 향상 */
+  height: auto !important;
+  min-height: 3.2rem !important; /* 최소 높이 보장 */
+}
+
+/* 계층별 크기 재정의 - 모든 레벨을 훨씬 크게 */
+#english-quiz-main .assessment-list > li input.fit-answer {
+  font-size: 2.8rem !important; /* 최상위 레벨을 가장 크게 */
+  font-weight: 900 !important;
+  min-width: 22ch !important;
+  border-width: 4px !important;
+  letter-spacing: 0.1em !important;
+  min-height: 3.8rem !important;
+  padding: 1.2rem 1.4rem !important;
+}
+
+#english-quiz-main .sub-list > li input.fit-answer {
+  font-size: 2.6rem !important; /* 2번째 레벨 */
+  font-weight: 850 !important;
+  min-width: 20ch !important;
+  letter-spacing: 0.09em !important;
+  min-height: 3.6rem !important;
+  padding: 1.1rem 1.3rem !important;
+}
+
+#english-quiz-main .sub-list .sub-list > li input.fit-answer {
+  font-size: 2.4rem !important; /* 3번째 레벨 */
+  font-weight: 800 !important;
+  min-width: 18ch !important;
+  letter-spacing: 0.08em !important;
+  min-height: 3.4rem !important;
+  padding: 1rem 1.2rem !important;
+}
+
+#english-quiz-main .sub-list .sub-list .sub-list > li input.fit-answer {
+  font-size: 2.2rem !important; /* 4번째 레벨도 충분히 크게 */
+  font-weight: 800 !important;
+  min-width: 16ch !important;
+  letter-spacing: 0.07em !important;
+  min-height: 3.2rem !important;
+  padding: 0.9rem 1.1rem !important;
+}
+
+/* 모든 영어 입력 필드에 적용 (다양한 선택자 커버) */
+#english-quiz-main input[data-answer],
+#english-quiz-main input[placeholder],
+#english-quiz-main input[type="text"] {
+  font-size: 2.4rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  padding: 1rem 1.2rem !important;
+  min-height: 3.2rem !important;
+}
+
+/* 영어 과목의 일반 텍스트도 가독성 향상 */
+#english-quiz-main li,
+#english-quiz-main .inline-item {
+  font-size: 2rem !important; /* 주변 텍스트도 크게 */
+  line-height: 2.4 !important;
+}
+
+/* 영어 과목 제목 및 라벨 크기 증가 */
+#english-quiz-main h2,
+#english-quiz-main h3 {
+  font-size: 2.8rem !important;
+  line-height: 1.4 !important;
+}
+
+#english-quiz-main .grade-title {
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+}
+
+/* 영어 과목 탭 메뉴도 크게 */
+body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
+  font-size: 1.8rem !important;
+  padding: 1rem 1.5rem !important;
+}
 #creative-quiz-main .creative-block {
   margin-bottom: 2rem;
   padding: 1rem;
