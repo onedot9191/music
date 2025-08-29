@@ -2326,6 +2326,7 @@ td input.activity-input:not(:first-child) {
   border-radius: 8px;
 }
 #science-std-quiz-main .achievement-block,
+#english-std-quiz-main .achievement-block,
 #practical-std-quiz-main .achievement-block,
 #math-operation-quiz-main .achievement-block {
   margin: 3rem 0 2rem;
@@ -2336,6 +2337,7 @@ td input.activity-input:not(:first-child) {
   position: relative;
 }
 #science-std-quiz-main .achievement-block::before,
+#english-std-quiz-main .achievement-block::before,
 #math-operation-quiz-main .achievement-block::before {
   content: '';
   position: absolute;
@@ -2347,7 +2349,8 @@ td input.activity-input:not(:first-child) {
   border-radius: 8px 8px 0 0;
 }
 
-#science-std-quiz-main .topic-divider {
+#science-std-quiz-main .topic-divider,
+#english-std-quiz-main .topic-divider {
   height: 14px;
   margin: 1.6rem 0 0.8rem;
   background: linear-gradient(90deg, transparent, var(--secondary) 14%, var(--secondary) 86%, transparent);
@@ -2360,6 +2363,7 @@ td input.activity-input:not(:first-child) {
   color: var(--primary);
 }
 #science-std-quiz-main .outline-title,
+#english-std-quiz-main .outline-title,
 #practical-std-quiz-main .outline-title,
 #math-operation-quiz-main .outline-title {
   font-size: 2rem;
@@ -2427,6 +2431,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question,
 #science-course-quiz-main .overview-question,
 #science-std-quiz-main .overview-question,
+#english-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question,
 #math-operation-quiz-main .overview-question,
 #practical-quiz-main .overview-question,
@@ -2462,6 +2467,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question:last-child,
 #science-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
+#english-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child,
 #math-operation-quiz-main .overview-question:last-child,
 #practical-quiz-main .overview-question:last-child,
@@ -2489,6 +2495,7 @@ td input.activity-input:not(:first-child) {
   #moral-course-quiz-main .overview-question,
   #science-course-quiz-main .overview-question,
   #science-std-quiz-main .overview-question,
+  #english-std-quiz-main .overview-question,
   #practical-std-quiz-main .overview-question,
   #math-operation-quiz-main .overview-question,
   #practical-quiz-main .overview-question,
@@ -2506,6 +2513,7 @@ td input.activity-input:not(:first-child) {
   #moral-course-quiz-main .overview-question input,
   #science-course-quiz-main .overview-question input,
   #science-std-quiz-main .overview-question input,
+  #english-std-quiz-main .overview-question input,
   #practical-std-quiz-main .overview-question input,
   #math-operation-quiz-main .overview-question input,
   #practical-quiz-main .overview-question input,
@@ -2576,6 +2584,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input,
 #science-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
+#english-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input,
 #math-operation-quiz-main .overview-question input,
 #practical-quiz-main .overview-question input,
@@ -2682,6 +2691,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input:focus,
 #science-course-quiz-main .overview-question input:focus,
 #science-std-quiz-main .overview-question input:focus,
+#english-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus,
 #math-operation-quiz-main .overview-question input:focus,
 #practical-quiz-main .overview-question input:focus,
@@ -2708,6 +2718,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.correct,
 #science-course-quiz-main .overview-question input.correct,
 #science-std-quiz-main .overview-question input.correct,
+#english-std-quiz-main .overview-question input.correct,
 #practical-std-quiz-main .overview-question input.correct,
 #math-operation-quiz-main .overview-question input.correct,
 #practical-quiz-main .overview-question input.correct,
@@ -2733,6 +2744,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.incorrect,
 #science-course-quiz-main .overview-question input.incorrect,
 #science-std-quiz-main .overview-question input.incorrect,
+#english-std-quiz-main .overview-question input.incorrect,
 #practical-std-quiz-main .overview-question input.incorrect,
 #math-operation-quiz-main .overview-question input.incorrect,
 #practical-quiz-main .overview-question input.incorrect,
@@ -2758,6 +2770,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.retrying,
 #science-course-quiz-main .overview-question input.retrying,
 #science-std-quiz-main .overview-question input.retrying,
+#english-std-quiz-main .overview-question input.retrying,
 #practical-std-quiz-main .overview-question input.retrying,
 #math-operation-quiz-main .overview-question input.retrying,
 #practical-quiz-main .overview-question input.retrying,
@@ -2781,6 +2794,7 @@ td input.activity-input:not(:first-child) {
 #moral-course-quiz-main .overview-question input.revealed,
 #science-course-quiz-main .overview-question input.revealed,
 #science-std-quiz-main .overview-question input.revealed,
+#english-std-quiz-main .overview-question input.revealed,
 #practical-std-quiz-main .overview-question input.revealed,
 #math-operation-quiz-main .overview-question input.revealed,
 #practical-quiz-main .overview-question input.revealed,
