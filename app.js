@@ -71,6 +71,7 @@
                 MATH_COURSE: 'math-course',
                 SCIENCE_COURSE: 'science-course',
                 MUSIC_COURSE: 'music-course',
+                ART_COURSE: 'art-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
