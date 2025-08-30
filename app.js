@@ -390,6 +390,7 @@
         const timeSetterWrapper = document.getElementById('time-setter-wrapper');
         const topicSelector = document.querySelector('.topic-selector');
         const subjectSelector = document.querySelector('.subject-selector');
+        const subjectSelectionTitle = document.getElementById('subject-selection-title');
         const curriculumBreak = document.getElementById('curriculum-break');
         const modelBreak = document.getElementById('model-break');
         const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
@@ -2311,6 +2312,7 @@
                 topic === CONSTANTS.TOPICS.MORAL
             ) {
                 subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                subjectSelectionTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
                 let defaultSubject;
                 if (topic === CONSTANTS.TOPICS.MODEL) {
@@ -2331,6 +2333,7 @@
                 gameState.selectedSubject = defaultSubject;
             } else {
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                subjectSelectionTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                 document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
                 gameState.selectedSubject = topic === CONSTANTS.TOPICS.COMPETENCY
                     ? CONSTANTS.SUBJECTS.COMPETENCY
