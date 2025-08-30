@@ -261,3 +261,82 @@
   visibility: visible;
   opacity: 1;
 }
+
+/* === 미술 과목 핵심 아이디어 범주별 그룹핑 === */
+.art-category-section {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  border-radius: var(--space-md);
+  border: 2px solid var(--primary);
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.art-category-section::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-radius: var(--space-sm) 0 0 var(--space-sm);
+}
+
+/* 미적체험 범주 */
+.art-category-aesthetic {
+  border-color: var(--accent);
+  background: rgba(255, 195, 0, 0.08);
+}
+
+.art-category-aesthetic::before {
+  background: var(--accent);
+}
+
+.art-category-aesthetic .art-category-title {
+  color: var(--accent);
+  text-shadow: 1px 1px 0px rgba(255, 195, 0, 0.3);
+}
+
+/* 표현 범주 */
+.art-category-expression {
+  border-color: var(--primary);
+  background: rgba(64, 224, 208, 0.08);
+}
+
+.art-category-expression::before {
+  background: var(--primary);
+}
+
+.art-category-expression .art-category-title {
+  color: var(--primary);
+  text-shadow: 1px 1px 0px rgba(64, 224, 208, 0.3);
+}
+
+/* 감상 범주 */
+.art-category-appreciation {
+  border-color: var(--correct);
+  background: rgba(57, 255, 20, 0.08);
+}
+
+.art-category-appreciation::before {
+  background: var(--correct);
+}
+
+.art-category-appreciation .art-category-title {
+  color: var(--correct);
+  text-shadow: 1px 1px 0px rgba(57, 255, 20, 0.3);
+}
+
+.art-category-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-family: var(--font-display);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid currentColor;
+  display: inline-block;
+}
+
+.art-category-content {
+  margin-left: var(--space-sm);
+}
