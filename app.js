@@ -65,10 +65,12 @@
                 PE_BACK: 'pe-back',
                 CREATIVE: 'creative',
                 OVERVIEW: 'overview',
+                ENGLISH_COURSE: 'english-course',
                 INTEGRATED_COURSE: 'integrated-course',
                 SOCIAL_COURSE: 'social-course',
                 MATH_COURSE: 'math-course',
                 SCIENCE_COURSE: 'science-course',
+                MUSIC_COURSE: 'music-course',
                 MORAL_COURSE: 'moral-course',
                 MORAL_PRINCIPLES: 'moral-principles',
                 MUSIC_ELEMENTS: 'music-elements',
@@ -143,10 +145,13 @@
             [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
+            [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
             [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
             [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
             [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
             [CONSTANTS.SUBJECTS.SCIENCE_COURSE]: '과학',
+            [CONSTANTS.SUBJECTS.MUSIC_COURSE]: '음악',
+            [CONSTANTS.SUBJECTS.ART_COURSE]: '미술',
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
@@ -319,7 +324,7 @@
         }
 
         function initAutoWidthCourse() {
-            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main'].forEach(id => {
+            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main'].forEach(id => {
                 const container = document.getElementById(id);
                 applyAutoWidthForContainer(container);
             });
@@ -1047,7 +1052,7 @@
        }
 
        function adjustCreativeInputWidths() {
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer]')
+           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer]')
                 .forEach(input => {
                     const answer = input.dataset.answer || '';
                     const answerLen = answer.length;
@@ -1545,6 +1550,8 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -2005,13 +2012,13 @@
                         input.value = input.dataset.answer;
                         input.disabled = true;
                         shouldAdvance = true;
-                        showRevealButtonForIntegrated(input);
-                    } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input)) {
-                        // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
-                        input.value = input.dataset.answer;
-                        input.disabled = true;
-                        shouldAdvance = true;
-                        showRevealButtonForIntegrated(input);
+                    showRevealButtonForIntegrated(input);
+                } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input) || isInCourseMusic(input) || isInCourseArt(input)) {
+                    // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+                    input.value = input.dataset.answer;
+                    input.disabled = true;
+                    shouldAdvance = true;
+                    showRevealButtonForIntegrated(input);
                     } else if (
                         gameState.selectedTopic !== CONSTANTS.TOPICS.CURRICULUM &&
                         gameState.selectedTopic !== CONSTANTS.TOPICS.COMPETENCY &&
@@ -2109,6 +2116,21 @@
         function isInCourseScience(el) {
             const main = el.closest('main');
             return !!main && main.id === 'science-course-quiz-main';
+        }
+
+        function isInCourseEnglish(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'english-course-quiz-main';
+        }
+
+        function isInCourseMusic(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'music-course-quiz-main';
+        }
+
+        function isInCourseArt(el) {
+            const main = el.closest('main');
+            return !!main && main.id === 'art-course-quiz-main';
         }
 
         function isIntegratedTitle(el) {
@@ -2450,6 +2472,8 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -2478,6 +2502,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -2548,6 +2574,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SOCIAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MATH_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_COURSE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
