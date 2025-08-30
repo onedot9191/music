@@ -2422,7 +2422,13 @@
                                 if (answersRevealed) {
                                     inp.disabled = true;
                                 } else {
-                                    inp.disabled = shouldGate;
+                                    // 이미 정답이나 2차 오답으로 처리된 input은 비활성화 상태 유지
+                                    const isAnswered = inp.classList.contains('correct') || inp.classList.contains('incorrect');
+                                    if (isAnswered) {
+                                        inp.disabled = true;
+                                    } else {
+                                        inp.disabled = shouldGate;
+                                    }
                                 }
                             });
                             sec.style.opacity = shouldGate ? '0.2' : '';
@@ -2496,7 +2502,13 @@
                                 if (answersRevealed) {
                                     inp.disabled = true;
                                 } else {
-                                    inp.disabled = shouldGate;
+                                    // 이미 정답이나 2차 오답으로 처리된 input은 비활성화 상태 유지
+                                    const isAnswered = inp.classList.contains('correct') || inp.classList.contains('incorrect');
+                                    if (isAnswered) {
+                                        inp.disabled = true;
+                                    } else {
+                                        inp.disabled = shouldGate;
+                                    }
                                 }
                             });
                             sec.style.opacity = shouldGate ? '0.2' : '';
