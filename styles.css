@@ -682,6 +682,7 @@ th.sub-area-cell .sub-area-input.revealed {
   display: block;
   width: 100%;
   margin-bottom: 0.8rem; /* separate from examples */
+  border: 3px solid #8A2BE2 !important;
 }
 #pe-quiz-main #activity-examples .activity-group > .example-input,
 #physical-activity-quiz-main .activity-group > .example-input {
@@ -725,7 +726,7 @@ th.sub-area-cell .sub-area-input.revealed {
 }
 
 td input.activity-input {
-  border: 3px solid var(--accent);
+  border: 3px solid #8A2BE2;
   background: var(--primary);
   font-weight: 800;
   color: var(--text-light);
@@ -804,25 +805,28 @@ td input.activity-input:not(:first-child) {
 }
 .activity-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.2rem;
   border: 2px dashed var(--secondary);
   border-radius: 8px;
   margin-bottom: 1rem; /* prevent overlap with next group */
 }
 
 .activity-group .activity-input {
-  flex: 1 1 100%;
   width: 100%;
+  margin-bottom: 0.5rem;
+  border: 3px solid #8A2BE2 !important;
 }
 
 .activity-group .example-input {
-  flex: 0 0 auto;
   width: auto;
-  min-width: 9ch;
+  min-width: 12ch;
+  max-width: 20ch;
   text-align: center;
-  padding: 1.2rem; /* align with td input default */
+  padding: 1.2rem;
+  margin: 0.2rem 0.3rem;
+  display: inline-block;
 }
 
 .activity-group + .activity-group {
@@ -831,20 +835,63 @@ td input.activity-input:not(:first-child) {
 
 /* Additional improvements for physical activity sections */
 #physical-activity-quiz-main .activity-group .example-input {
-  margin: 0.2rem;
-  flex: 0 1 auto;
-  min-width: 8ch;
-  max-width: 15ch;
+  margin: 0.3rem 0.4rem;
+  min-width: 10ch;
+  max-width: 18ch;
   font-size: 1.1rem;
+  display: inline-block;
+  vertical-align: top;
 }
 
 #physical-activity-quiz-main .activity-group {
   margin-bottom: 1.5rem;
-  padding: 1.2rem;
+  padding: 1.4rem;
+}
+
+/* 예시 입력 필드들을 위한 컨테이너 */
+.activity-group .examples-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  align-items: flex-start;
 }
 
 #physical-activity-quiz-main td {
   padding: 1rem;
+}
+
+/* 기타 주제 신체활동 예시 개선된 레이아웃 */
+.activity-group .activity-input + .example-input {
+  margin-top: 0.8rem;
+}
+
+.activity-group .example-input:first-of-type {
+  margin-left: 0;
+}
+
+/* 예시 입력 필드들 간의 일관된 간격 */
+.activity-group .example-input + .example-input {
+  margin-left: 0.5rem;
+}
+
+/* 더 나은 시각적 구분을 위한 스타일 */
+.activity-group {
+  background: rgba(255, 255, 255, 0.02);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.activity-group:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+/* 신체활동 예시 빈칸 보라색 테두리 - 최우선 적용 */
+#physical-activity-quiz-main input.activity-input,
+.activity-group input.activity-input,
+input.activity-input {
+  border: 3px solid #8A2BE2 !important;
 }
 
 .grade-container table tr:not(:last-child) > * {
