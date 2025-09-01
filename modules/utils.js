@@ -60,7 +60,7 @@ export function applyAutoWidthForContainer(container) {
 }
 
 export function initAutoWidthCourse() {
-    ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main'].forEach(id => {
+    ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main'].forEach(id => {
         const container = document.getElementById(id);
         applyAutoWidthForContainer(container);
     });
