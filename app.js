@@ -655,7 +655,7 @@
 
         function initAutoWidthCourse() {
 
-            ['practical-quiz-main', 'overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main'].forEach(id => {
+            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main'].forEach(id => {
 
                 const container = document.getElementById(id);
 
