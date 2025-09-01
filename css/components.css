@@ -340,3 +340,52 @@
 .art-category-content {
   margin-left: var(--space-sm);
 }
+
+/* === 홈 프로젝트 파트 구분 === */
+.home-project-part {
+  background: var(--bg-light);
+  border: 2px solid var(--secondary);
+  border-radius: var(--space-sm);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.home-project-part:last-child {
+  margin-bottom: 0;
+}
+
+.part-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--secondary);
+  border-radius: var(--space-sm);
+  border: 2px solid var(--primary);
+  text-align: center;
+}
+
+.home-project-part input {
+  width: 100% !important;
+  margin-bottom: var(--space-sm);
+}
+
+.home-project-part input:last-child {
+  margin-bottom: 0;
+}
+
+/* 홈 프로젝트 파트 입력 필드의 모든 상태에서 100% 너비 강제 적용 */
+.home-project-part input.correct,
+.home-project-part input.incorrect,
+.home-project-part input.retrying,
+.home-project-part input.revealed {
+  width: 100% !important;
+  display: block !important;
+}
+
+/* 인라인 스타일로 설정된 너비도 무시 */
+.home-project-part input[style*="width"] {
+  width: 100% !important;
+}
