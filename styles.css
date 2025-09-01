@@ -1134,6 +1134,40 @@ input.activity-input {
   border-left: 2px solid var(--primary);
 }
 
+/* Group curriculum buttons (총론, 창체) with visual grouping */
+.curriculum-group {
+  display: inline-flex;
+  gap: 0;
+  border: 3px solid var(--primary);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.curriculum-group .subject-btn {
+  border-radius: 0;
+  margin: 0;
+  border: none !important;
+  box-shadow: none !important;
+  position: relative;
+}
+.curriculum-group .subject-btn:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+.curriculum-group .subject-btn + .subject-btn {
+  border-left: 2px solid var(--primary) !important;
+}
+.curriculum-group .subject-btn:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.curriculum-group .subject-btn:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 /* Arrange topic buttons in two rows with up to four per row */
 .topic-selector {
   display: grid;
