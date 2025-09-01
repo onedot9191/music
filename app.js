@@ -137,6 +137,8 @@
 
                 OVERVIEW: 'overview',
 
+                KOREAN_COURSE: 'korean-course',
+
                 ENGLISH_COURSE: 'english-course',
 
                 INTEGRATED_COURSE: 'integrated-course',
@@ -307,6 +309,8 @@
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
 
             [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
+
+            [CONSTANTS.SUBJECTS.KOREAN_COURSE]: '국어',
 
             [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
 
@@ -679,7 +683,7 @@
 
         function initAutoWidthCourse() {
 
-            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main'].forEach(id => {
+            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main'].forEach(id => {
 
                 const container = document.getElementById(id);
 
@@ -2185,7 +2189,7 @@
 
        function adjustCreativeInputWidths() {
 
-        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -4211,7 +4215,7 @@
 
                     showRevealButtonForIntegrated(input);
 
-                } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input) || isInCoursePractical(input) || isInCourseMusic(input) || isInCourseArt(input) || isInCoursePe(input)) {
+                } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input) || isInCourseKorean(input) || isInCoursePractical(input) || isInCourseMusic(input) || isInCourseArt(input) || isInCoursePe(input)) {
 
                     // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
 
@@ -4426,6 +4430,16 @@
             const main = el.closest('main');
 
             return !!main && main.id === 'english-course-quiz-main';
+
+        }
+
+
+
+        function isInCourseKorean(el) {
+
+            const main = el.closest('main');
+
+            return !!main && main.id === 'korean-course-quiz-main';
 
         }
 

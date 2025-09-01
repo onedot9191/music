@@ -34,6 +34,7 @@ export const CONSTANTS = {
 
         CREATIVE: 'creative',
         OVERVIEW: 'overview',
+        KOREAN_COURSE: 'korean-course',
         ENGLISH_COURSE: 'english-course',
         INTEGRATED_COURSE: 'integrated-course',
         SOCIAL_COURSE: 'social-course',
@@ -119,6 +120,7 @@ export const SUBJECT_NAMES = {
 
     [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
     [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
+    [CONSTANTS.SUBJECTS.KOREAN_COURSE]: '국어',
     [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
     [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
     [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
