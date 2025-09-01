@@ -2992,6 +2992,31 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   min-width: 0;
   flex: 1 0 auto;
 }
+
+/* 체육(뒷교) 방법 파트 빈칸 너비 고정 - 채점 시에도 유지 */
+#pe-back-quiz-main input.fit-answer {
+  width: auto !important;
+  min-width: 600px !important;
+  max-width: none !important;
+}
+
+/* JavaScript 인라인 스타일도 무시하도록 강제 */
+#pe-back-quiz-main input.fit-answer[style] {
+  width: auto !important;
+  min-width: 600px !important;
+  max-width: none !important;
+}
+
+/* 채점 상태(correct, incorrect, retrying)에서도 너비 유지 */
+#pe-back-quiz-main input.fit-answer.correct,
+#pe-back-quiz-main input.fit-answer.incorrect,
+#pe-back-quiz-main input.fit-answer.retrying {
+  width: auto !important;
+  min-width: 600px !important;
+  max-width: none !important;
+}
+
+
 #moral .moral-wrapper {
   display: flex;
   gap: 2rem;
