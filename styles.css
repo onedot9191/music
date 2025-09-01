@@ -2566,7 +2566,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-std-quiz-main .achievement-block,
 #practical-std-quiz-main .achievement-block,
 #math-operation-quiz-main .achievement-block,
-#change-relation-quiz-main .achievement-block {
+#change-relation-quiz-main .achievement-block,
+#geometry-measure-quiz-main .achievement-block {
   margin: 3rem 0 2rem;
   padding: 1rem;
   background: var(--bg-light);
@@ -2577,7 +2578,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .achievement-block::before,
 #english-std-quiz-main .achievement-block::before,
 #math-operation-quiz-main .achievement-block::before,
-#change-relation-quiz-main .achievement-block::before {
+#change-relation-quiz-main .achievement-block::before,
+#geometry-measure-quiz-main .achievement-block::before {
   content: '';
   position: absolute;
   top: -3px;
@@ -2605,7 +2607,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-std-quiz-main .outline-title,
 #practical-std-quiz-main .outline-title,
 #math-operation-quiz-main .outline-title,
-#change-relation-quiz-main .outline-title {
+#change-relation-quiz-main .outline-title,
+#geometry-measure-quiz-main .outline-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -2686,7 +2689,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-quiz-main .overview-question,
 #math-course-quiz-main .overview-question,
 #spelling-quiz-main .overview-question,
-#change-relation-quiz-main .overview-question {
+#change-relation-quiz-main .overview-question,
+#geometry-measure-quiz-main .overview-question {
   display: block;
   line-height: 2.2; /* �?간격 ?��? */
   font-size: 2rem;
@@ -2723,6 +2727,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child,
 #math-operation-quiz-main .overview-question:last-child,
+#geometry-measure-quiz-main .overview-question:last-child,
 #practical-quiz-main .overview-question:last-child,
 #math-course-quiz-main .overview-question:last-child,
 #spelling-quiz-main .overview-question:last-child,
@@ -2756,6 +2761,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #practical-std-quiz-main .overview-question,
     #math-operation-quiz-main .overview-question,
     #change-relation-quiz-main .overview-question,
+    #geometry-measure-quiz-main .overview-question,
     #practical-quiz-main .overview-question,
   #math-course-quiz-main .overview-question,
   #spelling-quiz-main .overview-question {
@@ -2778,6 +2784,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #practical-std-quiz-main .overview-question input,
     #math-operation-quiz-main .overview-question input,
     #change-relation-quiz-main .overview-question input,
+    #geometry-measure-quiz-main .overview-question input,
     #practical-quiz-main .overview-question input,
   #math-course-quiz-main .overview-question input,
   #korean-model-quiz-main .overview-question input,
@@ -2853,6 +2860,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question input,
 #math-operation-quiz-main .overview-question input,
 #change-relation-quiz-main .overview-question input,
+#geometry-measure-quiz-main .overview-question input,
 #practical-quiz-main .overview-question input,
 #math-course-quiz-main .overview-question input,
 #korean-model-quiz-main .overview-question input,
@@ -2964,6 +2972,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question input:focus,
 #math-operation-quiz-main .overview-question input:focus,
 #change-relation-quiz-main .overview-question input:focus,
+#geometry-measure-quiz-main .overview-question input:focus,
 #practical-quiz-main .overview-question input:focus,
 #math-course-quiz-main .overview-question input:focus,
 #korean-model-quiz-main .overview-question input:focus,
@@ -2995,6 +3004,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question input.correct,
 #math-operation-quiz-main .overview-question input.correct,
 #change-relation-quiz-main .overview-question input.correct,
+#geometry-measure-quiz-main .overview-question input.correct,
 #practical-quiz-main .overview-question input.correct,
 #math-course-quiz-main .overview-question input.correct,
 #korean-model-quiz-main .overview-question input.correct,
@@ -3025,6 +3035,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question input.incorrect,
 #math-operation-quiz-main .overview-question input.incorrect,
 #change-relation-quiz-main .overview-question input.incorrect,
+#geometry-measure-quiz-main .overview-question input.incorrect,
 #practical-quiz-main .overview-question input.incorrect,
 #math-course-quiz-main .overview-question input.incorrect,
 #korean-model-quiz-main .overview-question input.incorrect,
@@ -3055,6 +3066,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question input.retrying,
 #math-operation-quiz-main .overview-question input.retrying,
 #change-relation-quiz-main .overview-question input.retrying,
+#geometry-measure-quiz-main .overview-question input.retrying,
 #practical-quiz-main .overview-question input.retrying,
 #math-course-quiz-main .overview-question input.retrying,
 #korean-model-quiz-main .overview-question input.retrying,
@@ -3083,6 +3095,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question input.revealed,
 #math-operation-quiz-main .overview-question input.revealed,
 #change-relation-quiz-main .overview-question input.revealed,
+#geometry-measure-quiz-main .overview-question input.revealed,
 #practical-quiz-main .overview-question input.revealed,
 #math-course-quiz-main .overview-question input.revealed,
 #korean-model-quiz-main .overview-question input.revealed,
@@ -3511,13 +3524,15 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   
   /* Math Operation & Change Relation 모바일 최적화 */
   #math-operation-quiz-main .tabs,
-  #change-relation-quiz-main .tabs {
+  #change-relation-quiz-main .tabs,
+  #geometry-measure-quiz-main .tabs {
     flex-direction: column;
     gap: 0.5rem;
   }
 
   #math-operation-quiz-main .tab,
-  #change-relation-quiz-main .tab {
+  #change-relation-quiz-main .tab,
+  #geometry-measure-quiz-main .tab {
     padding: 0.6rem 1rem;
     font-size: 1.4rem;
   }
@@ -3574,9 +3589,10 @@ input[placeholder="세부 단계"] {
   max-width: 100%;
 }
 
-/* Math Operation & Change Relation: 과목 탭 스타일 */
+/* Math Operation, Change Relation & Geometry Measure: 과목 탭 스타일 */
 #math-operation-quiz-main .tabs,
-#change-relation-quiz-main .tabs {
+#change-relation-quiz-main .tabs,
+#geometry-measure-quiz-main .tabs {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
@@ -3585,7 +3601,8 @@ input[placeholder="세부 단계"] {
 }
 
 #math-operation-quiz-main .tab,
-#change-relation-quiz-main .tab {
+#change-relation-quiz-main .tab,
+#geometry-measure-quiz-main .tab {
   padding: 0.8rem 1.5rem;
   background: var(--bg-light);
   border: 2px solid var(--secondary);
@@ -3596,15 +3613,17 @@ input[placeholder="세부 단계"] {
   color: var(--text-dark);
 }
 
-#math-operation-quiz-main .tab:hover,
-#change-relation-quiz-main .tab:hover {
+  #math-operation-quiz-main .tab:hover,
+  #change-relation-quiz-main .tab:hover,
+  #geometry-measure-quiz-main .tab:hover {
   background: var(--secondary);
   color: var(--text-light);
   transform: translateY(-2px);
 }
 
-#math-operation-quiz-main .tab.active,
-#change-relation-quiz-main .tab.active {
+  #math-operation-quiz-main .tab.active,
+  #change-relation-quiz-main .tab.active,
+  #geometry-measure-quiz-main .tab.active {
   background: var(--primary);
   color: var(--text-light);
   border-color: var(--primary);
