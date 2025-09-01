@@ -520,6 +520,18 @@ td input.fit-answer {
   display: inline-block;
   min-width: 14ch;
 }
+
+/* 홈 프로젝트 파트 빈칸 너비 강제 고정 - 최고 우선순위 */
+.home-project-part input,
+.home-project-part input.correct,
+.home-project-part input.incorrect,
+.home-project-part input.retrying,
+.home-project-part input.revealed,
+.home-project-part input.fit-answer,
+.home-project-part input[style] {
+  width: 100% !important;
+  display: block !important;
+}
 td input:focus {
   outline: none;
   border-color: var(--primary);
