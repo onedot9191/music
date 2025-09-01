@@ -118,8 +118,6 @@
 
                 SCIENCE: 'science',
 
-                SCIENCE_SUBJECT: 'science-subject',
-
                 SCIENCE_STD: 'science-std',
 
                 ENGLISH_STD: 'english-std',
@@ -283,8 +281,6 @@
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
 
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
-
-            [CONSTANTS.SUBJECTS.SCIENCE_SUBJECT]: '과학',
 
             [CONSTANTS.SUBJECTS.SCIENCE_STD]: '과학',
 
