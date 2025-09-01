@@ -606,6 +606,11 @@
 
         function setInputWidthToText(input, text) {
 
+            // 홈 프로젝트 파트 내부의 입력 필드는 너비 조정하지 않음
+            if (input.closest('.home-project-part')) {
+                return;
+            }
+
             const cs = getComputedStyle(input);
 
             const padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
@@ -631,6 +636,11 @@
             const inputs = container.querySelectorAll('input[data-answer]');
 
             inputs.forEach(input => {
+
+                // 홈 프로젝트 파트 내부의 입력 필드는 자동 너비 조정에서 제외
+                if (input.closest('.home-project-part')) {
+                    return;
+                }
 
                 const reference = getLongestReferenceText(input);
 
@@ -670,6 +680,54 @@
         // Defer until rendering is settled
 
         requestAnimationFrame(() => { initAutoWidthCourse(); });
+
+        // 홈 프로젝트 파트 빈칸 너비 보호 로직
+        function protectHomeProjectInputs() {
+            const homeProjectInputs = document.querySelectorAll('.home-project-part input');
+            homeProjectInputs.forEach(input => {
+                // 기본 너비 설정
+                input.style.width = '100%';
+                
+                // MutationObserver로 스타일 변경 감지 및 방지
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                            const currentWidth = input.style.width;
+                            if (currentWidth !== '100%' && currentWidth !== '') {
+                                input.style.width = '100%';
+                            }
+                        }
+                    });
+                });
+                
+                observer.observe(input, {
+                    attributes: true,
+                    attributeFilter: ['style']
+                });
+
+                // 클래스 변경 시에도 너비 복원
+                input.addEventListener('classChange', () => {
+                    setTimeout(() => {
+                        input.style.width = '100%';
+                    }, 0);
+                });
+            });
+        }
+
+        // 초기 실행 및 주기적 점검
+        requestAnimationFrame(() => {
+            protectHomeProjectInputs();
+            
+            // 주기적으로 점검하여 너비 복원
+            setInterval(() => {
+                const homeProjectInputs = document.querySelectorAll('.home-project-part input');
+                homeProjectInputs.forEach(input => {
+                    if (input.style.width !== '100%' && input.style.width !== '') {
+                        input.style.width = '100%';
+                    }
+                });
+            }, 100);
+        });
 
 
 
