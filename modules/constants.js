@@ -29,6 +29,7 @@ export const CONSTANTS = {
         PRACTICAL_STD: 'practical-std',
         MATH_OPERATION: 'math-operation',
         CHANGE_RELATION: 'change-relation',
+        GEOMETRY_MEASURE: 'geometry-measure',
 
         CREATIVE: 'creative',
         OVERVIEW: 'overview',
@@ -111,6 +112,7 @@ export const SUBJECT_NAMES = {
     [CONSTANTS.SUBJECTS.PRACTICAL_STD]: '실과',
     [CONSTANTS.SUBJECTS.MATH_OPERATION]: '수와 연산',
     [CONSTANTS.SUBJECTS.CHANGE_RELATION]: '변화와 관계',
+    [CONSTANTS.SUBJECTS.GEOMETRY_MEASURE]: '도형과 측정',
 
     [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
     [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
