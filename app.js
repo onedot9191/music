@@ -118,6 +118,8 @@
 
                 SCIENCE: 'science',
 
+                SCIENCE_CURRICULUM: 'science-curriculum',
+
                 SCIENCE_STD: 'science-std',
 
                 ENGLISH_STD: 'english-std',
@@ -281,6 +283,8 @@
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
 
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
+
+            [CONSTANTS.SUBJECTS.SCIENCE_CURRICULUM]: '과학',
 
             [CONSTANTS.SUBJECTS.SCIENCE_STD]: '과학',
 
@@ -3271,7 +3275,9 @@
 
                     { subject: CONSTANTS.SUBJECTS.SOCIAL, mainId: 'social-quiz-main', titleId: 'social-title' },
 
-                    { subject: CONSTANTS.SUBJECTS.SCIENCE, mainId: 'science-quiz-main', titleId: 'science-title' }
+                    { subject: CONSTANTS.SUBJECTS.SCIENCE, mainId: 'science-quiz-main', titleId: 'science-title' },
+
+                    { subject: CONSTANTS.SUBJECTS.SCIENCE_CURRICULUM, mainId: 'science-curriculum-quiz-main', titleId: 'science-title' }
 
                 ];
 
@@ -4510,7 +4516,9 @@
 
                 [CONSTANTS.SUBJECTS.SOCIAL]: { mainId: 'social-quiz-main', titleId: 'social-title' },
 
-                [CONSTANTS.SUBJECTS.SCIENCE]: { mainId: 'science-quiz-main', titleId: 'science-title' }
+                [CONSTANTS.SUBJECTS.SCIENCE]: { mainId: 'science-quiz-main', titleId: 'science-title' },
+
+                [CONSTANTS.SUBJECTS.SCIENCE_CURRICULUM]: { mainId: 'science-curriculum-quiz-main', titleId: 'science-title' }
 
             };
 
@@ -5038,7 +5046,9 @@
 
                     { mainId: 'social-quiz-main', titleId: 'social-title' },
 
-                    { mainId: 'science-quiz-main', titleId: 'science-title' }
+                    { mainId: 'science-quiz-main', titleId: 'science-title' },
+
+                    { mainId: 'science-curriculum-quiz-main', titleId: 'science-title' }
 
                 ];
 
@@ -6288,7 +6298,9 @@
 
                 { mainId: 'social-quiz-main', titleId: 'social-title', btnId: 'social-title-next-btn' },
 
-                { mainId: 'science-quiz-main', titleId: 'science-title', btnId: 'science-title-next-btn' }
+                { mainId: 'science-quiz-main', titleId: 'science-title', btnId: 'science-title-next-btn' },
+
+                { mainId: 'science-curriculum-quiz-main', titleId: 'science-title', btnId: 'science-title-next-btn' }
 
             ];
 
