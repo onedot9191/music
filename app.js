@@ -126,7 +126,7 @@
 
                 MATH_OPERATION: 'math-operation',
 
-                PE_BACK: 'pe-back',
+
 
                 CREATIVE: 'creative',
 
@@ -149,6 +149,8 @@
                 MORAL_COURSE: 'moral-course',
 
                 MORAL_PRINCIPLES: 'moral-principles',
+
+                PE_BACK: 'pe-back',
 
                 MUSIC_ELEMENTS: 'music-elements',
 
@@ -288,7 +290,7 @@
 
             [CONSTANTS.SUBJECTS.MATH_OPERATION]: '수와 연산',
 
-            [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
+
 
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
 
@@ -311,6 +313,8 @@
             [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
 
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
+
+            [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
 
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
 
@@ -2109,7 +2113,7 @@
 
        function adjustCreativeInputWidths() {
 
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer]')
+           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -3110,6 +3114,8 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
 
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
+
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_BACK ||
 
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
 
@@ -4128,7 +4134,7 @@
 
                 } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input) || isInCourseMusic(input) || isInCourseArt(input) || isInCoursePe(input)) {
 
-                    // 교육과정-총론, 교육과정-창체, 교육과정-체육(뒷교): 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+                    // 교육과정-총론, 교육과정-창체: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
 
                     input.value = input.dataset.answer;
 
@@ -4370,7 +4376,7 @@
 
             const main = el.closest('main');
 
-            return !!main && main.id === 'pe-back-quiz-main';
+            return false; // pe-back removed
 
         }
 
@@ -4742,7 +4748,7 @@
 
                 } else if (topic === CONSTANTS.TOPICS.COURSE) {
 
-                    defaultSubject = CONSTANTS.SUBJECTS.PE_BACK;
+                    defaultSubject = CONSTANTS.SUBJECTS.CREATIVE;
 
                 } else if (topic === CONSTANTS.TOPICS.BASIC) {
 
@@ -5064,6 +5070,8 @@
 
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
 
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_BACK ||
+
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
 
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH_STD ||
@@ -5123,6 +5131,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
 
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
+
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_BACK ||
 
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
 
@@ -5269,6 +5279,8 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_COURSE ||
 
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.MORAL_COURSE ||
+
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_BACK ||
 
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE_STD ||
 
