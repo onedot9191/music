@@ -129,6 +129,7 @@
                 MATH_OPERATION: 'math-operation',
                 CHANGE_RELATION: 'change-relation',
                 GEOMETRY_MEASURE: 'geometry-measure',
+                DATA_PROBABILITY: 'data-probability',
 
 
 
@@ -299,6 +300,7 @@
             [CONSTANTS.SUBJECTS.CHANGE_RELATION]: '변화와 관계',
 
             [CONSTANTS.SUBJECTS.GEOMETRY_MEASURE]: '도형과 측정',
+            [CONSTANTS.SUBJECTS.DATA_PROBABILITY]: '자료와 가능성',
 
             [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
 
@@ -2179,7 +2181,7 @@
 
        function adjustCreativeInputWidths() {
 
-           document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -3194,6 +3196,7 @@
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CHANGE_RELATION ||
 
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY_MEASURE ||
+                gameState.selectedSubject === CONSTANTS.SUBJECTS.DATA_PROBABILITY ||
 
                 (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
 
@@ -5159,6 +5162,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.CHANGE_RELATION ||
 
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY_MEASURE ||
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.DATA_PROBABILITY ||
 
                     (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
 
@@ -5225,6 +5229,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CHANGE_RELATION ||
 
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY_MEASURE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.DATA_PROBABILITY ||
 
                             (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
 
@@ -5375,6 +5380,7 @@
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.CHANGE_RELATION ||
 
                             gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY_MEASURE ||
+                            gameState.selectedSubject === CONSTANTS.SUBJECTS.DATA_PROBABILITY ||
 
                             (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
 
