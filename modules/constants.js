@@ -28,7 +28,7 @@ export const CONSTANTS = {
         ENGLISH_STD: 'english-std',
         PRACTICAL_STD: 'practical-std',
         MATH_OPERATION: 'math-operation',
-        PE_BACK: 'pe-back',
+
         CREATIVE: 'creative',
         OVERVIEW: 'overview',
         ENGLISH_COURSE: 'english-course',
@@ -109,7 +109,7 @@ export const SUBJECT_NAMES = {
     [CONSTANTS.SUBJECTS.ENGLISH_STD]: '영어',
     [CONSTANTS.SUBJECTS.PRACTICAL_STD]: '실과',
     [CONSTANTS.SUBJECTS.MATH_OPERATION]: '수와 연산',
-    [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
+
     [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
     [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
     [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
