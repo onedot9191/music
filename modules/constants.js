@@ -47,7 +47,6 @@ export const CONSTANTS = {
         MORAL_PRINCIPLES: 'moral-principles',
         MUSIC_ELEMENTS: 'music-elements',
         PHYSICAL_ACTIVITY: 'physical-activity',
-        FIGURE: 'figure',
         SPELLING: 'spelling',
         COMPETENCY: 'competency',
         AREA: 'area',
@@ -133,7 +132,6 @@ export const SUBJECT_NAMES = {
     [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
     [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
     [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
-    [CONSTANTS.SUBJECTS.FIGURE]: '도형',
     [CONSTANTS.SUBJECTS.SPELLING]: '맞춤법',
     [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
     [CONSTANTS.SUBJECTS.AREA]: '영역'
