@@ -31,7 +31,6 @@ export const CONSTANTS = {
         CHANGE_RELATION: 'change-relation',
         GEOMETRY_MEASURE: 'geometry-measure',
         DATA_PROBABILITY: 'data-probability',
-        FIGURE: 'figure',
 
         CREATIVE: 'creative',
         OVERVIEW: 'overview',
@@ -118,7 +117,6 @@ export const SUBJECT_NAMES = {
     [CONSTANTS.SUBJECTS.CHANGE_RELATION]: '변화와 관계',
     [CONSTANTS.SUBJECTS.GEOMETRY_MEASURE]: '도형과 측정',
     [CONSTANTS.SUBJECTS.DATA_PROBABILITY]: '자료와 가능성',
-    [CONSTANTS.SUBJECTS.FIGURE]: '도형',
 
     [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
     [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
