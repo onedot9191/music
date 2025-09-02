@@ -2506,7 +2506,7 @@ input.activity-input {
 #english-quiz-main .assessment-list > li input.fit-answer {
   font-size: 2.8rem !important; /* 최상위 레벨을 가장 크게 */
   font-weight: 900 !important;
-  min-width: 22ch !important;
+  min-width: 14ch !important;
   border-width: 4px !important;
   letter-spacing: 0.1em !important;
   min-height: 3.8rem !important;
@@ -2516,7 +2516,7 @@ input.activity-input {
 #english-quiz-main .sub-list > li input.fit-answer {
   font-size: 2.6rem !important; /* 2번째 레벨 */
   font-weight: 850 !important;
-  min-width: 20ch !important;
+  min-width: 12ch !important;
   letter-spacing: 0.09em !important;
   min-height: 3.6rem !important;
   padding: 1.1rem 1.3rem !important;
@@ -2525,7 +2525,7 @@ input.activity-input {
 #english-quiz-main .sub-list .sub-list > li input.fit-answer {
   font-size: 2.4rem !important; /* 3번째 레벨 */
   font-weight: 800 !important;
-  min-width: 18ch !important;
+  min-width: 10ch !important;
   letter-spacing: 0.08em !important;
   min-height: 3.4rem !important;
   padding: 1rem 1.2rem !important;
@@ -2534,7 +2534,7 @@ input.activity-input {
 #english-quiz-main .sub-list .sub-list .sub-list > li input.fit-answer {
   font-size: 2.2rem !important; /* 4번째 레벨도 충분히 크게 */
   font-weight: 800 !important;
-  min-width: 16ch !important;
+  min-width: 8ch !important;
   letter-spacing: 0.07em !important;
   min-height: 3.2rem !important;
   padding: 0.9rem 1.1rem !important;
@@ -2601,6 +2601,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .achievement-block,
 #english-std-quiz-main .achievement-block,
 #practical-std-quiz-main .achievement-block,
+#art-std-quiz-main .achievement-block,
 #math-operation-quiz-main .achievement-block,
 #change-relation-quiz-main .achievement-block,
 #geometry-measure-quiz-main .achievement-block,
@@ -2614,6 +2615,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 }
 #science-std-quiz-main .achievement-block::before,
 #english-std-quiz-main .achievement-block::before,
+#art-std-quiz-main .achievement-block::before,
 #math-operation-quiz-main .achievement-block::before,
 #change-relation-quiz-main .achievement-block::before,
 #geometry-measure-quiz-main .achievement-block::before,
@@ -2644,6 +2646,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .outline-title,
 #english-std-quiz-main .outline-title,
 #practical-std-quiz-main .outline-title,
+#art-std-quiz-main .outline-title,
 #math-operation-quiz-main .outline-title,
 #change-relation-quiz-main .outline-title,
 #geometry-measure-quiz-main .outline-title,
@@ -2730,6 +2733,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .overview-question,
 #english-std-quiz-main .overview-question,
 #practical-std-quiz-main .overview-question,
+#art-std-quiz-main .overview-question,
 #math-operation-quiz-main .overview-question,
 #practical-quiz-main .overview-question,
 #math-course-quiz-main .overview-question,
@@ -2774,6 +2778,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .overview-question:last-child,
 #english-std-quiz-main .overview-question:last-child,
 #practical-std-quiz-main .overview-question:last-child,
+#art-std-quiz-main .overview-question:last-child,
 #math-operation-quiz-main .overview-question:last-child,
 #geometry-measure-quiz-main .overview-question:last-child,
 #data-probability-quiz-main .overview-question:last-child,
@@ -2810,6 +2815,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #science-std-quiz-main .overview-question,
     #english-std-quiz-main .overview-question,
     #practical-std-quiz-main .overview-question,
+    #art-std-quiz-main .overview-question,
     #math-operation-quiz-main .overview-question,
     #change-relation-quiz-main .overview-question,
     #geometry-measure-quiz-main .overview-question,
@@ -2836,6 +2842,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #science-std-quiz-main .overview-question input,
     #english-std-quiz-main .overview-question input,
     #practical-std-quiz-main .overview-question input,
+    #art-std-quiz-main .overview-question input,
     #math-operation-quiz-main .overview-question input,
     #change-relation-quiz-main .overview-question input,
     #geometry-measure-quiz-main .overview-question input,
@@ -2864,7 +2871,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   
   /* 모바?�에???�력 ?�드 ?�기 조정 */
   #creative-quiz-main .assessment-list > li > input.fit-answer:first-child {
-    min-width: 200px;
+    min-width: 150px;
     font-size: 1.6rem;
   }
   
@@ -2877,12 +2884,12 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #creative-quiz-main .assessment-list input.fit-answer {
     font-size: 1.2rem;
     padding: 0.4rem 0.6rem;
-    min-width: 100px !important;
-    max-width: 120px !important;
+    min-width: 80px !important;
+    max-width: 100px !important;
   }
   
   #creative-quiz-main .sub-list .inline-item input.fit-answer {
-    min-width: 120px !important;
+    min-width: 80px !important;
     font-size: 1.2rem;
   }
 
@@ -2898,7 +2905,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   text-align: center;
   width: auto;
   min-width: 10ch; /* 최소 ?�비 ?��? */
-  max-width: 100%;
+  /* max-width: 100%; */ /* 최대 너비 제한 해제 */
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 그림??*/
   transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
 }
@@ -2915,6 +2922,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .overview-question input,
 #english-std-quiz-main .overview-question input,
 #practical-std-quiz-main .overview-question input,
+#art-std-quiz-main .overview-question input,
 #math-operation-quiz-main .overview-question input,
 #change-relation-quiz-main .overview-question input,
 #geometry-measure-quiz-main .overview-question input,
@@ -2923,27 +2931,112 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #math-course-quiz-main .overview-question input,
 #korean-model-quiz-main .overview-question input,
 #pe-model-quiz-main .overview-question input,
-#spelling-quiz-main .overview-question input {
+#spelling-quiz-main .overview-question input,
+#geometry-quiz-main .overview-question input {
   font-size: 1.9rem;
-  padding: 0.6rem 1rem; /* ?�딩 ?��? */
-  margin: 0 0.6rem; /* 좌우 마진 ?��? */
-  border: 2px solid var(--secondary); /* ?�두�?강화 */
-  border-radius: 8px; /* 모서�??��?�?*/
-  background: var(--bg-light); /* ?�마 ?�환 배경??*/
-  color: var(--text-light); /* ?�마 ?�환 ?�스???�상 */
+  padding: 0.6rem 1rem;
+  margin: 0 0.6rem;
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  background: var(--bg-light);
+  color: var(--text-light);
   text-align: center;
   width: auto;
-  min-width: 10ch; /* 최소 ?�비 ?��? */
-  max-width: 100%;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* ?��? 그림??*/
-  transition: all 0.2s ease; /* 부?�러???�환 ?�과 */
+  min-width: 15ch !important; /* 기본 최소 너비를 적절하게 조정 */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  resize: horizontal;
+  overflow: hidden;
+}
+
+/* 답변 길이에 따른 동적 너비 조정 - 훨씬 더 넉넉하게 */
+#geometry-quiz-main .overview-question input[data-answer] {
+  width: calc(var(--answer-length, 20) * 1.8ch + 6rem) !important;
+  min-width: max(20ch, calc(var(--answer-length, 20) * 1.5ch + 4rem)) !important;
+  max-width: 98vw !important; /* 화면 너비의 98%까지 확장 */
+}
+
+/* 구성요소 관련 빈칸은 더 작게 */
+#geometry-quiz-main .overview-question:contains("구성요소") input[data-answer] {
+  width: calc(var(--answer-length, 8) * 1.1ch + 1.5rem) !important;
+  min-width: max(6ch, calc(var(--answer-length, 8) * 0.9ch + 1rem)) !important;
+}
+
+/* 구성요소가 포함된 질문의 빈칸들 */
+#geometry-quiz-main .overview-question input[data-answer="꼭짓점"],
+#geometry-quiz-main .overview-question input[data-answer="변"],
+#geometry-quiz-main .overview-question input[data-answer="모서리"],
+#geometry-quiz-main .overview-question input[data-answer="면"],
+#geometry-quiz-main .overview-question input[data-answer="밑면"],
+#geometry-quiz-main .overview-question input[data-answer="옆면"],
+#geometry-quiz-main .overview-question input[data-answer="높이"],
+#geometry-quiz-main .overview-question input[data-answer="원의 중심"],
+#geometry-quiz-main .overview-question input[data-answer="반지름"],
+#geometry-quiz-main .overview-question input[data-answer="지름"],
+#geometry-quiz-main .overview-question input[data-answer="각뿔의 꼭짓점"],
+#geometry-quiz-main .overview-question input[data-answer="모선"],
+#geometry-quiz-main .overview-question input[data-answer="구의 중심"],
+#geometry-quiz-main .overview-question input[data-answer="구의 반지름"] {
+  width: auto !important;
+  min-width: 8ch !important;
+  max-width: 15ch !important;
+}
+
+/* 도형 과목 정답/오답에 따른 색상 피드백 */
+#geometry-quiz-main .overview-question input.correct {
+  border-color: #27ae60 !important;
+  background: rgba(39, 174, 96, 0.1) !important;
+  box-shadow: 0 0 8px rgba(39, 174, 96, 0.3) !important;
+  color: #27ae60 !important;
+}
+
+#geometry-quiz-main .overview-question input.retrying {
+  border-color: #f39c12 !important;
+  background: rgba(243, 156, 18, 0.1) !important;
+  box-shadow: 0 0 8px rgba(243, 156, 18, 0.3) !important;
+  color: #e67e22 !important;
+}
+
+#geometry-quiz-main .overview-question input.incorrect {
+  border-color: #e74c3c !important;
+  background: rgba(231, 76, 60, 0.1) !important;
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.3) !important;
+  color: #c0392b !important;
+}
+
+#geometry-quiz-main .overview-question input.revealed {
+  color: var(--revealed) !important;
+  border-color: var(--revealed) !important;
+  background: rgba(0, 255, 255, 0.1) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3) !important;
+}
+
+/* 포커스 상태에서 색상 유지 */
+#geometry-quiz-main .overview-question input.correct:focus {
+  border-color: #27ae60 !important;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2) !important;
+}
+
+#geometry-quiz-main .overview-question input.retrying:focus {
+  border-color: #f39c12 !important;
+  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.2) !important;
+}
+
+#geometry-quiz-main .overview-question input.incorrect:focus {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2) !important;
+}
+
+#geometry-quiz-main .overview-question input.revealed:focus {
+  border-color: var(--revealed) !important;
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2) !important;
 }
 
 /* 맞춤법 빈칸 섹션 - 우선순위를 높여서 적용 */
 #spelling-blank .overview-question input {
   min-width: 6ch !important; /* 답안에 맞는 더 작은 너비 */
   width: auto !important; /* 자동 너비 */
-  max-width: 12ch !important; /* 최대 너비 제한 */
+  /* max-width: 12ch !important; */ /* 최대 너비 제한 해제 */
 }
 
 #social-course-quiz-main .overview-question input {
@@ -3030,6 +3123,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .overview-question input:focus,
 #english-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus,
+#art-std-quiz-main .overview-question input:focus,
 #math-operation-quiz-main .overview-question input:focus,
 #change-relation-quiz-main .overview-question input:focus,
 #geometry-measure-quiz-main .overview-question input:focus,
@@ -3065,6 +3159,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .overview-question input.correct,
 #english-std-quiz-main .overview-question input.correct,
 #practical-std-quiz-main .overview-question input.correct,
+#art-std-quiz-main .overview-question input.correct,
 #math-operation-quiz-main .overview-question input.correct,
 #change-relation-quiz-main .overview-question input.correct,
 #geometry-measure-quiz-main .overview-question input.correct,
@@ -3099,6 +3194,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #science-std-quiz-main .overview-question input.incorrect,
 #english-std-quiz-main .overview-question input.incorrect,
 #practical-std-quiz-main .overview-question input.incorrect,
+#art-std-quiz-main .overview-question input.incorrect,
 #math-operation-quiz-main .overview-question input.incorrect,
 #change-relation-quiz-main .overview-question input.incorrect,
 #geometry-measure-quiz-main .overview-question input.incorrect,
@@ -3131,6 +3227,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #music-course-quiz-main .overview-question input.retrying,
 #art-course-quiz-main .overview-question input.retrying,
 #science-std-quiz-main .overview-question input.retrying,
+#art-std-quiz-main .overview-question input.retrying,
 #english-std-quiz-main .overview-question input.retrying,
 #practical-std-quiz-main .overview-question input.retrying,
 #math-operation-quiz-main .overview-question input.retrying,
@@ -3173,7 +3270,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #math-course-quiz-main .overview-question input.revealed,
 #korean-model-quiz-main .overview-question input.revealed,
 #pe-model-quiz-main .overview-question input.revealed,
-#spelling-quiz-main .overview-question input.revealed {
+#spelling-quiz-main .overview-question input.revealed,
+#geometry-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
 }
@@ -3240,9 +3338,9 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 /* 창체 ?�역�??�동 ?�션???�력 ?�드 최적??*/
 /* 2�??�벨: 중간 카테고리 ?�력 ?�드 */
 #creative-quiz-main .assessment-list > li > ul > li > input.fit-answer:first-child {
-  width: 180px !important;
-  min-width: 180px !important;
-  max-width: 180px !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  max-width: 140px !important;
   padding: 0.6rem 1rem;
   margin: 0.3rem 0;
   font-size: 1.5rem;
@@ -3259,8 +3357,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 /* 3�??�벨: ?��? ??�� ?�력 ?�드 */
 #creative-quiz-main .assessment-list input.fit-answer {
   width: auto !important;
-  min-width: 120px !important;
-  max-width: 160px !important;
+  min-width: 80px !important;
+  max-width: 120px !important;
   padding: 0.4rem 0.6rem;
   margin: 0.2rem 0.3rem;
   font-size: 1.3rem;
@@ -3282,23 +3380,23 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 
 /* Unify blanks width across Art Basic; override scattered inline min-widths */
 #art-basic-quiz-main .inline-item input.fit-answer {
-  width: 20ch !important;
-  min-width: 20ch !important;
+  width: 12ch !important;
+  min-width: 12ch !important;
   max-width: 100%;
   text-align: center;
 }
 
 /* Apply same width even when input is not wrapped by .inline-item */
 #art-basic-quiz-main input.fit-answer {
-  width: 20ch !important;
-  min-width: 20ch !important;
+  width: 12ch !important;
+  min-width: 12ch !important;
   max-width: 100%;
   text-align: center;
 }
 
 #art-basic-quiz-main .sub-list .inline-item input.fit-answer {
-  width: 20ch !important;
-  min-width: 20ch !important;
+  width: 12ch !important;
+  min-width: 12ch !important;
 }
 
 /* 창체 ?�역�??�동 ?�션???�열 카드 ?�이?�웃 */
@@ -3431,7 +3529,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 
 #creative-quiz-main .sub-list .inline-item input.fit-answer {
   width: 100% !important;
-  min-width: 120px !important;
+  min-width: 80px !important;
   max-width: 100% !important;
   margin: 0.2rem 0;
   font-size: 1.2rem;
@@ -3995,7 +4093,59 @@ iframe {
 section#spelling-blank .overview-question input[data-answer] {
   min-width: 6ch !important;
   width: auto !important;
-  max-width: 12ch !important;
+  /* max-width: 12ch !important; */ /* 최대 너비 제한 해제 */
+}
+
+/* 도형 과목 outline-title - 기본 스타일 (# 없는 경우만) */
+#geometry-quiz-main .outline-title:not([data-is-topic="true"]) {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* # 파트별 시각적 구분 - 기존 사이트 스타일과 조화 */
+#geometry-quiz-main .creative-block {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+/* # 기호로 시작하는 주요 섹션 강조 - 붉은색 강제 적용 */
+#geometry-quiz-main .creative-block .outline-title[data-is-topic="true"],
+#geometry-quiz-main .outline-title[data-is-topic="true"] {
+  font-size: 2.6rem !important;
+  color: #ff5555 !important;
+  margin: 2rem 0 1.5rem 0 !important;
+  position: relative;
+  font-weight: 700 !important;
+}
+
+/* # 문자로 시작하는 모든 outline-title (백업 선택자) */
+#geometry-quiz-main .outline-title:is([data-is-topic="true"], :where([data-is-topic]:not([data-is-topic="false"]))) {
+  font-size: 2.6rem !important;
+  color: #ff5555 !important;
+  margin: 2rem 0 1.5rem 0 !important;
+  position: relative;
+  font-weight: 700 !important;
+}
+
+/* # 섹션 하단에 구분선 추가 */
+#geometry-quiz-main .creative-block:has(.outline-title[data-is-topic="true"])::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 1.5rem 0;
+  background: linear-gradient(90deg, transparent, var(--secondary) 20%, var(--secondary) 80%, transparent);
+  border-radius: 1px;
+}
+
+/* 하위 섹션 ([방법1], [학문 수학] 등) 스타일 - 기본 스타일 덮어쓰기 */
+#geometry-quiz-main .outline-title:not([data-is-topic="true"]):contains("[") {
+  font-size: 1.8rem !important;
+  color: var(--secondary) !important;
+  margin: 1rem 0 0.8rem 0 !important;
+  font-weight: 600 !important;
 }
 
 /* 체육(뒷교) 전용 스타일 */
