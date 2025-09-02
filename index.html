@@ -271,6 +271,102 @@
       padding: var(--space-xl);
     }
 
+    /* 효과음 스위치 스타일 */
+    #sound-toggle-container {
+      position: absolute;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 10;
+    }
+
+    .sound-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--text-light);
+      user-select: none;
+    }
+
+    .sound-toggle-text {
+      font-weight: 600;
+      letter-spacing: 0.05rem;
+    }
+
+    .sound-toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    #sound-toggle {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .sound-toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--bg-dark);
+      border: 2px solid var(--secondary);
+      border-radius: 24px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .sound-toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: var(--text-dark);
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    #sound-toggle:checked + .sound-toggle-slider {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 0 8px rgba(233, 69, 96, 0.3);
+    }
+
+    #sound-toggle:checked + .sound-toggle-slider:before {
+      transform: translateX(26px);
+      background-color: var(--text-light);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .sound-toggle-label:hover .sound-toggle-slider {
+      border-color: var(--accent);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.3),
+        0 0 8px rgba(83, 52, 131, 0.2);
+    }
+
+    #sound-toggle:checked + .sound-toggle-slider:hover {
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 0 12px rgba(233, 69, 96, 0.4);
+    }
+
+    /* 시작 모달 컨테이너를 relative로 설정하여 절대 위치 기준점 제공 */
+    #settings-panel {
+      position: relative;
+    }
+
     .dataset-selection h3 {
       font-family: var(--font-display);
       font-size: 2.4rem;
@@ -14908,6 +15004,17 @@
 
             </div>
 
+            <!-- 효과음 ON/OFF 스위치 -->
+            <div id="sound-toggle-container">
+                <label for="sound-toggle" class="sound-toggle-label">
+                    <span class="sound-toggle-text">효과음</span>
+                    <div class="sound-toggle-switch">
+                        <input type="checkbox" id="sound-toggle" checked>
+                        <span class="sound-toggle-slider"></span>
+                    </div>
+                </label>
+            </div>
+
             <button id="start-game-btn" class="btn">시작</button>
 
         </div>
@@ -14958,6 +15065,65 @@
     }
   </script>
   
+  <!-- === 효과음 스위치 기능 === -->
+  <script>
+    // 효과음 설정 관리
+    let soundEnabled = true; // 기본값: ON
+
+    // 로컬 스토리지에서 설정 불러오기
+    function loadSoundSettings() {
+      const saved = localStorage.getItem('soundEnabled');
+      if (saved !== null) {
+        soundEnabled = JSON.parse(saved);
+      } else {
+        // 저장된 설정이 없으면 기본값 ON으로 설정하고 저장
+        soundEnabled = true;
+        localStorage.setItem('soundEnabled', 'true');
+      }
+      
+      const toggle = document.getElementById('sound-toggle');
+      if (toggle) {
+        toggle.checked = soundEnabled;
+      }
+    }
+
+    // 로컬 스토리지에 설정 저장하기
+    function saveSoundSettings() {
+      localStorage.setItem('soundEnabled', JSON.stringify(soundEnabled));
+    }
+
+    // 전역 효과음 제어 함수
+    function isSoundEnabled() {
+      return soundEnabled;
+    }
+
+    // 전역으로 노출하여 모듈에서도 접근 가능하도록
+    window.isSoundEnabled = isSoundEnabled;
+
+    // 페이지 로드 시 설정 적용
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSoundSettings();
+      
+      // 스위치 이벤트 리스너 추가
+      const soundToggle = document.getElementById('sound-toggle');
+      if (soundToggle) {
+        soundToggle.addEventListener('change', function() {
+          soundEnabled = this.checked;
+          saveSoundSettings();
+          
+          // 스위치 변경 시 간단한 피드백 (시각적)
+          const container = document.getElementById('sound-toggle-container');
+          if (container) {
+            container.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              container.style.transform = 'scale(1)';
+            }, 150);
+          }
+        });
+      }
+    });
+  </script>
+
   <!-- === 기존 메인 애플리케이션 파일 (변경 없음) === -->
   <script src="app.js"></script>
 
