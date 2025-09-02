@@ -1645,6 +1645,11 @@
 
         function playSound(audioElement) {
 
+            // 효과음 스위치가 OFF인 경우 재생하지 않음
+            if (window.isSoundEnabled && !window.isSoundEnabled()) {
+                return;
+            }
+
             if (!audioElement || typeof audioElement.play !== 'function') {
 
                 console.error('Provided element is not a valid audio element.');
