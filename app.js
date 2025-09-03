@@ -6159,7 +6159,7 @@
 
             playSound(clickAudio);
 
-            if (gameState.duration < 1800) { // Max 30 mins
+            if (gameState.duration < 3600) { // Max 60 mins
 
                 gameState.duration += 60;
 
