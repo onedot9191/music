@@ -4226,7 +4226,19 @@
 
                         shouldAdvance = true;
 
-                    showRevealButtonForIntegrated(input);
+                        showRevealButtonForIntegrated(input);
+
+                    } else if (isInGeometry(input)) {
+
+                        // 기타-도형: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                        input.value = input.dataset.answer;
+
+                        input.disabled = true;
+
+                        shouldAdvance = true;
+
+                        showRevealButtonForIntegrated(input);
 
                 } else if (isInCourseOverview(input) || isInCourseCreative(input) || isInCourseSocial(input) || isInCourseScience(input) || isInCourseEnglish(input) || isInCourseKorean(input) || isInCoursePractical(input) || isInCourseMusic(input) || isInCourseArt(input) || isInCoursePe(input)) {
 
@@ -4393,6 +4405,16 @@
             const main = el.closest('main');
 
             return !!main && main.id === 'art-basic-quiz-main';
+
+        }
+
+
+
+        function isInGeometry(el) {
+
+            const main = el.closest('main');
+
+            return !!main && main.id === 'geometry-quiz-main';
 
         }
 
