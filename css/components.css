@@ -389,3 +389,21 @@
 .home-project-part input[style*="width"] {
   width: 100% !important;
 }
+
+/* 1열 빈칸 배치를 위한 스타일 */
+.single-col-answers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.single-col-answers input {
+  width: 100% !important;
+  display: block !important;
+  margin-bottom: var(--space-xs);
+}
+
+.single-col-answers input:last-child {
+  margin-bottom: 0;
+}
