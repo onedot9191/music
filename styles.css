@@ -489,6 +489,18 @@ td.two-col-answers {
   gap: 1rem;
 }
 
+td.one-col-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+td.one-col-answers input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Force one-column layout for model topic sections */
 #ethics-quiz-main td.two-col-answers,
 #practical-quiz-main td.two-col-answers {
