@@ -2926,7 +2926,19 @@
 
 
 
-            resultTitle.textContent = feedback.title;
+            // 현재 날짜를 가져오는 함수
+            function getCurrentDate() {
+                const today = new Date();
+                const month = today.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1
+                const day = today.getDate();
+                return `${month}월 ${day}일`;
+            }
+
+            // 칭호에 날짜 추가
+            const currentDate = getCurrentDate();
+            const titleWithDate = `${currentDate} 자 ${feedback.title}`;
+
+            resultTitle.textContent = titleWithDate;
 
             
 
