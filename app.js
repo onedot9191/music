@@ -689,7 +689,7 @@
 
         function initAutoWidthCourse() {
 
-            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main'].forEach(id => {
+            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main'].forEach(id => {
 
                 const container = document.getElementById(id);
 
@@ -1056,6 +1056,20 @@
         if (overviewTabs) {
 
             overviewTabs.addEventListener('click', () => {
+
+                requestAnimationFrame(applyOverviewHierarchyIndentation);
+
+            });
+
+        }
+
+        // 동양윤리 내부 탭 클릭 시 재적용
+
+        const easternEthicsTabs = document.querySelector('#eastern-ethics-quiz-main .tabs');
+
+        if (easternEthicsTabs) {
+
+            easternEthicsTabs.addEventListener('click', () => {
 
                 requestAnimationFrame(applyOverviewHierarchyIndentation);
 
@@ -2200,7 +2214,7 @@
 
        function adjustCreativeInputWidths() {
 
-        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -4240,6 +4254,18 @@
 
                         showRevealButtonForIntegrated(input);
 
+                    } else if (isInEasternEthics(input)) {
+
+                        // 동양윤리: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                        input.value = input.dataset.answer;
+
+                        input.disabled = true;
+
+                        shouldAdvance = true;
+
+                        showRevealButtonForIntegrated(input);
+
                     } else if (isInGeometry(input)) {
 
                         // 기타-도형: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
@@ -4417,6 +4443,14 @@
             const main = el.closest('main');
 
             return !!main && main.id === 'art-basic-quiz-main';
+
+        }
+
+        function isInEasternEthics(el) {
+
+            const main = el.closest('main');
+
+            return !!main && main.id === 'eastern-ethics-quiz-main';
 
         }
 
