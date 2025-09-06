@@ -2736,6 +2736,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #integrated-course-quiz-main .overview-question,
 #social-course-quiz-main .overview-question,
 #moral-course-quiz-main .overview-question,
+#eastern-ethics-quiz-main .overview-question,
 #science-course-quiz-main .overview-question,
 #korean-course-quiz-main .overview-question,
 #english-course-quiz-main .overview-question,
@@ -2781,6 +2782,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #integrated-course-quiz-main .overview-question:last-child,
 #social-course-quiz-main .overview-question:last-child,
 #moral-course-quiz-main .overview-question:last-child,
+#eastern-ethics-quiz-main .overview-question:last-child,
 #science-course-quiz-main .overview-question:last-child,
 #english-course-quiz-main .overview-question:last-child,
 #practical-course-quiz-main .overview-question:last-child,
@@ -2801,12 +2803,24 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   margin-bottom: 1rem; /* 마�?�?문단???�단 ?�백 조정 */
 }
 
-/* Overview (총론) 계층 ?�여?�기 */
-#overview-quiz-main .overview-question.overview-top {
+/* Overview (총론, 동양윤리) 계층 ?�여?�기 */
+#overview-quiz-main .overview-question.overview-top,
+#eastern-ethics-quiz-main .overview-question.overview-top {
   margin-left: 0;
 }
-#overview-quiz-main .overview-question.overview-sub {
+#overview-quiz-main .overview-question.overview-sub,
+#eastern-ethics-quiz-main .overview-question.overview-sub {
   margin-left: 2rem;
+}
+
+/* 동양윤리 Title 강조 스타일 */
+#eastern-ethics-quiz-main .overview-question.title-highlight {
+  border: 3px solid var(--accent) !important;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  background: rgba(83, 52, 131, 0.05);
+  box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.2);
 }
 
 
