@@ -3298,6 +3298,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
 }
 #overview-quiz-main .overview-question input.revealed,
+#eastern-ethics-quiz-main .overview-question input.revealed,
 #integrated-course-quiz-main .overview-question input.revealed,
 #social-course-quiz-main .overview-question input.revealed,
 #moral-course-quiz-main .overview-question input.revealed,
