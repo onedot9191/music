@@ -104,6 +104,8 @@
 
                 ENGLISH: 'english',
 
+                EASTERN_ETHICS: 'eastern-ethics',
+
                 ETHICS: 'ethics',
 
                 ETHICS_LITE: 'ethics-lite',
@@ -278,6 +280,8 @@
             [CONSTANTS.SUBJECTS.ART_BASIC]: '미술',
 
             [CONSTANTS.SUBJECTS.ENGLISH]: '영어',
+
+            [CONSTANTS.SUBJECTS.EASTERN_ETHICS]: '동양윤리',
 
             [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
 
