@@ -2823,6 +2823,24 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.2);
 }
 
+/* 동양윤리 빈칸 스타일 - 총론과 동일하게 적용 */
+#eastern-ethics-quiz-main .overview-question input {
+  font-size: 1.9rem;
+  padding: 0.6rem 1rem;
+  margin: 0 0.6rem;
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  background: var(--bg-light);
+  color: var(--text-light);
+  text-align: center;  /* 중앙 정렬 적용 */
+  width: auto;
+  min-width: 10ch !important;  /* 좁은 최소 너비 적용 */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  resize: horizontal;
+  overflow: hidden;
+}
+
 
 
 /* 모바??반응???�자??개선 */
@@ -2856,6 +2874,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   
   #creative-quiz-main .creative-question input,
   #overview-quiz-main .overview-question input,
+  #eastern-ethics-quiz-main .overview-question input,
   #integrated-course-quiz-main .overview-question input,
   #social-course-quiz-main .overview-question input,
   #moral-course-quiz-main .overview-question input,
@@ -2968,7 +2987,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   color: var(--text-light);
   text-align: center;
   width: auto;
-  min-width: 15ch !important; /* 기본 최소 너비를 적절하게 조정 */
+  min-width: 10ch !important; /* 기본 최소 너비를 적절하게 조정 */
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   resize: horizontal;
@@ -3137,6 +3156,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   transform: translateY(-1px); /* 미세???�승 ?�과 */
 }
 #overview-quiz-main .overview-question input:focus,
+#eastern-ethics-quiz-main .overview-question input:focus,
 #integrated-course-quiz-main .overview-question input:focus,
 #social-course-quiz-main .overview-question input:focus,
 #moral-course-quiz-main .overview-question input:focus,
@@ -3173,6 +3193,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 #overview-quiz-main .overview-question input.correct,
+#eastern-ethics-quiz-main .overview-question input.correct,
 #integrated-course-quiz-main .overview-question input.correct,
 #social-course-quiz-main .overview-question input.correct,
 #moral-course-quiz-main .overview-question input.correct,
@@ -3208,6 +3229,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 #overview-quiz-main .overview-question input.incorrect,
+#eastern-ethics-quiz-main .overview-question input.incorrect,
 #integrated-course-quiz-main .overview-question input.incorrect,
 #social-course-quiz-main .overview-question input.incorrect,
 #moral-course-quiz-main .overview-question input.incorrect,
