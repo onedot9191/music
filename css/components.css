@@ -358,12 +358,12 @@
 .part-title {
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--primary);
+  color: white;
   margin-bottom: var(--space-md);
   padding: var(--space-sm) var(--space-md);
   background: var(--secondary);
   border-radius: var(--space-sm);
-  border: 2px solid var(--primary);
+  border: 2px solid #8b5cf6;
   text-align: center;
 }
 
