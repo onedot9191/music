@@ -407,3 +407,45 @@
 .single-col-answers input:last-child {
   margin-bottom: 0;
 }
+
+/* === 층위별 시각적 구분 - 들여쓰기로 계층 표현 === */
+
+/* 높은 층위 블록 (①, ②, ③, ④, ⑤) */
+.overview-question.standard-emphasis {
+  background: var(--primary);
+  color: white;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0 1rem 0;
+  border-radius: 8px;
+  font-weight: bold;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* 낮은 층위 블록 (㉠, ㉡, ㉢, ㉣) - 들여쓰기 효과 */
+.overview-question {
+  background: rgba(255,255,255,0.9);
+  padding: 0.8rem 1.2rem;
+  margin: 0.3rem 0 0.3rem 2rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* 높은 층위 블록의 자식 요소 간격 조정 */
+.overview-question.standard-emphasis + .overview-question {
+  margin-top: 0.5rem;
+}
+
+/* 호버 효과 */
+.overview-question.standard-emphasis:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.overview-question:hover {
+  background: rgba(255,255,255,1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
