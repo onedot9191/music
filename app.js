@@ -106,6 +106,10 @@
 
                 EASTERN_ETHICS: 'eastern-ethics',
 
+                WESTERN_ETHICS: 'western-ethics',
+
+                MORAL_PSYCHOLOGY: 'moral-psychology',
+
                 ETHICS: 'ethics',
 
                 ETHICS_LITE: 'ethics-lite',
@@ -693,7 +697,7 @@
 
         function initAutoWidthCourse() {
 
-            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main'].forEach(id => {
+            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main', 'western-ethics-quiz-main', 'moral-psychology-quiz-main'].forEach(id => {
 
                 const container = document.getElementById(id);
 
@@ -1074,6 +1078,34 @@
         if (easternEthicsTabs) {
 
             easternEthicsTabs.addEventListener('click', () => {
+
+                requestAnimationFrame(applyOverviewHierarchyIndentation);
+
+            });
+
+        }
+
+        // 서양윤리 내부 탭 클릭 시 재적용
+
+        const westernEthicsTabs = document.querySelector('#western-ethics-quiz-main .tabs');
+
+        if (westernEthicsTabs) {
+
+            westernEthicsTabs.addEventListener('click', () => {
+
+                requestAnimationFrame(applyOverviewHierarchyIndentation);
+
+            });
+
+        }
+
+        // 도덕 심리학 내부 탭 클릭 시 재적용
+
+        const moralPsychologyTabs = document.querySelector('#moral-psychology-quiz-main .tabs');
+
+        if (moralPsychologyTabs) {
+
+            moralPsychologyTabs.addEventListener('click', () => {
 
                 requestAnimationFrame(applyOverviewHierarchyIndentation);
 
@@ -2218,7 +2250,7 @@
 
        function adjustCreativeInputWidths() {
 
-        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -4455,6 +4487,54 @@
             const main = el.closest('main');
 
             return !!main && main.id === 'eastern-ethics-quiz-main';
+
+        }
+
+        function isInWesternEthics(el) {
+
+            const main = el.closest('main');
+
+            return !!main && main.id === 'western-ethics-quiz-main';
+
+        }
+
+        function isInMoralPsychology(el) {
+
+            const main = el.closest('main');
+
+            return !!main && main.id === 'moral-psychology-quiz-main';
+
+        }
+
+        function isInPiaget(el) {
+
+            const section = el.closest('section');
+
+            return !!section && section.id === 'piaget';
+
+        }
+
+        function isInKohlberg(el) {
+
+            const section = el.closest('section');
+
+            return !!section && section.id === 'kohlberg';
+
+        }
+
+        function isInGilligan(el) {
+
+            const section = el.closest('section');
+
+            return !!section && section.id === 'gilligan';
+
+        }
+
+        function isInNoddings(el) {
+
+            const section = el.closest('section');
+
+            return !!section && section.id === 'noddings';
 
         }
 
