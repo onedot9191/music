@@ -2737,6 +2737,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question,
 #moral-course-quiz-main .overview-question,
 #eastern-ethics-quiz-main .overview-question,
+#western-ethics-quiz-main .overview-question,
+#moral-psychology-quiz-main .overview-question,
 #science-course-quiz-main .overview-question,
 #korean-course-quiz-main .overview-question,
 #english-course-quiz-main .overview-question,
@@ -2783,6 +2785,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #social-course-quiz-main .overview-question:last-child,
 #moral-course-quiz-main .overview-question:last-child,
 #eastern-ethics-quiz-main .overview-question:last-child,
+#western-ethics-quiz-main .overview-question:last-child,
+#moral-psychology-quiz-main .overview-question:last-child,
 #science-course-quiz-main .overview-question:last-child,
 #english-course-quiz-main .overview-question:last-child,
 #practical-course-quiz-main .overview-question:last-child,
@@ -2805,16 +2809,22 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 
 /* Overview (총론, 동양윤리) 계층 ?�여?�기 */
 #overview-quiz-main .overview-question.overview-top,
-#eastern-ethics-quiz-main .overview-question.overview-top {
+#eastern-ethics-quiz-main .overview-question.overview-top,
+#western-ethics-quiz-main .overview-question.overview-top,
+#moral-psychology-quiz-main .overview-question.overview-top {
   margin-left: 0;
 }
 #overview-quiz-main .overview-question.overview-sub,
-#eastern-ethics-quiz-main .overview-question.overview-sub {
+#eastern-ethics-quiz-main .overview-question.overview-sub,
+#western-ethics-quiz-main .overview-question.overview-sub,
+#moral-psychology-quiz-main .overview-question.overview-sub {
   margin-left: 2rem;
 }
 
-/* 동양윤리 Title 강조 스타일 */
-#eastern-ethics-quiz-main .overview-question.title-highlight {
+/* 동양윤리, 서양윤리, 도덕 심리학 Title 강조 스타일 */
+#eastern-ethics-quiz-main .overview-question.title-highlight,
+#western-ethics-quiz-main .overview-question.title-highlight,
+#moral-psychology-quiz-main .overview-question.title-highlight {
   border: 3px solid var(--accent) !important;
   border-radius: 8px;
   padding: 1rem 1.5rem;
@@ -2823,8 +2833,10 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.2);
 }
 
-/* 동양윤리 빈칸 스타일 - 총론과 동일하게 적용 */
-#eastern-ethics-quiz-main .overview-question input {
+/* 동양윤리, 서양윤리, 도덕 심리학 빈칸 스타일 - 총론과 동일하게 적용 */
+#eastern-ethics-quiz-main .overview-question input,
+#western-ethics-quiz-main .overview-question input,
+#moral-psychology-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem;
   margin: 0 0.6rem;
@@ -2875,6 +2887,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #creative-quiz-main .creative-question input,
   #overview-quiz-main .overview-question input,
   #eastern-ethics-quiz-main .overview-question input,
+  #western-ethics-quiz-main .overview-question input,
+  #moral-psychology-quiz-main .overview-question input,
   #integrated-course-quiz-main .overview-question input,
   #social-course-quiz-main .overview-question input,
   #moral-course-quiz-main .overview-question input,
@@ -3157,6 +3171,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 }
 #overview-quiz-main .overview-question input:focus,
 #eastern-ethics-quiz-main .overview-question input:focus,
+#western-ethics-quiz-main .overview-question input:focus,
+#moral-psychology-quiz-main .overview-question input:focus,
 #integrated-course-quiz-main .overview-question input:focus,
 #social-course-quiz-main .overview-question input:focus,
 #moral-course-quiz-main .overview-question input:focus,
@@ -3194,6 +3210,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 }
 #overview-quiz-main .overview-question input.correct,
 #eastern-ethics-quiz-main .overview-question input.correct,
+#western-ethics-quiz-main .overview-question input.correct,
+#moral-psychology-quiz-main .overview-question input.correct,
 #integrated-course-quiz-main .overview-question input.correct,
 #social-course-quiz-main .overview-question input.correct,
 #moral-course-quiz-main .overview-question input.correct,
@@ -3230,6 +3248,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 }
 #overview-quiz-main .overview-question input.incorrect,
 #eastern-ethics-quiz-main .overview-question input.incorrect,
+#western-ethics-quiz-main .overview-question input.incorrect,
+#moral-psychology-quiz-main .overview-question input.incorrect,
 #integrated-course-quiz-main .overview-question input.incorrect,
 #social-course-quiz-main .overview-question input.incorrect,
 #moral-course-quiz-main .overview-question input.incorrect,
@@ -3299,6 +3319,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 }
 #overview-quiz-main .overview-question input.revealed,
 #eastern-ethics-quiz-main .overview-question input.revealed,
+#western-ethics-quiz-main .overview-question input.revealed,
+#moral-psychology-quiz-main .overview-question input.revealed,
 #integrated-course-quiz-main .overview-question input.revealed,
 #social-course-quiz-main .overview-question input.revealed,
 #moral-course-quiz-main .overview-question input.revealed,
