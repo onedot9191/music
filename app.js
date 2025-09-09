@@ -122,6 +122,8 @@
 
                 SOCIAL: 'social',
 
+                SOCIAL_34: 'social-34',
+
                 SCIENCE: 'science',
 
                 SCIENCE_CURRICULUM: 'science-curriculum',
@@ -287,6 +289,10 @@
 
             [CONSTANTS.SUBJECTS.EASTERN_ETHICS]: '동양윤리',
 
+            [CONSTANTS.SUBJECTS.WESTERN_ETHICS]: '서양윤리',
+
+            [CONSTANTS.SUBJECTS.MORAL_PSYCHOLOGY]: '도덕 심리학',
+
             [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
 
             [CONSTANTS.SUBJECTS.ETHICS_LITE]: '도덕(lite)',
@@ -298,6 +304,8 @@
             [CONSTANTS.SUBJECTS.MATH_MODEL]: '수학',
 
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
+
+            [CONSTANTS.SUBJECTS.SOCIAL_34]: '사회34',
 
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
 
@@ -2250,7 +2258,7 @@
 
        function adjustCreativeInputWidths() {
 
-        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #social-34-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
