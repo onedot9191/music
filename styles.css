@@ -2620,6 +2620,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .achievement-block,
 #social-34-quiz-main .achievement-block,
 #social-56-quiz-main .achievement-block,
+#music-std-quiz-main .achievement-block,
 #art-std-quiz-main .achievement-block,
 #math-operation-quiz-main .achievement-block,
 #change-relation-quiz-main .achievement-block,
@@ -2667,6 +2668,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .outline-title,
 #social-34-quiz-main .outline-title,
 #social-56-quiz-main .outline-title,
+#music-std-quiz-main .outline-title,
 #art-std-quiz-main .outline-title,
 #math-operation-quiz-main .outline-title,
 #change-relation-quiz-main .outline-title,
@@ -2759,6 +2761,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question,
 #social-34-quiz-main .overview-question,
 #social-56-quiz-main .overview-question,
+#music-std-quiz-main .overview-question,
 #art-std-quiz-main .overview-question,
 #math-operation-quiz-main .overview-question,
 #practical-quiz-main .overview-question,
@@ -2884,6 +2887,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #practical-std-quiz-main .overview-question,
 #social-34-quiz-main .overview-question,
 #social-56-quiz-main .overview-question,
+#music-std-quiz-main .overview-question,
     #art-std-quiz-main .overview-question,
     #math-operation-quiz-main .overview-question,
     #change-relation-quiz-main .overview-question,
@@ -2925,7 +2929,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #pe-model-quiz-main .overview-question input,
   #spelling-quiz-main .overview-question input,
   #social-34-quiz-main .overview-question input,
-  #social-56-quiz-main .overview-question input {
+  #social-56-quiz-main .overview-question input,
+  #music-std-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바?�에???�력 ?�드 ?�트 ?�기 */
     padding: 0.5rem 0.8rem; /* 모바?�에???�딩 조정 */
     margin: 0.2rem 0.4rem; /* 모바?�에??마진 조정 */
@@ -3008,7 +3013,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #spelling-quiz-main .overview-question input,
   #geometry-quiz-main .overview-question input,
   #social-34-quiz-main .overview-question input,
-  #social-56-quiz-main .overview-question input {
+  #social-56-quiz-main .overview-question input,
+  #music-std-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem;
   margin: 0 0.6rem;
@@ -3213,7 +3219,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #pe-model-quiz-main .overview-question input:focus,
   #spelling-quiz-main .overview-question input:focus,
   #social-34-quiz-main .overview-question input:focus,
-  #social-56-quiz-main .overview-question input:focus {
+  #social-56-quiz-main .overview-question input:focus,
+#music-std-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
   background: var(--bg-light); /* ?�커???�에???�마 배경???��? */
@@ -3254,6 +3261,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #pe-model-quiz-main .overview-question input.correct,
   #social-34-quiz-main .overview-question input.correct,
   #social-56-quiz-main .overview-question input.correct,
+#music-std-quiz-main .overview-question input.correct,
 #spelling-quiz-main .overview-question input.correct {
   border-color: var(--correct);
   color: var(--correct);
@@ -3293,6 +3301,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #korean-model-quiz-main .overview-question input.incorrect,
 #social-34-quiz-main .overview-question input.incorrect,
 #social-56-quiz-main .overview-question input.incorrect,
+#music-std-quiz-main .overview-question input.incorrect,
 #pe-model-quiz-main .overview-question input.incorrect,
 #spelling-quiz-main .overview-question input.incorrect {
   border-color: var(--incorrect);
@@ -3330,6 +3339,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #korean-model-quiz-main .overview-question input.retrying,
 #social-34-quiz-main .overview-question input.retrying,
 #social-56-quiz-main .overview-question input.retrying,
+#music-std-quiz-main .overview-question input.retrying,
 #pe-model-quiz-main .overview-question input.retrying,
 #spelling-quiz-main .overview-question input.retrying {
   border-color: var(--retrying);
@@ -3369,7 +3379,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #spelling-quiz-main .overview-question input.revealed,
   #geometry-quiz-main .overview-question input.revealed,
   #social-34-quiz-main .overview-question input.revealed,
-  #social-56-quiz-main .overview-question input.revealed {
+  #social-56-quiz-main .overview-question input.revealed,
+  #music-std-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
 }
