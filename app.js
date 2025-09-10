@@ -1115,10 +1115,35 @@
             });
         }
 
+        // --- 기타 도형 빈칸 주변 텍스트 보라색 적용 ---
+
+        function applyGeometryMoralPurpleText() {
+            // '기타' 주제 '도형' 과목인지 확인
+            const isGeometryMoral = gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                                    gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY;
+
+            if (!isGeometryMoral) return;
+
+            // 모든 빈칸 주변 텍스트 요소 찾기
+            const overviewQuestions = document.querySelectorAll('.overview-question');
+
+            overviewQuestions.forEach(question => {
+                // 기존 보라색 스타일 제거
+                question.classList.remove('science-model-purple-text');
+
+                // 빈칸이 있는 경우에만 보라색 적용
+                const inputs = question.querySelectorAll('input[data-answer]');
+                if (inputs.length > 0) {
+                    question.classList.add('science-model-purple-text');
+                }
+            });
+        }
+
         // 초기 적용
 
         applyOverviewHierarchyIndentation();
         applyScienceModelPurpleText();
+        applyGeometryMoralPurpleText();
 
         // 총론 내부 탭 클릭 시 재적용
 
@@ -1131,6 +1156,7 @@
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
                     applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -1148,6 +1174,7 @@
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
                     applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -1165,6 +1192,7 @@
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
                     applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -1182,6 +1210,7 @@
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
                     applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -5138,8 +5167,11 @@
 
             updateStartModalUI();
 
-            // 과학 모형 조건에 따른 스타일 적용
-            setTimeout(applyScienceModelPurpleText, 100);
+            // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
+            setTimeout(() => {
+                applyScienceModelPurpleText();
+                applyGeometryMoralPurpleText();
+            }, 100);
 
         });
 
@@ -5229,8 +5261,11 @@
 
                         gameState.isRandomizing = false;
 
-                        // 과학 모형 조건에 따른 스타일 적용
-                        setTimeout(applyScienceModelPurpleText, 100);
+                        // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
+                        setTimeout(() => {
+                            applyScienceModelPurpleText();
+                            applyGeometryMoralPurpleText();
+                        }, 100);
 
                         return;
 
@@ -5252,8 +5287,11 @@
 
                 gameState.selectedSubject = subject;
 
-                // 과학 모형 조건에 따른 스타일 적용
-                setTimeout(applyScienceModelPurpleText, 100);
+                // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
+                setTimeout(() => {
+                    applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
+                }, 100);
 
             }
 
