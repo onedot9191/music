@@ -1091,9 +1091,34 @@
 
 
 
+        // --- 과학 모형 빈칸 주변 텍스트 보라색 적용 ---
+
+        function applyScienceModelPurpleText() {
+            // '모형' 주제 '과학' 과목인지 확인
+            const isScienceModel = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                                   gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE;
+
+            if (!isScienceModel) return;
+
+            // 모든 빈칸 주변 텍스트 요소 찾기
+            const overviewQuestions = document.querySelectorAll('.overview-question');
+
+            overviewQuestions.forEach(question => {
+                // 기존 보라색 스타일 제거
+                question.classList.remove('science-model-purple-text');
+
+                // 빈칸이 있는 경우에만 보라색 적용
+                const inputs = question.querySelectorAll('input[data-answer]');
+                if (inputs.length > 0) {
+                    question.classList.add('science-model-purple-text');
+                }
+            });
+        }
+
         // 초기 적용
 
         applyOverviewHierarchyIndentation();
+        applyScienceModelPurpleText();
 
         // 총론 내부 탭 클릭 시 재적용
 
@@ -1103,7 +1128,10 @@
 
             overviewTabs.addEventListener('click', () => {
 
-                requestAnimationFrame(applyOverviewHierarchyIndentation);
+                requestAnimationFrame(() => {
+                    applyOverviewHierarchyIndentation();
+                    applyScienceModelPurpleText();
+                });
 
             });
 
@@ -1117,7 +1145,10 @@
 
             easternEthicsTabs.addEventListener('click', () => {
 
-                requestAnimationFrame(applyOverviewHierarchyIndentation);
+                requestAnimationFrame(() => {
+                    applyOverviewHierarchyIndentation();
+                    applyScienceModelPurpleText();
+                });
 
             });
 
@@ -1131,7 +1162,10 @@
 
             westernEthicsTabs.addEventListener('click', () => {
 
-                requestAnimationFrame(applyOverviewHierarchyIndentation);
+                requestAnimationFrame(() => {
+                    applyOverviewHierarchyIndentation();
+                    applyScienceModelPurpleText();
+                });
 
             });
 
@@ -1145,7 +1179,10 @@
 
             moralPsychologyTabs.addEventListener('click', () => {
 
-                requestAnimationFrame(applyOverviewHierarchyIndentation);
+                requestAnimationFrame(() => {
+                    applyOverviewHierarchyIndentation();
+                    applyScienceModelPurpleText();
+                });
 
             });
 
@@ -5101,6 +5138,9 @@
 
             updateStartModalUI();
 
+            // 과학 모형 조건에 따른 스타일 적용
+            setTimeout(applyScienceModelPurpleText, 100);
+
         });
 
 
@@ -5189,6 +5229,9 @@
 
                         gameState.isRandomizing = false;
 
+                        // 과학 모형 조건에 따른 스타일 적용
+                        setTimeout(applyScienceModelPurpleText, 100);
+
                         return;
 
                     }
@@ -5208,6 +5251,9 @@
                 clickedBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
 
                 gameState.selectedSubject = subject;
+
+                // 과학 모형 조건에 따른 스타일 적용
+                setTimeout(applyScienceModelPurpleText, 100);
 
             }
 
