@@ -2,6 +2,11 @@
   border-color: var(--accent) !important; /* 보라???�두�?*/
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
 }
+
+/* 과학 모형 빈칸 주변 텍스트 보라색 스타일 */
+.science-model-purple-text {
+  color: var(--accent) !important; /* 보라색 텍스트 */
+}
 :root {
   --bg-dark: #1a1a2e;
   --bg-light: #16213e;
