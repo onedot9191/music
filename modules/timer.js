@@ -164,7 +164,7 @@ export class TimerManager {
     }
 
     // 시간 설정 증가
-    increaseDuration(amount = 60) {
+    increaseDuration(amount = 300) {
         if (this.duration < 3600) { // 최대 60분
             this.duration += amount;
             this.updateTimeDisplay();
@@ -172,7 +172,7 @@ export class TimerManager {
     }
 
     // 시간 설정 감소
-    decreaseDuration(amount = 60) {
+    decreaseDuration(amount = 300) {
         if (this.duration > 60) { // 최소 1분
             this.duration -= amount;
             this.updateTimeDisplay();
