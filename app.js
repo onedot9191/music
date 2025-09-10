@@ -622,7 +622,37 @@
 
             const dataAnswer = input.getAttribute('data-answer');
 
-            if (dataAnswer) answers.push(dataAnswer.trim());
+            if (dataAnswer) {
+                const trimmedAnswer = dataAnswer.trim();
+                answers.push(trimmedAnswer);
+
+                // 괄호가 있는 경우 추가 정답 후보 생성
+                const parenMatch = trimmedAnswer.match(/([^(]*)\(([^)]*)\)(.*)/);
+                if (parenMatch) {
+                    const beforeParen = parenMatch[1];
+                    const parenContent = parenMatch[2];
+                    const afterParen = parenMatch[3] || '';
+
+                    // 괄호 제거 버전
+                    const withoutParen = beforeParen + afterParen;
+                    if (withoutParen && withoutParen !== trimmedAnswer) {
+                        answers.push(withoutParen);
+                    }
+
+                    // 괄호 내용이 앞 단어에 붙은 버전
+                    if (beforeParen && parenContent) {
+                        const mergedWithBefore = beforeParen + parenContent + afterParen;
+                        if (mergedWithBefore && mergedWithBefore !== trimmedAnswer && mergedWithBefore !== withoutParen) {
+                            answers.push(mergedWithBefore);
+                        }
+                    }
+
+                    // 괄호 내용만 있는 버전
+                    if (parenContent && parenContent !== trimmedAnswer) {
+                        answers.push(parenContent + afterParen);
+                    }
+                }
+            }
 
             const accept = input.getAttribute('data-accept') || input.getAttribute('data-alias') || input.getAttribute('data-aliases');
 
@@ -4080,19 +4110,20 @@
 
             } else {
 
-                const correctAnswer = normalizeAnswer(input.dataset.answer);
+                const correctAnswers = getAnswerCandidates(input).map(answer => normalizeAnswer(answer));
 
-                
+
 
                 // '기타' 주제 '음악요소'의 경우 괄호 내용까지 정확히 입력해야 함
 
-                if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL && 
+                if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
 
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS) {
 
-                    // 괄호 내용까지 정확히 입력해야 정답으로 처리
+                    // 괄호 내용까지 정확히 입력해야 정답으로 처리 (원본 정답만 사용)
+                    const originalAnswer = normalizeAnswer(input.dataset.answer);
 
-                    if (userAnswer === correctAnswer) {
+                    if (userAnswer === originalAnswer) {
 
                         isCorrect = true;
 
@@ -4100,7 +4131,7 @@
 
                     }
 
-                } else if (userAnswer === correctAnswer) {
+                } else if (correctAnswers.includes(userAnswer)) {
 
                     isCorrect = true;
 
@@ -4110,15 +4141,15 @@
 
                     const userNoModel = stripModelWord(userAnswer);
 
-                    const correctNoModel = stripModelWord(correctAnswer);
+                    const correctNoModelList = correctAnswers.map(answer => stripModelWord(answer));
 
                     if (
 
-                        userAnswer === correctNoModel ||
+                        correctNoModelList.some(correct => userAnswer === correct) ||
 
-                        userNoModel === correctAnswer ||
+                        correctAnswers.some(correct => userNoModel === correct) ||
 
-                        userNoModel === correctNoModel
+                        correctNoModelList.some(correct => userNoModel === correct)
 
                     ) {
 
