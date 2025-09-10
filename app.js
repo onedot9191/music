@@ -6336,7 +6336,7 @@
 
             if (gameState.duration > 60) {
 
-                gameState.duration -= 60;
+                gameState.duration -= 300;
 
                 updateTimeSettingDisplay();
 
@@ -6352,7 +6352,7 @@
 
             if (gameState.duration < 3600) { // Max 60 mins
 
-                gameState.duration += 60;
+                gameState.duration += 300;
 
                 updateTimeSettingDisplay();
 
