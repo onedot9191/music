@@ -2620,6 +2620,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .achievement-block,
 #social-34-quiz-main .achievement-block,
 #social-56-quiz-main .achievement-block,
+#korean-std-quiz-main .achievement-block,
 #music-std-quiz-main .achievement-block,
 #art-std-quiz-main .achievement-block,
 #math-operation-quiz-main .achievement-block,
@@ -2668,6 +2669,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .outline-title,
 #social-34-quiz-main .outline-title,
 #social-56-quiz-main .outline-title,
+#korean-std-quiz-main .outline-title,
 #music-std-quiz-main .outline-title,
 #art-std-quiz-main .outline-title,
 #math-operation-quiz-main .outline-title,
@@ -2761,6 +2763,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main .overview-question,
 #social-34-quiz-main .overview-question,
 #social-56-quiz-main .overview-question,
+#korean-std-quiz-main .overview-question,
 #music-std-quiz-main .overview-question,
 #art-std-quiz-main .overview-question,
 #math-operation-quiz-main .overview-question,
@@ -2887,6 +2890,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #practical-std-quiz-main .overview-question,
 #social-34-quiz-main .overview-question,
 #social-56-quiz-main .overview-question,
+#korean-std-quiz-main .overview-question,
 #music-std-quiz-main .overview-question,
     #art-std-quiz-main .overview-question,
     #math-operation-quiz-main .overview-question,
@@ -2930,6 +2934,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #spelling-quiz-main .overview-question input,
   #social-34-quiz-main .overview-question input,
   #social-56-quiz-main .overview-question input,
+  #korean-std-quiz-main .overview-question input,
   #music-std-quiz-main .overview-question input {
     font-size: 1.6rem; /* 모바?�에???�력 ?�드 ?�트 ?�기 */
     padding: 0.5rem 0.8rem; /* 모바?�에???�딩 조정 */
@@ -3014,6 +3019,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #geometry-quiz-main .overview-question input,
   #social-34-quiz-main .overview-question input,
   #social-56-quiz-main .overview-question input,
+  #korean-std-quiz-main .overview-question input,
   #music-std-quiz-main .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem;
@@ -3220,6 +3226,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #spelling-quiz-main .overview-question input:focus,
   #social-34-quiz-main .overview-question input:focus,
   #social-56-quiz-main .overview-question input:focus,
+#korean-std-quiz-main .overview-question input:focus,
 #music-std-quiz-main .overview-question input:focus {
   outline: none;
   border-color: var(--primary);
@@ -3261,6 +3268,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #pe-model-quiz-main .overview-question input.correct,
   #social-34-quiz-main .overview-question input.correct,
   #social-56-quiz-main .overview-question input.correct,
+#korean-std-quiz-main .overview-question input.correct,
 #music-std-quiz-main .overview-question input.correct,
 #spelling-quiz-main .overview-question input.correct {
   border-color: var(--correct);
@@ -3301,6 +3309,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #korean-model-quiz-main .overview-question input.incorrect,
 #social-34-quiz-main .overview-question input.incorrect,
 #social-56-quiz-main .overview-question input.incorrect,
+#korean-std-quiz-main .overview-question input.incorrect,
 #music-std-quiz-main .overview-question input.incorrect,
 #pe-model-quiz-main .overview-question input.incorrect,
 #spelling-quiz-main .overview-question input.incorrect {
@@ -3339,6 +3348,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #korean-model-quiz-main .overview-question input.retrying,
 #social-34-quiz-main .overview-question input.retrying,
 #social-56-quiz-main .overview-question input.retrying,
+#korean-std-quiz-main .overview-question input.retrying,
 #music-std-quiz-main .overview-question input.retrying,
 #pe-model-quiz-main .overview-question input.retrying,
 #spelling-quiz-main .overview-question input.retrying {
@@ -3380,6 +3390,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   #geometry-quiz-main .overview-question input.revealed,
   #social-34-quiz-main .overview-question input.revealed,
   #social-56-quiz-main .overview-question input.revealed,
+  #korean-std-quiz-main .overview-question input.revealed,
   #music-std-quiz-main .overview-question input.revealed {
   color: var(--revealed);
   border-color: var(--revealed);
