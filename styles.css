@@ -1,9 +1,11 @@
 #overview-quiz-main #design .design-emphasis {
-  border-color: var(--accent) !important;
+  border-color: var(--accent) !important; /* 보라???�두�?*/
   box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
 }
+
+/* 과학 모형 빈칸 주변 텍스트 보라색 스타일 */
 .science-model-purple-text {
-  color: var(--accent) !important;
+  color: var(--accent) !important; /* 보라색 텍스트 */
 }
 :root {
   --bg-dark: #1a1a2e;
@@ -13,20 +15,27 @@
   --accent: #533483;
   --text-light: #f0f0f0;
   --text-dark: #a0a0a0;
-  --correct: #39ff14;
-  --incorrect: #ff5733;
-  --retrying: #ffc300;
-  --revealed: #00ffff;
+  --correct: #39ff14; /* Neon Green */
+  --incorrect: #ff5733; /* Bright Orange-Red */
+  --retrying: #ffc300; /* Amber/Yellow for retry */
+  --revealed: #00ffff; /* Cyan */
+
+  /* Typography */
   --font-base: 'Noto Sans KR', sans-serif;
   --font-display: 'Galmuri9', 'Galmuri11', 'Press Start 2P', cursive;
   --font-mono: 'Galmuri9', monospace;
-  --space-xs: 0.4rem;
-  --space-sm: 0.8rem;
-  --space-md: 1.6rem;
-  --space-lg: 2.4rem;
-  --space-xl: 3.2rem;
-  font-size: 10px;
+
+  /* Spacing scale */
+  --space-xs: 0.4rem; /* 4px */
+  --space-sm: 0.8rem; /* 8px */
+  --space-md: 1.6rem; /* 16px */
+  --space-lg: 2.4rem; /* 24px */
+  --space-xl: 3.2rem; /* 32px */
+
+  font-size: 10px; /* Base font size for rem units */
 }
+
+/* Start modal: ensure first row lists four primary topics in order */
 #start-modal .topic-selector {
   display: grid;
   gap: 1rem;
@@ -52,12 +61,14 @@ body {
   font-weight: 400;
 }
 
+/* Global UX enhancements */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 12rem; /* keep focused content clear of fixed header */
   -webkit-text-size-adjust: 100%;
 }
 
+/* Accessible skip link */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -75,6 +86,7 @@ html {
   outline-offset: 2px;
 }
 
+/* Focus visible rings for keyboard users */
 .btn:focus-visible,
 .tab:focus-visible,
 input:focus-visible,
@@ -84,6 +96,7 @@ input:focus-visible,
   outline-offset: 2px;
 }
 
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
@@ -92,6 +105,7 @@ input:focus-visible,
   }
 }
 
+/* Visually hidden utility for screen reader only text */
 .sr-only {
   position: absolute !important;
   width: 1px !important;
@@ -145,6 +159,7 @@ header {
   gap: 1.5rem;
 }
 
+/* Top-right header buttons use display font */
 .hud-right .btn {
   font-family: var(--font-display);
 }
@@ -229,6 +244,7 @@ header h1 {
   display: none;
 }
 
+/* Flash reels when the slot machine hits a win */
 .slot-machine.win {
   animation: slot-win-rotate 1s ease-out;
 }
@@ -379,6 +395,8 @@ main,
   transform: translateY(3px);
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
+/* Blur titles for disabled sections in Practical model */
+/* Generic blur for disabled tabs across all model subjects */
 .tabs .tab.practical-disabled {
   filter: blur(8px);
   opacity: 0.2;
@@ -520,7 +538,7 @@ td input.fit-answer {
   min-width: 14ch;
 }
 
-/* Force fixed width for home project inputs - highest priority */
+/* 홈 프로젝트 파트 빈칸 너비 강제 고정 - 최고 우선순위 */
 .home-project-part input,
 .home-project-part input.correct,
 .home-project-part input.incorrect,
@@ -575,7 +593,7 @@ td input.shake {
   }
 }
 
-/* Correct answer pulse - disabled */
+/* Correct answer subtle pulse (distinct from wrong shake) - COMPLETELY DISABLED */
 td input.correct.correct-pulse {
   /* animation: correct-pulse 420ms ease-out; */
   animation: none !important;
@@ -859,7 +877,7 @@ td input.activity-input:not(:first-child) {
   padding: 1.4rem;
 }
 
-/* Example input container */
+/* 예시 입력 필드들을 위한 컨테이너 */
 .activity-group .examples-container {
   display: flex;
   flex-wrap: wrap;
@@ -872,7 +890,7 @@ td input.activity-input:not(:first-child) {
   padding: 1rem;
 }
 
-/* Other topic activity example layout */
+/* 기타 주제 신체활동 예시 개선된 레이아웃 */
 .activity-group .activity-input + .example-input {
   margin-top: 0.8rem;
 }
@@ -881,12 +899,12 @@ td input.activity-input:not(:first-child) {
   margin-left: 0;
 }
 
-/* Consistent spacing for example inputs */
+/* 예시 입력 필드들 간의 일관된 간격 */
 .activity-group .example-input + .example-input {
   margin-left: 0.5rem;
 }
 
-/* Better visual separation styles */
+/* 더 나은 시각적 구분을 위한 스타일 */
 .activity-group {
   background: rgba(255, 255, 255, 0.02);
   border: 2px dashed rgba(255, 255, 255, 0.3);
@@ -898,7 +916,7 @@ td input.activity-input:not(:first-child) {
   transition: all 0.2s ease;
 }
 
-/* Purple border for activity example inputs - highest priority */
+/* 신체활동 예시 빈칸 보라색 테두리 - 최우선 적용 */
 #physical-activity-quiz-main input.activity-input,
 .activity-group input.activity-input,
 input.activity-input {
@@ -1219,7 +1237,7 @@ input.activity-input {
   background-color: #524360; /* 채도가 ??? 보라??*/
 }
 
-/* Topic color themes - matching existing design */
+/* 주제별 색상 테마 - 기존 디자인과 조화 */
 .topic-btn.curriculum-btn {
   background: #2d4a3e !important; /* 어두운 청록 - 교육과정표 */
 }
@@ -1252,7 +1270,7 @@ input.activity-input {
   background: #524360 !important; /* 랜덤 버튼과 동일한 색상 - 기타 */
 }
 
-/* Hover states - slightly brighter colors */
+/* 호버 상태 - 각 색상을 약간 밝게 */
 .topic-btn.curriculum-btn:hover { 
   background: #3d5a4e !important;
   transform: translate(2px, 2px);
@@ -1294,7 +1312,7 @@ input.activity-input {
   box-shadow: 3px 3px 0px var(--secondary);
 }
 
-/* Selected state uses default primary color */
+/* 선택된 상태는 기본 primary 색상 유지 */
 .topic-btn.curriculum-btn.selected,
 .topic-btn.model-btn.selected,
 .topic-btn.course-btn.selected,
@@ -2232,7 +2250,7 @@ input.activity-input {
   width: 100%;
 }
 
-/* English: Function words in single column */
+/* English: 기능�??�어 지?�는 ??�� 1???�로) 배치 */
 #english-quiz-main #functional .grade-container {
   flex-direction: column;
 }
@@ -2242,21 +2260,21 @@ input.activity-input {
   min-width: 100%;
 }
 
-/* English: Content words - Culture block separate placement */
+/* English: ?�소�??�어 지??- �?블록(Culture)?� ?�독 ?�으�?분리 배치 */
 #english-quiz-main #element .grade-container > div:first-child {
   flex: none;
   width: 100%;
   min-width: 100%;
 }
 
-/* English: Activity-based lesson - 'Chant & Song' in separate column */
+/* English: 활동 중심 수업 - 'Chant & Song'을 독립 열으로 분리 배치 */
 #english-quiz-main #activity .grade-container > div:first-child {
   flex: none;
   width: 100%;
   min-width: 100%;
 }
 
-/* English: All sections in single column layout */
+/* English: 모든 섹션을 1열 배치로 설정 */
 #english-quiz-main .grade-container {
   flex-direction: column;
 }
@@ -2354,8 +2372,8 @@ input.activity-input {
   padding-left: 1rem;
 }
 
-/* English: Full redesign for readability & hierarchy */
-/* 1) Reset list styles and improve spacing */
+/* English: Full redesign for readability & hierarchy (?�면 개편) */
+/* 1) 리스??기본�?리셋 �?간격 ?�장 */
 #english-quiz-main .assessment-list,
 #english-quiz-main .sub-list {
   list-style: none;
@@ -2369,14 +2387,14 @@ input.activity-input {
   gap: 1.4rem;
 }
 
-/* Remove existing paragraph separation (card style) */
+/* 기존 ?�단 분리???�거 (카드?�로 ?��? */
 #english-quiz-main .assessment-list > li:not(:last-child) {
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
-/* 2) Top level: Card style + left guide line */
+/* 2) 최상????��: 카드 ?�태 + 좌측 가?�드 ?�인 */
 #english-quiz-main .assessment-list > li {
   background: var(--bg-light);
   border: 2px solid var(--secondary);
@@ -2385,7 +2403,7 @@ input.activity-input {
   padding: 1.2rem 1.2rem 1.2rem 1.4rem;
 }
 
-/* 3) Sub level: Left guide + improved spacing */
+/* 3) ?�위 ??��: 좌측 가?�드 + ?�여?�기 ?�장 */
 #english-quiz-main .sub-list {
   display: flex;
   flex-direction: column;
@@ -2402,7 +2420,7 @@ input.activity-input {
   padding-left: 1.2rem;
 }
 
-/* 4) Improve sentence/paragraph group spacing */
+/* 4) 문장/?�라??그룹 간격 �??�간 ?�장 */
 #english-quiz-main li,
 #english-quiz-main .inline-item {
   line-height: 1.9;
@@ -2412,7 +2430,7 @@ input.activity-input {
   row-gap: 1.6rem; /* 줄바�????�로 간격 추�? ?��? */
 }
 
-/* 5) Improve input field spacing/alignment, hierarchy sizing */
+/* 5) ?�력�?빈칸) ?�설�? ?�백/줄간�??�렬 개선, ?�계�??�기 차등 */
 #english-quiz-main input.fit-answer {
   display: inline-flex;
   align-items: center;
@@ -2806,7 +2824,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   margin-bottom: 1rem; /* 마�?�?문단???�단 ?�백 조정 */
 }
 
-/* Overview hierarchy display */
+/* Overview (총론, 동양윤리) 계층 ?�여?�기 */
 #overview-quiz-main .overview-question.overview-top,
 #eastern-ethics-quiz-main .overview-question.overview-top,
 #western-ethics-quiz-main .overview-question.overview-top,
@@ -2820,7 +2838,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   margin-left: 2rem;
 }
 
-/* Ethics section title emphasis styles */
+/* 동양윤리, 서양윤리, 도덕 심리학 Title 강조 스타일 */
 #eastern-ethics-quiz-main .overview-question.title-highlight,
 #western-ethics-quiz-main .overview-question.title-highlight,
 #moral-psychology-quiz-main .overview-question.title-highlight {
@@ -3378,30 +3396,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   border-color: var(--revealed);
 }
 
-/* 국어 과목 학년별 시각 구분 */
-#korean-std-quiz-main .achievement-standard[data-grade="2"] {
-  background: linear-gradient(135deg, rgba(135, 206, 250, 0.1), rgba(173, 216, 230, 0.05));
-  border-left: 4px solid #87ceeb;
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-  margin: 0.3rem 0;
-}
 
-#korean-std-quiz-main .achievement-standard[data-grade="4"] {
-  background: linear-gradient(135deg, rgba(144, 238, 144, 0.1), rgba(152, 251, 152, 0.05));
-  border-left: 4px solid #90ee90;
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-  margin: 0.3rem 0;
-}
 
-#korean-std-quiz-main .achievement-standard[data-grade="6"] {
-  background: linear-gradient(135deg, rgba(255, 218, 185, 0.1), rgba(255, 228, 196, 0.05));
-  border-left: 4px solid #ffb347;
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-  margin: 0.3rem 0;
-}
 
 #moral .moral-wrapper {
   display: flex;
