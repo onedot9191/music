@@ -1091,34 +1091,50 @@
 
 
 
-        // --- 특정 과목 빈칸 주변 텍스트 보라색 적용 ---
+        // --- 과학 모형 빈칸 주변 텍스트 보라색 적용 ---
 
-        function applyPurpleTextStyles() {
+        function applyScienceModelPurpleText() {
             // '모형' 주제 '과학' 과목인지 확인
             const isScienceModel = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
                                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE;
 
-            // '기타' 주제 '도형' 과목인지 확인
-            const isGeometryMoral = gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
-                                    gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY;
-
-            // 특정 조건에 해당하는지 확인
-            const shouldApplyPurple = isScienceModel || isGeometryMoral;
+            if (!isScienceModel) return;
 
             // 모든 빈칸 주변 텍스트 요소 찾기
             const overviewQuestions = document.querySelectorAll('.overview-question');
 
             overviewQuestions.forEach(question => {
-                // 빈칸이 있는 경우에만 처리
+                // 기존 보라색 스타일 제거
+                question.classList.remove('science-model-purple-text');
+
+                // 빈칸이 있는 경우에만 보라색 적용
                 const inputs = question.querySelectorAll('input[data-answer]');
                 if (inputs.length > 0) {
-                    if (shouldApplyPurple) {
-                        // 특정 조건이면 보라색 적용
-                        question.classList.add('science-model-purple-text');
-                    } else {
-                        // 특정 조건이 아니면 보라색 스타일 제거 (기본 하얀색으로 복원)
-                        question.classList.remove('science-model-purple-text');
-                    }
+                    question.classList.add('science-model-purple-text');
+                }
+            });
+        }
+
+        // --- 기타 도형 빈칸 주변 텍스트 보라색 적용 ---
+
+        function applyGeometryMoralPurpleText() {
+            // '기타' 주제 '도형' 과목인지 확인
+            const isGeometryMoral = gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                                    gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY;
+
+            if (!isGeometryMoral) return;
+
+            // 모든 빈칸 주변 텍스트 요소 찾기
+            const overviewQuestions = document.querySelectorAll('.overview-question');
+
+            overviewQuestions.forEach(question => {
+                // 기존 보라색 스타일 제거
+                question.classList.remove('science-model-purple-text');
+
+                // 빈칸이 있는 경우에만 보라색 적용
+                const inputs = question.querySelectorAll('input[data-answer]');
+                if (inputs.length > 0) {
+                    question.classList.add('science-model-purple-text');
                 }
             });
         }
@@ -1126,7 +1142,8 @@
         // 초기 적용
 
         applyOverviewHierarchyIndentation();
-        applyPurpleTextStyles();
+        applyScienceModelPurpleText();
+        applyGeometryMoralPurpleText();
 
         // 총론 내부 탭 클릭 시 재적용
 
@@ -1138,7 +1155,8 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyPurpleTextStyles();
+                    applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -1155,7 +1173,8 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyPurpleTextStyles();
+                    applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -1172,7 +1191,8 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyPurpleTextStyles();
+                    applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -1189,7 +1209,8 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyPurpleTextStyles();
+                    applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
                 });
 
             });
@@ -5146,8 +5167,11 @@
 
             updateStartModalUI();
 
-            // 특정 과목 조건에 따른 스타일 적용
-            setTimeout(applyPurpleTextStyles, 100);
+            // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
+            setTimeout(() => {
+                applyScienceModelPurpleText();
+                applyGeometryMoralPurpleText();
+            }, 100);
 
         });
 
@@ -5263,8 +5287,11 @@
 
                 gameState.selectedSubject = subject;
 
-                // 특정 과목 조건에 따른 스타일 적용
-                setTimeout(applyPurpleTextStyles, 100);
+                // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
+                setTimeout(() => {
+                    applyScienceModelPurpleText();
+                    applyGeometryMoralPurpleText();
+                }, 100);
 
             }
 
@@ -6235,11 +6262,53 @@
 
 
 
+        // 로딩 상태 관리 함수들 (버튼 상태만 변경, 오버레이 제거)
+        const setLoadingState = (loading) => {
+            const buttons = [scrapResultImageBtn, scrapResultImageBtnTop].filter(btn => btn);
+
+            buttons.forEach(btn => {
+                if (loading) {
+                    btn.classList.add('loading');
+                    btn.disabled = true;
+                    const originalText = btn.textContent;
+                    btn.setAttribute('data-original-text', originalText);
+                    btn.innerHTML = '<span class="btn-text">' + originalText + '</span>';
+                } else {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                    const originalText = btn.getAttribute('data-original-text');
+                    if (originalText) {
+                        btn.textContent = originalText;
+                        btn.removeAttribute('data-original-text');
+                    }
+                }
+            });
+
+            // 강제 리플로우로 DOM 변경 즉시 반영
+            if (loading) {
+                buttons.forEach(btn => {
+                    btn.offsetHeight; // 강제 리플로우
+                });
+            }
+
+            // 로딩 오버레이 제거 - 사용자가 결과창을 볼 수 있도록
+        };
+
         const handleScrapResultImage = async () => {
 
             const modalContent = document.querySelector('#progress-modal .modal-content');
 
             const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
+
+            // 로딩 상태 시작
+            setLoadingState(true);
+
+            // DOM 업데이트가 확실히 완료될 때까지 대기
+            await new Promise(resolve => {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(resolve);
+                });
+            });
 
             
 
@@ -6334,6 +6403,9 @@
                 alert('이미지 캡처에 실패했습니다. 다시 시도해주세요.');
 
             } finally {
+
+                // 로딩 상태 해제
+                setLoadingState(false);
 
                 if (wasHidden) {
 
