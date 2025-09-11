@@ -186,6 +186,81 @@
   animation: spin 1s linear infinite;
 }
 
+/* === 버튼 로딩 상태 === */
+.btn.loading {
+  position: relative;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--primary) 0%, #ff6b6b 50%, var(--primary) 100%) !important;
+  border-color: var(--primary) !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+}
+
+.btn.loading .btn-text {
+  visibility: hidden; /* 텍스트 완전히 숨김 */
+}
+
+.btn.loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: loadingBar 2s ease-in-out infinite;
+  z-index: 5;
+}
+
+.btn.loading::after {
+  content: "로딩중...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  z-index: 10;
+  animation: loadingText 1.5s ease-in-out infinite;
+}
+
+/* 로딩바 애니메이션 */
+@keyframes loadingBar {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes loadingText {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+@keyframes retroSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1); }
+  75% { transform: rotate(270deg) scale(0.9); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 로딩 오버레이 스타일 제거 - 버튼에만 로딩 표시 */
+
 /* === 토글 스위치 === */
 .toggle {
   position: relative;
