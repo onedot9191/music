@@ -1091,50 +1091,34 @@
 
 
 
-        // --- 과학 모형 빈칸 주변 텍스트 보라색 적용 ---
+        // --- 특정 과목 빈칸 주변 텍스트 보라색 적용 ---
 
-        function applyScienceModelPurpleText() {
+        function applyPurpleTextStyles() {
             // '모형' 주제 '과학' 과목인지 확인
             const isScienceModel = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
                                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE;
 
-            if (!isScienceModel) return;
-
-            // 모든 빈칸 주변 텍스트 요소 찾기
-            const overviewQuestions = document.querySelectorAll('.overview-question');
-
-            overviewQuestions.forEach(question => {
-                // 기존 보라색 스타일 제거
-                question.classList.remove('science-model-purple-text');
-
-                // 빈칸이 있는 경우에만 보라색 적용
-                const inputs = question.querySelectorAll('input[data-answer]');
-                if (inputs.length > 0) {
-                    question.classList.add('science-model-purple-text');
-                }
-            });
-        }
-
-        // --- 기타 도형 빈칸 주변 텍스트 보라색 적용 ---
-
-        function applyGeometryMoralPurpleText() {
             // '기타' 주제 '도형' 과목인지 확인
             const isGeometryMoral = gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
                                     gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY;
 
-            if (!isGeometryMoral) return;
+            // 특정 조건에 해당하는지 확인
+            const shouldApplyPurple = isScienceModel || isGeometryMoral;
 
             // 모든 빈칸 주변 텍스트 요소 찾기
             const overviewQuestions = document.querySelectorAll('.overview-question');
 
             overviewQuestions.forEach(question => {
-                // 기존 보라색 스타일 제거
-                question.classList.remove('science-model-purple-text');
-
-                // 빈칸이 있는 경우에만 보라색 적용
+                // 빈칸이 있는 경우에만 처리
                 const inputs = question.querySelectorAll('input[data-answer]');
                 if (inputs.length > 0) {
-                    question.classList.add('science-model-purple-text');
+                    if (shouldApplyPurple) {
+                        // 특정 조건이면 보라색 적용
+                        question.classList.add('science-model-purple-text');
+                    } else {
+                        // 특정 조건이 아니면 보라색 스타일 제거 (기본 하얀색으로 복원)
+                        question.classList.remove('science-model-purple-text');
+                    }
                 }
             });
         }
@@ -1142,8 +1126,7 @@
         // 초기 적용
 
         applyOverviewHierarchyIndentation();
-        applyScienceModelPurpleText();
-        applyGeometryMoralPurpleText();
+        applyPurpleTextStyles();
 
         // 총론 내부 탭 클릭 시 재적용
 
@@ -1155,8 +1138,7 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+                    applyPurpleTextStyles();
                 });
 
             });
@@ -1173,8 +1155,7 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+                    applyPurpleTextStyles();
                 });
 
             });
@@ -1191,8 +1172,7 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+                    applyPurpleTextStyles();
                 });
 
             });
@@ -1209,8 +1189,7 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+                    applyPurpleTextStyles();
                 });
 
             });
@@ -5167,11 +5146,8 @@
 
             updateStartModalUI();
 
-            // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
-            setTimeout(() => {
-                applyScienceModelPurpleText();
-                applyGeometryMoralPurpleText();
-            }, 100);
+            // 특정 과목 조건에 따른 스타일 적용
+            setTimeout(applyPurpleTextStyles, 100);
 
         });
 
@@ -5287,11 +5263,8 @@
 
                 gameState.selectedSubject = subject;
 
-                // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
-                setTimeout(() => {
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
-                }, 100);
+                // 특정 과목 조건에 따른 스타일 적용
+                setTimeout(applyPurpleTextStyles, 100);
 
             }
 
