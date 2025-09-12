@@ -8,6 +8,7 @@
   --incorrect: #e74c3c; /* 빨간색 - 2차 오답 */
   --retrying: #f39c12; /* 주황색 - 1차 오답 */
   --revealed: #00ffff; /* 시안색 - 정답 보기 */
+  --subject-high-accuracy: #6a1b9a; /* 진한 보라색 - 과목 정답률 10% 이상 */
 }
 
 /* === 다크 테마 지원 ===
