@@ -138,6 +138,12 @@
                 CHANGE_RELATION: 'change-relation',
                 GEOMETRY_MEASURE: 'geometry-measure',
                 DATA_PROBABILITY: 'data-probability',
+                KOREAN_STD: 'korean-std',
+                MUSIC_STD: 'music-std',
+                ART_STD: 'art-std',
+                LIFE_ACHIEVEMENT: 'life-achievement',
+                WISE_ACHIEVEMENT: 'wise-achievement',
+                JOY_ACHIEVEMENT: 'joy-achievement',
 
 
 
@@ -267,11 +273,11 @@
 
             [CONSTANTS.SUBJECTS.KOREAN_MODEL]: '국어',
 
-            [CONSTANTS.SUBJECTS.LIFE]: '바생',
+            [CONSTANTS.SUBJECTS.LIFE]: '바른 생활',
 
-            [CONSTANTS.SUBJECTS.WISE]: '슬생',
+            [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
 
-            [CONSTANTS.SUBJECTS.JOY]: '즐생',
+            [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
 
             [CONSTANTS.SUBJECTS.PE]: '체육',
 
@@ -325,6 +331,12 @@
 
             [CONSTANTS.SUBJECTS.GEOMETRY_MEASURE]: '도형과 측정',
             [CONSTANTS.SUBJECTS.DATA_PROBABILITY]: '자료와 가능성',
+            [CONSTANTS.SUBJECTS.KOREAN_STD]: '국어',
+            [CONSTANTS.SUBJECTS.MUSIC_STD]: '음악',
+            [CONSTANTS.SUBJECTS.ART_STD]: '미술',
+            [CONSTANTS.SUBJECTS.LIFE_ACHIEVEMENT]: '바른 생활',
+            [CONSTANTS.SUBJECTS.WISE_ACHIEVEMENT]: '슬기로운 생활',
+            [CONSTANTS.SUBJECTS.JOY_ACHIEVEMENT]: '즐거운 생활',
 
             [CONSTANTS.SUBJECTS.GEOMETRY]: '도형',
 
@@ -3957,7 +3969,10 @@
 
                                     idx++;
 
-                                    input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                                    input.classList.add(
+                                        CONSTANTS.CSS_CLASSES.CORRECT,
+                                        CONSTANTS.CSS_CLASSES.REVEALED
+                                    );
 
                                 }
 
@@ -4103,6 +4118,12 @@
                     groupSection && groupSection.id && groupSection.id.toLowerCase().includes('title')
                 );
                 if (isScienceModelTitleForGrading) {
+                    ignoreOrder = false;
+                }
+
+                // [성취기준] 미술 과목에서는 일반 채점 시스템 사용 (순서 무시 비활성화)
+                if (gameState.selectedTopic === CONSTANTS.TOPICS.ACHIEVEMENT &&
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_STD) {
                     ignoreOrder = false;
                 }
 
@@ -6527,7 +6548,13 @@
 
                             );
 
-                            input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
+                            input.classList.add(
+
+                                CONSTANTS.CSS_CLASSES.CORRECT,
+
+                                CONSTANTS.CSS_CLASSES.REVEALED
+
+                            );
 
                         }
 
