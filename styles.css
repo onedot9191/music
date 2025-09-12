@@ -15,8 +15,8 @@
   --accent: #533483;
   --text-light: #f0f0f0;
   --text-dark: #a0a0a0;
-  --correct: #39ff14; /* Neon Green */
-  --incorrect: #ff5733; /* Bright Orange-Red */
+  --correct: #00ffff; /* 시안색 (revealed와 통일) */
+  --incorrect: #e94560; /* 빨간색 (primary와 통일) */
   --retrying: #ffc300; /* Amber/Yellow for retry */
   --revealed: #00ffff; /* Cyan */
 
