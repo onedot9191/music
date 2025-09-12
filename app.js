@@ -1373,6 +1373,99 @@
 
         }
 
+        function saveSubjectAccuracy(subject, correctCount, totalCount) {
+
+            const key = formatDateKey();
+
+            const stats = JSON.parse(localStorage.getItem('subjectAccuracy') || '{}');
+
+            if (!stats[key]) {
+                stats[key] = {};
+            }
+
+            if (!stats[key][subject]) {
+                stats[key][subject] = { correct: 0, total: 0 };
+            }
+
+            stats[key][subject].correct += correctCount;
+            stats[key][subject].total += totalCount;
+
+            localStorage.setItem('subjectAccuracy', JSON.stringify(stats));
+
+        }
+
+        function getSubjectAccuracy(subject) {
+
+            const key = formatDateKey();
+
+            const stats = JSON.parse(localStorage.getItem('subjectAccuracy') || '{}');
+
+            if (stats[key] && stats[key][subject]) {
+                const data = stats[key][subject];
+                return data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+            }
+
+            return 0;
+
+        }
+
+        function checkSubjectAccuracyThreshold(subject, threshold = 70) {
+
+            const accuracy = getSubjectAccuracy(subject);
+
+            return accuracy >= threshold;
+
+        }
+
+        function markSubjectAccuracyAchieved(subject) {
+
+            const key = formatDateKey();
+
+            const achievements = JSON.parse(localStorage.getItem('subjectAchievements') || '{}');
+
+            if (!achievements[key]) {
+                achievements[key] = {};
+            }
+
+            achievements[key][subject] = true;
+
+            localStorage.setItem('subjectAchievements', JSON.stringify(achievements));
+
+        }
+
+        function checkSubjectAccuracyAchieved(subject) {
+
+            const key = formatDateKey();
+
+            const achievements = JSON.parse(localStorage.getItem('subjectAchievements') || '{}');
+
+            return achievements[key] && achievements[key][subject] === true;
+
+        }
+
+        function updateSubjectButtonStates() {
+
+            const subjectButtons = document.querySelectorAll('.subject-btn');
+
+            subjectButtons.forEach(button => {
+
+                const subject = button.dataset.subject;
+
+                // 한번 달성했으면 계속 유지, 아니면 현재 정답률로 판단
+                if (subject && (checkSubjectAccuracyAchieved(subject) || checkSubjectAccuracyThreshold(subject, 70))) {
+
+                    button.classList.add('high-accuracy');
+
+                } else {
+
+                    button.classList.remove('high-accuracy');
+
+                }
+
+            });
+
+        }
+
 
 
         function getDailyStats(days = 30) {
@@ -2720,6 +2813,9 @@
 
             updateHeatmapTitle(stats);
 
+            // 과목 버튼 정답률 상태 업데이트
+            updateSubjectButtonStates();
+
         }
 
 
@@ -3016,6 +3112,17 @@
 
                 percentage = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
+                // 맞춤법 퀴즈의 경우에도 과목별 정답률 저장
+                saveSubjectAccuracy(gameState.selectedSubject, correctCount, totalCount);
+
+                // 10% 이상 달성했으면 기록
+                if (percentage >= 70) {
+                    markSubjectAccuracyAchieved(gameState.selectedSubject);
+                }
+
+                // 과목 버튼 상태 업데이트
+                updateSubjectButtonStates();
+
             } else {
 
                 // 일반 퀴즈의 경우 기존 방식 사용
@@ -3034,7 +3141,16 @@
 
                 saveDailyStats(correctCount);
 
-                
+                // 과목별 정답률 저장
+                saveSubjectAccuracy(gameState.selectedSubject, correctCount, totalCount);
+
+                // 10% 이상 달성했으면 기록
+                if (percentage >= 70) {
+                    markSubjectAccuracyAchieved(gameState.selectedSubject);
+                }
+
+                // 과목 버튼 상태 업데이트
+                updateSubjectButtonStates();
 
                 document.getElementById('correct-count').textContent = correctCount;
 
