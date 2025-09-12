@@ -19,6 +19,7 @@
   --incorrect: #e94560; /* 빨간색 (primary와 통일) */
   --retrying: #ffc300; /* Amber/Yellow for retry */
   --revealed: #00ffff; /* Cyan */
+  --subject-high-accuracy: #6a1b9a; /* 진한 보라색 - 과목 정답률 10% 이상 */
 
   /* Typography */
   --font-base: 'Noto Sans KR', sans-serif;
@@ -1232,6 +1233,31 @@ input.activity-input {
   transform: scale(1.1) translateY(0);
   box-shadow: 0 0 15px var(--accent);
   transition: all 0.1s ease-in-out;
+}
+
+.subject-btn:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0px 0px 0px var(--secondary);
+}
+
+.subject-btn.high-accuracy {
+  background: var(--subject-high-accuracy) !important;
+  border-color: var(--primary) !important;
+  color: var(--text-light);
+}
+
+.subject-btn.high-accuracy:hover {
+  background: var(--subject-high-accuracy) !important;
+  border-color: var(--primary) !important;
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0px var(--secondary);
+}
+
+.subject-btn.high-accuracy:active {
+  background: var(--subject-high-accuracy) !important;
+  border-color: var(--primary) !important;
+  transform: translate(5px, 5px);
+  box-shadow: 0px 0px 0px var(--secondary);
 }
 #random-subject-btn {
   background-color: #524360; /* 채도가 ??? 보라??*/
