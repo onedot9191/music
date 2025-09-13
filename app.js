@@ -3115,7 +3115,7 @@
                 // 맞춤법 퀴즈의 경우에도 과목별 정답률 저장
                 saveSubjectAccuracy(gameState.selectedSubject, correctCount, totalCount);
 
-                // 10% 이상 달성했으면 기록
+                // 70% 이상 달성했으면 기록
                 if (percentage >= 70) {
                     markSubjectAccuracyAchieved(gameState.selectedSubject);
                 }
@@ -3144,7 +3144,7 @@
                 // 과목별 정답률 저장
                 saveSubjectAccuracy(gameState.selectedSubject, correctCount, totalCount);
 
-                // 10% 이상 달성했으면 기록
+                // 70% 이상 달성했으면 기록
                 if (percentage >= 70) {
                     markSubjectAccuracyAchieved(gameState.selectedSubject);
                 }
