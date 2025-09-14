@@ -3995,6 +3995,338 @@
 
 
 
+        // 전역 handleInputChange 함수
+        function handleInputChange(e) {
+
+            const input = e.target;
+
+            if (!input.matches('input[data-answer]') || input.disabled) return;
+
+
+
+            const section = input.closest('section');
+
+            const userAnswer = normalizeAnswer(input.value);
+
+            const stripModelWord = (str) => str.replace(/모형/g, '').replace(/\s+/g, ' ').trim();
+
+
+
+            let isCorrect = false;
+
+            let displayAnswer = input.dataset.answer;
+
+
+
+            if (
+
+                SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
+
+                isIntegratedTitle(input) ||
+
+                isPracticalTitle(input) ||
+
+                isGenericModelTitle(input)
+
+            ) {
+
+                const group = input.closest('[data-group]') || section;
+
+                let ignoreOrder = group.hasAttribute('data-ignore-order');
+
+
+
+                if (!usedAnswersMap.has(group)) usedAnswersMap.set(group, new Set());
+
+                const usedSet = usedAnswersMap.get(group);
+
+                // 과학-모형 타이틀에서는 채점 시 순서 무시를 강제로 비활성화
+                const groupSection = input.closest('section') || section;
+                const isScienceModelTitleForGrading = (
+                    gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE &&
+                    groupSection && groupSection.id && groupSection.id.toLowerCase().includes('title')
+                );
+
+                if (isScienceModelTitleForGrading) {
+                    ignoreOrder = false;
+                }
+
+                const answers = Array.from(group.querySelectorAll('input[data-answer]')).map(i => i.dataset.answer);
+                const typedSet = new Set(
+                    Array.from(group.querySelectorAll('input[data-answer]'))
+                        .map(i => normalizeAnswer(i.value))
+                        .filter(v => v)
+                );
+
+                const correctAnswers = Array.from(group.querySelectorAll('input[data-answer]'))
+                    .filter(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT))
+                    .map(input => input.dataset.answer);
+
+                let remaining = answers.filter(ans => !correctAnswers.includes(ans));
+                if (isScienceModelTitleForGrading) {
+                    remaining = remaining.filter(ans => !typedSet.has(normalizeAnswer(ans)));
+                }
+
+                const candidates = getAnswerCandidates(input);
+
+                for (const candidate of candidates) {
+
+                    const canonical = normalizeAnswer(candidate);
+
+                    const canonicalNorm = canonical;
+
+                    if (userAnswer === canonicalNorm && !usedSet.has(canonicalNorm)) {
+
+                        isCorrect = true;
+
+                        displayAnswer = candidate;
+
+                        if (!ignoreOrder) {
+
+                            usedSet.add(canonicalNorm);
+
+                        }
+
+                        break;
+
+                    }
+
+                }
+
+            } else {
+
+                const correctAnswers = getAnswerCandidates(input).map(answer => normalizeAnswer(answer));
+
+
+
+                // '기타' 주제 '음악요소'의 경우 괄호 내용까지 정확히 입력해야 함
+
+                if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS) {
+
+                    // 괄호 내용까지 정확히 입력해야 정답으로 처리 (원본 정답만 사용)
+                    const originalAnswer = normalizeAnswer(input.dataset.answer);
+
+                    if (userAnswer === originalAnswer) {
+
+                        isCorrect = true;
+
+                        displayAnswer = input.dataset.answer;
+
+                    }
+
+                } else if (correctAnswers.includes(userAnswer)) {
+
+                    isCorrect = true;
+
+                    displayAnswer = input.dataset.answer;
+
+                } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
+
+                    const userNoModel = stripModelWord(userAnswer);
+
+                    const correctNoModelList = correctAnswers.map(answer => stripModelWord(answer));
+
+                    if (correctNoModelList.includes(userNoModel)) {
+
+                        isCorrect = true;
+
+                        displayAnswer = input.dataset.answer;
+
+                    }
+
+                }
+
+            }
+
+            const isRetry = input.classList.contains(CONSTANTS.CSS_CLASSES.INCORRECT);
+
+            let shouldAdvance = false;
+
+            if (isCorrect) {
+
+                input.classList.remove(CONSTANTS.CSS_CLASSES.INCORRECT);
+
+                input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
+
+                input.classList.add(CONSTANTS.CSS_CLASSES.CORRECT);
+
+                gameState.correct++;
+
+                gameState.combo++;
+
+                setCharacterState('happy');
+
+                updateMushroomGrowth();
+
+                slotMachine.stopNext();
+
+
+
+                if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+
+                    gameState.total += CONSTANTS.HARD_CORE_TIME_BONUS;
+
+                    timeEl.textContent = formatTime(gameState.total);
+
+                }
+
+
+
+                if (gameState.combo > 1) {
+
+                    headerTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+
+                    comboCounter.textContent = `COMBO x${gameState.combo}`;
+
+                    comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+
+                    comboCounter.classList.remove(CONSTANTS.CSS_CLASSES.COMBO_POP);
+
+                    void comboCounter.offsetWidth;
+
+                    comboCounter.classList.add(CONSTANTS.CSS_CLASSES.COMBO_POP);
+
+                }
+
+                // 정답 파티클 (무음): 입력 주위로 작은 네온 점 터짐
+
+                spawnTypingParticles(input, '#39ff14');
+
+                // 콤보 5, 10, 15...마다 미니 컨페티
+
+                if (gameState.combo >= 5 && gameState.combo % 5 === 0) {
+
+                    spawnComboConfetti(input);
+
+                }
+
+            } else if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
+
+                input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
+
+                input.classList.add(CONSTANTS.CSS_CLASSES.INCORRECT);
+
+
+
+                if (isInIntegratedModel(input) && !isIntegratedTitle(input)) {
+
+                    // 통합 과목: 2차 오답 시 빨간색(incorrect) 유지 + 답 공개 + 버튼 제공
+
+                    input.value = input.dataset.answer;
+
+                    input.disabled = true;
+
+                    shouldAdvance = true;
+
+                    showRevealButtonForIntegrated(input);
+
+                } else if (isInArtBasic(input)) {
+
+                    // 미술-기본이론: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                    input.value = input.dataset.answer;
+
+                    input.disabled = true;
+
+                    shouldAdvance = true;
+
+                    showRevealButtonForIntegrated(input);
+
+                } else if (isInEasternEthics(input)) {
+
+                    // 동양윤리: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                    input.value = input.dataset.answer;
+
+                    input.disabled = true;
+
+                    shouldAdvance = true;
+
+                    showRevealButtonForIntegrated(input);
+
+                } else if (isInGeometry(input)) {
+
+                    // 기타-도형: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                    input.value = input.dataset.answer;
+
+                    input.disabled = true;
+
+                    shouldAdvance = true;
+
+                    showRevealButtonForIntegrated(input);
+
+                } else if (isInWesternEthics(input)) {
+
+                    // 서양윤리: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                    input.value = input.dataset.answer;
+
+                    input.disabled = true;
+
+                    shouldAdvance = true;
+
+                    showRevealButtonForIntegrated(input);
+
+                } else if (isInMoralPsychology(input)) {
+
+                    // 윤리심리: 2차 오답 시 빨간색(incorrect) + 답 공개 + 버튼 제공(정답 처리 가능)
+
+                    input.value = input.dataset.answer;
+
+                    input.disabled = true;
+
+                    shouldAdvance = true;
+
+                    showRevealButtonForIntegrated(input);
+
+                } else {
+
+                    // 기본 처리: 2차 오답 시 빨간색(incorrect) 유지
+
+                    gameState.incorrect++;
+
+                    setCharacterState('sad');
+
+                    gameState.combo = 0;
+
+                    comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+
+                    headerTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+
+                    // 틀린 답변 파티클 (무음): 입력 주위로 작은 빨간 점 터짐
+
+                    spawnTypingParticles(input, '#ff073a');
+
+                }
+
+            } else {
+
+                input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
+
+            }
+
+            if (isCorrect || shouldAdvance) {
+
+                updateScore();
+
+                if (shouldAdvance) {
+
+                    advanceToNextStage();
+
+                } else if (gameState.correct >= gameState.totalQuestions) {
+
+                    handleGameOver();
+
+                }
+
+            }
+
+        }
+
         function revealCompetencyAnswers() {
 
             const normalize = str => normalizeAnswer(str);
@@ -5972,11 +6304,21 @@
         const attachInputHandlers = root => {
 
             root.addEventListener('change', handleInputChange);
+            root.addEventListener('input', handleInputChange);
+            root.addEventListener('blur', handleInputChange);
 
             root.addEventListener('keydown', e => {
 
                 if (e.key === 'Enter' && e.target.matches('input[data-answer]')) {
 
+                    handleInputChange({ target: e.target });
+
+                }
+
+                // 다른 keydown 이벤트도 처리 (Enter 키 외의 입력)
+                if (e.key !== 'Enter' && e.target.matches('input[data-answer]')) {
+
+                    // Tab 키 등의 다른 키 입력도 처리할 수 있도록
                     handleInputChange({ target: e.target });
 
                     if (e.target.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
@@ -7913,77 +8255,71 @@
         // 도형 과목 전용 기능들
         initializeGeometryFeatures();
 
-    });
+        // 도형 과목 전용 기능 초기화
+        function initializeGeometryFeatures() {
+            // 답변 길이에 따른 동적 너비 조정 - 훨씬 더 넉넉하게
+            function adjustInputWidth(input) {
+                const answer = input.dataset.answer || input.getAttribute('aria-label') || '';
+                const answerLength = answer.length;
+                input.style.setProperty('--answer-length', answerLength);
 
-    // 도형 과목 전용 기능 초기화
-    function initializeGeometryFeatures() {
-        // 답변 길이에 따른 동적 너비 조정 - 훨씬 더 넉넉하게
-        function adjustInputWidth(input) {
-            const answer = input.dataset.answer || input.getAttribute('aria-label') || '';
-            const answerLength = answer.length;
-            input.style.setProperty('--answer-length', answerLength);
-            
-            // 구성요소 관련 단어들 (짧게 처리)
-            const componentWords = ['꼭짓점', '변', '모서리', '면', '밑면', '옆면', '높이', '원의 중심', '반지름', '지름', '각뿔의 꼭짓점', '모선', '구의 중심', '구의 반지름'];
-            const isComponent = componentWords.includes(answer);
-            
-            if (isComponent) {
-                // 구성요소는 작게
-                input.style.width = `${Math.max(8, answerLength * 1.1 + 2)}ch !important`;
-                input.style.minWidth = `8ch !important`;
-                input.style.maxWidth = `15ch !important`;
-            } else {
-                // 일반 답변은 훨씬 더 크게
-                const minWidth = Math.max(30, answerLength * 1.8); // 기본 최소 너비 더욱 증가
-                const maxWidth = answerLength * 2.5 + 15; // 최대 너비를 훨씬 더 넉넉하게
-                input.style.minWidth = `${minWidth}ch !important`;
-                input.style.width = `${maxWidth}ch !important`;
-                
-                // 긴 답변의 경우 더욱 넉넉하게
-                if (answerLength > 20) {
-                    input.style.width = `${answerLength * 2.2 + 18}ch !important`;
-                    input.style.minWidth = `${answerLength * 1.8 + 12}ch !important`;
+                // 구성요소 관련 단어들 (짧게 처리)
+                const componentWords = ['꼭짓점', '변', '모서리', '면', '밑면', '옆면', '높이', '원의 중심', '반지름', '지름', '각뿔의 꼭짓점', '모선', '구의 중심', '구의 반지름'];
+                const isComponent = componentWords.includes(answer);
+
+                if (isComponent) {
+                    // 구성요소는 작게
+                    input.style.width = `${Math.max(8, answerLength * 1.1 + 2)}ch !important`;
+                    input.style.minWidth = `8ch !important`;
+                    input.style.maxWidth = `15ch !important`;
+                } else {
+                    // 일반 답변은 훨씬 더 크게
+                    const minWidth = Math.max(30, answerLength * 1.8); // 기본 최소 너비 더욱 증가
+                    const maxWidth = answerLength * 2.5 + 15; // 최대 너비를 훨씬 더 넉넉하게
+                    input.style.minWidth = `${minWidth}ch !important`;
+                    input.style.width = `${maxWidth}ch !important`;
+
+                    // 긴 답변의 경우 더욱 넉넉하게
+                    if (answerLength > 20) {
+                        input.style.width = `${answerLength * 2.2 + 18}ch !important`;
+                        input.style.minWidth = `${answerLength * 1.8 + 12}ch !important`;
+                    }
+
+                    // 매우 긴 답변의 경우 특별 처리
+                    if (answerLength > 40) {
+                        input.style.width = `${answerLength * 2.0 + 20}ch !important`;
+                        input.style.minWidth = `${answerLength * 1.6 + 15}ch !important`;
+                    }
+
+                    // 화면 너비 제한을 더 넉넉하게
+                    input.style.maxWidth = '98vw !important';
                 }
-                
-                // 매우 긴 답변의 경우 특별 처리
-                if (answerLength > 40) {
-                    input.style.width = `${answerLength * 2.0 + 20}ch !important`;
-                    input.style.minWidth = `${answerLength * 1.6 + 15}ch !important`;
-                }
-                
-                // 화면 너비 제한을 더 넉넉하게
-                input.style.maxWidth = '98vw !important';
+            }
+
+            // 도형 과목 input 요소들에 이벤트 리스너 추가
+            const geometryMain = document.getElementById('geometry-quiz-main');
+            if (geometryMain) {
+                // # 표기가 있는 outline-title을 주제로 표시 (기존 사이트와 동일한 방식)
+                geometryMain.querySelectorAll('.outline-title').forEach(title => {
+                    if (title.textContent.trim().startsWith('#')) {
+                        title.setAttribute('data-is-topic', 'true');
+                    }
+                });
+
+                const inputs = geometryMain.querySelectorAll('input[data-answer]');
+
+                inputs.forEach(input => {
+                    // 초기 너비 조정
+                    adjustInputWidth(input);
+
+                    // 기존 이벤트 리스너는 이미 revealCompetencyAnswers에서 추가됨
+                    // 중복 추가 방지를 위해 여기서는 추가하지 않음
+                });
             }
         }
 
-        // 도형 과목 input 요소들에 이벤트 리스너 추가
-        const geometryMain = document.getElementById('geometry-quiz-main');
-        if (geometryMain) {
-            // # 표기가 있는 outline-title을 주제로 표시 (기존 사이트와 동일한 방식)
-            geometryMain.querySelectorAll('.outline-title').forEach(title => {
-                if (title.textContent.trim().startsWith('#')) {
-                    title.setAttribute('data-is-topic', 'true');
-                }
-            });
-            
-            const inputs = geometryMain.querySelectorAll('input[data-answer]');
-            
-            inputs.forEach(input => {
-                // 초기 너비 조정
-                adjustInputWidth(input);
-                
-                // 기존 이벤트 리스너 제거 (중복 방지)
-                input.removeEventListener('input', handleInputChange);
-                input.removeEventListener('blur', handleInputChange);
-                input.removeEventListener('keydown', handleInputChange);
-                
-                // 기존 정답 시스템 사용
-                input.addEventListener('input', handleInputChange);
-                input.addEventListener('blur', handleInputChange);
-                input.addEventListener('keydown', handleInputChange);
-            });
-        }
-    }
+    });
+
 
 
 
