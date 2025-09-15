@@ -1154,8 +1154,21 @@
         // 초기 적용
 
         applyOverviewHierarchyIndentation();
-        applyScienceModelPurpleText();
-        applyGeometryMoralPurpleText();
+
+        // 보라색 텍스트는 지정된 과목에서만 적용
+        if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+            gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+            applyScienceModelPurpleText();
+        } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                   gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+            applyGeometryMoralPurpleText();
+        } else {
+            // 다른 과목에서는 보라색 클래스 제거
+            const overviewQuestions = document.querySelectorAll('.overview-question');
+            overviewQuestions.forEach(question => {
+                question.classList.remove('science-model-purple-text');
+            });
+        }
 
         // 총론 내부 탭 클릭 시 재적용
 
@@ -1167,8 +1180,21 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+
+                    // 보라색 텍스트는 지정된 과목에서만 적용
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                        applyScienceModelPurpleText();
+                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                        applyGeometryMoralPurpleText();
+                    } else {
+                        // 다른 과목에서는 보라색 클래스 제거
+                        const overviewQuestions = document.querySelectorAll('.overview-question');
+                        overviewQuestions.forEach(question => {
+                            question.classList.remove('science-model-purple-text');
+                        });
+                    }
                 });
 
             });
@@ -1185,8 +1211,21 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+
+                    // 보라색 텍스트는 지정된 과목에서만 적용
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                        applyScienceModelPurpleText();
+                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                        applyGeometryMoralPurpleText();
+                    } else {
+                        // 다른 과목에서는 보라색 클래스 제거
+                        const overviewQuestions = document.querySelectorAll('.overview-question');
+                        overviewQuestions.forEach(question => {
+                            question.classList.remove('science-model-purple-text');
+                        });
+                    }
                 });
 
             });
@@ -1203,8 +1242,21 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+
+                    // 보라색 텍스트는 지정된 과목에서만 적용
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                        applyScienceModelPurpleText();
+                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                        applyGeometryMoralPurpleText();
+                    } else {
+                        // 다른 과목에서는 보라색 클래스 제거
+                        const overviewQuestions = document.querySelectorAll('.overview-question');
+                        overviewQuestions.forEach(question => {
+                            question.classList.remove('science-model-purple-text');
+                        });
+                    }
                 });
 
             });
@@ -1221,8 +1273,21 @@
 
                 requestAnimationFrame(() => {
                     applyOverviewHierarchyIndentation();
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+
+                    // 보라색 텍스트는 지정된 과목에서만 적용
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                        applyScienceModelPurpleText();
+                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                        applyGeometryMoralPurpleText();
+                    } else {
+                        // 다른 과목에서는 보라색 클래스 제거
+                        const overviewQuestions = document.querySelectorAll('.overview-question');
+                        overviewQuestions.forEach(question => {
+                            question.classList.remove('science-model-purple-text');
+                        });
+                    }
                 });
 
             });
@@ -5638,8 +5703,20 @@
 
             // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
             setTimeout(() => {
-                applyScienceModelPurpleText();
-                applyGeometryMoralPurpleText();
+                // 보라색 텍스트는 지정된 과목에서만 적용
+                if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                    applyScienceModelPurpleText();
+                } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                           gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                    applyGeometryMoralPurpleText();
+                } else {
+                    // 다른 과목에서는 보라색 클래스 제거
+                    const overviewQuestions = document.querySelectorAll('.overview-question');
+                    overviewQuestions.forEach(question => {
+                        question.classList.remove('science-model-purple-text');
+                    });
+                }
             }, 100);
 
         });
@@ -5732,8 +5809,20 @@
 
                         // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
                         setTimeout(() => {
-                            applyScienceModelPurpleText();
-                            applyGeometryMoralPurpleText();
+                            // 보라색 텍스트는 지정된 과목에서만 적용
+                            if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                                gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                                applyScienceModelPurpleText();
+                            } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                                       gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                                applyGeometryMoralPurpleText();
+                            } else {
+                                // 다른 과목에서는 보라색 클래스 제거
+                                const overviewQuestions = document.querySelectorAll('.overview-question');
+                                overviewQuestions.forEach(question => {
+                                    question.classList.remove('science-model-purple-text');
+                                });
+                            }
                         }, 100);
 
                         return;
@@ -5758,8 +5847,20 @@
 
                 // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
                 setTimeout(() => {
-                    applyScienceModelPurpleText();
-                    applyGeometryMoralPurpleText();
+                    // 보라색 텍스트는 지정된 과목에서만 적용
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                        applyScienceModelPurpleText();
+                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                        applyGeometryMoralPurpleText();
+                    } else {
+                        // 다른 과목에서는 보라색 클래스 제거
+                        const overviewQuestions = document.querySelectorAll('.overview-question');
+                        overviewQuestions.forEach(question => {
+                            question.classList.remove('science-model-purple-text');
+                        });
+                    }
                 }, 100);
 
             }
