@@ -4139,6 +4139,61 @@ iframe {
   width: 100%;
 }
 
+/* 실천적 문제 중심 학습 섹션의 빈칸 너비 조정 - 답안 길이에 비례 */
+#practical-quiz-main .overview-question input[data-answer] {
+  width: auto !important;
+  min-width: max(8ch, calc(var(--answer-length, 10) * 1.2ch + 2rem)) !important;
+  max-width: 25ch !important;
+}
+
+/* 특정 답안들에 대한 개별 너비 조정 */
+#practical-quiz-main .overview-question input[data-answer="개인"],
+#practical-quiz-main .overview-question input[data-answer="타인"],
+#practical-quiz-main .overview-question input[data-answer="사회"] {
+  width: auto !important;
+  min-width: 6ch !important;
+  max-width: 8ch !important;
+}
+
+#practical-quiz-main .overview-question input[data-answer="가치판단"] {
+  width: auto !important;
+  min-width: 8ch !important;
+  max-width: 12ch !important;
+}
+
+#practical-quiz-main .overview-question input[data-answer="실천적 추론"] {
+  width: auto !important;
+  min-width: 12ch !important;
+  max-width: 18ch !important;
+}
+
+#practical-quiz-main .overview-question input[data-answer="실천적 문제해결"] {
+  width: auto !important;
+  min-width: 14ch !important;
+  max-width: 20ch !important;
+}
+
+/* 기술적 문제해결 과정 섹션의 빈칸 너비 조정 - 답안 길이에 비례 */
+#practical-quiz-main .overview-question input[data-answer="불편함"],
+#practical-quiz-main .overview-question input[data-answer="결점"],
+#practical-quiz-main .overview-question input[data-answer="개선"] {
+  width: auto !important;
+  min-width: 6ch !important;
+  max-width: 8ch !important;
+}
+
+#practical-quiz-main .overview-question input[data-answer="발명"] {
+  width: auto !important;
+  min-width: 6ch !important;
+  max-width: 8ch !important;
+}
+
+#practical-quiz-main .overview-question input[data-answer="기술적 문제해결 능력"] {
+  width: auto !important;
+  min-width: 16ch !important;
+  max-width: 22ch !important;
+}
+
 @media (max-width: 768px) {
   /* Guarantee minimum tap target height */
   .btn, .tab {
