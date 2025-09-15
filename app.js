@@ -3996,7 +3996,7 @@
 
 
         // 전역 handleInputChange 함수
-        function handleInputChange(e) {
+        window.handleInputChange = function(e) {
 
             const input = e.target;
 
