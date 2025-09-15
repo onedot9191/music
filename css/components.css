@@ -499,11 +499,12 @@
 
 /* 낮은 층위 블록 (㉠, ㉡, ㉢, ㉣) - 들여쓰기 효과 */
 .overview-question {
-  background: rgba(255,255,255,0.9);
+  background: rgba(22, 33, 62, 0.9);
+  color: var(--text-light);
   padding: 0.8rem 1.2rem;
-  margin: 0.3rem 0 0.3rem 2rem;
-  border-left: 3px solid var(--accent);
-  border-radius: 0 6px 6px 0;
+  margin: 0.3rem 0;
+  border: none;
+  border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
@@ -520,7 +521,14 @@
 }
 
 .overview-question:hover {
-  background: rgba(255,255,255,1);
+  background: rgba(22, 33, 62, 1);
+  color: var(--text-light);
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
+}
+
+/* 강제로 흰색 글자 적용 */
+.overview-question,
+.overview-question * {
+  color: var(--text-light) !important;
 }
