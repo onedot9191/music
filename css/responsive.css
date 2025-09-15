@@ -263,7 +263,7 @@
 }
 
 /* === 프린트 스타일 === */
-@media print {
+@media print and (min-resolution: 96dpi) {
   header,
   .btn,
   .modal-overlay {
