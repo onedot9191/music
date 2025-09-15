@@ -451,6 +451,27 @@
   margin-bottom: 0;
 }
 
+/* === 정답/오답 색상 스타일 === */
+input.correct {
+  color: var(--correct) !important;
+  border-color: var(--correct) !important;
+}
+
+input.incorrect {
+  color: var(--incorrect) !important;
+  border-color: var(--incorrect) !important;
+}
+
+input.retrying {
+  color: var(--retrying) !important;
+  border-color: var(--retrying) !important;
+}
+
+input.revealed {
+  color: var(--revealed) !important;
+  border-color: var(--revealed) !important;
+}
+
 /* 홈 프로젝트 파트 입력 필드의 모든 상태에서 100% 너비 강제 적용 */
 .home-project-part input.correct,
 .home-project-part input.incorrect,
