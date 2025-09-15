@@ -2644,6 +2644,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .creative-block,
 #practical-course-quiz-main .creative-block,
 #music-course-quiz-main .creative-block,
+#pe-course-quiz-main .creative-block,
 #art-course-quiz-main .creative-block {
   margin-bottom: 2rem;
   padding: 1rem;
@@ -2750,6 +2751,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .outline-title,
 #practical-course-quiz-main .outline-title,
 #music-course-quiz-main .outline-title,
+#pe-course-quiz-main .outline-title,
 #art-course-quiz-main .outline-title,
 #spelling-quiz-main .outline-title {
   font-size: 2rem;
@@ -2766,6 +2768,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .sub-title,
 #practical-course-quiz-main .sub-title,
 #music-course-quiz-main .sub-title,
+#pe-course-quiz-main .sub-title,
 #art-course-quiz-main .sub-title,
 #spelling-quiz-main .sub-title {
   font-size: 1.8rem;
@@ -2799,6 +2802,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .overview-question,
 #practical-course-quiz-main .overview-question,
 #music-course-quiz-main .overview-question,
+#pe-course-quiz-main .overview-question,
 #art-course-quiz-main .overview-question,
 #science-std-quiz-main .overview-question,
 #english-std-quiz-main .overview-question,
@@ -2853,6 +2857,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .overview-question:last-child,
 #practical-course-quiz-main .overview-question:last-child,
 #music-course-quiz-main .overview-question:last-child,
+#pe-course-quiz-main .overview-question:last-child,
 #art-course-quiz-main .overview-question:last-child,
 #korean-course-quiz-main .overview-question:last-child,
 #science-std-quiz-main .overview-question:last-child,
@@ -2929,6 +2934,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #english-course-quiz-main .overview-question,
     #practical-course-quiz-main .overview-question,
     #music-course-quiz-main .overview-question,
+    #pe-course-quiz-main .overview-question,
     #art-course-quiz-main .overview-question,
     #science-std-quiz-main .overview-question,
     #english-std-quiz-main .overview-question,
@@ -2966,6 +2972,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
     #english-course-quiz-main .overview-question input,
     #practical-course-quiz-main .overview-question input,
     #music-course-quiz-main .overview-question input,
+#pe-course-quiz-main .overview-question input,
     #art-course-quiz-main .overview-question input,
     #science-std-quiz-main .overview-question input,
     #english-std-quiz-main .overview-question input,
@@ -3053,6 +3060,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .overview-question input,
 #practical-course-quiz-main .overview-question input,
 #music-course-quiz-main .overview-question input,
+#pe-course-quiz-main .overview-question input,
 #art-course-quiz-main .overview-question input,
 #science-std-quiz-main .overview-question input,
 #english-std-quiz-main .overview-question input,
@@ -3091,10 +3099,10 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   overflow: hidden;
 }
 
-/* 답변 길이에 따른 동적 너비 조정 - 훨씬 더 넉넉하게 */
+/* 답변 길이에 따른 동적 너비 조정 - 도형 과목은 일부 긴 답안 고려하여 적절히 */
 #geometry-quiz-main .overview-question input[data-answer] {
-  width: calc(var(--answer-length, 20) * 1.8ch + 6rem) !important;
-  min-width: max(20ch, calc(var(--answer-length, 20) * 1.5ch + 4rem)) !important;
+  width: calc(var(--answer-length, 20) * 1.4ch + 4rem) !important;
+  min-width: max(15ch, calc(var(--answer-length, 20) * 1.2ch + 2rem)) !important;
   max-width: 98vw !important; /* 화면 너비의 98%까지 확장 */
 }
 
@@ -3264,6 +3272,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-course-quiz-main .overview-question input:focus,
 #practical-course-quiz-main .overview-question input:focus,
 #music-course-quiz-main .overview-question input:focus,
+#pe-course-quiz-main .overview-question input:focus,
 #art-course-quiz-main .overview-question input:focus,
 #science-std-quiz-main .overview-question input:focus,
 #english-std-quiz-main .overview-question input:focus,
