@@ -2524,7 +2524,7 @@
 
        function adjustCreativeInputWidths() {
 
-        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #social-34-quiz-main .overview-question input[data-answer], #social-56-quiz-main .overview-question input[data-answer], #life-achievement-quiz-main .overview-question input[data-answer], #wise-achievement-quiz-main .overview-question input[data-answer], #joy-achievement-quiz-main .overview-question input[data-answer], #music-std-quiz-main .overview-question input[data-answer], #korean-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #social-34-quiz-main .overview-question input[data-answer], #social-56-quiz-main .overview-question input[data-answer], #life-achievement-quiz-main .overview-question input[data-answer], #wise-achievement-quiz-main .overview-question input[data-answer], #joy-achievement-quiz-main .overview-question input[data-answer], #music-std-quiz-main .overview-question input[data-answer], #korean-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #geometry-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -2534,7 +2534,11 @@
 
                     const hasHangul = /[\u3131-\uD79D]/.test(answer);
 
-                    const factor = hasHangul ? 1.8 : 1.3;
+                    // 체육 과목과 도형 과목은 적절한 factor로 빈칸 너비 조정
+                    const isPECourse = input.closest('#pe-course-quiz-main') !== null;
+                    const isGeometryCourse = input.closest('#geometry-quiz-main') !== null;
+
+                    const factor = hasHangul ? (isPECourse ? 1.5 : (isGeometryCourse ? 1.4 : 1.8)) : 1.3;
 
                     const desired = Math.max(2, Math.ceil(answerLen * factor) + 4);
 
@@ -2549,6 +2553,11 @@
                         input.setAttribute('size', desired);
 
                         input.style.width = `${desired}ch`;
+
+                        // 도형 과목의 경우 CSS 변수도 업데이트하여 CSS !important 규칙을 우회
+                        if (isGeometryCourse) {
+                            input.style.setProperty('--answer-length', answerLen.toString());
+                        }
 
                     }
 
