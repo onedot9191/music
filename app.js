@@ -6303,22 +6303,12 @@
 
         const attachInputHandlers = root => {
 
-            root.addEventListener('change', handleInputChange);
-            root.addEventListener('input', handleInputChange);
             root.addEventListener('blur', handleInputChange);
 
             root.addEventListener('keydown', e => {
 
                 if (e.key === 'Enter' && e.target.matches('input[data-answer]')) {
 
-                    handleInputChange({ target: e.target });
-
-                }
-
-                // 다른 keydown 이벤트도 처리 (Enter 키 외의 입력)
-                if (e.key !== 'Enter' && e.target.matches('input[data-answer]')) {
-
-                    // Tab 키 등의 다른 키 입력도 처리할 수 있도록
                     handleInputChange({ target: e.target });
 
                     if (e.target.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
