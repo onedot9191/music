@@ -553,3 +553,9 @@ input.revealed {
 .overview-question * {
   color: var(--text-light) !important;
 }
+
+/* 코드 하이라이트 - 녹색 */
+.overview-question .code-highlight {
+  color: #4CAF50 !important;
+  font-weight: bold;
+}
