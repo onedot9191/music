@@ -175,6 +175,8 @@
 
                 PE_BACK: 'pe-back',
 
+                PE_COURSE: 'pe-course',
+
                 MUSIC_ELEMENTS: 'music-elements',
 
                 PHYSICAL_ACTIVITY: 'physical-activity',
@@ -367,6 +369,8 @@
             [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
 
             [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
+
+            [CONSTANTS.SUBJECTS.PE_COURSE]: '체육',
 
             [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
 
