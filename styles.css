@@ -2652,6 +2652,17 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   border: 2px solid var(--secondary);
   border-radius: 8px;
 }
+
+/* 체육 과목 major-section 시각적 구분 */
+#pe-course-quiz-main .major-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(15, 52, 96, 0.1); /* secondary 색상의 투명 버전 */
+  border: 1px solid rgba(15, 52, 96, 0.3); /* secondary 색상의 연한 테두리 */
+  border-left: 3px solid var(--secondary); /* 왼쪽은 더 진한 테두리 */
+  border-radius: 6px;
+}
+
 #science-std-quiz-main .achievement-block,
 #english-std-quiz-main .achievement-block,
 #practical-std-quiz-main .achievement-block,
