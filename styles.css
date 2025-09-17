@@ -3201,9 +3201,9 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 
 /* 맞춤법 빈칸 섹션 - 우선순위를 높여서 적용 */
 #spelling-blank .overview-question input {
-  min-width: 6ch !important; /* 답안에 맞는 더 작은 너비 */
-  width: auto !important; /* 자동 너비 */
-  /* max-width: 12ch !important; */ /* 최대 너비 제한 해제 */
+  min-width: 4ch !important; /* 최소 너비 축소 */
+  width: auto !important;
+  max-width: 10ch !important; /* 최대 너비 축소 */
 }
 
 #social-course-quiz-main .overview-question input {
