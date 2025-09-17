@@ -230,7 +230,7 @@ export const SPELLING_DATA_EXTENDED = [
     { sentence: "민서야, (이것, 이 것)은 내가 만든 100층 젠가야.", answer: "이것" },
     { sentence: "목마른 상훈이에게 (마실것, 마실 것) 좀 주세요.", answer: "마실 것" },
     { sentence: "내 통장 잔고를 정확히 (암, 앎)이 부자의 첫걸음이다.", answer: "앎" },
-    { sentence: "현민이는 바다에서 황금 조개 (껍데기를, 껍질을) 주웠다.", answer: "껍질을" },
+    { sentence: "현민이는 바다에서 황금 조개 (껍데기를, 껍질을) 주웠다.", answer: "껍데기를" },
     { sentence: "영민이는 양파 (껍데기를, 껍질을) 까다가 펑펑 울었다.", answer: "껍질을" },
     { sentence: "상현이는 더워서 (윗옷, 웃옷)만 입고 수건만 둘렀다.", answer: "윗옷" },
     { sentence: "탐정 희원이는 변장용 아빠 (윗옷, 웃옷)을 걸쳤다.", answer: "웃옷" },
