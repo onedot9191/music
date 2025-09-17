@@ -6416,6 +6416,11 @@
 
 
         const attachInputHandlers = root => {
+            // 각 input 요소에 직접 이벤트 리스너 추가
+            root.querySelectorAll('input[data-answer]').forEach(input => {
+                input.addEventListener('blur', handleInputChange);
+                input.addEventListener('change', handleInputChange);
+            });
 
             root.addEventListener('blur', handleInputChange);
 
