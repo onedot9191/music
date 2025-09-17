@@ -554,6 +554,15 @@ input.revealed {
   color: var(--text-light) !important;
 }
 
+/* overview-question 내 input 요소 너비 조정 */
+.overview-question input {
+  width: 80px !important;
+  min-width: 60px !important;
+  max-width: 120px !important;
+  display: inline-block !important;
+  margin: 0 2px !important;
+}
+
 /* 코드 하이라이트 - 녹색 */
 .overview-question .code-highlight {
   color: #4CAF50 !important;
