@@ -6421,8 +6421,9 @@
 
             root.addEventListener('keydown', e => {
 
-                if (e.key === 'Enter' && e.target.matches('input[data-answer]')) {
+                if ((e.key === 'Enter' || e.key === 'Tab') && e.target.matches('input[data-answer]')) {
 
+                    e.preventDefault();
                     handleInputChange({ target: e.target });
 
                     if (e.target.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
