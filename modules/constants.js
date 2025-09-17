@@ -240,7 +240,7 @@ export const SPELLING_DATA_EXTENDED = [
     { sentence: "마녀 다운이는 솥에 개구리 다리를 (다리는, 달이는) 중이다.", answer: "달이는" },
     { sentence: "동한이는 과거의 나에게 경고 편지를 (부쳤다, 붙였다).", answer: "부쳤다" },
     { sentence: "민서는 상훈이 등에 '바보' 스티커를 (부쳤다, 붙였다).", answer: "붙였다" },
-    { sentence: "요리왕 상훈이는 벌레를 간장에 (조렸다, 졸였다).", answer: "졸였다" },
+    { sentence: "요리왕 상훈이는 벌레를 간장에 (조렸다, 졸였다).", answer: "조렸다" },
     { sentence: "현민이는 공포 영화를 보며 심장을 (조렸다, 졸였다).", answer: "졸였다" },
     { sentence: "로봇 춤을 추던 영민이는 다리가 (절여요, 저려요).", answer: "저려요" },
     { sentence: "요리왕 상현이는 초콜릿을 소금에 (절이고, 저리고) 있다.", answer: "절이고" },
