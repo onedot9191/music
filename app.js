@@ -6416,10 +6416,8 @@
 
 
         const attachInputHandlers = root => {
-            // 각 input 요소에 직접 blur 이벤트 추가 (모바일 '다음' 버튼 지원)
-            root.querySelectorAll('input[data-answer]').forEach(input => {
-                input.addEventListener('blur', handleInputChange);
-            });
+
+            root.addEventListener('blur', handleInputChange);
 
             root.addEventListener('keydown', e => {
 
