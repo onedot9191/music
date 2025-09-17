@@ -247,7 +247,7 @@
 
             },
 
-            DEFAULT_DURATION: 1200,
+            DEFAULT_DURATION: 2400,
 
             HARD_CORE_DURATION: 60,
 
@@ -2893,6 +2893,9 @@
 
             // 과목 버튼 정답률 상태 업데이트
             updateSubjectButtonStates();
+
+            // 시간 설정 표시 업데이트
+            updateTimeSettingDisplay();
 
         }
 
@@ -5712,6 +5715,15 @@
 
             }
 
+            // 주제별 시간 설정: 내체표, 역량, 영역 주제는 20분, 나머지는 40분
+            if (topic === CONSTANTS.TOPICS.CURRICULUM ||
+                topic === CONSTANTS.TOPICS.COMPETENCY ||
+                topic === CONSTANTS.TOPICS.AREA) {
+                gameState.duration = 1200; // 20분
+            } else {
+                gameState.duration = 2400; // 40분
+            }
+
             updateStartModalUI();
 
             // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
@@ -8342,6 +8354,15 @@
             gameState.selectedTopic = CONSTANTS.TOPICS.CURRICULUM;
 
             gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
+
+            // 주제별 시간 설정: 내체표, 역량, 영역 주제는 20분, 나머지는 40분
+            if (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM ||
+                gameState.selectedTopic === CONSTANTS.TOPICS.COMPETENCY ||
+                gameState.selectedTopic === CONSTANTS.TOPICS.AREA) {
+                gameState.duration = 1200; // 20분
+            } else {
+                gameState.duration = 2400; // 40분
+            }
 
             resetGame(false); // Reset state without showing any modal
 
