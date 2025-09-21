@@ -9,7 +9,9 @@ export class StorageManager {
             DAILY_STATS: 'dailyStats',
             USER_PREFERENCES: 'userPreferences',
             GAME_SETTINGS: 'gameSettings',
-            ACHIEVEMENT_DATA: 'achievementData'
+            ACHIEVEMENT_DATA: 'achievementData',
+            WRONG_ANSWERS: 'wrongAnswers',
+            CORRECT_ANSWERS: 'correctAnswers'
         };
     }
 
@@ -329,6 +331,139 @@ export class StorageManager {
         } catch (error) {
             console.error('Storage importData failed:', error);
             return false;
+        }
+    }
+
+    // === 오답노트 관련 ===
+
+    // 오답 데이터 저장
+    saveWrongAnswer(subject, topic, questionId, wrongCount) {
+        const data = this.getWrongAnswers();
+        const key = `${subject}_${topic}`;
+        
+        if (!data[key]) {
+            data[key] = {};
+        }
+        
+        if (!data[key][questionId]) {
+            data[key][questionId] = { count: 0, lastWrong: null };
+        }
+        
+        data[key][questionId].count = wrongCount;
+        data[key][questionId].lastWrong = formatDateKey();
+        
+        this.setItem(this.storageKeys.WRONG_ANSWERS, data);
+    }
+
+    // 오답 데이터 가져오기
+    getWrongAnswers() {
+        return this.getItem(this.storageKeys.WRONG_ANSWERS, {});
+    }
+
+    // 특정 과목/주제의 오답 데이터 가져오기
+    getWrongAnswersForSubject(subject, topic) {
+        const data = this.getWrongAnswers();
+        const key = `${subject}_${topic}`;
+        return data[key] || {};
+    }
+
+    // 특정 문제의 오답 횟수 가져오기
+    getWrongCount(subject, topic, questionId) {
+        const data = this.getWrongAnswersForSubject(subject, topic);
+        return data[questionId]?.count || 0;
+    }
+
+    // 오답 데이터 초기화
+    clearWrongAnswers(subject = null, topic = null) {
+        if (subject && topic) {
+            const data = this.getWrongAnswers();
+            const key = `${subject}_${topic}`;
+            delete data[key];
+            this.setItem(this.storageKeys.WRONG_ANSWERS, data);
+        } else {
+            this.removeItem(this.storageKeys.WRONG_ANSWERS);
+        }
+    }
+
+    // 오답 통계 가져오기
+    getWrongAnswerStats() {
+        const data = this.getWrongAnswers();
+        const stats = {
+            totalSubjects: 0,
+            totalQuestions: 0,
+            totalWrongAnswers: 0,
+            subjects: {}
+        };
+
+        Object.entries(data).forEach(([key, subjectData]) => {
+            const [subject, topic] = key.split('_');
+            const subjectKey = `${subject}_${topic}`;
+
+            if (!stats.subjects[subjectKey]) {
+                stats.subjects[subjectKey] = {
+                    subject,
+                    topic,
+                    questionCount: 0,
+                    wrongCount: 0
+                };
+            }
+
+            Object.values(subjectData).forEach(questionData => {
+                stats.subjects[subjectKey].questionCount++;
+                stats.subjects[subjectKey].wrongCount += questionData.count;
+                stats.totalQuestions++;
+                stats.totalWrongAnswers += questionData.count;
+            });
+
+            stats.totalSubjects++;
+        });
+
+        return stats;
+    }
+
+    // === 정답 데이터 관련 ===
+
+    // 정답 데이터 저장
+    saveCorrectAnswer(subject, topic, questionId) {
+        const data = this.getCorrectAnswers();
+        const key = `${subject}_${topic}`;
+
+        if (!data[key]) {
+            data[key] = {};
+        }
+
+        data[key][questionId] = formatDateKey();
+
+        this.setItem(this.storageKeys.CORRECT_ANSWERS, data);
+    }
+
+    // 정답 데이터 가져오기
+    getCorrectAnswers() {
+        return this.getItem(this.storageKeys.CORRECT_ANSWERS, {});
+    }
+
+    // 특정 과목/주제의 정답 데이터 가져오기
+    getCorrectAnswersForSubject(subject, topic) {
+        const data = this.getCorrectAnswers();
+        const key = `${subject}_${topic}`;
+        return data[key] || {};
+    }
+
+    // 특정 문제가 정답 처리되었는지 확인
+    isAnsweredCorrectly(subject, topic, questionId) {
+        const data = this.getCorrectAnswersForSubject(subject, topic);
+        return !!data[questionId];
+    }
+
+    // 정답 데이터 초기화
+    clearCorrectAnswers(subject = null, topic = null) {
+        if (subject && topic) {
+            const data = this.getCorrectAnswers();
+            const key = `${subject}_${topic}`;
+            delete data[key];
+            this.setItem(this.storageKeys.CORRECT_ANSWERS, data);
+        } else {
+            this.removeItem(this.storageKeys.CORRECT_ANSWERS);
         }
     }
 }
