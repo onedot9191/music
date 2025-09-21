@@ -1577,6 +1577,29 @@
 
         }
 
+        function updateTodayBlankCount() {
+            try {
+                // localStorage에서 최신 데이터 강제 로드
+                const dailyStatsStr = localStorage.getItem('dailyStats');
+                const stats = dailyStatsStr ? JSON.parse(dailyStatsStr) : {};
+
+                const todayKey = formatDateKey();
+                const count = stats[todayKey] || 0;
+
+                const countEl = document.getElementById('today-blank-count-number');
+                if (countEl) {
+                    countEl.textContent = String(count);
+                }
+            } catch (error) {
+                console.warn('Failed to update today blank count:', error);
+                // 오류 발생 시 안전하게 0으로 표시
+                const countEl = document.getElementById('today-blank-count-number');
+                if (countEl) {
+                    countEl.textContent = '0';
+                }
+            }
+        }
+
 
 
        function renderHeatmap(stats) {
@@ -3222,6 +3245,9 @@
 
                 saveDailyStats(correctCount);
 
+                // 오늘 푼 빈칸 수 표시 요소 업데이트
+                updateTodayBlankCount();
+
                 // 과목별 정답률 저장
                 saveSubjectAccuracy(gameState.selectedSubject, correctCount, totalCount);
 
@@ -3244,6 +3270,10 @@
             // 히트맵 제목(오늘 푼 빈칸 수) 즉시 갱신
 
             updateHeatmapTitle(getDailyStats(30));
+
+            // 오늘 푼 빈칸 수 표시 요소 업데이트
+
+            updateTodayBlankCount();
 
 
 
@@ -3417,7 +3447,11 @@
 
             gameState.timerId = null;
 
-            
+            // 오늘 푼 빈칸 수 표시 요소 숨김
+            const todayBlankCountEl = document.getElementById('today-blank-count');
+            if (todayBlankCountEl) {
+                todayBlankCountEl.classList.add('hidden');
+            }
 
             quizContainers.forEach(main => main.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
 
@@ -3538,8 +3572,6 @@
             headerTitle.textContent =
 
                 SUBJECT_NAMES[gameState.selectedSubject] || '퀴즈';
-
-           
 
            // Determine the correct main element based on topic and subject
 
@@ -4818,6 +4850,20 @@
                 setCharacterState('happy');
 
                 updateMushroomGrowth();
+
+                // 실시간 빈칸 카운트 업데이트
+                const stats = getDailyStats(30);
+                const todayKey = formatDateKey();
+                const today = stats.find(s => s.date === todayKey);
+                const currentCount = today ? today.count : 0;
+
+                // localStorage에 실시간으로 1 증가
+                const dailyStats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
+                dailyStats[todayKey] = currentCount + 1;
+                localStorage.setItem('dailyStats', JSON.stringify(dailyStats));
+
+                // UI 즉시 업데이트
+                updateTodayBlankCount();
 
                 slotMachine.stopNext();
 
@@ -6583,6 +6629,28 @@
 
 
         quizContainers.forEach(main => attachInputHandlers(main));
+
+        // 버섯 캐릭터 클릭 이벤트 - 개수 블럭 3초간 표시
+        let countBlockTimer = null;
+        character.addEventListener('click', () => {
+            const todayBlankCount = document.getElementById('today-blank-count');
+            if (todayBlankCount) {
+                // 기존 타이머 취소
+                if (countBlockTimer) {
+                    clearTimeout(countBlockTimer);
+                }
+
+                // 개수 블럭 표시 및 최신 데이터로 업데이트
+                todayBlankCount.classList.remove('hidden');
+                updateTodayBlankCount();
+
+                // 1.5초 후 자동 숨김
+                countBlockTimer = setTimeout(() => {
+                    todayBlankCount.classList.add('hidden');
+                    countBlockTimer = null;
+                }, 1500);
+            }
+        });
 
 
 
