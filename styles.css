@@ -1354,6 +1354,7 @@ input.activity-input {
   flex-wrap: wrap;
 }
 #settings-panel {
+  position: relative;
   width: 600px;
   max-width: 600px;
   flex-shrink: 0;
@@ -4502,4 +4503,39 @@ section#spelling-blank .overview-question input[data-answer] {
     padding: 10px 16px;
     border-radius: 14px;
   }
+}
+
+/* === 오답노트 시각적 표시 === */
+input.wrong-answer-indicator {
+  background: rgba(233, 69, 96, 0.15) !important;  /* 연한 분홍색 배경 */
+}
+
+/* === 오답 기록 초기화 버튼 === */
+#clear-wrong-answers-btn {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: var(--secondary);
+  border: none;
+  color: var(--text-light);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  box-shadow: 3px 3px 0px var(--bg-dark);
+  transition: transform 0.1s, box-shadow 0.1s;
+  border-radius: 6px;
+  width: auto;
+  min-width: auto;
+  cursor: pointer;
+}
+
+#clear-wrong-answers-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px var(--bg-dark);
+  background: var(--accent);
+}
+
+#clear-wrong-answers-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px var(--bg-dark);
 }
