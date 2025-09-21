@@ -4445,3 +4445,61 @@ section#spelling-blank .overview-question input[data-answer] {
     margin-left: 1rem;
   }
 }
+
+/* 오늘 푼 빈칸 수 표시 스타일 */
+.today-blank-count {
+  position: fixed;
+  right: 20px;
+  bottom: 110px; /* 버섯 캐릭터(80px) 위쪽에 여유 공간 확보 */
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+  border: 2px solid rgba(233, 69, 96, 0.3);
+  border-radius: 16px;
+  padding: 12px 20px;
+  font-size: 1.4rem;
+  color: var(--text-light);
+  font-weight: 600;
+  font-family: var(--font-display);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  white-space: nowrap;
+  cursor: default;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.today-blank-count.hidden {
+  display: none;
+}
+
+/* 개수 블럭 표시 애니메이션 */
+.today-blank-count:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.today-blank-count:hover {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.98) 0%, rgba(22, 33, 62, 0.98) 100%);
+  border-color: rgba(233, 69, 96, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 개수 블럭 내 숫자 강조 */
+.count-highlight {
+  color: var(--primary);
+  font-weight: 900;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .today-blank-count {
+    right: 15px;
+    bottom: 85px; /* 모바일 캐릭터(60px) 위쪽에 여유 공간 확보 */
+    font-size: 16px;
+    padding: 10px 16px;
+    border-radius: 14px;
+  }
+}
