@@ -2151,6 +2151,8 @@
 
                 .trim()
 
+                .replace(/,/g, '')  // 콤마 무시
+
                 .replace(pattern, '')
 
                 .toLowerCase();
