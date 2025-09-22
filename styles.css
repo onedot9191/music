@@ -2735,6 +2735,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-std-quiz-main #info-education .overview-question,
 #social-34-quiz-main .overview-question,
 #social-56-quiz-main .overview-question,
+#geometry-quiz-main .overview-question,
 #life-achievement-quiz-main .overview-question,
 #wise-achievement-quiz-main .overview-question,
 #joy-achievement-quiz-main .overview-question,
@@ -3028,88 +3029,6 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   overflow: hidden;
 }
 
-/* 답변 길이에 따른 동적 너비 조정 - 도형 과목은 일부 긴 답안 고려하여 적절히 */
-#geometry-quiz-main .overview-question input[data-answer] {
-  width: calc(var(--answer-length, 20) * 1.4ch + 4rem) !important;
-  min-width: max(15ch, calc(var(--answer-length, 20) * 1.2ch + 2rem)) !important;
-  max-width: 98vw !important; /* 화면 너비의 98%까지 확장 */
-}
-
-/* 구성요소 관련 빈칸은 더 작게 */
-#geometry-quiz-main .overview-question:contains("구성요소") input[data-answer] {
-  width: calc(var(--answer-length, 8) * 1.1ch + 1.5rem) !important;
-  min-width: max(6ch, calc(var(--answer-length, 8) * 0.9ch + 1rem)) !important;
-}
-
-/* 구성요소가 포함된 질문의 빈칸들 */
-#geometry-quiz-main .overview-question input[data-answer="꼭짓점"],
-#geometry-quiz-main .overview-question input[data-answer="변"],
-#geometry-quiz-main .overview-question input[data-answer="모서리"],
-#geometry-quiz-main .overview-question input[data-answer="면"],
-#geometry-quiz-main .overview-question input[data-answer="밑면"],
-#geometry-quiz-main .overview-question input[data-answer="옆면"],
-#geometry-quiz-main .overview-question input[data-answer="높이"],
-#geometry-quiz-main .overview-question input[data-answer="원의 중심"],
-#geometry-quiz-main .overview-question input[data-answer="반지름"],
-#geometry-quiz-main .overview-question input[data-answer="지름"],
-#geometry-quiz-main .overview-question input[data-answer="각뿔의 꼭짓점"],
-#geometry-quiz-main .overview-question input[data-answer="모선"],
-#geometry-quiz-main .overview-question input[data-answer="구의 중심"],
-#geometry-quiz-main .overview-question input[data-answer="구의 반지름"] {
-  width: auto !important;
-  min-width: 8ch !important;
-  max-width: 15ch !important;
-}
-
-/* 도형 과목 정답/오답에 따른 색상 피드백 */
-#geometry-quiz-main .overview-question input.correct {
-  border-color: #27ae60 !important;
-  background: rgba(39, 174, 96, 0.1) !important;
-  box-shadow: 0 0 8px rgba(39, 174, 96, 0.3) !important;
-  color: #27ae60 !important;
-}
-
-#geometry-quiz-main .overview-question input.retrying {
-  border-color: #f39c12 !important;
-  background: rgba(243, 156, 18, 0.1) !important;
-  box-shadow: 0 0 8px rgba(243, 156, 18, 0.3) !important;
-  color: #e67e22 !important;
-}
-
-#geometry-quiz-main .overview-question input.incorrect {
-  border-color: #e74c3c !important;
-  background: rgba(231, 76, 60, 0.1) !important;
-  box-shadow: 0 0 8px rgba(231, 76, 60, 0.3) !important;
-  color: #c0392b !important;
-}
-
-#geometry-quiz-main .overview-question input.revealed {
-  color: var(--revealed) !important;
-  border-color: var(--revealed) !important;
-  background: rgba(0, 255, 255, 0.1) !important;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3) !important;
-}
-
-/* 포커스 상태에서 색상 유지 */
-#geometry-quiz-main .overview-question input.correct:focus {
-  border-color: #27ae60 !important;
-  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2) !important;
-}
-
-#geometry-quiz-main .overview-question input.retrying:focus {
-  border-color: #f39c12 !important;
-  box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.2) !important;
-}
-
-#geometry-quiz-main .overview-question input.incorrect:focus {
-  border-color: #e74c3c !important;
-  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2) !important;
-}
-
-#geometry-quiz-main .overview-question input.revealed:focus {
-  border-color: var(--revealed) !important;
-  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.2) !important;
-}
 
 /* 맞춤법 빈칸 섹션 - 우선순위를 높여서 적용 */
 #spelling-blank .overview-question input {
