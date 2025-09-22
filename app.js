@@ -2218,7 +2218,6 @@
 
             // 섹션 ID, 정답, 입력 순서를 조합하여 고유 ID 생성
             const questionId = `${sectionId}_${answer}_${inputIndex}`;
-            console.log('문제 ID 생성:', questionId, '섹션:', sectionId, '정답:', answer, '인덱스:', inputIndex);
             return questionId;
         }
 
@@ -2227,11 +2226,9 @@
             const questionId = generateQuestionId(input);
             const currentCount = storageManager.getWrongCount(gameState.selectedSubject, gameState.selectedTopic, questionId);
             const newCount = currentCount + 1;
-            
-            console.log(`오답 추적: ${questionId}, 이전 횟수: ${currentCount}, 새로운 횟수: ${newCount}`);
-            
+
             storageManager.saveWrongAnswer(gameState.selectedSubject, gameState.selectedTopic, questionId, newCount);
-            
+
             return newCount;
         }
 
@@ -2254,26 +2251,19 @@
         function updateWrongAnswerIndicators() {
             const mainId = getMainElementId();
             const inputs = document.querySelectorAll(`#${mainId} input[data-answer]`);
-
-            console.log(`오답 표시 업데이트: ${mainId}, 입력 필드 수: ${inputs.length}, 과목: ${gameState.selectedSubject}, 주제: ${gameState.selectedTopic}`);
+            const { selectedSubject, selectedTopic } = gameState;
 
             inputs.forEach(input => {
                 const questionId = generateQuestionId(input);
-                const wrongCount = storageManager.getWrongCount(gameState.selectedSubject, gameState.selectedTopic, questionId);
-                const isAnsweredCorrectly = storageManager.isAnsweredCorrectly(gameState.selectedSubject, gameState.selectedTopic, questionId);
-
-                console.log(`문제 분석 - ID: ${questionId}, 오답 횟수: ${wrongCount}, 정답 처리됨: ${isAnsweredCorrectly}, 표시 상태: ${input.classList.contains('wrong-answer-indicator')}`);
+                const wrongCount = storageManager.getWrongCount(selectedSubject, selectedTopic, questionId);
 
                 // 정답 처리된 문제는 오답 표시하지 않음
-                if (isAnsweredCorrectly) {
+                if (storageManager.isAnsweredCorrectly(selectedSubject, selectedTopic, questionId)) {
                     input.classList.remove('wrong-answer-indicator');
-                    console.log(`✅ 정답 처리된 문제 표시 제거: ${questionId}`);
-                } else if (shouldShowWrongAnswerIndicator(input)) {
+                } else if (wrongCount >= 1) {
                     input.classList.add('wrong-answer-indicator');
-                    console.log(`✅ 오답 표시 추가: ${questionId}`);
                 } else {
                     input.classList.remove('wrong-answer-indicator');
-                    console.log(`❌ 오답 표시 제거: ${questionId}`);
                 }
             });
         }
@@ -2284,6 +2274,7 @@
                 updateWrongAnswerIndicators();
             });
         }
+
 
         // Respect reduced motion preference
 
@@ -4196,11 +4187,8 @@
             const input = e.target;
 
             if (!input.matches('input[data-answer]') || input.disabled) {
-                console.log('handleInputChange: 입력 필드가 아님 또는 비활성화됨', input);
                 return;
             }
-
-            console.log('handleInputChange: 처리 시작', input);
 
 
 
@@ -4356,9 +4344,23 @@
                 // 정답 시 오답 표시 제거
                 input.classList.remove('wrong-answer-indicator');
 
-                // 정답 데이터 저장 (다음 플레이에도 적용)
+                // 정답 처리 시 오답 기록과 정답 기록 모두 초기화 (순환 구조 유지)
                 const questionId = generateQuestionId(input);
-                storageManager.saveCorrectAnswer(gameState.selectedSubject, gameState.selectedTopic, questionId);
+
+                // 해당 문제의 오답 기록과 정답 기록 삭제
+                const wrongAnswers = storageManager.getWrongAnswers();
+                const correctAnswers = storageManager.getCorrectAnswers();
+                const subjectKey = `${gameState.selectedSubject}_${gameState.selectedTopic}`;
+
+                if (wrongAnswers[subjectKey] && wrongAnswers[subjectKey][questionId]) {
+                    delete wrongAnswers[subjectKey][questionId];
+                    storageManager.setItem(storageManager.storageKeys.WRONG_ANSWERS, wrongAnswers);
+                }
+
+                if (correctAnswers[subjectKey] && correctAnswers[subjectKey][questionId]) {
+                    delete correctAnswers[subjectKey][questionId];
+                    storageManager.setItem(storageManager.storageKeys.CORRECT_ANSWERS, correctAnswers);
+                }
 
                 gameState.correct++;
 
@@ -4414,8 +4416,6 @@
                 }
 
             } else if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
-
-                console.log('2차 오답 발생!', input);
 
                 input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
 
@@ -4739,11 +4739,8 @@
             const input = e.target;
 
             if (!input.matches('input[data-answer]') || input.disabled) {
-                console.log('로컬 handleInputChange: 입력 필드가 아님 또는 비활성화됨', input);
                 return;
             }
-
-            console.log('로컬 handleInputChange: 처리 시작', input);
 
 
 
@@ -4938,9 +4935,23 @@
                 // 정답 시 오답 표시 제거
                 input.classList.remove('wrong-answer-indicator');
 
-                // 정답 데이터 저장 (다음 플레이에도 적용)
+                // 정답 처리 시 오답 기록과 정답 기록 모두 초기화 (순환 구조 유지)
                 const questionId = generateQuestionId(input);
-                storageManager.saveCorrectAnswer(gameState.selectedSubject, gameState.selectedTopic, questionId);
+
+                // 해당 문제의 오답 기록과 정답 기록 삭제
+                const wrongAnswers = storageManager.getWrongAnswers();
+                const correctAnswers = storageManager.getCorrectAnswers();
+                const subjectKey = `${gameState.selectedSubject}_${gameState.selectedTopic}`;
+
+                if (wrongAnswers[subjectKey] && wrongAnswers[subjectKey][questionId]) {
+                    delete wrongAnswers[subjectKey][questionId];
+                    storageManager.setItem(storageManager.storageKeys.WRONG_ANSWERS, wrongAnswers);
+                }
+
+                if (correctAnswers[subjectKey] && correctAnswers[subjectKey][questionId]) {
+                    delete correctAnswers[subjectKey][questionId];
+                    storageManager.setItem(storageManager.storageKeys.CORRECT_ANSWERS, correctAnswers);
+                }
 
                 // 즉시 오답 표시 업데이트 (다른 입력 필드들의 표시 상태 갱신)
                 updateWrongAnswerIndicatorsImmediate();
@@ -5082,8 +5093,6 @@
 
 
                 } else if (input.classList.contains(CONSTANTS.CSS_CLASSES.RETRYING)) {
-
-                    console.log('로컬 함수: 2차 오답 발생!', input);
 
                     input.classList.remove(CONSTANTS.CSS_CLASSES.RETRYING);
 
