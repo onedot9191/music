@@ -803,19 +803,9 @@
             });
         }
 
-        // 초기 실행 및 주기적 점검
+        // 초기 실행
         requestAnimationFrame(() => {
             protectHomeProjectInputs();
-            
-            // 주기적으로 점검하여 너비 복원
-            setInterval(() => {
-                const homeProjectInputs = document.querySelectorAll('.home-project-part input');
-                homeProjectInputs.forEach(input => {
-                    if (input.style.width !== '100%' && input.style.width !== '') {
-                        input.style.width = '100%';
-                    }
-                });
-            }, 100);
         });
 
 
@@ -1692,6 +1682,9 @@
 
 
 
+        // D-Day 렌더링을 위한 캐싱된 요소들
+        let ddayElements = null;
+
         function renderDDay() {
 
             const el = document.getElementById('dday');
@@ -1710,9 +1703,21 @@
 
                     ddayRaceResizeObserver = new ResizeObserver(() => {
 
-                        // 다음 프레임에서 안전하게 위치 재계산
+                        // 다음 프레임에서 안전하게 위치 재계산 (디바운스 적용)
 
-                        requestAnimationFrame(() => renderDDay());
+                        if (!ddayRaceResizeObserver._pending) {
+
+                            ddayRaceResizeObserver._pending = true;
+
+                            requestAnimationFrame(() => {
+
+                                ddayRaceResizeObserver._pending = false;
+
+                                renderDDay();
+
+                            });
+
+                        }
 
                     });
 
@@ -1778,9 +1783,9 @@
 
 
 
-                // 최초 렌더 시 구조 구성
+                // 최초 렌더 시 구조 구성 및 캐싱
 
-                if (!race.dataset.initialized) {
+                if (!ddayElements) {
 
                     race.innerHTML = '';
 
@@ -1948,19 +1953,33 @@
 
                     race.appendChild(ddayChip);
 
-                    race.dataset.initialized = 'true';
+                    // 요소들을 캐싱하여 이후 querySelector 호출 방지
+
+                    ddayElements = {
+
+                        runner: runner,
+
+                        progress: progress,
+
+                        chip: ddayChip,
+
+                        rightLabel: rightLabel
+
+                    };
 
                 }
 
 
 
-                const runnerEl = race.querySelector('.dday-runner');
+                // 캐싱된 요소들 사용 (querySelector 호출 방지)
 
-                const progressEl = race.querySelector('.dday-progress');
+                const runnerEl = ddayElements.runner;
 
-                const chipEl = race.querySelector('.dday-chip');
+                const progressEl = ddayElements.progress;
 
-                const rightLabelEl = race.querySelector('.dday-label.right');
+                const chipEl = ddayElements.chip;
+
+                const rightLabelEl = ddayElements.rightLabel;
 
                 const percent = clamped * 100;
 
@@ -5798,11 +5817,14 @@
 
             if (!e.target.matches('.btn')) return;
 
-            playSound(clickAudio);
+            // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
-            document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-
-            e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+            // INP 개선: DOM 조작을 다음 프레임으로 지연
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+                e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+            });
 
             const topic = e.target.dataset.topic;
 
@@ -5810,33 +5832,23 @@
 
             
 
-            // 기본이론 주제 선택 시 특별한 시각적 효과 적용
-
-            if (topic === CONSTANTS.TOPICS.BASIC) {
-
-                document.querySelectorAll('.subject-btn').forEach(btn => {
-
-                    if (btn.dataset.topic === 'basic') {
-
-                        btn.classList.add('basic-topic-highlight');
-
-                    } else {
-
+            // INP 개선: subject-btn 조작도 다음 프레임으로 지연
+            requestAnimationFrame(() => {
+                // 기본이론 주제 선택 시 특별한 시각적 효과 적용
+                if (topic === CONSTANTS.TOPICS.BASIC) {
+                    document.querySelectorAll('.subject-btn').forEach(btn => {
+                        if (btn.dataset.topic === 'basic') {
+                            btn.classList.add('basic-topic-highlight');
+                        } else {
+                            btn.classList.remove('basic-topic-highlight');
+                        }
+                    });
+                } else {
+                    document.querySelectorAll('.subject-btn').forEach(btn => {
                         btn.classList.remove('basic-topic-highlight');
-
-                    }
-
-                });
-
-            } else {
-
-                document.querySelectorAll('.subject-btn').forEach(btn => {
-
-                    btn.classList.remove('basic-topic-highlight');
-
-                });
-
-            }
+                    });
+                }
+            });
 
             
 
@@ -5962,7 +5974,8 @@
 
             if (subject !== CONSTANTS.SUBJECTS.RANDOM) {
 
-                 playSound(clickAudio);
+                 // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
             }
 
@@ -6104,17 +6117,19 @@
 
             if (!e.target.matches('.btn')) return;
 
-            playSound(clickAudio);
-
-            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-
-            e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+            // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
             gameState.gameMode = e.target.dataset.mode;
 
-            timeSetterWrapper.style.display = gameState.gameMode === CONSTANTS.MODES.NORMAL ? 'block' : 'none';
+            // INP 개선: DOM 조작을 다음 프레임으로 지연
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+                e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
 
-            document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
+                timeSetterWrapper.style.display = gameState.gameMode === CONSTANTS.MODES.NORMAL ? 'block' : 'none';
+                document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
+            });
 
         });
 
@@ -6130,7 +6145,8 @@
 
                 if (!e.target.classList.contains('tab')) return;
 
-                playSound(clickAudio);
+                // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
                 const main = e.target.closest('main');
 
@@ -6448,7 +6464,8 @@
 
                 e.stopPropagation();
 
-                playSound(clickAudio);
+                // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
                 const parentSection = tabsContainer.closest('section');
 
@@ -6541,7 +6558,8 @@
 
                 if (!e.target.matches('.competency-tab')) return;
 
-                playSound(clickAudio);
+                // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
                 tabs.querySelectorAll('.competency-tab').forEach(tab => tab.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE));
 
@@ -7295,7 +7313,8 @@
 
         decreaseTimeBtn.addEventListener('click', () => {
 
-            playSound(clickAudio);
+            // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
             if (gameState.duration > 60) {
 
@@ -7311,7 +7330,8 @@
 
         increaseTimeBtn.addEventListener('click', () => {
 
-            playSound(clickAudio);
+            // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
+            setTimeout(() => playSound(clickAudio), 0);
 
             if (gameState.duration < 3600) { // Max 60 mins
 
@@ -8608,16 +8628,17 @@
 
             updateStartModalUI();
 
-            openModal(guideModal); // Always show guide on page load
-
         }
-
-
 
         initializeApp();
 
-        // 도형 과목 전용 기능들
-        initializeGeometryFeatures();
+        // 일단 원래대로 모달 표시 (LCP 개선은 추후 적용)
+        openModal(guideModal);
+
+        // 도형 과목 전용 기능들은 다음 프레임에서 초기화 (성능 최적화)
+        requestAnimationFrame(() => {
+            initializeGeometryFeatures();
+        });
 
         // 도형 과목 전용 기능 초기화
         function initializeGeometryFeatures() {
