@@ -2663,11 +2663,6 @@
 
                         input.style.width = `${desired}ch`;
 
-                        // 도형 과목의 경우 CSS 변수도 업데이트하여 CSS !important 규칙을 우회
-                        if (isGeometryCourse) {
-                            input.style.setProperty('--answer-length', answerLen.toString());
-                        }
-
                     }
 
                 });
@@ -8615,45 +8610,6 @@
 
         // 도형 과목 전용 기능 초기화
         function initializeGeometryFeatures() {
-            // 답변 길이에 따른 동적 너비 조정 - 훨씬 더 넉넉하게
-            function adjustInputWidth(input) {
-                const answer = input.dataset.answer || input.getAttribute('aria-label') || '';
-                const answerLength = answer.length;
-                input.style.setProperty('--answer-length', answerLength);
-
-                // 구성요소 관련 단어들 (짧게 처리)
-                const componentWords = ['꼭짓점', '변', '모서리', '면', '밑면', '옆면', '높이', '원의 중심', '반지름', '지름', '각뿔의 꼭짓점', '모선', '구의 중심', '구의 반지름'];
-                const isComponent = componentWords.includes(answer);
-
-                if (isComponent) {
-                    // 구성요소는 작게
-                    input.style.width = `${Math.max(8, answerLength * 1.1 + 2)}ch !important`;
-                    input.style.minWidth = `8ch !important`;
-                    input.style.maxWidth = `15ch !important`;
-                } else {
-                    // 일반 답변은 훨씬 더 크게
-                    const minWidth = Math.max(30, answerLength * 1.8); // 기본 최소 너비 더욱 증가
-                    const maxWidth = answerLength * 2.5 + 15; // 최대 너비를 훨씬 더 넉넉하게
-                    input.style.minWidth = `${minWidth}ch !important`;
-                    input.style.width = `${maxWidth}ch !important`;
-
-                    // 긴 답변의 경우 더욱 넉넉하게
-                    if (answerLength > 20) {
-                        input.style.width = `${answerLength * 2.2 + 18}ch !important`;
-                        input.style.minWidth = `${answerLength * 1.8 + 12}ch !important`;
-                    }
-
-                    // 매우 긴 답변의 경우 특별 처리
-                    if (answerLength > 40) {
-                        input.style.width = `${answerLength * 2.0 + 20}ch !important`;
-                        input.style.minWidth = `${answerLength * 1.6 + 15}ch !important`;
-                    }
-
-                    // 화면 너비 제한을 더 넉넉하게
-                    input.style.maxWidth = '98vw !important';
-                }
-            }
-
             // 도형 과목 input 요소들에 이벤트 리스너 추가
             const geometryMain = document.getElementById('geometry-quiz-main');
             if (geometryMain) {
@@ -8662,16 +8618,6 @@
                     if (title.textContent.trim().startsWith('#')) {
                         title.setAttribute('data-is-topic', 'true');
                     }
-                });
-
-                const inputs = geometryMain.querySelectorAll('input[data-answer]');
-
-                inputs.forEach(input => {
-                    // 초기 너비 조정
-                    adjustInputWidth(input);
-
-                    // 기존 이벤트 리스너는 이미 revealCompetencyAnswers에서 추가됨
-                    // 중복 추가 방지를 위해 여기서는 추가하지 않음
                 });
             }
         }
