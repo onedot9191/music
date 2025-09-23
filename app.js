@@ -742,9 +742,16 @@
 
                 };
 
+                // Debounce resize function to improve INP
+                let resizeTimeout;
+                const debouncedResize = () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(resize, 16); // ~60fps
+                };
+
                 resize();
 
-                input.addEventListener('input', resize);
+                input.addEventListener('input', debouncedResize);
 
             });
 
@@ -4818,36 +4825,29 @@
 
 
 
+                // Cache DOM query result to improve performance
+                const inputs = Array.from(group.querySelectorAll('input[data-answer]'));
                 const answerMap = new Map();
+                const isModelTopic = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL;
 
-                group.querySelectorAll('input[data-answer]').forEach(inp => {
-
+                // Process answers more efficiently
+                inputs.forEach(inp => {
                     const original = inp.dataset.answer.trim();
-
                     const normalized = normalizeAnswer(original);
 
                     answerMap.set(normalized, original);
 
                     const alias = normalized.replace(/역량$/, '');
-
                     if (alias !== normalized) {
-
                         answerMap.set(alias, original);
-
                     }
 
-                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL) {
-
+                    if (isModelTopic) {
                         const modelAlias = stripModelWord(normalized);
-
                         if (modelAlias && modelAlias !== normalized) {
-
                             answerMap.set(modelAlias, original);
-
                         }
-
                     }
-
                 });
 
 
@@ -6653,7 +6653,12 @@
 
         const attachInputHandlers = root => {
 
-            root.addEventListener('blur', handleInputChange);
+            // Use requestAnimationFrame to defer heavy computation and improve INP
+            const debouncedHandleInputChange = (e) => {
+                requestAnimationFrame(() => handleInputChange(e));
+            };
+
+            root.addEventListener('blur', debouncedHandleInputChange);
 
             root.addEventListener('keydown', e => {
 
