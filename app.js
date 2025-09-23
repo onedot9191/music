@@ -1,11 +1,11 @@
-    // Import modules
+    // 모듈 임포트
     import { StorageManager } from './modules/storage.js';
 
     document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        // --- AudioContext for Autoplay Policy ---
+        // --- 오디오 컨텍스트 자동 재생 정책 ---
 
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -73,7 +73,7 @@
 
 
 
-        // --- CONSTANTS ---
+        // --- 상수 ---
 
         const CONSTANTS = {
 
@@ -609,9 +609,9 @@
 
 
 
-        // --- Auto width for blanks (fit to answer length) ---
+        // --- 빈칸 자동 너비 조정 (답변 길이에 맞춤) ---
 
-        // Measure text width using a canvas with the same font as the input element
+        // 입력 요소와 동일한 폰트를 사용하여 캔버스로 텍스트 너비 측정
 
         function measureTextWidthForElement(text, element) {
 
@@ -621,7 +621,7 @@
 
             const cs = getComputedStyle(element);
 
-            // Build a reasonable font shorthand for canvas
+            // 캔버스용 적절한 폰트 약어 생성
 
             const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
 
@@ -742,7 +742,7 @@
 
                 };
 
-                // Debounce resize function to improve INP
+                // INP 개선을 위한 리사이즈 함수 디바운스
                 let resizeTimeout;
                 const debouncedResize = () => {
                     clearTimeout(resizeTimeout);
@@ -773,7 +773,7 @@
 
 
 
-        // Defer until rendering is settled
+        // 렌더링이 안정될 때까지 지연
 
         requestAnimationFrame(() => { initAutoWidthCourse(); });
 
@@ -817,7 +817,7 @@
 
 
 
-        // --- GAME STATE ---
+        // --- 게임 상태 ---
 
         const gameState = {
 
@@ -859,7 +859,7 @@
 
         };
 
-        // --- STORAGE MANAGER ---
+        // --- 저장소 관리자 ---
         const storageManager = new StorageManager();
 
         const SPECIAL_SUBJECTS = new Set([
@@ -874,13 +874,13 @@
 
 
 
-        // Used to keep track of which answers have been matched in competency/area sections
+        // 역량/영역 섹션에서 일치된 답변 추적용
 
         let usedAnswersMap = new WeakMap();
 
 
 
-        // --- DOM Elements ---
+        // --- DOM 요소 ---
 
         const timeEl = document.getElementById('time');
 
@@ -1303,7 +1303,7 @@
 
 
 
-        // --- Modal focus helpers ---
+        // --- 모달 포커스 헬퍼 ---
 
         let lastFocusedElement = null;
 
@@ -1349,7 +1349,7 @@
 
 
 
-        // --- Audio ---
+        // --- 오디오 ---
 
         const SFX_VOLUME = 0.5;
 
@@ -1411,7 +1411,7 @@
 
         
 
-        // --- UTILITY FUNCTIONS ---
+        // --- 유틸리티 함수 ---
 
         const fmt = n => String(n).padStart(2, '0');
 
@@ -1619,7 +1619,7 @@
 
             const firstDate = new Date(stats[0].date);
 
-            let offset = (firstDate.getDay() + 6) % 7; // Monday = 0
+            let offset = (firstDate.getDay() + 6) % 7; // 월요일 = 0
 
             for (let i = 0; i < offset; i++) {
 
@@ -2302,7 +2302,7 @@
         }
 
 
-        // Respect reduced motion preference
+        // 모션 감소 설정 존중
 
         const PREFERS_REDUCED_MOTION =
 
@@ -2312,7 +2312,7 @@
 
 
 
-        // Check if device is mobile (for disabling intensive effects)
+        // 모바일 기기인지 확인 (집중 효과 비활성화용)
 
         const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
 
@@ -2320,11 +2320,11 @@
 
 
 
-        // --- PARTICLE EFFECTS ---
+        // --- 파티클 효과 ---
 
         function spawnTypingParticles(element, color) {
 
-            // Skip particles on mobile devices to improve performance
+            // 성능 개선을 위해 모바일 기기에서 파티클 생략
 
             if (IS_MOBILE || PREFERS_REDUCED_MOTION) {
 
@@ -2342,7 +2342,7 @@
 
 
 
-            // Create 3-5 small particles
+            // 3-5개의 작은 파티클 생성
 
             const particleCount = 3 + Math.floor(Math.random() * 3);
 
@@ -2362,7 +2362,7 @@
 
                 
 
-                // Random movement variables
+                // 무작위 이동 변수
 
                 const tx = (Math.random() - 0.5) * 100;
 
@@ -2376,9 +2376,9 @@
 
                 document.body.appendChild(particle);
 
-                
 
-                // Remove after animation
+
+                // 애니메이션 후 제거
 
                 setTimeout(() => {
 
@@ -2398,7 +2398,7 @@
 
         function spawnComboConfetti(element) {
 
-            // Skip confetti on mobile devices to improve performance
+            // 성능 개선을 위해 모바일 기기에서 confetti 생략
 
             if (IS_MOBILE || PREFERS_REDUCED_MOTION) {
 
@@ -2416,7 +2416,7 @@
 
 
 
-            // Create small confetti pieces
+            // 작은 confetti 조각 생성
 
             const confettiCount = 8 + Math.floor(Math.random() * 6);
 
@@ -2438,7 +2438,7 @@
 
                 
 
-                // Random movement and rotation
+                // 무작위 이동 및 회전
 
                 const dx = (Math.random() - 0.5) * 120;
 
@@ -2456,9 +2456,9 @@
 
                 document.body.appendChild(confetti);
 
-                
 
-                // Remove after animation
+
+                // 애니메이션 후 제거
 
                 setTimeout(() => {
 
@@ -2476,7 +2476,7 @@
 
 
 
-        // --- UI UPDATE FUNCTIONS ---
+        // --- UI 업데이트 함수 ---
 
         function updateTimeSettingDisplay() {
 
@@ -2484,7 +2484,7 @@
 
         }
 
-        // --- SLOT MACHINE ---
+        // --- 슬롯 머신 ---
 
         const SLOT_SYMBOLS = [
 
@@ -2528,7 +2528,7 @@
 
                 symbols[0] = this.randomSymbol();
 
-                // Increase chance that the first two reels match
+                // 첫 두 릴이 일치할 확률 증가
 
                 symbols[1] = Math.random() < 0.9 ? symbols[0] : this.randomSymbol();
 
@@ -3170,7 +3170,7 @@
 
 
 
-            // If there is no next stage, keep the current one active
+            // 다음 단계가 없으면 현재 단계 활성 유지
 
             if (nextIndex >= tabs.length) {
 
@@ -3467,7 +3467,7 @@
 
 
 
-        // --- GAME LOGIC FUNCTIONS ---
+        // --- 게임 로직 함수 ---
 
         function handleGameOver() {
 
@@ -3623,7 +3623,7 @@
 
 
 
-            // Reset competency tab states
+            // 역량 탭 상태 초기화
 
            document.querySelectorAll('.competency-tab.cleared')
 
@@ -3669,7 +3669,7 @@
 
                 SUBJECT_NAMES[gameState.selectedSubject] || '퀴즈';
 
-           // Determine the correct main element based on topic and subject
+           // 주제와 과목에 따라 올바른 메인 요소 결정
 
            const mainId = getMainElementId();
 
@@ -3973,7 +3973,7 @@
 
         function getMainElementId() {
 
-            // Determine the correct main element based on topic and subject
+            // 주제와 과목에 따라 올바른 메인 요소 결정
 
             if (gameState.selectedTopic === CONSTANTS.TOPICS.BASIC) {
 
@@ -5811,7 +5811,7 @@
 
 
 
-        // --- EVENT LISTENERS ---
+        // --- 이벤트 리스너 ---
 
         document.querySelector('.topic-selector').addEventListener('click', e => {
 
@@ -8610,7 +8610,7 @@
 
 
 
-        // --- INITIAL SETUP ---
+        // --- 초기 설정 ---
 
         function initializeApp() {
 
