@@ -4458,3 +4458,201 @@ input.wrong-answer-indicator {
   transform: translate(3px, 3px);
   box-shadow: 0px 0px 0px var(--bg-dark);
 }
+
+/* 특별 빈칸 수 팝업 스타일 */
+.special-blank-count-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  text-align: center;
+  z-index: 10000;
+  box-shadow:
+    0 0 30px rgba(233, 69, 96, 0.6),
+    0 0 60px rgba(83, 51, 131, 0.4),
+    0 0 90px rgba(83, 51, 131, 0.2);
+  animation: special-popup-appear 0.5s ease-out, special-popup-float 3s ease-in-out infinite;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.special-count-highlight {
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd700, #ffed4a, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.8),
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 60px rgba(255, 215, 0, 0.4);
+  animation: count-glow 2.5s ease-in-out infinite alternate, count-pulse 3s ease-in-out infinite;
+  display: inline-block;
+  transform-origin: center;
+}
+
+.special-popup-sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  animation: sparkle-twinkle 2s ease-in-out infinite;
+}
+
+.sparkle:nth-child(1) {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.sparkle:nth-child(2) {
+  top: 30%;
+  right: 25%;
+  animation-delay: 0.3s;
+}
+
+.sparkle:nth-child(3) {
+  bottom: 25%;
+  left: 25%;
+  animation-delay: 0.6s;
+}
+
+.sparkle:nth-child(4) {
+  top: 25%;
+  right: 20%;
+  animation-delay: 0.9s;
+}
+
+.sparkle:nth-child(5) {
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 1.2s;
+}
+
+.sparkle:nth-child(6) {
+  top: 35%;
+  left: 35%;
+  animation-delay: 0.15s;
+}
+
+@keyframes special-popup-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes special-popup-float {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0px);
+  }
+  25% {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(0px);
+  }
+  75% {
+    transform: translate(-50%, -50%) translateY(5px);
+  }
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes count-glow {
+  0% {
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 0.8),
+      0 0 40px rgba(255, 215, 0, 0.6),
+      0 0 60px rgba(255, 215, 0, 0.4);
+  }
+  100% {
+    text-shadow:
+      0 0 30px rgba(255, 215, 0, 1),
+      0 0 60px rgba(255, 215, 0, 0.8),
+      0 0 90px rgba(255, 215, 0, 0.6);
+  }
+}
+
+@keyframes count-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  50% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) translateY(200%) rotate(45deg);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+  .special-blank-count-popup {
+    font-size: 1.4rem;
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+  }
+
+  .special-count-highlight {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .special-blank-count-popup {
+    font-size: 1.2rem;
+    padding: 1.5rem 2rem;
+    border-radius: 18px;
+  }
+
+  .special-count-highlight {
+    font-size: 1.8rem;
+  }
+}
