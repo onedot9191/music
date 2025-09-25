@@ -829,6 +829,10 @@
 
             combo: 0,
 
+            isForceQuit: false,
+
+            lastSpecialPopupCount: 0, // 마지막으로 특별 팝업이 표시된 카운트
+
             selectedSubject: CONSTANTS.SUBJECTS.MUSIC,
 
             selectedTopic: CONSTANTS.TOPICS.CURRICULUM,
@@ -1409,6 +1413,8 @@
 
         const slotWinAudio = createAudioElement('./hit.mp3', Math.min(1, SFX_VOLUME * 2));
 
+        const specialBlankAudio = createAudioElement('./great.mp3', Math.min(1, SFX_VOLUME * 1.5));
+
         
 
         // --- 유틸리티 함수 ---
@@ -1580,6 +1586,48 @@
 
         }
 
+        function showSpecialBlankCountPopup(count) {
+            // 기존 팝업 제거 (중복 방지)
+            const existingPopup = document.getElementById('special-blank-count-popup');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+
+            // 마지막 팝업 카운트 업데이트
+            gameState.lastSpecialPopupCount = count;
+
+            const specialPopup = document.createElement('div');
+            specialPopup.id = 'special-blank-count-popup';
+            specialPopup.className = 'special-blank-count-popup';
+            specialPopup.innerHTML = `
+                오늘 푼 빈칸 <span class="special-count-highlight">${count}</span>개 돌파!
+                <div class="special-popup-sparkles">
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                </div>
+            `;
+
+            document.body.appendChild(specialPopup);
+
+            // 특별 빈칸 팝업 효과음 재생 (hit.mp3 우선 중지)
+            if (slotWinAudio) {
+                slotWinAudio.pause();
+                slotWinAudio.currentTime = 0;
+            }
+            playSound(specialBlankAudio);
+
+            // 3초 후 자동 제거
+            setTimeout(() => {
+                if (specialPopup.parentNode) {
+                    specialPopup.parentNode.removeChild(specialPopup);
+                }
+            }, 3000);
+        }
+
         function updateTodayBlankCount() {
             try {
                 // localStorage에서 최신 데이터 강제 로드
@@ -1589,9 +1637,20 @@
                 const todayKey = formatDateKey();
                 const count = stats[todayKey] || 0;
 
+
                 const countEl = document.getElementById('today-blank-count-number');
                 if (countEl) {
                     countEl.textContent = String(count);
+                }
+
+                // 50의 배수일 경우 특별 팝업 표시 (이미 표시된 카운트거나 강제 종료 시에는 표시하지 않음)
+                if (count > 0 && count % 50 === 0 && count !== gameState.lastSpecialPopupCount && !gameState.isForceQuit) {
+                    showSpecialBlankCountPopup(count);
+                }
+
+                // 강제 종료 플래그 초기화
+                if (gameState.isForceQuit) {
+                    gameState.isForceQuit = false;
                 }
             } catch (error) {
                 console.warn('Failed to update today blank count:', error);
@@ -3339,7 +3398,8 @@
 
 
 
-                saveDailyStats(correctCount);
+                // 빈칸 카운팅은 정답을 맞을 때마다 실시간으로 저장되므로 여기서는 저장하지 않음
+                // saveDailyStats(correctCount);
 
                 // 오늘 푼 빈칸 수 표시 요소 업데이트
                 updateTodayBlankCount();
@@ -3658,6 +3718,9 @@
 
 
         function startGame() {
+
+            // 특별 팝업 카운트 초기화
+            gameState.lastSpecialPopupCount = 0;
 
             playSound(startAudio);
 
@@ -5707,6 +5770,20 @@
 
             updateMushroomGrowth();
 
+            // 실시간 빈칸 카운트 업데이트 (정답 버튼 클릭 시에도 카운트 증가)
+            const stats = getDailyStats(30);
+            const todayKey = formatDateKey();
+            const today = stats.find(s => s.date === todayKey);
+            const currentCount = today ? today.count : 0;
+
+            // localStorage에 실시간으로 1 증가
+            const dailyStats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
+            dailyStats[todayKey] = currentCount + 1;
+            localStorage.setItem('dailyStats', JSON.stringify(dailyStats));
+
+            // UI 즉시 업데이트
+            updateTodayBlankCount();
+
             slotMachine.stopNext();
 
             if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
@@ -6845,7 +6922,13 @@
 
         resetBtn.addEventListener('click', () => resetGame(true));
 
-        forceQuitBtn.addEventListener('click', () => { if(gameState.timerId) { gameState.total = 0; tick(); } });
+        forceQuitBtn.addEventListener('click', () => {
+            if(gameState.timerId) {
+                gameState.isForceQuit = true; // 강제 종료 플래그 설정
+                gameState.total = 0;
+                tick();
+            }
+        });
 
         // 오답 기록 초기화 버튼 이벤트 리스너
         clearWrongAnswersBtn.addEventListener('click', () => {
