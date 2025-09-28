@@ -192,6 +192,8 @@
 
                 AREA: 'area',
 
+                INTEGRATED_GUIDE: 'integrated-guide',
+
                 RANDOM: 'random'
 
             },
@@ -383,7 +385,9 @@
 
             [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
 
-            [CONSTANTS.SUBJECTS.AREA]: '영역'
+            [CONSTANTS.SUBJECTS.AREA]: '영역',
+
+            [CONSTANTS.SUBJECTS.INTEGRATED_GUIDE]: '통합 지도서'
 
         };
 
@@ -761,7 +765,7 @@
 
         function initAutoWidthCourse() {
 
-            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main', 'western-ethics-quiz-main', 'moral-psychology-quiz-main'].forEach(id => {
+            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main', 'western-ethics-quiz-main', 'moral-psychology-quiz-main', 'integrated-guide-overview'].forEach(id => {
 
                 const container = document.getElementById(id);
 
@@ -971,12 +975,15 @@
         function applyOverviewHierarchyIndentation() {
 
             const overviewMain = document.getElementById('overview-quiz-main');
+            const integratedGuideMain = document.getElementById('integrated-guide-overview');
 
-            if (!overviewMain) return;
+            if (!overviewMain && !integratedGuideMain) return;
 
-            const items = overviewMain.querySelectorAll('.overview-question');
+            const items = overviewMain ? overviewMain.querySelectorAll('.overview-question') : [];
+            const integratedGuideItems = integratedGuideMain ? integratedGuideMain.querySelectorAll('.overview-question') : [];
+            const allItems = [...items, ...integratedGuideItems];
 
-            items.forEach((el) => {
+            allItems.forEach((el) => {
 
                 const textStart = (el.textContent || '').trim();
 
@@ -1303,6 +1310,35 @@
 
             });
 
+        }
+
+        // 통합 지도서 내부 탭 클릭 시 재적용
+
+        const integratedGuideTabs = document.querySelector('#integrated-guide-overview .tabs');
+
+        if (integratedGuideTabs) {
+
+            integratedGuideTabs.addEventListener('click', () => {
+
+                requestAnimationFrame(() => {
+                    applyOverviewHierarchyIndentation();
+
+                    // 보라색 텍스트는 지정된 과목에서만 적용
+                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
+                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
+                        applyScienceModelPurpleText();
+                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
+                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
+                        applyGeometryMoralPurpleText();
+                    } else {
+                        // 다른 과목에서는 보라색 클래스 제거
+                        const overviewQuestions = document.querySelectorAll('.overview-question');
+                        overviewQuestions.forEach(question => {
+                            question.classList.remove('science-model-purple-text');
+                        });
+                    }
+                });
+            });
         }
 
 
@@ -2711,7 +2747,7 @@
 
        function adjustCreativeInputWidths() {
 
-        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main #info-education .overview-question input[data-answer], #social-34-quiz-main .overview-question input[data-answer], #social-56-quiz-main .overview-question input[data-answer], #life-achievement-quiz-main .overview-question input[data-answer], #wise-achievement-quiz-main .overview-question input[data-answer], #joy-achievement-quiz-main .overview-question input[data-answer], #music-std-quiz-main .overview-question input[data-answer], #korean-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #geometry-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer]')
+        document.querySelectorAll('#creative-quiz-main .creative-question input[data-answer], #overview-quiz-main .overview-question input[data-answer], #integrated-course-quiz-main .overview-question input[data-answer], #moral-course-quiz-main .overview-question input[data-answer], #eastern-ethics-quiz-main .overview-question input[data-answer], #western-ethics-quiz-main .overview-question input[data-answer], #moral-psychology-quiz-main .overview-question input[data-answer], #pe-course-quiz-main .overview-question input[data-answer], #pe-back-quiz-main .pe-back-input, #science-std-quiz-main .overview-question input[data-answer], #english-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main .overview-question input[data-answer], #practical-std-quiz-main #info-education .overview-question input[data-answer], #social-34-quiz-main .overview-question input[data-answer], #social-56-quiz-main .overview-question input[data-answer], #life-achievement-quiz-main .overview-question input[data-answer], #wise-achievement-quiz-main .overview-question input[data-answer], #joy-achievement-quiz-main .overview-question input[data-answer], #music-std-quiz-main .overview-question input[data-answer], #korean-std-quiz-main .overview-question input[data-answer], #art-std-quiz-main .overview-question input[data-answer], #math-operation-quiz-main .overview-question input[data-answer], #change-relation-quiz-main .overview-question input[data-answer], #geometry-measure-quiz-main .overview-question input[data-answer], #geometry-quiz-main .overview-question input[data-answer], #data-probability-quiz-main .overview-question input[data-answer], #math-course-quiz-main .overview-question input[data-answer], #science-course-quiz-main .overview-question input[data-answer], #practical-course-quiz-main .overview-question input[data-answer], #music-course-quiz-main .overview-question input[data-answer], #english-course-quiz-main .overview-question input[data-answer], #art-course-quiz-main .overview-question input[data-answer], #korean-course-quiz-main .overview-question input[data-answer], #integrated-guide-overview .overview-question input[data-answer]')
 
                 .forEach(input => {
 
@@ -4060,7 +4096,15 @@
 
             } else {
 
-                return `${gameState.selectedSubject}-quiz-main`;
+                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_GUIDE) {
+
+                    return 'integrated-guide-overview';
+
+                } else {
+
+                    return `${gameState.selectedSubject}-quiz-main`;
+
+                }
 
             }
 
