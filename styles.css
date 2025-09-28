@@ -2748,7 +2748,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #spelling-quiz-main .overview-question,
 #change-relation-quiz-main .overview-question,
 #geometry-measure-quiz-main .overview-question,
-#data-probability-quiz-main .overview-question {
+#data-probability-quiz-main .overview-question,
+#integrated-guide-overview .overview-question {
   display: block;
   line-height: 2.2; /* �?간격 ?��? */
   font-size: 2rem;
@@ -2797,7 +2798,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #practical-quiz-main .overview-question:last-child,
 #math-course-quiz-main .overview-question:last-child,
 #spelling-quiz-main .overview-question:last-child,
-#change-relation-quiz-main .overview-question:last-child {
+#change-relation-quiz-main .overview-question:last-child,
+#integrated-guide-overview .overview-question:last-child {
   margin-bottom: 1rem; /* 마�?�?문단???�단 ?�백 조정 */
 }
 
@@ -2805,13 +2807,15 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #overview-quiz-main .overview-question.overview-top,
 #eastern-ethics-quiz-main .overview-question.overview-top,
 #western-ethics-quiz-main .overview-question.overview-top,
-#moral-psychology-quiz-main .overview-question.overview-top {
+#moral-psychology-quiz-main .overview-question.overview-top,
+#integrated-guide-overview .overview-question.overview-top {
   margin-left: 0;
 }
 #overview-quiz-main .overview-question.overview-sub,
 #eastern-ethics-quiz-main .overview-question.overview-sub,
 #western-ethics-quiz-main .overview-question.overview-sub,
-#moral-psychology-quiz-main .overview-question.overview-sub {
+#moral-psychology-quiz-main .overview-question.overview-sub,
+#integrated-guide-overview .overview-question.overview-sub {
   margin-left: 2rem;
 }
 
@@ -3012,7 +3016,8 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #wise-achievement-quiz-main .overview-question input,
 #joy-achievement-quiz-main .overview-question input,
   #korean-std-quiz-main .overview-question input,
-  #music-std-quiz-main .overview-question input {
+  #music-std-quiz-main .overview-question input,
+#integrated-guide-overview .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem;
   margin: 0 0.6rem;
@@ -3126,6 +3131,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #english-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main .overview-question input:focus,
 #practical-std-quiz-main #info-education .overview-question input:focus,
+#integrated-guide-overview .overview-question input:focus,
 #art-std-quiz-main .overview-question input:focus,
 #math-operation-quiz-main .overview-question input:focus,
 #change-relation-quiz-main .overview-question input:focus,
