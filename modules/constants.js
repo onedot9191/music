@@ -59,6 +59,7 @@ export const CONSTANTS = {
         SPELLING: 'spelling',
         COMPETENCY: 'competency',
         AREA: 'area',
+        INTEGRATED_GUIDE: 'integrated-guide',
         RANDOM: 'random'
     },
     TOPICS: {
@@ -152,7 +153,8 @@ export const SUBJECT_NAMES = {
     [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
     [CONSTANTS.SUBJECTS.SPELLING]: '맞춤법',
     [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
-    [CONSTANTS.SUBJECTS.AREA]: '영역'
+    [CONSTANTS.SUBJECTS.AREA]: '영역',
+    [CONSTANTS.SUBJECTS.INTEGRATED_GUIDE]: '통합 지도서'
 };
 
 export const TOPIC_NAMES = {
