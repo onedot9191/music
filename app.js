@@ -3089,7 +3089,7 @@
 
                 subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
-                subjectButtons.forEach(btn => { btn.disabled = true; });
+                subjectButtons.forEach(btn => btn.disabled = true);
 
                 curriculumBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
