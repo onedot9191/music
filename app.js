@@ -127,6 +127,8 @@
 
                 SOCIAL_34: 'social-34',
 
+                SOCIAL_56: 'social-56',
+
                 SCIENCE: 'science',
 
                 SCIENCE_CURRICULUM: 'science-curriculum',
@@ -319,6 +321,8 @@
             [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
 
             [CONSTANTS.SUBJECTS.SOCIAL_34]: '사회34',
+
+            [CONSTANTS.SUBJECTS.SOCIAL_56]: '사회56',
 
             [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
 
@@ -7257,12 +7261,19 @@
 
             buttons.forEach(btn => {
                 if (loading) {
+                    // 즉시 시각적 변경을 위해 동기적으로 처리
+                    btn.style.pointerEvents = 'none'; // 클릭 방지
                     btn.classList.add('loading');
                     btn.disabled = true;
                     const originalText = btn.textContent;
                     btn.setAttribute('data-original-text', originalText);
                     btn.innerHTML = '<span class="btn-text">' + originalText + '</span>';
+                    
+                    // 강제 리플로우로 변경사항 즉시 적용
+                    btn.offsetHeight;
+                    btn.getBoundingClientRect();
                 } else {
+                    btn.style.pointerEvents = '';
                     btn.classList.remove('loading');
                     btn.disabled = false;
                     const originalText = btn.getAttribute('data-original-text');
@@ -7272,58 +7283,129 @@
                     }
                 }
             });
-
-            // 강제 리플로우로 DOM 변경 즉시 반영
-            if (loading) {
-                buttons.forEach(btn => {
-                    btn.offsetHeight; // 강제 리플로우
-                });
-            }
-
-            // 로딩 오버레이 제거 - 사용자가 결과창을 볼 수 있도록
         };
 
+        // 캡처 성능 최적화를 위한 캐시 변수
+        let lastCaptureTime = 0;
+        let cachedCanvas = null;
+        let lastResultHash = null; // 결과 내용 변경 감지용
+        const CAPTURE_CACHE_DURATION = 5000; // 5초간 캐시 유지 (연장)
+
         const handleScrapResultImage = async () => {
+            // 버튼 클릭 즉시 로딩 상태로 변경 (동기적 처리)
+            setLoadingState(true);
+            
+            // DOM 변경사항을 즉시 반영하기 위한 강제 렌더링
+            document.body.offsetHeight;
+            
+            // 메인 스레드 블로킹 방지를 위한 마이크로태스크 분할
+            await new Promise(resolve => setTimeout(resolve, 0));
 
             const modalContent = document.querySelector('#progress-modal .modal-content');
 
             const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
 
-            // 로딩 상태 시작
-            setLoadingState(true);
-
-            // DOM 업데이트가 확실히 완료될 때까지 대기
-            await new Promise(resolve => {
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(resolve);
-                });
-            });
-
-            
-
             if (wasHidden) {
-
                 openModal(progressModal);
-
+                // 모달이 열린 경우에만 최소한의 대기
+                await new Promise(resolve => requestAnimationFrame(resolve));
             }
 
-
-
             try {
+                // 결과 내용 해시 생성 (빠른 변경 감지)
+                const resultText = modalContent.textContent || '';
+                const currentResultHash = resultText.length + resultText.slice(0, 100);
+                
+                // 캐시된 캔버스가 있고 유효한 경우 재사용
+                const currentTime = Date.now();
+                const isCacheValid = cachedCanvas && 
+                                   (currentTime - lastCaptureTime) < CAPTURE_CACHE_DURATION &&
+                                   lastResultHash === currentResultHash;
+                
+                if (isCacheValid) {
+                    // 캐시된 캔버스 사용으로 즉시 처리
+                    const canvas = cachedCanvas;
+                    
+                    // 모바일 환경에서는 공유 또는 다운로드 우선
+                    if (isMobile()) {
+                        const shareSuccess = await shareImage(canvas);
+                        setLoadingState(false); // 로딩 상태 해제
+                        if (shareSuccess) {
+                            alert('결과 이미지가 공유되었습니다!');
+                            return;
+                        }
+                        downloadImage(canvas);
+                        alert('이미지가 다운로드되었습니다. 갤러리에서 확인하세요!');
+                        return;
+                    }
+
+                    // 데스크톱 환경에서는 클립보드 복사 시도
+                    const copyResult = await copyImageToClipboard(canvas);
+                    setLoadingState(false); // 로딩 상태 해제
+                    if (copyResult.success) {
+                        if (copyResult.method === 'text-dataurl' || copyResult.method === 'legacy-text') {
+                            alert('이미지 데이터가 복사되었습니다!\n(일부 앱에서는 이미지로 붙여넣기가 안될 수 있습니다)');
+                        } else {
+                            alert('결과 이미지가 복사되었습니다!');
+                        }
+                    } else {
+                        downloadImage(canvas);
+                        alert('클립보드 복사에 실패했습니다.\n이미지를 다운로드했습니다!');
+                    }
+                    return;
+                }
 
                 const canvas = await html2canvas(modalContent, {
 
                     backgroundColor: '#ffffff',
 
-                    scale: 2, // 고해상도
+                    scale: 1.2, // 성능 우선으로 스케일 추가 감소
 
-                    useCORS: true,
+                    logging: false,
 
-                    allowTaint: false
+                    removeContainer: true,
+
+                    imageTimeout: 3000, // 타임아웃 더 단축
+
+                    useCORS: false, // CORS 체크 비활성화로 속도 향상
+
+                    allowTaint: true, // 외부 리소스 허용으로 빠른 처리
+
+                    foreignObjectRendering: false, // SVG 렌더링 비활성화
+
+                    ignoreElements: (element) => {
+                        // 불필요한 요소들 렌더링에서 제외
+                        return element.classList.contains('loading') ||
+                               element.classList.contains('hidden') ||
+                               element.style.display === 'none' ||
+                               element.style.visibility === 'hidden';
+                    },
+
+                    onclone: (clonedDoc) => {
+                        const clonedContent = clonedDoc.querySelector('.modal-content');
+                        if (clonedContent) {
+                            // 모든 애니메이션과 트랜지션 완전 제거
+                            const allElements = clonedContent.querySelectorAll('*');
+                            allElements.forEach(el => {
+                                el.style.transition = 'none';
+                                el.style.animation = 'none';
+                                el.style.transform = 'none';
+                                // 불필요한 CSS 속성 제거
+                                el.style.boxShadow = 'none';
+                                el.style.filter = 'none';
+                            });
+                            
+                            // 폰트 로딩 최적화
+                            clonedContent.style.fontDisplay = 'swap';
+                        }
+                    }
 
                 });
 
-
+                // 캔버스를 캐시에 저장
+                cachedCanvas = canvas;
+                lastCaptureTime = Date.now();
+                lastResultHash = currentResultHash;
 
                 // 모바일 환경에서는 공유 또는 다운로드 우선
 
