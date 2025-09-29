@@ -489,6 +489,7 @@ td {
   word-break: break-word; /* ensure long text wraps within cell */
 }
 
+.two-col-answers,
 td.two-col-answers {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -515,6 +516,7 @@ td.one-col-answers input {
 }
 
 @media (max-width: 480px) {
+  .two-col-answers,
   td.two-col-answers {
     grid-template-columns: 1fr;
   }
@@ -3032,6 +3034,19 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
   transition: all 0.3s ease;
   resize: horizontal;
   overflow: hidden;
+}
+
+/* 요쇼 섹션 입력 너비 고정 (충분히 넓게) */
+#integrated-guide-overview #basic-movement .overview-question input,
+#integrated-guide-overview #safety-elements .overview-question input {
+  width: 22ch !important;
+  min-width: 22ch !important;
+}
+
+/* 요쇼(legacy) 섹션만 고정 너비 적용 */
+#integrated-guide-overview #yosho .overview-question input {
+  width: 22ch !important;
+  min-width: 22ch !important;
 }
 
 
