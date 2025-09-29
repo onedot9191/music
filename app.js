@@ -946,7 +946,7 @@
 
         const modelBreak = document.getElementById('model-break');
 
-        const quizContainers = document.querySelectorAll('main[id$="-quiz-main"]');
+        const quizContainers = document.querySelectorAll('main[id$="-quiz-main"], #integrated-guide-overview');
 
         const modalCharacterPlaceholder = document.getElementById('modal-character-placeholder');
 
@@ -4347,7 +4347,10 @@
 
                 isPracticalTitle(input) ||
 
-                isGenericModelTitle(input)
+                isGenericModelTitle(input) ||
+
+                // Allow order-agnostic grading for explicitly marked groups (e.g., #yosho)
+                input.closest('[data-ignore-order]')
 
             ) {
 
@@ -4899,7 +4902,9 @@
 
                 isPracticalTitle(input) ||
 
-                isGenericModelTitle(input)
+                isGenericModelTitle(input) ||
+
+                input.closest('[data-ignore-order]')
 
             ) {
 
