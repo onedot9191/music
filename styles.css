@@ -3039,14 +3039,14 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 /* 요쇼 섹션 입력 너비 고정 (충분히 넓게) */
 #integrated-guide-overview #basic-movement .overview-question input,
 #integrated-guide-overview #safety-elements .overview-question input {
-  width: 22ch !important;
-  min-width: 22ch !important;
+  width: 26ch !important;
+  min-width: 26ch !important;
 }
 
 /* 요쇼(legacy) 섹션만 고정 너비 적용 */
 #integrated-guide-overview #yosho .overview-question input {
-  width: 22ch !important;
-  min-width: 22ch !important;
+  width: 26ch !important;
+  min-width: 26ch !important;
 }
 
 
