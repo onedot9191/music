@@ -193,7 +193,7 @@
   background: linear-gradient(90deg, var(--primary) 0%, #ff6b6b 50%, var(--primary) 100%) !important;
   border-color: var(--primary) !important;
   color: white !important;
-  transition: all 0.3s ease !important;
+  transition: none !important; /* 즉시 전환 */
   overflow: hidden;
 }
 
