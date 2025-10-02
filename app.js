@@ -926,10 +926,6 @@
 
         const startModal = document.getElementById('start-modal');
 
-        const guideModal = document.getElementById('guide-modal');
-
-        const closeGuideBtn = document.getElementById('close-guide-btn');
-
         const settingsPanel = document.getElementById('settings-panel');
 
         const timeSettingDisplay = document.getElementById('time-setting-display');
@@ -6257,8 +6253,21 @@
                 document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
                 e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
 
-                timeSetterWrapper.style.display = gameState.gameMode === CONSTANTS.MODES.NORMAL ? 'block' : 'none';
-                document.getElementById('hard-core-description').classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, gameState.gameMode !== CONSTANTS.MODES.HARD_CORE);
+                // 세그먼트 슬라이딩 애니메이션을 위한 data-selected 속성 설정
+                const modeBtnGroup = document.querySelector('.mode-btn-group');
+                if (modeBtnGroup) {
+                    modeBtnGroup.setAttribute('data-selected', gameState.gameMode);
+                }
+
+                // Normal 모드: 제한 시간 표시, Hard 설명 숨김
+                // Hard 모드: 제한 시간 숨김, Hard 설명 표시
+                if (gameState.gameMode === CONSTANTS.MODES.NORMAL) {
+                    timeSetterWrapper.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    document.getElementById('hard-core-description').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                } else {
+                    timeSetterWrapper.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    document.getElementById('hard-core-description').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                }
             });
 
         });
@@ -6994,18 +7003,6 @@
         });
 
         
-
-        closeGuideBtn.addEventListener('click', () => {
-
-            closeModal(guideModal);
-
-            openModal(startModal);
-
-            updateStartModalUI();
-
-            fixSettingsPanelHeight();
-
-        });
 
 
 
@@ -8851,8 +8848,20 @@
 
         initializeApp();
 
-        // 일단 원래대로 모달 표시 (LCP 개선은 추후 적용)
-        openModal(guideModal);
+        // 시작 모달 표시
+        openModal(startModal);
+        updateStartModalUI();
+        fixSettingsPanelHeight();
+        
+        // 초기 모드 상태 설정 (Normal 모드 기본)
+        timeSetterWrapper.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+        document.getElementById('hard-core-description').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+        
+        // 세그먼트 초기 상태 설정
+        const modeBtnGroup = document.querySelector('.mode-btn-group');
+        if (modeBtnGroup) {
+            modeBtnGroup.setAttribute('data-selected', CONSTANTS.MODES.NORMAL);
+        }
 
         // 도형 과목 전용 기능들은 다음 프레임에서 초기화 (성능 최적화)
         requestAnimationFrame(() => {
