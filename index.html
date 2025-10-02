@@ -29081,111 +29081,6 @@
   
 
 
-
-  <div id="guide-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="guide-title">
-
-
-
-      <div class="modal-content">
-
-
-
-          <h3 id="guide-title">HOW TO PLAY</h3>
-
-
-
-          <div class="guide-steps">
-
-
-
-              <div class="guide-step">
-
-
-
-                  <div class="guide-label">STEP 1</div>
-
-
-
-                  <div class="guide-text"><strong>설정:</strong> 학습할 주제와 과목, 모드, 시간을 선택하세요.</div>
-
-
-
-              </div>
-
-
-
-              <div class="guide-step">
-
-
-
-                  <div class="guide-label">STEP 2</div>
-
-
-
-                  <div class="guide-text"><strong>시작:</strong> '시작' 버튼을 눌러 게임을 시작!</div>
-
-
-
-              </div>
-
-
-
-              <div class="guide-step">
-
-
-
-                  <div class="guide-label">STEP 3</div>
-
-
-
-                  <div class="guide-text"><strong>채점:</strong> 빈칸에 정답을 입력하면 즉시 채점됩니다.</div>
-
-
-
-              </div>
-
-
-
-              <div class="guide-step">
-
-
-
-                  <div class="guide-label">STEP 4</div>
-
-
-
-                  <div class="guide-text"><strong>복습:</strong> 게임 종료 후, '정답 보기'로 복습하세요.</div>
-
-
-
-              </div>
-
-
-
-          </div>
-
-
-
-          <p class="tip">※ 채점 시 띄어쓰기와 ⋅ 기호는 무시됩니다.</p>
-
-
-
-          <p class="tip">※ 해당 사이트는 PC에 최적화되어 있습니다.</p>
-
-
-
-          <button id="close-guide-btn" class="btn">OK!</button>
-
-
-
-      </div>
-
-
-
-  </div>
-
-
-
   <main id="spelling-quiz-main" class="hidden">
 
 
@@ -29903,7 +29798,7 @@
 
 
 
-                <button class="btn subject-btn" data-subject="music" data-topic="curriculum">음악</button>
+                <button class="btn subject-btn selected" data-subject="music" data-topic="curriculum">음악</button>
 
 
 
@@ -30144,65 +30039,53 @@
 
 
 
-            <h2>게임 모드</h2>
+            <div class="mode-time-grid">
 
+                <div class="mode-section">
 
+                    <h2>게임 모드</h2>
 
-            <div class="mode-selector">
+                    <div class="mode-selector">
 
+                        <div class="mode-btn-group">
 
+                            <button class="btn mode-btn selected" data-mode="normal">Normal</button>
 
-                <button class="btn mode-btn selected" data-mode="normal">기본 모드</button>
+                            <button class="btn mode-btn" data-mode="hard-core">Hard</button>
 
+                        </div>
 
-
-                <button class="btn mode-btn" data-mode="hard-core">하드 코어</button>
-
-
-
-            </div>
-
-
-
-            <div id="time-setter-wrapper">
-
-
-
-                <h2>제한 시간 선택</h2>
-
-
-
-                <div class="time-setter">
-
-
-
-                    <button id="decrease-time" class="btn time-control-btn">-</button>
-
-
-
-                    <div id="time-setting-display">20:00</div>
-
-
-
-                    <button id="increase-time" class="btn time-control-btn">+</button>
-
-
+                    </div>
 
                 </div>
 
+                <div class="time-section">
 
+                    <div id="time-setter-wrapper">
 
-            </div>
+                        <h2>제한 시간</h2>
 
+                        <div class="time-setter">
 
+                            <button id="decrease-time" class="btn time-control-btn">-</button>
 
-            <div id="hard-core-description" class="notice-text hidden">
+                            <div id="time-setting-display">20:00</div>
 
+                            <button id="increase-time" class="btn time-control-btn">+</button>
 
+                        </div>
 
-                <p>제한시간 60초, 정답 시 +5초가 주어집니다.</p>
+                    </div>
 
+                    <div id="hard-core-description" class="notice-text hidden">
 
+                      
+
+                        <p>제한시간 60초,<br>정답 시 +5초가 주어집니다.</p>
+
+                    </div>
+
+                </div>
 
             </div>
 
