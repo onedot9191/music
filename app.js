@@ -846,6 +846,8 @@
             selectedTopic: CONSTANTS.TOPICS.CURRICULUM,
 
             gameMode: CONSTANTS.MODES.NORMAL,
+            
+            normalModeDuration: CONSTANTS.DEFAULT_DURATION, // Normal 모드의 duration 저장
 
             isRandomizing: false,
 
@@ -6246,6 +6248,11 @@
             // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
             setTimeout(() => playSound(clickAudio), 0);
 
+            // Hard 모드로 전환하기 전에 Normal 모드의 duration 저장
+            if (gameState.gameMode === CONSTANTS.MODES.NORMAL && e.target.dataset.mode === CONSTANTS.MODES.HARD_CORE) {
+                gameState.normalModeDuration = gameState.duration;
+            }
+            
             gameState.gameMode = e.target.dataset.mode;
 
             // INP 개선: DOM 조작을 다음 프레임으로 지연
@@ -6264,6 +6271,10 @@
                 if (gameState.gameMode === CONSTANTS.MODES.NORMAL) {
                     timeSetterWrapper.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
                     document.getElementById('hard-core-description').classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    
+                    // Normal 모드로 돌아올 때 저장된 duration 복원
+                    gameState.duration = gameState.normalModeDuration;
+                    updateTimeSettingDisplay();
                 } else {
                     timeSetterWrapper.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                     document.getElementById('hard-core-description').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -7535,6 +7546,7 @@
             if (gameState.duration > 60) {
 
                 gameState.duration -= 300;
+                gameState.normalModeDuration = gameState.duration; // Normal 모드 duration도 함께 업데이트
 
                 updateTimeSettingDisplay();
 
@@ -7552,6 +7564,7 @@
             if (gameState.duration < 3600) { // Max 60 mins
 
                 gameState.duration += 300;
+                gameState.normalModeDuration = gameState.duration; // Normal 모드 duration도 함께 업데이트
 
                 updateTimeSettingDisplay();
 
