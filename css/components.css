@@ -4,7 +4,7 @@
 /* === 버튼 === */
 .btn {
   cursor: pointer;
-  font-family: var(--font-base);
+  font-family: var(--font-display);
   font-weight: 700;
   color: var(--text-light);
   background: var(--accent);
@@ -52,6 +52,7 @@
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 700;
+  font-family: var(--font-display);
   color: var(--text-dark);
   transition: all 0.2s;
   border-radius: 8px;
