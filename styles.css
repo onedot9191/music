@@ -953,7 +953,7 @@ input.activity-input {
 }
 .modal-content {
   background: var(--bg-light);
-  padding: var(--space-lg) var(--space-xl);
+  padding: 2rem var(--space-xl);
   text-align: center;
   border: 4px solid var(--primary);
   box-shadow: 10px 10px 0px var(--secondary);
@@ -972,6 +972,7 @@ input.activity-input {
   color: var(--primary);
   font-size: 3rem;
   margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
   background: none;
   border: none;
   padding: 0;
@@ -1121,6 +1122,115 @@ input.activity-input {
   font-family: var(--font-display);
 }
 
+/* 게임 모드와 제한 시간 2열 배치 */
+.mode-time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 0 0 2.5rem 0;
+}
+
+.mode-section,
+.time-section {
+  background: rgba(255, 255, 255, 0.03);
+  border: 3px solid var(--accent);
+  border-radius: var(--space-md);
+  padding: 1.2rem 1rem;
+  box-shadow: 4px 4px 0px var(--secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 100%;
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.mode-section h2,
+.time-section h2 {
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  text-align: center;
+  color: var(--accent);
+  font-family: var(--font-display);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.mode-section .mode-selector {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin: 0.5rem 0 0 0;
+  justify-content: center;
+}
+
+.time-section #time-setter-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.time-section #time-setter-wrapper h2 {
+  margin-bottom: 1rem;
+}
+
+.time-section #time-setter-wrapper .time-setter {
+  margin-top: 0.5rem;
+}
+
+.time-section #time-setter-wrapper.hidden {
+  display: none;
+}
+
+
+.mode-time-grid .time-setter {
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+  flex-wrap: nowrap !important;
+}
+
+/* 반응형: 작은 화면에서는 세로 배치 */
+@media (max-width: 768px) {
+  .mode-time-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .mode-section .mode-selector {
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+  
+  .mode-btn-group .mode-btn {
+    min-width: 80px;
+    max-width: 110px;
+    font-size: 1.2rem;
+    padding: 0.9rem 0.8rem;
+  }
+  
+  .mode-btn-group::before {
+    border-radius: 6px;
+  }
+  
+  .mode-section,
+  .time-section {
+    padding: 1.2rem 0.8rem;
+  }
+  
+  .mode-time-grid .time-control-btn {
+    font-size: 2rem;
+    padding: 0.7rem 1.2rem;
+  }
+  
+  .mode-time-grid #time-setting-display {
+    font-size: 2.2rem;
+  }
+}
+
 .time-setter,
 .subject-selector,
 .mode-selector,
@@ -1129,7 +1239,7 @@ input.activity-input {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin: 2rem 0;
+  margin: 0 0 2.5rem 0;
   flex-wrap: wrap;
 }
 
@@ -1152,6 +1262,79 @@ input.activity-input {
 }
 .subject-btn-group .subject-btn + .subject-btn {
   border-left: 2px solid var(--primary);
+}
+
+/* 모드 버튼 세그먼트 스타일 */
+.mode-btn-group {
+  display: inline-flex;
+  gap: 0;
+  border: 4px solid var(--accent);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    4px 4px 0px var(--secondary),
+    0 0 20px rgba(83, 52, 131, 0.3);
+  background: var(--secondary);
+  position: relative;
+}
+
+/* 슬라이딩 배경 */
+.mode-btn-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--accent);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  border-radius: 8px;
+}
+
+/* Hard 모드 선택 시 오른쪽으로 이동 */
+.mode-btn-group[data-selected="hard-core"]::before {
+  transform: translateX(100%);
+}
+
+.mode-btn-group .mode-btn {
+  border-radius: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-light);
+  min-width: 90px;
+  max-width: 120px;
+  padding: 1rem 1.2rem;
+  font-size: 1.4rem;
+  transition: color 0.3s ease, font-weight 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.mode-btn-group .mode-btn:hover {
+  transform: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.mode-btn-group .mode-btn:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.mode-btn-group .mode-btn + .mode-btn {
+  border-left: 3px solid var(--accent);
+}
+
+.mode-btn-group .mode-btn.selected {
+  color: var(--text-light) !important;
+  font-weight: 900;
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* Group curriculum buttons (총론, 창체) with visual grouping */
@@ -1202,10 +1385,24 @@ input.activity-input {
   color: var(--text-light);
   width: 8ch;
   text-align: center;
+  flex-shrink: 0;
+}
+
+.mode-time-grid #time-setting-display {
+  font-size: 2.5rem;
+  width: 6.5ch;
 }
 .time-control-btn {
   font-size: 2rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0.8rem 1.5rem;
+  min-width: 50px;
+  flex-shrink: 0;
+  border-color: var(--accent) !important;
+}
+
+.mode-time-grid .time-control-btn {
+  font-size: 2.2rem;
+  padding: 0.8rem 1.5rem;
 }
 .subject-btn,
 .mode-btn,
@@ -1277,32 +1474,117 @@ input.activity-input {
 
 
 #start-game-btn {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, #ff6b6b 50%, var(--primary) 100%);
+  background-size: 200% 200%;
   color: var(--text-light);
-  padding: 1.2rem 2.5rem;
-  margin-top: 2rem;
-  font-size: 1.8rem;
-  animation: pulse-start-btn 2s infinite;
+  padding: 1.5rem 3.5rem;
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
+  font-size: 2.4rem;
+  font-weight: 900;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+  border: 4px solid var(--primary);
+  box-shadow: 
+    6px 6px 0px var(--secondary),
+    0 0 20px rgba(233, 69, 96, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: pulse-start-btn 2s ease-in-out infinite, gradient-shift 3s ease infinite;
+}
+
+#start-game-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s ease-in-out infinite;
+}
+
+#start-game-btn:hover {
+  transform: translate(3px, 3px) scale(1.02);
+  box-shadow: 
+    3px 3px 0px var(--secondary),
+    0 0 25px rgba(233, 69, 96, 0.5);
+  animation: pulse-start-btn 1s ease-in-out infinite, gradient-shift 2s ease infinite;
+}
+
+#start-game-btn:active {
+  transform: translate(6px, 6px) scale(0.98);
+  box-shadow: 
+    0px 0px 0px var(--secondary),
+    0 0 15px rgba(233, 69, 96, 0.4);
 }
 
 @keyframes pulse-start-btn {
-  0% {
+  0%, 100% {
     transform: scale(1);
-    box-shadow: 5px 5px 0px var(--secondary);
   }
   50% {
-    transform: scale(1.05);
-    box-shadow: 8px 8px 15px var(--secondary);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 5px 5px 0px var(--secondary);
+    transform: scale(1.03);
   }
 }
 
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+    top: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+    top: 100%;
+  }
+}
+
+#hard-core-description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  min-height: 100px;
+}
+
+#hard-core-description.hidden {
+  display: none;
+}
+
+#hard-core-description h2 {
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  text-align: center;
+  color: var(--accent);
+  font-family: var(--font-display);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
 #hard-core-description p {
-  margin-bottom: 0.5rem;
-  font-size: 1.4rem;
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: var(--font-display);
+  color: var(--text-light);
+  text-align: center;
+  line-height: 1.8;
 }
 
 /* Activity Heatmap */
@@ -1361,6 +1643,16 @@ input.activity-input {
   max-width: 600px;
   flex-shrink: 0;
   overflow-y: auto;
+  padding: 3rem 2rem !important;
+}
+
+#settings-panel h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.2rem;
+}
+
+#settings-panel h2:first-of-type {
+  margin-top: 0;
 }
 #heatmap-panel {
   max-width: 260px;
