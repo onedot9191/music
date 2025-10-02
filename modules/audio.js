@@ -6,7 +6,10 @@ export class AudioManager {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         this.audioUnlockAttempts = 0;
         this.MAX_UNLOCK_ATTEMPTS = 3;
-        this.SFX_VOLUME = 0.5;
+        
+        // 모바일 기기 감지 후 볼륨 설정 (모바일에서는 더 낮은 볼륨 사용)
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.SFX_VOLUME = isMobile ? 0.25 : 0.5;
         
         // 페이드 관리용 상태
         this.fadeTimers = {};
