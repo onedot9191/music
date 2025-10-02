@@ -1126,8 +1126,8 @@ input.activity-input {
 .mode-time-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin: 0 0 2.5rem 0;
+  gap: 1rem;
+  margin: 0 0 1.5rem 0;
 }
 
 .mode-section,
@@ -1135,20 +1135,20 @@ input.activity-input {
   background: rgba(255, 255, 255, 0.03);
   border: 3px solid var(--accent);
   border-radius: var(--space-md);
-  padding: 1.2rem 1rem;
+  padding: 0.8rem 1rem;
   box-shadow: 4px 4px 0px var(--secondary);
   display: flex;
   flex-direction: column;
   gap: 0;
   max-width: 100%;
   overflow: hidden;
-  min-height: 140px;
+  min-height: 120px;
 }
 
 .mode-section h2,
 .time-section h2 {
   font-size: 2rem;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.6rem 0;
   text-align: center;
   color: var(--accent);
   font-family: var(--font-display);
@@ -1159,7 +1159,7 @@ input.activity-input {
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  margin: 0.5rem 0 0 0;
+  margin: 0.2rem 0 0 0;
   justify-content: center;
 }
 
@@ -1171,11 +1171,11 @@ input.activity-input {
 }
 
 .time-section #time-setter-wrapper h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
 }
 
 .time-section #time-setter-wrapper .time-setter {
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .time-section #time-setter-wrapper.hidden {
@@ -1197,7 +1197,7 @@ input.activity-input {
 @media (max-width: 768px) {
   .mode-time-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
   }
   
   .mode-section .mode-selector {
@@ -1218,7 +1218,7 @@ input.activity-input {
   
   .mode-section,
   .time-section {
-    padding: 1.2rem 0.8rem;
+    padding: 0.8rem 0.8rem;
   }
   
   .mode-time-grid .time-control-btn {
