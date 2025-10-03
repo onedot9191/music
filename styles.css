@@ -3342,6 +3342,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #joy-achievement-quiz-main .overview-question input,
   #korean-std-quiz-main .overview-question input,
   #music-std-quiz-main .overview-question input,
+  #social-quiz-main .overview-question input,
 #integrated-guide-overview .overview-question input {
   font-size: 1.9rem;
   padding: 0.6rem 1rem;
