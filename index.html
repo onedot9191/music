@@ -1322,6 +1322,64 @@
 
     }
 
+    /* 각록 클래스 */
+
+    .overview-question.achievement-notes {
+
+      background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+
+      border: 2px solid #FF1493;
+
+      border-radius: 1rem;
+
+      padding: var(--space-lg);
+
+      margin-bottom: var(--space-lg);
+
+      color: var(--text-light);
+
+      font-weight: 500;
+
+      box-shadow: 0 0.4rem 1.6rem rgba(255, 20, 147, 0.3);
+
+      position: relative;
+
+      margin-left: 3rem !important; /* 성취기준보다 더 들여쓰기 */
+
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    }
+
+
+
+    .overview-question.achievement-notes::before {
+
+      content: "각록";
+
+      position: absolute;
+
+      top: -0.8rem;
+
+      left: var(--space-md);
+
+      background: #FF1493;
+
+      color: var(--text-light);
+
+      padding: 0.3rem var(--space-sm);
+
+      border-radius: 0.5rem;
+
+      font-size: 1.2rem;
+
+      font-weight: 700;
+
+      letter-spacing: 0.05rem;
+
+      z-index: 10;
+
+    }
+
 
 
     /* 성취기준과 해설을 짝으로 묶는 컨테이너 */
@@ -1362,7 +1420,9 @@
 
     @media (max-width: 768px) {
 
-      .overview-question.achievement-explanation {
+      .overview-question.achievement-explanation,
+
+      .overview-question.achievement-notes {
 
         margin-left: var(--space-md);
 
@@ -1372,7 +1432,9 @@
 
       .overview-question.achievement-standard::before,
 
-      .overview-question.achievement-explanation::before {
+      .overview-question.achievement-explanation::before,
+
+      .overview-question.achievement-notes::before {
 
         font-size: 1rem;
 
@@ -32247,6 +32309,19 @@
 
           <div class="overview-question achievement-standard">[2국03-04] <input data-answer="겪은 일" aria-label="겪은 일" placeholder="정답">을 표현하는 글을 자유롭게 쓰고, 쓴 글을 함께 읽고 <input data-answer="생각" aria-label="생각" placeholder="정답">이나 <input data-answer="느낌" aria-label="느낌" placeholder="정답">을 나눈다.</div>
 
+          <div class="overview-question achievement-notes">
+            • [일기]<br>
+            : <input data-answer="날짜" aria-label="날짜" placeholder="정답">, 
+            <input data-answer="요일" aria-label="요일" placeholder="정답">, 
+            <input data-answer="날씨" aria-label="날씨" placeholder="정답">, 
+            <input data-answer="겪은 일" aria-label="겪은 일" placeholder="정답">, 
+            <input data-answer="생각이나 느낌" aria-label="생각이나 느낌" placeholder="정답"><br><br>
+            • [생활문]<br>
+            : <input data-answer="겪은 일" aria-label="겪은 일" placeholder="정답">, 
+            <input data-answer="겪은 일" aria-label="겪은 일" placeholder="정답">에 대한 
+            <input data-answer="생각이나 느낌" aria-label="생각이나 느낌" placeholder="정답">
+          </div>
+
         </div>
 
 
@@ -32261,6 +32336,20 @@
 
           <div class="overview-question achievement-standard">[4국03-02] <input data-answer="절차" aria-label="절차" placeholder="정답">와 <input data-answer="결과" aria-label="결과" placeholder="정답">가 드러나게 정확한 표현으로 <input data-answer="보고" aria-label="보고" placeholder="정답">하는 글을 쓴다.</div>
 
+          <div class="overview-question achievement-notes">
+            • [보고문]<br>
+            처음: 
+            <input data-answer="관찰 동기" aria-label="관찰 동기" placeholder="정답">, 
+            <input data-answer="관찰 방법" aria-label="관찰 방법" placeholder="정답">, 
+            <input data-answer="관찰 대상" aria-label="관찰 대상" placeholder="정답">, 
+            <input data-answer="관찰 기간" aria-label="관찰 기간" placeholder="정답"><br>
+            가운데: 
+            <input data-answer="관찰 내용과 결과" aria-label="관찰 내용과 결과" placeholder="정답">, 
+            <input data-answer="수집한 자료 내용" aria-label="수집한 자료 내용" placeholder="정답"><br>
+            끝: 
+            <input data-answer="생각이나 느낀점" aria-label="생각이나 느낀점" placeholder="정답">
+          </div>
+
         </div>
 
 
@@ -32268,12 +32357,43 @@
 
           <div class="overview-question achievement-standard">[4국03-03] 대상에 대한 자신의 <input data-answer="의견" aria-label="의견" placeholder="정답">과 그렇게 생각한 <input data-answer="이유" aria-label="이유" placeholder="정답">가 드러나게 글을 쓴다.</div>
 
+          <div class="overview-question achievement-notes">
+            • [건의문]<br>
+            처음: 
+            <input data-answer="첫인사" aria-label="첫인사" placeholder="정답">, 
+            <input data-answer="자기소개" aria-label="자기소개" placeholder="정답"><br>
+            중간: 
+            <input data-answer="문제 상황" aria-label="문제 상황" placeholder="정답">, 
+            <input data-answer="해결 방안" aria-label="해결 방안" placeholder="정답">, 
+            <input data-answer="이익이나 기대효과" aria-label="이익이나 기대효과" placeholder="정답"><br>
+            끝: 
+            <input data-answer="끝인사" aria-label="끝인사" placeholder="정답">, 
+            <input data-answer="날짜" aria-label="날짜" placeholder="정답">, 
+            <input data-answer="서명" aria-label="서명" placeholder="정답"><br><br>
+            • [제안하는 글]<br>
+            : <input data-answer="문제 상황" aria-label="문제 상황" placeholder="정답">, 
+            <input data-answer="제안하는 내용" aria-label="제안하는 내용" placeholder="정답">, 
+            <input data-answer="제안하는 까닭" aria-label="제안하는 까닭" placeholder="정답">
+          </div>
+
         </div>
 
 
         <div class="achievement-pair">
 
           <div class="overview-question achievement-standard">[4국03-04] <input data-answer="목적" aria-label="목적" placeholder="정답">과 <input data-answer="주제" aria-label="주제" placeholder="정답">를 고려하여 독자에게 <input data-answer="마음" aria-label="마음" placeholder="정답">을 전하는 글을 쓴다.</div>
+
+          <div class="overview-question achievement-notes">
+            • [편지]<br>
+            <input data-answer="받는 사람" aria-label="받는 사람" placeholder="정답">, 
+            <input data-answer="쓴 사람" aria-label="쓴 사람" placeholder="정답">,<br>
+            글을 쓰는 
+            <input data-answer="상황" aria-label="상황" placeholder="정답">이나 
+            <input data-answer="전하려는 내용" aria-label="전하려는 내용" placeholder="정답"><br>
+            전하고 싶은 
+            <input data-answer="마음" aria-label="마음" placeholder="정답">과 그때 자신의 
+            <input data-answer="생각이나 느낌" aria-label="생각이나 느낌" placeholder="정답">
+          </div>
 
         </div>
 
@@ -32289,6 +32409,17 @@
 
           <div class="overview-question achievement-standard">[6국03-01] 알맞은 내용을 선정하여 대상의 <input data-answer="특성" aria-label="특성" placeholder="정답">이 나타나게 <input data-answer="설명" aria-label="설명" placeholder="정답">하는 글을 쓴다.</div>
 
+          <div class="overview-question achievement-notes">
+            • [설명문]<br>
+            <input data-answer="머리말" aria-label="머리말" placeholder="정답">: 설명할 
+            <input data-answer="대상" aria-label="대상" placeholder="정답">, 
+            <input data-answer="이유" aria-label="이유" placeholder="정답"><br>
+            <input data-answer="본문" aria-label="본문" placeholder="정답">: 대상의 구체적 설명 → 
+            <input data-answer="설명방법" aria-label="설명방법" placeholder="정답"><br>
+            <input data-answer="맺은말" aria-label="맺은말" placeholder="정답">: 
+            <input data-answer="요약⋅정리" aria-label="요약⋅정리" placeholder="정답">
+          </div>
+
         </div>
 
 
@@ -32296,12 +32427,44 @@
 
           <div class="overview-question achievement-standard">[6국03-02] 적절한 <input data-answer="근거" aria-label="근거" placeholder="정답">를 사용하고 <input data-answer="인용" aria-label="인용" placeholder="정답">의 <input data-answer="출처" aria-label="출처" placeholder="정답">를 밝히며 <input data-answer="주장" aria-label="주장" placeholder="정답">하는 글을 쓴다.</div>
 
+          <div class="overview-question achievement-notes">
+            • [논설문]<br>
+            <input data-answer="서론" aria-label="서론" placeholder="정답">: 
+            <input data-answer="문제 제기" aria-label="문제 제기" placeholder="정답">, 
+            <input data-answer="주장" aria-label="주장" placeholder="정답"><br>
+            <input data-answer="본론" aria-label="본론" placeholder="정답">: 
+            <input data-answer="이유" aria-label="이유" placeholder="정답">, 
+            <input data-answer="근거" aria-label="근거" placeholder="정답"><br>
+            <input data-answer="결론" aria-label="결론" placeholder="정답">: 
+            <input data-answer="내용 요약" aria-label="내용 요약" placeholder="정답">, 
+            <input data-answer="주장 재강조" aria-label="주장 재강조" placeholder="정답">
+          </div>
+
         </div>
 
 
         <div class="achievement-pair">
 
           <div class="overview-question achievement-standard">[6국03-03] <input data-answer="체험한 일" aria-label="체험한 일" placeholder="정답">에 대한 <input data-answer="감상" aria-label="감상" placeholder="정답">을 나타내는 글을 쓴다.</div>
+
+          <div class="overview-question achievement-notes">
+            • [기행문]<br>
+            : <input data-answer="여정" aria-label="여정" placeholder="정답">, 
+            <input data-answer="견문" aria-label="견문" placeholder="정답">, 
+            <input data-answer="감상" aria-label="감상" placeholder="정답"><br><br>
+            • [견학 기록문]<br>
+            처음: 
+            <input data-answer="견학 목적" aria-label="견학 목적" placeholder="정답">, 
+            <input data-answer="견학 장소" aria-label="견학 장소" placeholder="정답">, 
+            <input data-answer="날짜" aria-label="날짜" placeholder="정답"><br>
+            가운데: 
+            <input data-answer="여정" aria-label="여정" placeholder="정답">, 
+            <input data-answer="견문" aria-label="견문" placeholder="정답">, 
+            <input data-answer="감상" aria-label="감상" placeholder="정답"><br>
+            끝: 
+            <input data-answer="견학 내용 정리" aria-label="견학 내용 정리" placeholder="정답">, 
+            <input data-answer="견학 후 생각이나 느낌" aria-label="견학 후 생각이나 느낌" placeholder="정답">
+          </div>
 
         </div>
 
