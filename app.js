@@ -730,7 +730,7 @@
 
             if (!container) return;
 
-            const inputs = container.querySelectorAll('input[data-answer]');
+            const inputs = container.querySelectorAll('.overview-question input[data-answer]');
 
             inputs.forEach(input => {
 
@@ -769,7 +769,7 @@
 
         function initAutoWidthCourse() {
 
-            ['overview-quiz-main', 'social-course-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main', 'western-ethics-quiz-main', 'moral-psychology-quiz-main', 'integrated-guide-overview'].forEach(id => {
+            ['overview-quiz-main', 'social-course-quiz-main', 'social-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main', 'western-ethics-quiz-main', 'moral-psychology-quiz-main', 'integrated-guide-overview'].forEach(id => {
 
                 const container = document.getElementById(id);
 
