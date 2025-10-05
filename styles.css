@@ -1894,6 +1894,7 @@ input.activity-input {
   font-size: 1.1rem; /* 칩 크게 */
   line-height: 1;
   pointer-events: none;
+  white-space: nowrap; /* 줄바꿈 방지 */
 }
 
 @media (max-width: 600px) {
