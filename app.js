@@ -1795,6 +1795,16 @@
             // 전체 데이터의 최대값 계산 (일관된 색상 표시를 위해)
             const globalMax = Math.max(...stats.map(s => s.count), 0);
             console.log('전체 최대값:', globalMax);
+            
+            // 6개월 총 푼 개수 계산
+            const totalCount = stats.reduce((sum, stat) => sum + stat.count, 0);
+            console.log('6개월 총 개수:', totalCount);
+            
+            // 제목 업데이트
+            const titleElement = document.getElementById('six-month-heatmap-title');
+            if (titleElement) {
+                titleElement.innerHTML = `<span style="color: var(--primary);">${totalCount}개</span> 진행 중 (6개월 기준)`;
+            }
 
             // 각 월별로 히트맵 생성
             Object.keys(monthGroups).sort().forEach(monthKey => {
