@@ -30440,6 +30440,8 @@
 
                 <h2 id="heatmap-title"><span class="heatmap-label">오늘 푼 빈칸</span> <span id="heatmap-count">0</span>개</h2>
 
+                <button id="expand-heatmap-btn" class="expand-heatmap-btn" aria-label="6개월 히트맵 보기" title="6개월 히트맵 보기">+</button>
+
 
 
                 <div id="activity-heatmap"></div>
@@ -30478,7 +30480,14 @@
 
 
 
-
+  <!-- 6개월 히트맵 팝업 모달 -->
+  <div id="six-month-heatmap-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="six-month-heatmap-title">
+    <div class="six-month-heatmap-content">
+      <button id="close-six-month-heatmap" class="close-modal-btn" aria-label="닫기">&times;</button>
+      <h2 id="six-month-heatmap-title">6개월 활동 히트맵</h2>
+      <div id="six-month-heatmap-container"></div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
