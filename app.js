@@ -1792,6 +1792,10 @@
             console.log('월별 그룹:', monthGroups);
             console.log('월 개수:', Object.keys(monthGroups).length);
 
+            // 전체 데이터의 최대값 계산 (일관된 색상 표시를 위해)
+            const globalMax = Math.max(...stats.map(s => s.count), 0);
+            console.log('전체 최대값:', globalMax);
+
             // 각 월별로 히트맵 생성
             Object.keys(monthGroups).sort().forEach(monthKey => {
                 const monthData = monthGroups[monthKey];
@@ -1817,15 +1821,12 @@
                     monthGrid.appendChild(empty);
                 }
                 
-                // 최대값 계산 (레벨 결정용)
-                const max = Math.max(...monthData.map(s => s.count), 0);
-                
-                // 각 날짜별 셀 생성
+                // 각 날짜별 셀 생성 (전체 최대값 기준으로 레벨 계산)
                 monthData.forEach(({ date, count }) => {
                     const cell = document.createElement('div');
                     cell.classList.add('heatmap-cell');
-                    if (max > 0 && count > 0) {
-                        const level = Math.min(4, Math.ceil((count / max) * 4));
+                    if (globalMax > 0 && count > 0) {
+                        const level = Math.min(4, Math.ceil((count / globalMax) * 4));
                         cell.classList.add(`level-${level}`);
                     }
                     cell.title = `${date}: ${count}개`;
