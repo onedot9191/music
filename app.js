@@ -7493,7 +7493,7 @@
                     // 캐시된 캔버스 사용으로 즉시 처리
                     const canvas = cachedCanvas;
                     
-                    // 모바일 환경에서는 공유 또는 다운로드 우선
+                    // 모바일 환경에서는 공유 우선
                     if (isMobile()) {
                         const shareSuccess = await shareImage(canvas);
                         setLoadingState(false); // 로딩 상태 해제
@@ -7501,8 +7501,8 @@
                             alert('결과 이미지가 공유되었습니다!');
                             return;
                         }
-                        downloadImage(canvas);
-                        alert('이미지가 다운로드되었습니다. 갤러리에서 확인하세요!');
+                        // 공유 실패 시 사용자에게 알림
+                        alert('공유에 실패했습니다. 다시 시도해주세요.');
                         return;
                     }
 
@@ -7516,8 +7516,7 @@
                             alert('결과 이미지가 복사되었습니다!');
                         }
                     } else {
-                        downloadImage(canvas);
-                        alert('클립보드 복사에 실패했습니다.\n이미지를 다운로드했습니다!');
+                        alert('클립보드 복사에 실패했습니다. 다시 시도해주세요.');
                     }
                     return;
                 }
@@ -7574,7 +7573,7 @@
                 lastCaptureTime = Date.now();
                 lastResultHash = currentResultHash;
 
-                // 모바일 환경에서는 공유 또는 다운로드 우선
+                // 모바일 환경에서는 공유 우선
 
                 if (isMobile()) {
 
@@ -7590,14 +7589,8 @@
 
                     }
 
-                    
-
-                    // 공유 실패시 다운로드
-
-                    downloadImage(canvas);
-
-                    alert('이미지가 다운로드되었습니다. 갤러리에서 확인하세요!');
-
+                    // 공유 실패 시 사용자에게 알림
+                    alert('공유에 실패했습니다. 다시 시도해주세요.');
                     return;
 
                 }
@@ -7624,11 +7617,8 @@
 
                 } else {
 
-                    // 복사 실패시 다운로드로 대체
-
-                    downloadImage(canvas);
-
-                    alert('클립보드 복사에 실패했습니다.\n이미지를 다운로드했습니다!');
+                    // 복사 실패 시 사용자에게 알림
+                    alert('클립보드 복사에 실패했습니다. 다시 시도해주세요.');
 
                 }
 
