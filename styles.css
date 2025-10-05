@@ -5067,7 +5067,7 @@ input.wrong-answer-indicator {
 .six-month-heatmap-content h2 {
   font-family: var(--font-display);
   font-size: 2.8rem;
-  color: var(--primary);
+  color: var(--text-light);
   text-align: center;
   margin-bottom: 2rem;
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
