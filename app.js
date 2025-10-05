@@ -902,7 +902,7 @@
 
         const comboCounter = document.getElementById('combo-counter');
 
-        const showAnswersBtn = document.getElementById('show-answers-btn');
+        // showAnswersBtn 제거됨 - 기능이 결과창의 정답 보기 버튼으로 통합됨
 
         const startGameBtn = document.getElementById('start-game-btn');
 
@@ -3837,9 +3837,7 @@
 
             comboCounter.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
-            showAnswersBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-            showAnswersBtn.disabled = false;
+            // showAnswersBtn 제거됨 - 기능이 결과창의 정답 보기 버튼으로 통합됨
 
             scrapResultImageBtnTop.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
@@ -7151,10 +7149,41 @@
 
             closeModal(progressModal);
 
-            showAnswersBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            // 정답 보기 기능 실행
+            if (
+                SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
+                (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL && gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_MODEL) ||
+                (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL && gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE)
+            ) {
+                revealCompetencyAnswers();
+            } else {
+                const mainId = getMainElementId();
+                document
+                    .querySelectorAll(`#${mainId} input[data-answer]`)
+                    .forEach(input => {
+                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
+                            input.value = input.dataset.answer;
+                            input.classList.remove(
+                                CONSTANTS.CSS_CLASSES.INCORRECT,
+                                CONSTANTS.CSS_CLASSES.RETRYING
+                            );
+                            input.classList.add(
+                                CONSTANTS.CSS_CLASSES.CORRECT,
+                                CONSTANTS.CSS_CLASSES.REVEALED
+                            );
+                        }
+                        input.disabled = true;
+                    });
+            }
 
+            const mainId = getMainElementId();
+            const main = document.getElementById(mainId);
+            if (main) main.dataset.answersRevealed = 'true';
+
+            // showAnswersBtn 제거됨 - 기능이 결과창의 정답 보기 버튼으로 통합됨
+
+            // 다른 버튼들 표시
             scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-
             resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
 
         });
@@ -7704,69 +7733,7 @@
 
 
 
-        showAnswersBtn.addEventListener('click', () => {
-
-            if (
-
-                SPECIAL_SUBJECTS.has(gameState.selectedSubject) ||
-
-                (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL && gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_MODEL) ||
-
-                (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL && gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE)
-
-            ) {
-
-                revealCompetencyAnswers();
-
-            } else {
-
-                const mainId = getMainElementId();
-
-                document
-
-                    .querySelectorAll(`#${mainId} input[data-answer]`)
-
-                    .forEach(input => {
-
-                        if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-
-                            input.value = input.dataset.answer;
-
-                            input.classList.remove(
-
-                                CONSTANTS.CSS_CLASSES.INCORRECT,
-
-                                CONSTANTS.CSS_CLASSES.RETRYING
-
-                            );
-
-                            input.classList.add(
-
-                                CONSTANTS.CSS_CLASSES.CORRECT,
-
-                                CONSTANTS.CSS_CLASSES.REVEALED
-
-                            );
-
-                        }
-
-                        input.disabled = true;
-
-                    });
-
-            }
-
-            const mainId = getMainElementId();
-
-            const main = document.getElementById(mainId);
-
-            if (main) main.dataset.answersRevealed = 'true';
-
-            showAnswersBtn.disabled = true;
-
-            // 결과 창이 즉시 표시되지 않도록 진행 상태를 확인하지 않는다.
-
-        });
+        // showAnswersBtn 이벤트 리스너 제거됨 - 기능이 결과창의 정답 보기 버튼으로 통합됨
 
 
 
