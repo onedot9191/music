@@ -1760,6 +1760,125 @@
 
 
 
+        // --- 6개월 히트맵 팝업 ---
+
+        function render6MonthHeatmap() {
+            const container = document.getElementById('six-month-heatmap-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            // 6개월 (약 180일) 데이터 가져오기
+            const stats = getDailyStats(180);
+            console.log('6개월 데이터:', stats);
+            console.log('데이터 개수:', stats.length);
+            
+            if (stats.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 2rem;">아직 학습 기록이 없습니다.</p>';
+                return;
+            }
+
+            // 월별로 그룹화
+            const monthGroups = {};
+            stats.forEach(({ date, count }) => {
+                const [year, month] = date.split('-');
+                const key = `${year}-${month}`;
+                if (!monthGroups[key]) {
+                    monthGroups[key] = [];
+                }
+                monthGroups[key].push({ date, count });
+            });
+            
+            console.log('월별 그룹:', monthGroups);
+            console.log('월 개수:', Object.keys(monthGroups).length);
+
+            // 각 월별로 히트맵 생성
+            Object.keys(monthGroups).sort().forEach(monthKey => {
+                const monthData = monthGroups[monthKey];
+                const [year, month] = monthKey.split('-');
+                
+                const monthSection = document.createElement('div');
+                monthSection.classList.add('month-heatmap-section');
+                
+                const monthTitle = document.createElement('h3');
+                monthTitle.classList.add('month-title');
+                monthTitle.textContent = `${year}년 ${parseInt(month)}월`;
+                monthSection.appendChild(monthTitle);
+                
+                const monthGrid = document.createElement('div');
+                monthGrid.classList.add('month-heatmap-grid');
+                
+                // 첫 날의 요일에 맞춰 빈 칸 추가
+                const firstDate = new Date(monthData[0].date);
+                let offset = (firstDate.getDay() + 6) % 7; // 월요일 = 0
+                for (let i = 0; i < offset; i++) {
+                    const empty = document.createElement('div');
+                    empty.classList.add('heatmap-cell', 'empty');
+                    monthGrid.appendChild(empty);
+                }
+                
+                // 최대값 계산 (레벨 결정용)
+                const max = Math.max(...monthData.map(s => s.count), 0);
+                
+                // 각 날짜별 셀 생성
+                monthData.forEach(({ date, count }) => {
+                    const cell = document.createElement('div');
+                    cell.classList.add('heatmap-cell');
+                    if (max > 0 && count > 0) {
+                        const level = Math.min(4, Math.ceil((count / max) * 4));
+                        cell.classList.add(`level-${level}`);
+                    }
+                    cell.title = `${date}: ${count}개`;
+                    monthGrid.appendChild(cell);
+                });
+                
+                monthSection.appendChild(monthGrid);
+                container.appendChild(monthSection);
+            });
+        }
+
+        // 6개월 히트맵 모달 열기/닫기
+        const expandHeatmapBtn = document.getElementById('expand-heatmap-btn');
+        const sixMonthModal = document.getElementById('six-month-heatmap-modal');
+        const closeSixMonthBtn = document.getElementById('close-six-month-heatmap');
+
+        console.log('히트맵 버튼 요소:', expandHeatmapBtn);
+        console.log('6개월 모달 요소:', sixMonthModal);
+        console.log('닫기 버튼 요소:', closeSixMonthBtn);
+
+        if (expandHeatmapBtn && sixMonthModal) {
+            expandHeatmapBtn.addEventListener('click', (e) => {
+                console.log('히트맵 확장 버튼 클릭됨');
+                e.preventDefault();
+                e.stopPropagation();
+                render6MonthHeatmap();
+                sixMonthModal.classList.remove('hidden');
+                sixMonthModal.classList.add('active');
+                console.log('모달 표시됨, active 클래스 추가');
+            });
+        } else {
+            console.error('히트맵 버튼 또는 모달을 찾을 수 없습니다');
+        }
+
+        if (closeSixMonthBtn && sixMonthModal) {
+            closeSixMonthBtn.addEventListener('click', () => {
+                console.log('닫기 버튼 클릭됨');
+                sixMonthModal.classList.remove('active');
+                sixMonthModal.classList.add('hidden');
+            });
+            
+            // 모달 배경 클릭 시 닫기
+            sixMonthModal.addEventListener('click', (e) => {
+                if (e.target === sixMonthModal) {
+                    console.log('모달 배경 클릭됨');
+                    sixMonthModal.classList.remove('active');
+                    sixMonthModal.classList.add('hidden');
+                }
+            });
+        }
+
+
+
         // --- D-DAY ---
 
         let ddayRaceResizeObserver = null;
