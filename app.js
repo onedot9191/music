@@ -7459,6 +7459,90 @@
         const CAPTURE_CACHE_DURATION = 5000; // 5초간 캐시 유지 (연장)
 
         const handleScrapResultImage = async () => {
+            const modalContent = document.querySelector('#progress-modal .modal-content');
+            const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
+
+            // Safari 특별 처리: 사용자 제스처 컨텍스트 내에서 clipboard.write() 호출
+            if (isSafari() && !isMobile() && supportsClipboardAPI()) {
+                try {
+                    // 버튼 클릭 즉시 로딩 상태로 변경
+                    setLoadingState(true);
+                    
+                    if (wasHidden) {
+                        openModal(progressModal);
+                        await new Promise(resolve => requestAnimationFrame(resolve));
+                    }
+
+                    // Safari를 위한 즉시 clipboard.write() 호출 (사용자 제스처 컨텍스트 유지)
+                    await navigator.clipboard.write([
+                        new ClipboardItem({
+                            'image/png': (async () => {
+                                // 이 함수는 나중에 실행되므로 html2canvas를 여기서 호출
+                                const canvas = await html2canvas(modalContent, {
+                                    backgroundColor: '#ffffff',
+                                    scale: 1.2,
+                                    logging: false,
+                                    removeContainer: true,
+                                    imageTimeout: 3000,
+                                    useCORS: false,
+                                    allowTaint: true,
+                                    foreignObjectRendering: false,
+                                    ignoreElements: (element) => {
+                                        return element.classList.contains('loading') ||
+                                               element.classList.contains('hidden') ||
+                                               element.style.display === 'none' ||
+                                               element.style.visibility === 'hidden';
+                                    },
+                                    onclone: (clonedDoc) => {
+                                        const clonedContent = clonedDoc.querySelector('.modal-content');
+                                        if (clonedContent) {
+                                            const allElements = clonedContent.querySelectorAll('*');
+                                            allElements.forEach(el => {
+                                                el.style.transition = 'none';
+                                                el.style.animation = 'none';
+                                                el.style.transform = 'none';
+                                                el.style.boxShadow = 'none';
+                                                el.style.filter = 'none';
+                                            });
+                                            clonedContent.style.fontDisplay = 'swap';
+                                        }
+                                    }
+                                });
+                                
+                                const dataUrl = canvas.toDataURL('image/png');
+                                const blob = await (await fetch(dataUrl)).blob();
+                                
+                                // 캔버스 캐싱
+                                cachedCanvas = canvas;
+                                lastCaptureTime = Date.now();
+                                const resultText = modalContent.textContent || '';
+                                lastResultHash = resultText.length + resultText.slice(0, 100);
+                                
+                                return blob;
+                            })()
+                        })
+                    ]);
+
+                    setLoadingState(false);
+                    alert('결과 이미지가 복사되었습니다!');
+                    
+                    if (wasHidden) {
+                        closeModal(progressModal);
+                    }
+                    return;
+
+                } catch (error) {
+                    console.error('Safari clipboard failed:', error);
+                    setLoadingState(false);
+                    alert('클립보드 복사에 실패했습니다. 다시 시도해주세요.');
+                    if (wasHidden) {
+                        closeModal(progressModal);
+                    }
+                    return;
+                }
+            }
+
+            // 일반 처리 (Chrome, Firefox, 기타 브라우저)
             // 버튼 클릭 즉시 로딩 상태로 변경 (동기적 처리)
             setLoadingState(true);
             
@@ -7467,10 +7551,6 @@
             
             // 메인 스레드 블로킹 방지를 위한 마이크로태스크 분할
             await new Promise(resolve => setTimeout(resolve, 0));
-
-            const modalContent = document.querySelector('#progress-modal .modal-content');
-
-            const wasHidden = !progressModal.classList.contains(CONSTANTS.CSS_CLASSES.ACTIVE);
 
             if (wasHidden) {
                 openModal(progressModal);
