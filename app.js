@@ -7310,27 +7310,27 @@
 
                     const dataUrl = canvas.toDataURL('image/png');
 
-                    const blob = await (await fetch(dataUrl)).blob();
-
                     
 
-                    // Safari는 특별한 처리가 필요
+                    // Safari는 특별한 처리가 필요 (macOS Safari는 Promise 기반 blob 필요)
 
                     if (isSafari()) {
 
-                        // Safari에서는 ClipboardItem 생성자가 다를 수 있음
+                        // Safari에서는 ClipboardItem을 Promise를 반환하는 함수로 생성해야 함
 
                         await navigator.clipboard.write([
 
                             new ClipboardItem({
 
-                                'image/png': blob
+                                'image/png': fetch(dataUrl).then(res => res.blob())
 
                             })
 
                         ]);
 
                     } else {
+
+                        const blob = await (await fetch(dataUrl)).blob();
 
                         await navigator.clipboard.write([
 
