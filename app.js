@@ -3049,21 +3049,13 @@
 
                     const factor = hasHangul ? 1.8 : 1.3;
 
-                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 4);
+                    const desiredBase = Math.max(2, Math.ceil(answerLen * factor) + 4);
+                    // 10% 축소 적용
+                    const desired = Math.max(2, Math.floor(desiredBase * 0.8));
 
-                    const inlineWidth = parseInt(input.style.width) || 0;
-
-                    const attrSize = parseInt(input.getAttribute('size')) || 0;
-
-                    const current = Math.max(inlineWidth, attrSize);
-
-                    if (current < desired) {
-
-                        input.setAttribute('size', desired);
-
-                        input.style.width = `${desired}ch`;
-
-                    }
+                    // 항상 최신 계산값으로 갱신하여 축소가 반영되도록 함
+                    input.setAttribute('size', desired);
+                    input.style.width = `${desired}ch`;
 
                 });
 
@@ -3091,20 +3083,21 @@
 
                     const factor = hasHangul ? 1.8 : 1.3;
 
-                    const desired = Math.max(2, Math.ceil(answerLen * factor) + 4);
-
-                    const inlineWidth = parseInt(input.style.width) || 0;
-
-                    const attrSize = parseInt(input.getAttribute('size')) || 0;
-
-                    const current = Math.max(inlineWidth, attrSize);
-
-                    if (current < desired) {
-
+                    const desiredBase = Math.max(2, Math.ceil(answerLen * factor) + 4);
+                    // 영어 기본 토픽의 특수 규칙: 10% 축소 적용 및 항상 갱신
+                    if (mainId === 'english-quiz-main') {
+                        const desired = Math.max(2, Math.floor(desiredBase * 0.8));
                         input.setAttribute('size', desired);
-
                         input.style.width = `${desired}ch`;
-
+                    } else {
+                        const desired = desiredBase;
+                        const inlineWidth = parseInt(input.style.width) || 0;
+                        const attrSize = parseInt(input.getAttribute('size')) || 0;
+                        const current = Math.max(inlineWidth, attrSize);
+                        if (current < desired) {
+                            input.setAttribute('size', desired);
+                            input.style.width = `${desired}ch`;
+                        }
                     }
 
                 });
