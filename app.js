@@ -7783,7 +7783,7 @@
             // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
             setTimeout(() => playSound(clickAudio), 0);
 
-            if (gameState.duration < 3600) { // Max 60 mins
+            if (gameState.duration < 7200) { // Max 120 mins
 
                 gameState.duration += 300;
                 gameState.normalModeDuration = gameState.duration; // Normal 모드 duration도 함께 업데이트
