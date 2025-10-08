@@ -2837,7 +2837,7 @@ input.activity-input {
 #english-quiz-main .assessment-list > li input.fit-answer {
   font-size: 2.8rem !important; /* 최상위 레벨을 가장 크게 */
   font-weight: 900 !important;
-  min-width: 14ch !important;
+  min-width: 11.2ch !important; /* 20% 축소 */
   border-width: 4px !important;
   letter-spacing: 0.1em !important;
   min-height: 3.8rem !important;
@@ -2847,7 +2847,7 @@ input.activity-input {
 #english-quiz-main .sub-list > li input.fit-answer {
   font-size: 2.6rem !important; /* 2번째 레벨 */
   font-weight: 850 !important;
-  min-width: 12ch !important;
+  min-width: 9.6ch !important; /* 20% 축소 */
   letter-spacing: 0.09em !important;
   min-height: 3.6rem !important;
   padding: 1.1rem 1.3rem !important;
@@ -2856,7 +2856,7 @@ input.activity-input {
 #english-quiz-main .sub-list .sub-list > li input.fit-answer {
   font-size: 2.4rem !important; /* 3번째 레벨 */
   font-weight: 800 !important;
-  min-width: 10ch !important;
+  min-width: 8ch !important; /* 20% 축소 */
   letter-spacing: 0.08em !important;
   min-height: 3.4rem !important;
   padding: 1rem 1.2rem !important;
@@ -2865,7 +2865,7 @@ input.activity-input {
 #english-quiz-main .sub-list .sub-list .sub-list > li input.fit-answer {
   font-size: 2.2rem !important; /* 4번째 레벨도 충분히 크게 */
   font-weight: 800 !important;
-  min-width: 8ch !important;
+  min-width: 6.4ch !important; /* 20% 축소 */
   letter-spacing: 0.07em !important;
   min-height: 3.2rem !important;
   padding: 0.9rem 1.1rem !important;
