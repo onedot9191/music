@@ -3516,9 +3516,11 @@
 
             
 
-            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING) {
+            // 맞춤법 퀴즈의 이지선다 모드만 누적 방식 사용, 빈칸 모드는 일반 퀴즈처럼 처리
 
-                // 맞춤법 퀴즈의 경우, 이미 결과창에 누적된 값을 사용
+            if (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && !isSpellingBlankMode()) {
+
+                // 맞춤법 이지선다 퀴즈의 경우, 이미 결과창에 누적된 값을 사용
 
                 const correctCountEl = document.getElementById('correct-count');
 
@@ -3545,7 +3547,7 @@
 
             } else {
 
-                // 일반 퀴즈의 경우 기존 방식 사용
+                // 일반 퀴즈 및 맞춤법 빈칸 모드의 경우 입력 요소 기준으로 계산
 
                 const mainId = getMainElementId();
 
@@ -3792,6 +3794,28 @@
 
             
 
+            // 결과창 카운터 초기화 (맞춤법 퀴즈에서 일반 퀴즈로 전환 시 이전 값 제거)
+
+            const correctCountEl = document.getElementById('correct-count');
+
+            const totalCountEl = document.getElementById('total-count');
+
+            const resultProgress = document.getElementById('result-progress');
+
+            const resultPercentage = document.getElementById('result-percentage');
+
+            
+
+            if (correctCountEl) correctCountEl.textContent = '0';
+
+            if (totalCountEl) totalCountEl.textContent = '0';
+
+            if (resultProgress) resultProgress.style.width = '0%';
+
+            if (resultPercentage) resultPercentage.textContent = '0%';
+
+            
+
             // 맞춤법 상태 초기화
 
             gameState.spelling = {
@@ -3911,6 +3935,32 @@
 
            // 오답 표시 업데이트
            updateWrongAnswerIndicators();
+
+            // 맞춤법 퀴즈가 아닌 경우 결과창 카운터 초기화
+
+            // (맞춤법 퀴즈는 initializeSpellingQuiz에서 초기화함)
+
+            if (gameState.selectedSubject !== CONSTANTS.SUBJECTS.SPELLING) {
+
+                const correctCountEl = document.getElementById('correct-count');
+
+                const totalCountEl = document.getElementById('total-count');
+
+                const resultProgress = document.getElementById('result-progress');
+
+                const resultPercentage = document.getElementById('result-percentage');
+
+                
+
+                if (correctCountEl) correctCountEl.textContent = '0';
+
+                if (totalCountEl) totalCountEl.textContent = '0';
+
+                if (resultProgress) resultProgress.style.width = '0%';
+
+                if (resultPercentage) resultPercentage.textContent = '0%';
+
+            }
 
             if (
 
