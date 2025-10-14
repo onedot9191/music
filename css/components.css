@@ -36,6 +36,56 @@
   transform: none;
 }
 
+/* === 탭별 복사 버튼 === */
+.copy-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+  font-size: 1.1rem;
+  padding: 0.6rem 1rem;
+  font-weight: 800;
+  background: var(--primary);
+  border: 3px solid var(--accent);
+  color: var(--text-light);
+  box-shadow: 4px 4px 0px var(--secondary);
+  vertical-align: middle;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: 6px;
+}
+
+.copy-tab-btn:hover {
+  background: var(--accent);
+  border-color: var(--primary);
+  box-shadow: 3px 3px 0px var(--secondary);
+  transform: translate(1px, 1px);
+  color: var(--text-dark);
+}
+
+.copy-tab-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px var(--secondary);
+}
+
+.copy-tab-btn.loading {
+  background: linear-gradient(90deg, var(--primary) 0%, #ff6b6b 50%, var(--primary) 100%) !important;
+  animation: none;
+}
+
+/* overview-quiz-main과 creative-quiz-main의 h2 안에 버튼이 있을 때 레이아웃 */
+#overview-quiz-main section h2,
+#creative-quiz-main section h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  text-align: left;
+}
+
 /* === 탭 === */
 .tabs {
   display: flex;
