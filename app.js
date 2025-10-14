@@ -7770,6 +7770,177 @@
 
 
 
+        // 각 탭별 복사 기능
+        const handleTabCopy = async (tabId) => {
+            const section = document.getElementById(tabId);
+            if (!section) {
+                alert('탭을 찾을 수 없습니다.');
+                return;
+            }
+
+            const copyButton = section.querySelector('.copy-tab-btn');
+            const originalText = copyButton ? copyButton.textContent : '';
+            
+            if (copyButton) {
+                copyButton.disabled = true;
+                copyButton.classList.add('loading');
+                copyButton.setAttribute('data-original-text', originalText);
+                copyButton.innerHTML = '<span class="btn-text">' + originalText + '</span>';
+            }
+
+            // 섹션이 숨겨져 있는지 확인하고 일시적으로 보이게 하기
+            const wasHidden = !section.classList.contains('active');
+            const originalPosition = section.style.position;
+            const originalLeft = section.style.left;
+            const originalTop = section.style.top;
+            
+            if (wasHidden) {
+                // 일시적으로 섹션을 보이게 함 (화면 밖에 위치시켜 사용자에게는 안 보이게)
+                section.style.position = 'absolute';
+                section.style.left = '-9999px';
+                section.style.top = '0';
+                section.classList.add('active');
+                // 강제로 display block 설정
+                section.style.display = 'block';
+            }
+
+            // DOM 변경사항이 완전히 반영될 때까지 대기
+            await new Promise(resolve => requestAnimationFrame(resolve));
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            try {
+                const canvas = await html2canvas(section, {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // 해상도 향상
+                    logging: false,
+                    removeContainer: true,
+                    imageTimeout: 3000,
+                    useCORS: false, // CORS 체크 비활성화
+                    allowTaint: true, // 외부 리소스 허용
+                    foreignObjectRendering: false, // SVG 렌더링 비활성화
+                    ignoreElements: (element) => {
+                        return element.classList.contains('loading') ||
+                               element.classList.contains('hidden') ||
+                               element.classList.contains('copy-tab-btn') ||
+                               element.style.display === 'none' ||
+                               element.style.visibility === 'hidden';
+                    },
+                    onclone: (clonedDoc) => {
+                        const clonedSection = clonedDoc.getElementById(tabId);
+                        if (clonedSection) {
+                            // 복사 버튼 숨기기
+                            const clonedBtn = clonedSection.querySelector('.copy-tab-btn');
+                            if (clonedBtn) {
+                                clonedBtn.style.display = 'none';
+                            }
+                            
+                            // 모든 요소의 애니메이션 제거
+                            const allElements = clonedSection.querySelectorAll('*');
+                            allElements.forEach(el => {
+                                el.style.transition = 'none';
+                                el.style.animation = 'none';
+                                el.style.boxShadow = 'none';
+                                el.style.filter = 'none';
+                            });
+                            
+                            // input 요소를 텍스트로 변환하여 렌더링 개선
+                            const inputs = clonedSection.querySelectorAll('input[data-answer]');
+                            inputs.forEach((input, index) => {
+                                const originalInput = section.querySelectorAll('input[data-answer]')[index];
+                                if (!originalInput) return;
+                                
+                                // input을 div로 교체
+                                const replacement = clonedDoc.createElement('div');
+                                
+                                // 원본 input의 스타일 복사
+                                const computedStyle = window.getComputedStyle(originalInput);
+                                replacement.style.cssText = input.style.cssText;
+                                replacement.style.display = 'inline-block';
+                                replacement.style.border = computedStyle.border;
+                                replacement.style.borderRadius = computedStyle.borderRadius;
+                                replacement.style.padding = computedStyle.padding;
+                                replacement.style.fontSize = computedStyle.fontSize;
+                                replacement.style.fontFamily = computedStyle.fontFamily;
+                                replacement.style.fontWeight = computedStyle.fontWeight;
+                                replacement.style.color = computedStyle.color;
+                                replacement.style.backgroundColor = computedStyle.backgroundColor;
+                                replacement.style.textAlign = 'center';
+                                replacement.style.verticalAlign = 'middle';
+                                replacement.style.lineHeight = computedStyle.lineHeight;
+                                replacement.style.minWidth = computedStyle.width;
+                                replacement.style.minHeight = computedStyle.height;
+                                replacement.style.boxSizing = 'border-box';
+                                
+                                // 텍스트 내용 설정 (value 또는 placeholder)
+                                const text = originalInput.value || originalInput.placeholder || '';
+                                replacement.textContent = text;
+                                
+                                // class 복사 (정답/오답 스타일 유지)
+                                replacement.className = input.className;
+                                
+                                // input을 replacement로 교체
+                                if (input.parentNode) {
+                                    input.parentNode.replaceChild(replacement, input);
+                                }
+                            });
+                            
+                            clonedSection.style.fontDisplay = 'swap';
+                        }
+                    }
+                });
+
+                // 모바일 환경에서는 공유 우선
+                if (isMobile()) {
+                    const shareSuccess = await shareImage(canvas);
+                    if (shareSuccess) {
+                        alert('탭 내용이 공유되었습니다!');
+                    } else {
+                        alert('공유에 실패했습니다. 다시 시도해주세요.');
+                    }
+                } else {
+                    // 데스크톱 환경에서는 클립보드 복사
+                    const copyResult = await copyImageToClipboard(canvas);
+                    if (copyResult.success) {
+                        if (copyResult.method === 'text-dataurl' || copyResult.method === 'legacy-text') {
+                            alert('탭 이미지 데이터가 복사되었습니다!\n(일부 앱에서는 이미지로 붙여넣기가 안될 수 있습니다)');
+                        } else {
+                            alert('탭 내용이 복사되었습니다!');
+                        }
+                    } else {
+                        alert('클립보드 복사에 실패했습니다. 다시 시도해주세요.');
+                    }
+                }
+            } catch (error) {
+                console.error('Tab copy failed:', error);
+                alert('이미지 캡처에 실패했습니다. 다시 시도해주세요.');
+            } finally {
+                // 섹션 상태 복원
+                if (wasHidden) {
+                    section.classList.remove('active');
+                    section.style.display = '';
+                    section.style.position = originalPosition || '';
+                    section.style.left = originalLeft || '';
+                    section.style.top = originalTop || '';
+                }
+                
+                // 버튼 상태 복원
+                if (copyButton) {
+                    copyButton.disabled = false;
+                    copyButton.classList.remove('loading');
+                    // 원본 텍스트로 복원
+                    const savedText = copyButton.getAttribute('data-original-text');
+                    if (savedText) {
+                        copyButton.textContent = savedText;
+                        copyButton.removeAttribute('data-original-text');
+                    } else {
+                        copyButton.textContent = originalText;
+                    }
+                }
+            }
+        };
+
+
+
         // 버튼 텍스트를 환경에 맞게 업데이트
 
         const updateCopyButtonText = () => {
@@ -7792,6 +7963,15 @@
 
             }
 
+            // 탭 복사 버튼 텍스트도 업데이트
+            const tabCopyButtons = document.querySelectorAll('.copy-tab-btn');
+            const tabButtonText = isMobileDevice ? '📋 섹션 공유' : '📋 섹션 복사';
+            tabCopyButtons.forEach(btn => {
+                if (!btn.classList.contains('loading')) {
+                    btn.textContent = tabButtonText;
+                }
+            });
+
         };
 
 
@@ -7807,6 +7987,18 @@
             btn.addEventListener('click', handleScrapResultImage)
 
         );
+
+
+
+        // 탭별 복사 버튼 이벤트 리스너 등록
+        document.querySelectorAll('.copy-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                if (tabId) {
+                    handleTabCopy(tabId);
+                }
+            });
+        });
 
 
 
