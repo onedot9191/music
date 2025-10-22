@@ -2893,7 +2893,7 @@
                     const isPECourse = input.closest('#pe-course-quiz-main') !== null;
                     const isGeometryCourse = input.closest('#geometry-quiz-main') !== null;
 
-                    const factor = hasHangul ? (isPECourse ? 1.5 : (isGeometryCourse ? 1.4 : 1.8)) : 1.3;
+                    const factor = hasHangul ? (isPECourse ? 1.5 : (isGeometryCourse ? 1.4 : 1.6)) : 1.3;
 
                     const desired = Math.max(2, Math.ceil(answerLen * factor) + 4);
 
