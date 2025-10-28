@@ -9,7 +9,7 @@ export class AudioManager {
         
         // 모바일 기기 감지 후 볼륨 설정 (모바일에서는 더 낮은 볼륨 사용)
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        this.SFX_VOLUME = isMobile ? 0.25 : 0.5;
+        this.SFX_VOLUME = isMobile ? 0.15 : 0.3;
         
         // 페이드 관리용 상태
         this.fadeTimers = {};
@@ -66,14 +66,14 @@ export class AudioManager {
     // 모든 오디오 요소 초기화
     initializeAudioElements() {
         this.audioElements = {
-            success: this.createAudioElement('./success.mp3', this.SFX_VOLUME * 0.6),
+            success: this.createAudioElement('./success.mp3', this.SFX_VOLUME * 0.5),
             timeup: this.createAudioElement('./timeup.mp3'),
             start: this.createAudioElement('./start.mp3'),
             fail: this.createAudioElement('./fail.mp3'),
             clear: this.createAudioElement('./clear.mp3'),
             random: this.createAudioElement('./random.mp3'),
             click: this.createAudioElement('./click.mp3'),
-            slotWin: this.createAudioElement('./hit.mp3', Math.min(1, this.SFX_VOLUME * 2))
+            slotWin: this.createAudioElement('./hit.mp3', Math.min(1, this.SFX_VOLUME * 1.4))
         };
     }
 
@@ -641,9 +641,9 @@ export class AudioManager {
             audio.volume = this.SFX_VOLUME;
         });
         // success 오디오는 특별히 더 낮은 볼륨
-        this.audioElements.success.volume = this.SFX_VOLUME * 0.6;
+        this.audioElements.success.volume = this.SFX_VOLUME * 0.5;
         // slotWin 오디오는 특별히 더 높은 볼륨
-        this.audioElements.slotWin.volume = Math.min(1, this.SFX_VOLUME * 2);
+        this.audioElements.slotWin.volume = Math.min(1, this.SFX_VOLUME * 1.4);
 
         // 기준 볼륨 갱신 (페이드 복구 시 참조)
         Object.entries(this.audioElements).forEach(([key, audio]) => {
