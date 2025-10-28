@@ -1393,7 +1393,7 @@
 
         // --- 오디오 ---
 
-        const SFX_VOLUME = 0.5;
+        const SFX_VOLUME = 0.3;
 
 
 
@@ -1435,7 +1435,7 @@
 
 
 
-        const successAudio = createAudioElement('./success.mp3', SFX_VOLUME * 0.6);
+        const successAudio = createAudioElement('./success.mp3', SFX_VOLUME * 0.5);
 
         const timeupAudio = createAudioElement('./timeup.mp3');
 
@@ -1449,9 +1449,9 @@
 
         const clickAudio = createAudioElement('./click.mp3');
 
-        const slotWinAudio = createAudioElement('./hit.mp3', Math.min(1, SFX_VOLUME * 2));
+        const slotWinAudio = createAudioElement('./hit.mp3', Math.min(1, SFX_VOLUME * 1.4));
 
-        const specialBlankAudio = createAudioElement('./great.mp3', Math.min(1, SFX_VOLUME * 1.5));
+        const specialBlankAudio = createAudioElement('./great.mp3', Math.min(1, SFX_VOLUME * 1.2));
 
         
 
