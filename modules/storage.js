@@ -80,7 +80,7 @@ export class StorageManager {
     // 사용자 설정 가져오기
     getUserPreferences() {
         return this.getItem(this.storageKeys.USER_PREFERENCES, {
-            volume: 0.5,
+            volume: 0.3,
             theme: 'dark',
             language: 'ko',
             autoSave: true,
