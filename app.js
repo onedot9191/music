@@ -1,421 +1,22 @@
     // 모듈 임포트
     import { StorageManager } from './modules/storage.js';
+    import { CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES } from './modules/constants.js';
+    import { AudioManager } from './modules/audio.js';
 
     document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        // --- 오디오 컨텍스트 자동 재생 정책 ---
-
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        
-
-        // 오디오 잠금 해제 시도 횟수 추적
-
-        let audioUnlockAttempts = 0;
-
-        const MAX_UNLOCK_ATTEMPTS = 3;
-
-
-
-        function unlockAudio() {
-
-            audioUnlockAttempts++;
-
-            console.log(`Audio unlock attempt ${audioUnlockAttempts}`);
-
-            
-
-            if (audioContext.state === 'suspended') {
-
-                audioContext.resume().then(() => {
-
-                    console.log('AudioContext successfully resumed');
-
-                }).catch(err => {
-
-                    console.error('Failed to resume AudioContext:', err);
-
-                });
-
-            }
-
-            
-
-            // 최대 시도 횟수에 도달하면 이벤트 리스너 제거
-
-            if (audioUnlockAttempts >= MAX_UNLOCK_ATTEMPTS) {
-
-                document.body.removeEventListener('click', unlockAudio);
-
-                document.body.removeEventListener('touchend', unlockAudio);
-
-                document.body.removeEventListener('keydown', unlockAudio);
-
-                console.log('Audio unlock event listeners removed after max attempts');
-
-            }
-
-        }
-
-        
-
-        // 여러 사용자 상호작용 이벤트에 오디오 잠금 해제 바인딩
-
-        document.body.addEventListener('click', unlockAudio);
-
-        document.body.addEventListener('touchend', unlockAudio);
-
-        document.body.addEventListener('keydown', unlockAudio);
+        // --- 오디오 관리자 ---
+        // AudioManager는 오디오 컨텍스트와 오디오 잠금 해제를 자동으로 처리합니다
+        const audioManager = new AudioManager();
 
 
 
 
 
         // --- 상수 ---
-
-        const CONSTANTS = {
-
-            SUBJECTS: {
-
-                MUSIC: 'music',
-
-                ART: 'art',
-
-                KOREAN: 'korean',
-
-                KOREAN_MODEL: 'korean-model',
-
-                LIFE: 'life',
-
-                WISE: 'wise',
-
-                JOY: 'joy',
-
-                PE: 'pe',
-
-                PE_LITE: 'pe-lite',
-
-                PE_MODEL: 'pe-model',
-
-                INTEGRATED_MODEL: 'integrated-model',
-
-                ART_MODEL: 'art-model',
-
-                ART_BASIC: 'art-basic',
-
-                ENGLISH: 'english',
-
-                EASTERN_ETHICS: 'eastern-ethics',
-
-                WESTERN_ETHICS: 'western-ethics',
-
-                MORAL_PSYCHOLOGY: 'moral-psychology',
-
-                ETHICS: 'ethics',
-
-                ETHICS_LITE: 'ethics-lite',
-
-                PRACTICAL: 'practical',
-
-                PRACTICAL_LITE: 'practical-lite',
-
-                MATH_MODEL: 'math-model',
-
-                SOCIAL: 'social',
-
-                SOCIAL_34: 'social-34',
-
-                SOCIAL_56: 'social-56',
-
-                SCIENCE: 'science',
-
-                SCIENCE_CURRICULUM: 'science-curriculum',
-
-                SCIENCE_STD: 'science-std',
-
-                ENGLISH_STD: 'english-std',
-
-                PRACTICAL_STD: 'practical-std',
-
-                MATH_OPERATION: 'math-operation',
-                CHANGE_RELATION: 'change-relation',
-                GEOMETRY_MEASURE: 'geometry-measure',
-                DATA_PROBABILITY: 'data-probability',
-                KOREAN_STD: 'korean-std',
-                MUSIC_STD: 'music-std',
-                ART_STD: 'art-std',
-                LIFE_ACHIEVEMENT: 'life-achievement',
-                WISE_ACHIEVEMENT: 'wise-achievement',
-                JOY_ACHIEVEMENT: 'joy-achievement',
-
-
-
-                CREATIVE: 'creative',
-
-                OVERVIEW: 'overview',
-
-                KOREAN_COURSE: 'korean-course',
-
-                ENGLISH_COURSE: 'english-course',
-
-                INTEGRATED_COURSE: 'integrated-course',
-
-                SOCIAL_COURSE: 'social-course',
-
-                MATH_COURSE: 'math-course',
-
-                SCIENCE_COURSE: 'science-course',
-
-                PRACTICAL_COURSE: 'practical-course',
-
-                MUSIC_COURSE: 'music-course',
-
-                ART_COURSE: 'art-course',
-
-                MORAL_COURSE: 'moral-course',
-
-                MORAL_PRINCIPLES: 'moral-principles',
-
-                PE_BACK: 'pe-back',
-
-                PE_COURSE: 'pe-course',
-
-                MUSIC_ELEMENTS: 'music-elements',
-
-                PHYSICAL_ACTIVITY: 'physical-activity',
-
-                SPELLING: 'spelling',
-
-                GEOMETRY: 'geometry',
-
-                COMPETENCY: 'competency',
-
-                AREA: 'area',
-
-                INTEGRATED_GUIDE: 'integrated-guide',
-
-                RANDOM: 'random'
-
-            },
-
-            TOPICS: {
-
-                CURRICULUM: 'curriculum',
-
-                COMPETENCY: 'competency',
-
-                AREA: 'area',
-
-                MODEL: 'model',
-
-                COURSE: 'course',
-
-                BASIC: 'basic',
-
-                ACHIEVEMENT: 'achievement',
-
-                MORAL: 'moral'
-
-            },
-
-            MODES: {
-
-                NORMAL: 'normal',
-
-                HARD_CORE: 'hard-core'
-
-            },
-
-            CSS_CLASSES: {
-
-                HIDDEN: 'hidden',
-
-                CORRECT: 'correct',
-
-                INCORRECT: 'incorrect',
-
-                RETRYING: 'retrying',
-
-                REVEALED: 'revealed',
-
-                SELECTED: 'selected',
-
-                IS_SELECTING: 'is-selecting',
-
-                ACTIVE: 'active',
-
-                COMBO_POP: 'combo-pop',
-
-                SHAKE: 'shake',
-
-                CORRECT_PULSE: 'correct-pulse'
-
-            },
-
-            DEFAULT_DURATION: 2400,
-
-            HARD_CORE_DURATION: 60,
-
-            HARD_CORE_TIME_BONUS: 5,
-
-            RANDOM_ANIMATION_DURATION: 2000,
-
-            RANDOM_ANIMATION_INTERVAL: 100,
-
-            STAGE_CLEAR_DURATION: 300,
-
-            NEXT_STAGE_DELAY: 550
-
-        };
-
-
-
-        const SUBJECT_NAMES = {
-
-            [CONSTANTS.SUBJECTS.MUSIC]: '음악',
-
-            [CONSTANTS.SUBJECTS.ART]: '미술',
-
-            [CONSTANTS.SUBJECTS.KOREAN]: '국어',
-
-            [CONSTANTS.SUBJECTS.KOREAN_MODEL]: '국어',
-
-            [CONSTANTS.SUBJECTS.LIFE]: '바른 생활',
-
-            [CONSTANTS.SUBJECTS.WISE]: '슬기로운 생활',
-
-            [CONSTANTS.SUBJECTS.JOY]: '즐거운 생활',
-
-            [CONSTANTS.SUBJECTS.PE]: '체육',
-
-            [CONSTANTS.SUBJECTS.PE_LITE]: '체육(lite)',
-
-            [CONSTANTS.SUBJECTS.PE_MODEL]: '체육',
-
-            [CONSTANTS.SUBJECTS.INTEGRATED_MODEL]: '통합',
-
-            [CONSTANTS.SUBJECTS.ART_MODEL]: '미술',
-
-            [CONSTANTS.SUBJECTS.ART_BASIC]: '미술',
-
-            [CONSTANTS.SUBJECTS.ENGLISH]: '영어',
-
-            [CONSTANTS.SUBJECTS.EASTERN_ETHICS]: '동양윤리',
-
-            [CONSTANTS.SUBJECTS.WESTERN_ETHICS]: '서양윤리',
-
-            [CONSTANTS.SUBJECTS.MORAL_PSYCHOLOGY]: '도덕 심리학',
-
-            [CONSTANTS.SUBJECTS.ETHICS]: '도덕',
-
-            [CONSTANTS.SUBJECTS.ETHICS_LITE]: '도덕(lite)',
-
-            [CONSTANTS.SUBJECTS.PRACTICAL]: '실과',
-
-            [CONSTANTS.SUBJECTS.PRACTICAL_LITE]: '실과(lite)',
-
-            [CONSTANTS.SUBJECTS.MATH_MODEL]: '수학',
-
-            [CONSTANTS.SUBJECTS.SOCIAL]: '사회',
-
-            [CONSTANTS.SUBJECTS.SOCIAL_34]: '사회34',
-
-            [CONSTANTS.SUBJECTS.SOCIAL_56]: '사회56',
-
-            [CONSTANTS.SUBJECTS.SCIENCE]: '과학',
-
-            [CONSTANTS.SUBJECTS.SCIENCE_CURRICULUM]: '과학',
-
-            [CONSTANTS.SUBJECTS.SCIENCE_STD]: '과학',
-
-            [CONSTANTS.SUBJECTS.ENGLISH_STD]: '영어',
-
-            [CONSTANTS.SUBJECTS.PRACTICAL_STD]: '실과',
-
-            [CONSTANTS.SUBJECTS.ART_STD]: '미술',
-
-            [CONSTANTS.SUBJECTS.MATH_OPERATION]: '수와 연산',
-
-            [CONSTANTS.SUBJECTS.CHANGE_RELATION]: '변화와 관계',
-
-            [CONSTANTS.SUBJECTS.GEOMETRY_MEASURE]: '도형과 측정',
-            [CONSTANTS.SUBJECTS.DATA_PROBABILITY]: '자료와 가능성',
-            [CONSTANTS.SUBJECTS.KOREAN_STD]: '국어',
-            [CONSTANTS.SUBJECTS.MUSIC_STD]: '음악',
-            [CONSTANTS.SUBJECTS.ART_STD]: '미술',
-            [CONSTANTS.SUBJECTS.LIFE_ACHIEVEMENT]: '바른 생활',
-            [CONSTANTS.SUBJECTS.WISE_ACHIEVEMENT]: '슬기로운 생활',
-            [CONSTANTS.SUBJECTS.JOY_ACHIEVEMENT]: '즐거운 생활',
-
-            [CONSTANTS.SUBJECTS.GEOMETRY]: '도형',
-
-            [CONSTANTS.SUBJECTS.CREATIVE]: '창체',
-
-            [CONSTANTS.SUBJECTS.OVERVIEW]: '총론',
-
-            [CONSTANTS.SUBJECTS.KOREAN_COURSE]: '국어',
-
-            [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
-
-            [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
-
-            [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
-
-            [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
-
-                [CONSTANTS.SUBJECTS.SCIENCE_COURSE]: '과학',
-
-                [CONSTANTS.SUBJECTS.PRACTICAL_COURSE]: '실과',
-
-                [CONSTANTS.SUBJECTS.MUSIC_COURSE]: '음악',
-
-            [CONSTANTS.SUBJECTS.ART_COURSE]: '미술',
-
-            [CONSTANTS.SUBJECTS.MORAL_COURSE]: '도덕',
-
-            [CONSTANTS.SUBJECTS.MORAL_PRINCIPLES]: '원리와 방법',
-
-            [CONSTANTS.SUBJECTS.PE_BACK]: '체육(뒷교)',
-
-            [CONSTANTS.SUBJECTS.PE_COURSE]: '체육',
-
-            [CONSTANTS.SUBJECTS.MUSIC_ELEMENTS]: '음악요소',
-
-            [CONSTANTS.SUBJECTS.PHYSICAL_ACTIVITY]: '신체활동 예시',
-
-            [CONSTANTS.SUBJECTS.SPELLING]: '맞춤법',
-
-            [CONSTANTS.SUBJECTS.COMPETENCY]: '역량',
-
-            [CONSTANTS.SUBJECTS.AREA]: '영역',
-
-            [CONSTANTS.SUBJECTS.INTEGRATED_GUIDE]: '통합 지도서'
-
-        };
-
-
-
-        const TOPIC_NAMES = {
-
-            [CONSTANTS.TOPICS.CURRICULUM]: '내체표',
-
-            [CONSTANTS.TOPICS.COMPETENCY]: '역량',
-
-            [CONSTANTS.TOPICS.AREA]: '영역',
-
-            [CONSTANTS.TOPICS.MODEL]: '모형',
-
-            [CONSTANTS.TOPICS.COURSE]: '교육과정',
-
-            [CONSTANTS.TOPICS.BASIC]: '기본이론',
-
-            [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준',
-
-            [CONSTANTS.TOPICS.MORAL]: '기타'
-
-        };
+        // CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES는 modules/constants.js에서 import됨
 
 
 
@@ -1419,13 +1020,7 @@
 
             
 
-            // 오디오 로딩 완료 로그
-
-            audio.addEventListener('canplaythrough', () => {
-
-                console.log(`Audio file loaded: ${src}`);
-
-            });
+            // 오디오 로딩 완료
 
             
 
@@ -1770,8 +1365,6 @@
             
             // 6개월 (약 180일) 데이터 가져오기
             const stats = getDailyStats(180);
-            console.log('6개월 데이터:', stats);
-            console.log('데이터 개수:', stats.length);
             
             if (stats.length === 0) {
                 container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 2rem;">아직 학습 기록이 없습니다.</p>';
@@ -1788,17 +1381,12 @@
                 }
                 monthGroups[key].push({ date, count });
             });
-            
-            console.log('월별 그룹:', monthGroups);
-            console.log('월 개수:', Object.keys(monthGroups).length);
 
             // 전체 데이터의 최대값 계산 (일관된 색상 표시를 위해)
             const globalMax = Math.max(...stats.map(s => s.count), 0);
-            console.log('전체 최대값:', globalMax);
             
             // 6개월 총 푼 개수 계산
             const totalCount = stats.reduce((sum, stat) => sum + stat.count, 0);
-            console.log('6개월 총 개수:', totalCount);
             
             // 제목 업데이트
             const titleElement = document.getElementById('six-month-heatmap-title');
@@ -1853,27 +1441,18 @@
         const sixMonthModal = document.getElementById('six-month-heatmap-modal');
         const closeSixMonthBtn = document.getElementById('close-six-month-heatmap');
 
-        console.log('히트맵 버튼 요소:', expandHeatmapBtn);
-        console.log('6개월 모달 요소:', sixMonthModal);
-        console.log('닫기 버튼 요소:', closeSixMonthBtn);
-
         if (expandHeatmapBtn && sixMonthModal) {
             expandHeatmapBtn.addEventListener('click', (e) => {
-                console.log('히트맵 확장 버튼 클릭됨');
                 e.preventDefault();
                 e.stopPropagation();
                 render6MonthHeatmap();
                 sixMonthModal.classList.remove('hidden');
                 sixMonthModal.classList.add('active');
-                console.log('모달 표시됨, active 클래스 추가');
             });
-        } else {
-            console.error('히트맵 버튼 또는 모달을 찾을 수 없습니다');
         }
 
         if (closeSixMonthBtn && sixMonthModal) {
             closeSixMonthBtn.addEventListener('click', () => {
-                console.log('닫기 버튼 클릭됨');
                 sixMonthModal.classList.remove('active');
                 sixMonthModal.classList.add('hidden');
             });
@@ -1881,7 +1460,6 @@
             // 모달 배경 클릭 시 닫기
             sixMonthModal.addEventListener('click', (e) => {
                 if (e.target === sixMonthModal) {
-                    console.log('모달 배경 클릭됨');
                     sixMonthModal.classList.remove('active');
                     sixMonthModal.classList.add('hidden');
                 }
@@ -2317,8 +1895,6 @@
                     .resume()
 
                     .then(() => {
-
-                        console.log('AudioContext resumed successfully');
 
                         play();
 
@@ -4832,8 +4408,6 @@
 
             } else {
 
-                console.log('첫 번째 오답 발생!', input);
-
                 input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
 
             }
@@ -5501,8 +5075,6 @@
 
 
                 } else {
-
-                    console.log('로컬 함수: 첫 번째 오답 발생!', input);
 
                     input.classList.add(CONSTANTS.CSS_CLASSES.RETRYING);
 
@@ -7180,7 +6752,6 @@
                 storageManager.clearWrongAnswers();
                 storageManager.clearCorrectAnswers();
                 alert('오답 기록이 초기화되었습니다.');
-                console.log('오답 기록 초기화 완료');
             }
         });
 
@@ -7329,7 +6900,7 @@
 
                 } catch (err) {
 
-                    console.log('Share API failed:', err);
+                    // Share API failed, fallback to other methods
 
                 }
 
@@ -7387,7 +6958,7 @@
 
                 } catch (err) {
 
-                    console.log('Clipboard API failed:', err);
+                    // Clipboard API failed, fallback to other methods
 
                 }
 
@@ -7409,7 +6980,7 @@
 
                 } catch (err) {
 
-                    console.log('Text clipboard failed:', err);
+                    // Text clipboard failed, fallback to other methods
 
                 }
 
@@ -7453,7 +7024,7 @@
 
             } catch (err) {
 
-                console.log('Legacy copy failed:', err);
+                // Legacy copy failed
 
             }
 
