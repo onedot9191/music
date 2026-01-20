@@ -1888,9 +1888,9 @@
 
             // AudioContext 상태 확인 및 복구
 
-            if (audioContext.state === 'suspended') {
+            if (audioManager && audioManager.audioContext && audioManager.audioContext.state === 'suspended') {
 
-                audioContext
+                audioManager.audioContext
 
                     .resume()
 
@@ -6734,7 +6734,21 @@
 
         
 
-        startGameBtn.addEventListener('click', startGame);
+        if (startGameBtn) {
+            startGameBtn.addEventListener('click', (e) => {
+                console.log('시작 버튼 클릭됨!', e);
+                e.preventDefault();
+                e.stopPropagation();
+                try {
+                    startGame();
+                } catch (error) {
+                    console.error('startGame 함수 실행 중 에러:', error);
+                }
+            });
+            console.log('시작 버튼 이벤트 리스너 등록 완료');
+        } else {
+            console.error('시작 버튼을 찾을 수 없습니다. ID: start-game-btn');
+        }
 
         resetBtn.addEventListener('click', () => resetGame(true));
 
