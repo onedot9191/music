@@ -161,7 +161,7 @@ export function updateSubjectButtonStates() {
 export function renderHeatmapStats(stats) {
     renderHeatmap(stats);
     updateHeatmapTitle(stats);
-    renderDDay();
+    // renderDDay는 app.js에서 직접 호출됨 (복잡한 DOM 구조 생성 필요)
 }
 
 /**
@@ -264,7 +264,7 @@ export function renderDDay(playSound = null) {
     
     // 텍스트 D-Day 표시
     const text = calculateDDayText(target);
-    el.textContent = '';
+    el.textContent = text;
     
     // 경주 트랙 업데이트 (D-100 기준 진행도)
     if (race) {

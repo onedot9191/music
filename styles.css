@@ -1813,20 +1813,28 @@ input.activity-input {
 /* D-Day Race (D-100 트랙) */
 #dday-race {
   position: relative;
-  margin-top: 0.8rem;
-  height: 64px; /* 전체 크기 상향 */
+  margin-top: 1.2rem; /* 간격 증가 */
+  margin-bottom: 0.4rem; /* 하단 여백 추가 */
+  height: 90px; /* 세로 길이 증가로 가독성 향상 */
 }
 #dday-race::before { content: none; }
 .dday-track-labels { display: none; }
 .dday-runner {
   position: absolute;
   left: 0%;
-  top: 50%;
+  top: calc(50% - 18px); /* 위로 더 올려서 라벨과 충분한 간격 확보 */
   transform: translate(-50%, -50%);
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
 }
-.dday-runner canvas { width: 48px; height: 48px; image-rendering: pixelated; image-rendering: crisp-edges; }
+.dday-runner canvas { width: 32px; height: 32px; image-rendering: pixelated; image-rendering: crisp-edges; }
+
+/* 버섯 떠다니는 애니메이션 (더 작고 하찮게) */
+@keyframes dday-runner-float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+  50% { transform: translate(-50%, -50%) translateY(-2px); }
+}
 
 /* finish flag */
 .dday-finish-flag {
@@ -1840,8 +1848,28 @@ input.activity-input {
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
-  height: 14px;
+  height: 18px; /* 통일된 높이 */
   background: rgba(255,255,255,0.25);
+}
+/* D-365 위치 세로선 - 왼쪽 끝, 붉게 표기 */
+.dday-tick.dday-tick-start {
+  background: var(--primary);
+  box-shadow: 0 0 4px var(--primary);
+  width: 2px;
+  height: 18px; /* 다른 세로선과 동일한 높이 */
+}
+/* D-100 위치 세로선 */
+.dday-tick.d100-tick {
+  background: rgba(255,255,255,0.25);
+  width: 2px;
+  height: 18px; /* 다른 세로선과 동일한 높이 */
+}
+/* D-Day 위치 세로선 - 붉게 표기 */
+.dday-tick.dday-tick-end {
+  background: var(--primary);
+  box-shadow: 0 0 4px var(--primary);
+  width: 2px;
+  height: 18px; /* 다른 세로선과 동일한 높이 */
 }
 
 /* 중앙 주로 선 */
@@ -1871,34 +1899,115 @@ input.activity-input {
 /* 좌/우 라벨 */
 .dday-label {
   position: absolute;
-  top: calc(50% + 8px);
-  font-size: 0.95rem;
-  color: var(--text-dark);
+  top: calc(50% + 20px); /* 캐릭터와 충분한 간격 확보 */
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-light);
   white-space: nowrap; /* 줄바꿈 방지 */
+  text-shadow: 1px 1px 0px var(--bg-dark);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: var(--font-display);
+  z-index: 3;
 }
-.dday-label.left { left: 0; }
-.dday-label.right { right: 0; }
+.dday-label.left { 
+  left: 0; 
+  transform: translateX(0); /* 왼쪽 정렬 유지, JavaScript에서 중앙 계산 */
+}
+/* D-Day 라벨 강조 - JavaScript에서 위치 조정 */
+.dday-label.right {
+  /* right와 left는 JavaScript에서 동적으로 설정됨 */
+  font-size: 0.9rem; /* 다른 라벨과 동일한 크기 */
+  font-weight: 600; /* 다른 라벨과 동일한 굵기 */
+  color: var(--primary); /* 이전 색상으로 복원 */
+  background: rgba(0, 0, 0, 0.3); /* 다른 라벨과 동일한 배경 */
+  padding: 2px 5px; /* 다른 라벨과 동일한 패딩 */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* 다른 라벨과 동일한 테두리 */
+  box-shadow: none; /* 그림자 제거 */
+  text-shadow: 1px 1px 0px var(--bg-dark); /* 다른 라벨과 동일한 텍스트 그림자 */
+  z-index: 3; /* 다른 라벨과 동일한 z-index */
+}
+/* D-100 마커 스타일 - D-365와 동일하게 */
+.dday-label.d100-marker {
+  transform: translateX(-50%);
+  font-size: 0.9rem; /* D-365와 동일한 크기 */
+  font-weight: 600; /* D-365와 동일한 굵기 */
+  color: var(--text-light); /* D-365와 동일한 색상 */
+  opacity: 1; /* D-365와 동일한 투명도 */
+  background: rgba(0, 0, 0, 0.3); /* D-365와 동일한 배경 */
+  padding: 2px 5px; /* D-365와 동일한 패딩 */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* D-365와 동일한 테두리 */
+  border-radius: 3px; /* D-365와 동일한 둥근 모서리 */
+  box-shadow: none;
+  z-index: 3;
+  top: calc(50% + 20px); /* D-365와 동일한 높이 */
+}
+.dday-label.d100-marker .d100-line {
+  position: absolute;
+  top: -18px; /* 진행 바 중앙에서 위로 9px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px; /* 다른 세로선과 동일한 두께 */
+  height: 18px; /* 다른 세로선과 동일한 높이 */
+  background: rgba(255, 255, 255, 0.25); /* 다른 세로선과 동일한 색상 */
+  box-shadow: none;
+}
 
 /* 퍼센트 칩 */
 .dday-percent,
 .dday-chip {
   position: absolute;
-  top: calc(50% - 46px); /* 러너 위로 더 높게 */
+  top: calc(50% - 58px); /* 캐릭터와 충분한 간격 확보 (캐릭터가 32px 높이 + 여유 공간) */
   transform: translateX(-50%);
   background: var(--bg-dark);
   border: 3px solid var(--primary);
   color: var(--text-light);
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 6px;
   font-family: var(--font-display);
-  font-size: 1.1rem; /* 칩 크게 */
+  font-size: 1.2rem;
+  font-weight: 800;
   line-height: 1;
   pointer-events: none;
   white-space: nowrap; /* 줄바꿈 방지 */
+  text-shadow: 2px 2px 0px var(--bg-dark);
+  box-shadow: 0 0 10px var(--primary), 2px 2px 0px var(--secondary);
+  z-index: 11;
+}
+
+/* 진행 바 구분선 컨테이너 */
+.dday-divider-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px; /* 진행 바 주변으로만 제한 */
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 진행 바 구분선 (30일 단위) */
+.dday-divider {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px; /* 다른 세로선과 동일한 두께 */
+  height: 18px; /* 다른 세로선과 동일한 높이 */
+  background: rgba(255, 255, 255, 0.25); /* 다른 세로선과 동일한 색상 */
+}
+
+/* D-100 위치의 구분선은 약간 더 밝게 */
+.dday-divider:nth-child(9) { /* 270일 = 9 * 30일, D-100 근처 */
+  width: 2px; /* 동일한 두께 유지 */
+  height: 18px; /* 동일한 높이 유지 */
+  background: rgba(255, 255, 255, 0.3); /* 약간 더 밝게만 */
 }
 
 @media (max-width: 600px) {
-  #dday-race { height: 48px; }
+  #dday-race { height: 80px; } /* 모바일에서도 충분한 높이 유지 */
   .dday-runner { width: 30px; height: 30px; }
   .dday-runner .mushroom { width: 30px; height: 30px; }
   

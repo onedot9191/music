@@ -864,15 +864,14 @@
 
             // 텍스트 D-Day 표시
 
-            // 상단 텍스트 제거 요청에 따라 숨김 처리
-
             const text = calculateDDayText(target);
 
+            // #dday 요소는 비워둠 (칩에만 표시하여 중복 방지)
             el.textContent = '';
 
 
 
-            // 경주 트랙 업데이트 (D-100 기준 진행도)
+            // 경주 트랙 업데이트 (D-365 기준 진행도)
 
             if (race) {
 
@@ -880,9 +879,9 @@
 
                 const start = new Date(target);
 
-                start.setDate(start.getDate() - 100);
+                start.setDate(start.getDate() - 365);
 
-                const clamped = Math.max(0, Math.min(1, (today - start) / (100 * MS_PER_DAY)));
+                const clamped = Math.max(0, Math.min(1, (today - start) / (365 * MS_PER_DAY)));
 
 
 
@@ -912,25 +911,15 @@
 
                     progress.className = 'dday-progress';
 
-                    // minimal ticks
+                    // D-365 위치 세로선만 유지 (왼쪽 끝에 위치)
 
                     const tick0 = document.createElement('div');
 
-                    tick0.className = 'dday-tick';
+                    tick0.className = 'dday-tick dday-tick-start'; // D-365 위치 표시용 클래스 추가
 
+                    // 초기 위치는 임시로 설정, 나중에 JavaScript에서 라벨 중앙에 맞춤
                     tick0.style.left = '0';
-
-                    const tick50 = document.createElement('div');
-
-                    tick50.className = 'dday-tick';
-
-                    tick50.style.left = 'calc(50% - 1px)';
-
-                    const tick100 = document.createElement('div');
-
-                    tick100.className = 'dday-tick';
-
-                    tick100.style.right = '0';
+                    tick0.style.transform = 'translateX(-50%) translateY(-50%)'; // 세로선 중앙 정렬
 
 
 
@@ -941,24 +930,27 @@
                     runner.style.transition = 'left 0.4s ease';
 
                     runner.setAttribute('aria-hidden', 'true');
+                    
+                    // 버섯에 살짝 떠다니는 애니메이션 효과
+                    runner.style.animation = 'dday-runner-float 2s ease-in-out infinite';
 
-                    // 픽셀 버섯 캔버스 (해상도 상승: 굵고 선명하게)
+                    // 픽셀 버섯 캔버스 (미니멀하고 하찮고 귀엽게)
 
                     const canvas = document.createElement('canvas');
 
-                    canvas.width = 20; // 논리 픽셀
+                    canvas.width = 16; // 논리 픽셀 (작고 미니멀하게)
 
-                    canvas.height = 20;
+                    canvas.height = 16;
 
                     const ctx = canvas.getContext('2d');
 
-                    // 픽셀 아트 그리기 함수
+                    // 픽셀 아트 그리기 함수 (미니멀하고 귀엽게)
 
                     const drawPixelMushroom = (c) => {
 
                         // clear
 
-                        c.clearRect(0,0,20,20);
+                        c.clearRect(0,0,16,16);
 
                         const fill = (x,y,w,h,color) => {
 
@@ -966,49 +958,53 @@
 
                         };
 
-                        // stem (베이지)
+                        // stem (베이지, 작고 단순하게)
 
-                        fill(7,11,6,6,'#f4e3c3');
+                        fill(6,10,4,5,'#f4e3c3');
 
-                        // cap (빨강)
+                        // cap (빨강, 작고 둥글게)
 
-                        fill(4,6,12,5,'#d9534f');
+                        fill(3,5,10,5,'#ff6b6b');
 
-                        fill(5,5,10,2,'#d9534f');
+                        fill(4,4,8,3,'#ff6b6b');
 
-                        // outline (검정)
+                        // outline (검정, 미니멀하게)
 
                         ctx.fillStyle = '#000';
 
-                        // 상단/측면 윤곽
+                        // 캡 윤곽
 
-                        ctx.fillRect(5,5,10,1);
+                        ctx.fillRect(4,4,8,1);
 
-                        ctx.fillRect(4,6,1,5);
+                        ctx.fillRect(3,5,1,5);
 
-                        ctx.fillRect(16,6,1,5);
+                        ctx.fillRect(12,5,1,5);
 
-                        ctx.fillRect(6,11,8,1); // 캡 하단 림
+                        ctx.fillRect(4,10,8,1);
 
                         // stem 윤곽
 
-                        ctx.fillRect(7,11,1,6);
+                        ctx.fillRect(6,10,1,5);
 
-                        ctx.fillRect(12,11,1,6);
+                        ctx.fillRect(9,10,1,5);
 
-                        ctx.fillRect(7,17,6,1);
+                        ctx.fillRect(6,15,4,1);
 
-                        // dots (하양)
+                        // dots (하양, 작고 귀엽게)
 
-                        fill(6,7,3,2,'#fff');
+                        fill(5,6,2,2,'#fff');
 
-                        fill(12,7,3,2,'#fff');
+                        fill(9,6,2,2,'#fff');
 
-                        // eyes (검정)
+                        // eyes (작고 하찮게, 단순하게)
 
-                        fill(8,13,1,2,'#000');
+                        fill(6,11,1,1,'#000');
 
-                        fill(11,13,1,2,'#000');
+                        fill(9,11,1,1,'#000');
+
+                        // 미소 (작고 귀여운 입)
+
+                        fill(7,13,2,1,'#000');
 
                     };
 
@@ -1030,13 +1026,26 @@
 
                     leftLabel.className = 'dday-label left';
 
-                    leftLabel.textContent = 'D-100';
+                    leftLabel.textContent = 'D-365';
 
                     const rightLabel = document.createElement('div');
 
                     rightLabel.className = 'dday-label right';
 
                     rightLabel.textContent = 'D-Day';
+
+                    // D-100 별도 마커 추가
+                    const d100Marker = document.createElement('div');
+                    d100Marker.className = 'dday-label d100-marker';
+                    d100Marker.textContent = 'D-100';
+                    
+                    // D-100 마커의 세로선 추가
+                    const d100Tick = document.createElement('div');
+                    d100Tick.className = 'dday-tick d100-tick';
+                    
+                    // D-Day 라벨의 세로선 추가
+                    const ddayTick = document.createElement('div');
+                    ddayTick.className = 'dday-tick dday-tick-end';
 
                     const ddayChip = document.createElement('div');
 
@@ -1050,11 +1059,11 @@
 
                     race.appendChild(progress);
 
-                    race.appendChild(tick0);
+                    race.appendChild(tick0); // D-365 세로선
 
-                    race.appendChild(tick50);
+                    race.appendChild(d100Tick); // D-100 세로선
 
-                    race.appendChild(tick100);
+                    race.appendChild(ddayTick); // D-Day 세로선
 
                     race.appendChild(runner);
 
@@ -1063,6 +1072,8 @@
                     race.appendChild(leftLabel);
 
                     race.appendChild(rightLabel);
+
+                    race.appendChild(d100Marker);
 
                     race.appendChild(ddayChip);
 
@@ -1076,7 +1087,13 @@
 
                         chip: ddayChip,
 
-                        rightLabel: rightLabel
+                        rightLabel: rightLabel,
+
+                        d100Marker: d100Marker,
+
+                        d100Tick: d100Tick,
+
+                        ddayTick: ddayTick
 
                     };
 
@@ -1094,19 +1111,85 @@
 
                 const rightLabelEl = ddayElements.rightLabel;
 
+                const d100MarkerEl = ddayElements.d100Marker;
+
+                // 세로선을 왼쪽 끝에 배치하고 시작점으로 사용
+                const tick0 = race.querySelector('.dday-tick-start');
+                const lineEl = race.querySelector('.dday-line');
+                const leftLabelEl = race.querySelector('.dday-label.left');
+                const startPos = 0; // 왼쪽 끝을 시작점으로 설정
+                
+                if (tick0) {
+                    // 세로선을 왼쪽 끝에 배치
+                    tick0.style.left = '0';
+                    tick0.style.transform = 'translateX(0) translateY(-50%)'; // 왼쪽 정렬
+                }
+                
+                // D-365 라벨을 왼쪽에 배치 (세로선과 정렬)
+                if (leftLabelEl) {
+                    leftLabelEl.style.left = '0';
+                    leftLabelEl.style.transform = 'translateX(0)';
+                }
+                
+                // 가로선을 왼쪽 끝부터 시작하도록 설정
+                if (lineEl) {
+                    lineEl.style.left = '0'; // 왼쪽 끝부터 시작
+                    lineEl.style.right = '0'; // 오른쪽 끝까지
+                }
+
                 const percent = clamped * 100;
 
-                // 실제 트랙 너비 기준 픽셀 위치 계산
+                // 실제 트랙 너비 기준 픽셀 위치 계산 (왼쪽 끝부터 D-Day까지)
+                // 왼쪽 끝을 시작점으로 사용
 
                 const finishOffset = 0; // 끝까지 사용
+                const totalWidth = race.clientWidth;
+                const range = Math.max(0, totalWidth - finishOffset); // startPos 제거
 
-                const range = Math.max(0, race.clientWidth - finishOffset);
-
-                const pos = Math.round((percent / 100) * range);
+                const pos = Math.round((percent / 100) * range); // startPos 제거
 
                 runnerEl.style.left = `${pos}px`;
 
-                if (progressEl) progressEl.style.width = `${pos}px`;
+                if (progressEl) {
+                    progressEl.style.left = '0'; // 왼쪽 끝부터 시작
+                    progressEl.style.width = `${Math.round((percent / 100) * range)}px`;
+                }
+
+                // D-100 마커 위치 계산 (왼쪽 끝에서 D-Day까지의 365일 중, D-100은 D-Day로부터 100일 전)
+                // 왼쪽 끝(0%) -> D-100(265/365 ≈ 72.6%) -> D-Day(100%)
+                if (d100MarkerEl) {
+                    const d100Percent = ((365 - 100) / 365) * 100; // 약 72.6%
+                    const d100Pos = Math.round((d100Percent / 100) * range);
+                    d100MarkerEl.style.left = `${d100Pos}px`;
+                    // D-100 라벨은 이미 translateX(-50%)로 중앙 정렬되어 있으므로
+                    // 라벨 중앙이 d100Pos에 위치함
+                    
+                    // D-100 세로선을 라벨 중앙에 맞춤
+                    const d100TickEl = ddayElements.d100Tick;
+                    if (d100TickEl) {
+                        d100TickEl.style.left = `${d100Pos}px`;
+                        d100TickEl.style.transform = 'translateX(-50%) translateY(-50%)'; // 세로선 중앙 정렬
+                    }
+                }
+                
+                // D-Day 라벨을 진행 바 끝(100% 위치)에 정확히 맞춤 - 중앙 정렬
+                if (rightLabelEl) {
+                    // 진행 바의 실제 끝 위치 (왼쪽 끝부터 range)
+                    const ddayPos = range;
+                    // 라벨의 중앙이 진행 바 끝에 맞도록 설정
+                    rightLabelEl.style.left = `${ddayPos}px`;
+                    rightLabelEl.style.right = 'auto';
+                    rightLabelEl.style.transform = 'translateX(-50%)'; // 라벨의 중앙이 진행 바 끝에 맞춤
+                    
+                    // D-Day 세로선을 라벨 중앙에 맞춤
+                    const ddayTickEl = ddayElements.ddayTick;
+                    if (ddayTickEl) {
+                        ddayTickEl.style.left = `${ddayPos}px`;
+                        ddayTickEl.style.transform = 'translateX(-50%) translateY(-50%)'; // 세로선 중앙 정렬
+                    }
+                }
+                
+                // 구분선 제거 (세로선 모두 제거)
 
                 if (chipEl) {
 
@@ -1981,6 +2064,9 @@
             renderHeatmapStats(stats);
 
             updateHeatmapTitle(stats);
+            
+            // D-Day 렌더링 (전체 구조 생성)
+            renderDDay();
 
             // 과목 버튼 정답률 상태 업데이트
             updateSubjectButtonStates();
@@ -2437,6 +2523,11 @@
             
 
             openModal(progressModal);
+            
+            // 결과 모달이 열릴 때 우측 상단 버튼 표시
+            if (scrapResultImageBtnTop) {
+                scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
 
         }
 
@@ -2608,7 +2699,9 @@
 
             // showAnswersBtn 제거됨 - 기능이 결과창의 정답 보기 버튼으로 통합됨
 
-            scrapResultImageBtnTop.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            if (scrapResultImageBtnTop) {
+                scrapResultImageBtnTop.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
 
             resetBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
 
@@ -5938,8 +6031,12 @@
             // showAnswersBtn 제거됨 - 기능이 결과창의 정답 보기 버튼으로 통합됨
 
             // 다른 버튼들 표시
-            scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-            resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            if (scrapResultImageBtnTop) {
+                scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
+            if (resetBtn) {
+                resetBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+            }
 
         });
 
@@ -6309,6 +6406,10 @@
 
             if (wasHidden) {
                 openModal(progressModal);
+                // 결과 모달이 열릴 때 우측 상단 버튼 표시
+                if (scrapResultImageBtnTop) {
+                    scrapResultImageBtnTop.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                }
                 // 모달이 열린 경우에만 최소한의 대기
                 await new Promise(resolve => requestAnimationFrame(resolve));
             }
@@ -6694,7 +6795,7 @@
 
 
 
-        [scrapResultImageBtn, scrapResultImageBtnTop].forEach(btn =>
+        [scrapResultImageBtn, scrapResultImageBtnTop].filter(btn => btn).forEach(btn =>
 
             btn.addEventListener('click', handleScrapResultImage)
 
