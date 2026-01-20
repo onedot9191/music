@@ -38,6 +38,9 @@
   border-radius: var(--space-md);
   max-height: 90vh;
   overflow-y: auto;
+  position: relative;
+  z-index: 201;
+  pointer-events: auto;
 }
 
 .modal-overlay.active .modal-content {
@@ -206,6 +209,10 @@
   font-size: 1.8rem;
   font-family: var(--font-display);
   animation: pulse-start-btn 2s infinite;
+  position: relative;
+  z-index: 202;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* === 시간 설정 === */
