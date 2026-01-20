@@ -2,6 +2,7 @@
     import { StorageManager } from './modules/storage.js';
     import { CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES } from './modules/constants.js';
     import { AudioManager } from './modules/audio.js';
+    import { getNextDDay } from './modules/utils.js';
 
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -1541,23 +1542,13 @@
 
             }
 
-            // 11월 8일 기준. 이미 지났다면 내년 11월 8일 기준
-
-            const now = new Date();
-
-            const year = now.getFullYear();
-
-            let target = new Date(year, 10, 8); // 0-based: 10 => November
+            // 11월 두 번째 주 토요일 기준. 이미 지났다면 내년으로 자동 변경
 
             const today = new Date();
 
             today.setHours(0, 0, 0, 0);
 
-            if (target < today) {
-
-                target = new Date(year + 1, 10, 8);
-
-            }
+            const target = getNextDDay();
 
 
 
@@ -1571,7 +1562,7 @@
 
 
 
-            // 경주 트랙 업데이트 (D-100 기준 진행도)
+            // 경주 트랙 업데이트 (D-365 기준 진행도)
 
             if (race) {
 
@@ -1579,9 +1570,9 @@
 
                 const start = new Date(target);
 
-                start.setDate(start.getDate() - 100);
+                start.setDate(start.getDate() - 365);
 
-                const clamped = Math.max(0, Math.min(1, (today - start) / (100 * MS_PER_DAY)));
+                const clamped = Math.max(0, Math.min(1, (today - start) / (365 * MS_PER_DAY)));
 
 
 
@@ -1615,19 +1606,22 @@
 
                     const tick0 = document.createElement('div');
 
-                    tick0.className = 'dday-tick';
+                    tick0.className = 'dday-tick dday-tick-start';
 
                     tick0.style.left = '0';
 
-                    const tick50 = document.createElement('div');
+                    // D-100 위치 세로선 계산
+                    // D-365부터 D-Day까지 365일 범위에서 D-100 위치 = (365-100)/365 = 약 72.6%
+                    const d100Position = ((365 - 100) / 365) * 100;
+                    const tickD100 = document.createElement('div');
 
-                    tick50.className = 'dday-tick';
+                    tickD100.className = 'dday-tick d100-tick';
 
-                    tick50.style.left = 'calc(50% - 1px)';
+                    tickD100.style.left = `calc(${d100Position}% - 1px)`;
 
                     const tick100 = document.createElement('div');
 
-                    tick100.className = 'dday-tick';
+                    tick100.className = 'dday-tick dday-tick-end';
 
                     tick100.style.right = '0';
 
@@ -1729,8 +1723,16 @@
 
                     leftLabel.className = 'dday-label left';
 
-                    leftLabel.textContent = 'D-100';
+                    leftLabel.textContent = 'D-365';
 
+                    // D-100 라벨
+                    const d100Label = document.createElement('div');
+
+                    d100Label.className = 'dday-label d100-label';
+
+                    d100Label.textContent = 'D-100';
+
+                    // D-Day 라벨
                     const rightLabel = document.createElement('div');
 
                     rightLabel.className = 'dday-label right';
@@ -1751,7 +1753,7 @@
 
                     race.appendChild(tick0);
 
-                    race.appendChild(tick50);
+                    race.appendChild(tickD100);
 
                     race.appendChild(tick100);
 
@@ -1760,6 +1762,8 @@
                     race.appendChild(finish);
 
                     race.appendChild(leftLabel);
+
+                    race.appendChild(d100Label);
 
                     race.appendChild(rightLabel);
 
@@ -1773,9 +1777,7 @@
 
                         progress: progress,
 
-                        chip: ddayChip,
-
-                        rightLabel: rightLabel
+                        chip: ddayChip
 
                     };
 
@@ -1790,8 +1792,6 @@
                 const progressEl = ddayElements.progress;
 
                 const chipEl = ddayElements.chip;
-
-                const rightLabelEl = ddayElements.rightLabel;
 
                 const percent = clamped * 100;
 
@@ -1820,8 +1820,6 @@
                     chipEl.style.left = `${chipX}px`;
 
                 }
-
-                // D-Day 라벨은 CSS에서 right:0 고정, 줄바꿈 방지 처리
 
                 race.setAttribute('aria-label', `디데이 경주 진행도 ${Math.round(percent)}%`);
 
