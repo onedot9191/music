@@ -127,6 +127,26 @@ export function getSecondSaturdayOfNovember(year) {
     return new Date(year, 10, secondSaturday);
 }
 
+/**
+ * 현재 또는 다음 해의 11월 두 번째 주 토요일을 구합니다.
+ * @returns {Date} 현재 또는 다음 해의 11월 두 번째 주 토요일
+ */
+export function getNextDDay() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const year = today.getFullYear();
+    
+    // 올해 11월 두 번째 주 토요일 계산
+    let target = getSecondSaturdayOfNovember(year);
+    
+    // 이미 지났다면 내년 11월 두 번째 주 토요일
+    if (target < today) {
+        target = getSecondSaturdayOfNovember(year + 1);
+    }
+    
+    return target;
+}
+
 export function calculateDDayText(targetDate) {
     const msPerDay = 24 * 60 * 60 * 1000;
     const today = new Date();
