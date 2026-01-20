@@ -1541,6 +1541,7 @@ input.activity-input {
   );
   transform: rotate(45deg);
   animation: shine 3s ease-in-out infinite;
+  pointer-events: none;
 }
 
 #start-game-btn:hover {
