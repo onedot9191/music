@@ -266,12 +266,12 @@ export function renderDDay(playSound = null) {
     const text = calculateDDayText(target);
     el.textContent = text;
     
-    // 경주 트랙 업데이트 (D-100 기준 진행도)
+    // 경주 트랙 업데이트 (D-365 기준 진행도)
     if (race) {
         const MS_PER_DAY = 24 * 60 * 60 * 1000;
         const start = new Date(target);
-        start.setDate(start.getDate() - 100);
-        const clamped = Math.max(0, Math.min(1, (today - start) / (100 * MS_PER_DAY)));
+        start.setDate(start.getDate() - 365);
+        const clamped = Math.max(0, Math.min(1, (today - start) / (365 * MS_PER_DAY)));
         
         // 아직 레이아웃이 잡히지 않아 너비가 0이면 다음 기회로 미룸
         if (race.clientWidth === 0) {
