@@ -73,7 +73,8 @@ export class AudioManager {
             clear: this.createAudioElement('./clear.mp3'),
             random: this.createAudioElement('./random.mp3'),
             click: this.createAudioElement('./click.mp3'),
-            slotWin: this.createAudioElement('./hit.mp3', Math.min(1, this.SFX_VOLUME * 1.4))
+            slotWin: this.createAudioElement('./hit.mp3', Math.min(1, this.SFX_VOLUME * 1.4)),
+            great: this.createAudioElement('./great.mp3', Math.min(1, this.SFX_VOLUME * 1.2))
         };
     }
 
