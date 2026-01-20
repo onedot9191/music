@@ -1,7 +1,41 @@
     // 모듈 임포트
     import { StorageManager } from './modules/storage.js';
-    import { CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES } from './modules/constants.js';
+    import { CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES, SPELLING_DATA_BASIC, SPELLING_DATA_EXTENDED, SPELLING_DATA_ALL } from './modules/constants.js';
     import { AudioManager } from './modules/audio.js';
+    import { TimerManager } from './modules/timer.js';
+    import { formatTime, formatDateKey, getSecondSaturdayOfNovember, updateHeatmapTitle } from './modules/utils.js';
+    import {
+        measureTextWidthForElement,
+        getAnswerCandidates,
+        getLongestReferenceText,
+        setInputWidthToText,
+        applyAutoWidthForContainer,
+        initAutoWidthCourse,
+        protectHomeProjectInputs,
+        focusModal,
+        openModal,
+        closeModal,
+        updateTimeSettingDisplay,
+        focusFirstInput
+    } from './modules/ui.js';
+    import {
+        saveDailyStats,
+        getDailyStats,
+        saveSubjectAccuracy,
+        getSubjectAccuracy,
+        checkSubjectAccuracyThreshold,
+        markSubjectAccuracyAchieved,
+        checkSubjectAccuracyAchieved,
+        updateSubjectButtonStates,
+        renderHeatmapStats,
+        render6MonthHeatmap,
+        updateTodayBlankCount,
+        setStorageManager
+    } from './modules/stats.js';
+    import {
+        normalizeAnswer,
+        getMainElementId
+    } from './modules/game-utils.js';
 
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -11,374 +45,34 @@
         // AudioManager는 오디오 컨텍스트와 오디오 잠금 해제를 자동으로 처리합니다
         const audioManager = new AudioManager();
 
+        // --- 타이머 관리자 ---
+        // TimerManager는 게임 타이머와 시간 관리를 담당합니다
+        const timerManager = new TimerManager(audioManager);
+        
+        // TimerManager 콜백 설정
+        timerManager.setCallbacks(
+            (remainingTime) => {
+                // onTick: 남은 시간이 변경될 때마다 호출
+                gameState.total = remainingTime;
+            },
+            () => {
+                // onGameOver: 시간이 0이 되었을 때 호출
+                handleGameOver();
+            }
+        );
+
 
 
 
 
         // --- 상수 ---
-        // CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES는 modules/constants.js에서 import됨
-
-
-
-        // 맞춤법 데이터셋
-
-        // 기존 데이터셋 (22 지도서 수록)
-
-        const SPELLING_DATA_BASIC = [
-
-            { sentence: "민서가 비밀 편지 한 (권, 장)을 조심스럽게 꺼냈다.", answer: "장" },
-
-            { sentence: "동한아, 그 신기한 마법 연필 한 (그루, 자루)만 빌려줄래?", answer: "자루" },
-
-            { sentence: "상훈이의 스포츠카 한 (개, 대)가 하늘에서 멋지게 내려왔다.", answer: "대" },
-
-            { sentence: "희원이는 하늘을 나는 운동화 한 (채, 켤레)를 샀다.", answer: "켤레" },
-
-            { sentence: "먹방 유튜버 성훈이가 수박 한 (통, 개)을 5초 만에 먹었다.", answer: "통" },
-
-            { sentence: "다운이가 임금님 수라상에 금수저 한 (벌, 묶음)을 올렸다.", answer: "벌" },
-
-            { sentence: "패셔니스타 마노는 투명 망토 (한벌, 한 벌)을 새로 샀다.", answer: "한 벌" },
-
-            { sentence: "병현이는 좀비 학교를 (마치고, 맞히고) 겨우 탈출했다.", answer: "마치고" },
-
-            { sentence: "궁수 영민이가 눈을 감고 과녁 10점을 (맞추고, 맞히고) 환호했다.", answer: "맞히고" },
-
-            { sentence: "상현이는 현민이와 어젯밤 꾼 꿈을 서로 (맞추어, 맞히어) 보았다.", answer: "맞추어" },
-
-            { sentence: "명탐정 동한이가 마침내 범인을 (알아맞혔다, 알아맞췄다).", answer: "알아맞혔다" },
-
-            { sentence: "민서는 흙탕물에서 뒹군 발을 (깨끗히, 깨끗이) 씻었다.", answer: "깨끗이" },
-
-            { sentence: "상훈이는 치킨 배달을 마음 (느긋이, 느긋히) 기다렸다.", answer: "느긋이" },
-
-            { sentence: "희원아, 로봇처럼 줄을 (반듯이, 반듯히) 서야 해.", answer: "반듯이" },
-
-            { sentence: "성훈이는 팬케이크를 천장까지 (겹겹이, 겹겹히) 쌓아 올렸다.", answer: "겹겹이" },
-
-            { sentence: "닌자 다운이는 시간을 내어 (틈틈이, 틈틈히) 표창을 연습한다.", answer: "틈틈이" },
-
-            { sentence: "마노야, 화장실이 급해도 너무 (급히, 급이) 뛰지 마.", answer: "급히" },
-
-            { sentence: "병현이는 마법 주문을 (정확이, 정확히) 외워야 한다.", answer: "정확히" },
-
-            { sentence: "영민이는 공룡 중에서 (특히, 특이) 티라노사우루스를 좋아한다.", answer: "특히" },
-
-            { sentence: "상현이는 외계인에게 자기 생각을 (솔직이, 솔직히) 털어놓았다.", answer: "솔직히" },
-
-            { sentence: "폭탄 제거반 현민이는 선을 (꼼꼼이, 꼼꼼히) 살폈다.", answer: "꼼꼼히" },
-
-            { sentence: "동한이는 용돈이 다 떨어져 마음이 (쓸쓸이, 쓸쓸히) 느껴진다고 했다.", answer: "쓸쓸히" },
-
-            { sentence: "용사 민서는 용의 동굴에 잘 (다녀온 것 같아요, 다녀왔어요)라고 보고했다.", answer: "다녀왔어요" },
-
-            { sentence: "우주비행사 상훈이는 화성에서 별일 (없었던 것 같아요, 없었어요)라고 말했다.", answer: "없었어요" },
-
-            { sentence: "희원아, 조용한 도서관에서 랩을 하면 (안, 않) 돼.", answer: "안" },
-
-            { sentence: "성훈아, 상어가 있는 바다에 들어가지 (안아야, 않아야) 한다.", answer: "않아야" },
-
-            { sentence: "밤새 게임한 다운이 얼굴이 많이 (안돼, 안 돼) 보인다.", answer: "안돼" },
-
-            { sentence: "마노야, 쿨쿨 자는 사자 앞에서 떠들면 (안돼, 안 돼).", answer: "안 돼" },
-
-            { sentence: "병현이가 \"귀신의 집에서 내가 먼저 (나갈게, 나갈께)!\"라고 소리쳤다.", answer: "나갈게" },
-
-            { sentence: "슈퍼히어로 영민이가 \"지구는 제가 꼭 (지킬게요, 지킬께요)!\"라고 외쳤다.", answer: "지킬게요" },
-
-            { sentence: "상현이는 웃음을 (뿌린만큼, 뿌린 만큼) 행복을 거둔다고 믿는다.", answer: "뿌린 만큼" },
-
-            { sentence: "현민이는 (나무만큼, 나무 만큼) 키가 크고 싶어 한다.", answer: "나무만큼" },
-
-            { sentence: "마법사 동한이는 주문이 (생각한대로, 생각한 대로) 이루어질 거라고 믿었다.", answer: "생각한 대로" },
-
-            { sentence: "엉뚱한 화가 민서는 (민서대로, 민서 대로) 그림을 완성했다.", answer: "민서대로" },
-
-            { sentence: "좀비 세상에서 살아남은 사람은 상훈이와 희원이 (둘뿐이다, 둘 뿐이다).", answer: "둘뿐이다" },
-
-            { sentence: "요리사 성훈이는 (노력할뿐, 노력할 뿐) 맛은 보장 못 한다고 했다.", answer: "노력할 뿐" },
-
-            { sentence: "다운이가 로봇 마노를 가리키며 \"(애, 얘)는 내 비밀 친구야.\"라고 소개했다.", answer: "얘" },
-
-            { sentence: "병현이가 시끄러운 앵무새들에게 \"(애들아, 얘들아), 조용히 해 줄래?\"라고 말했다.", answer: "얘들아" },
-
-            { sentence: "영민이가 순간이동하는 친구를 보며 \"저기 가는 (쟤, 재)는 누구니?\"라고 물었다.", answer: "쟤" },
-
-            { sentence: "상현이가 발로 그린 그림을 보여주며 \"이것은 (쟤가, 제가) 그린 작품입니다.\"라고 말했다.", answer: "제가" },
-
-            { sentence: "현민이는 공룡이 쫓아오는 꿈을 꿔서 걱정이 (되서, 돼서) 잠을 설쳤다.", answer: "돼서" },
-
-            { sentence: "동한이가 100층짜리 젠가를 다 쌓고 \"이제 다 (됬다, 됐다)!\"라고 외쳤다.", answer: "됐다" }
-
-        ];
-
-
-
-        // 새로운 데이터셋 (15 지도서 수록 + 기타)
-
-        const SPELLING_DATA_EXTENDED = [
-
-            { sentence: "라면만 먹는 우리 형 병현이는 완전 (멋장이, 멋쟁이)야.", answer: "멋쟁이" },
-
-            { sentence: "용돈으로 벽지를 바르는 상현이는 미래의 (도배쟁이, 도배장이).", answer: "도배장이" },
-
-            { sentence: "다운이가 노래방에 있었(는대, 는데) 마이크가 터졌어.", answer: "는데" },
-
-            { sentence: "동한이 말이, 민서가 꿈에서 용을 봤(데, 대).", answer: "대" },
-
-            { sentence: "상훈이는 가위바위보(로서, 로써) 우주 평화를 지켰다.", answer: "로써" },
-
-            { sentence: "먹기 대회 챔피언(으로서, 으로써) 현민이는 위엄을 보였다.", answer: "으로서" },
-
-            { sentence: "영민이는 꿀벌을 피해 미친 듯이 (뛰었다, 뗬다).", answer: "뛰었다" },
-
-            { sentence: "앵무새가 상훈이의 빵점 시험지를 (할퀴었다, 할켰다).", answer: "할퀴었다" },
-
-            { sentence: "희원아, 숨쉬기도 힘드니 (쉬었다가, 셨다가) 하자.", answer: "쉬었다가" },
-
-            { sentence: "나무늘보 성훈이가 랩에 맞춰 춤을 (쳤다니, 췄다니)!", answer: "췄다니" },
-
-            { sentence: "마노야, 숨겨둔 치킨 위치 좀 알려 (조, 줘).", answer: "줘" },
-
-            { sentence: "병현아, 그 외계어 (좀, 쫌) 그만해.", answer: "좀" },
-
-            { sentence: "다운이는 라면을 (먹을려고, 먹으려고) 한강에 갔다.", answer: "먹으려고" },
-
-            { sentence: "동한이는 PC방에 (갈려고, 가려고) 숙제를 후다닥 끝냈다.", answer: "가려고" },
-
-            { sentence: "민서야, (이것, 이 것)은 내가 만든 100층 젠가야.", answer: "이것" },
-
-            { sentence: "목마른 상훈이에게 (마실것, 마실 것) 좀 주세요.", answer: "마실 것" },
-
-            { sentence: "내 통장 잔고를 정확히 (암, 앎)이 부자의 첫걸음이다.", answer: "앎" },
-
-            { sentence: "현민이는 바다에서 황금 조개 (껍데기를, 껍질을) 주웠다.", answer: "껍데기를" },
-
-            { sentence: "영민이는 양파 (껍데기를, 껍질을) 까다가 펑펑 울었다.", answer: "껍질을" },
-
-            { sentence: "상현이는 더워서 (윗옷, 웃옷)만 입고 수건만 둘렀다.", answer: "윗옷" },
-
-            { sentence: "탐정 희원이는 변장용 아빠 (윗옷, 웃옷)을 걸쳤다.", answer: "웃옷" },
-
-            { sentence: "성훈이는 넥타이를 머리에 (매고, 메고) 파티에 갔다.", answer: "매고" },
-
-            { sentence: "마노는 기타를 등에 (매고, 메고) 노래하며 걸었다.", answer: "메고" },
-
-            { sentence: "병현이는 눅눅한 과자를 다리미로 (다린, 달인) 다음 먹었다.", answer: "다린" },
-
-            { sentence: "마녀 다운이는 솥에 개구리 다리를 (다리는, 달이는) 중이다.", answer: "달이는" },
-
-            { sentence: "동한이는 과거의 나에게 경고 편지를 (부쳤다, 붙였다).", answer: "부쳤다" },
-
-            { sentence: "민서는 상훈이 등에 '바보' 스티커를 (부쳤다, 붙였다).", answer: "붙였다" },
-
-            { sentence: "요리왕 상훈이는 벌레를 간장에 (조렸다, 졸였다).", answer: "졸였다" },
-
-            { sentence: "현민이는 공포 영화를 보며 심장을 (조렸다, 졸였다).", answer: "졸였다" },
-
-            { sentence: "로봇 춤을 추던 영민이는 다리가 (절여요, 저려요).", answer: "저려요" },
-
-            { sentence: "요리왕 상현이는 초콜릿을 소금에 (절이고, 저리고) 있다.", answer: "절이고" },
-
-            { sentence: "희원아, 지구 멸망은 (이따가, 있다가) 걱정하고 밥부터 먹자.", answer: "이따가" },
-
-            { sentence: "성훈이는 교실에 조금 (이따가, 있다가) 매점으로 튀어갔다.", answer: "있다가" },
-
-            { sentence: "유튜버 마노는 구독자를 100만으로 (늘리기로, 늘이기로) 결심했다.", answer: "늘리기로" },
-
-            { sentence: "병현이는 엿가락을 1미터까지 (늘리는, 늘이는) 데 성공했다.", answer: "늘이는" },
-
-            { sentence: "이 자리를 (빌려, 빌어) 제 개그가 썰렁했음을 사과합니다.", answer: "빌려" },
-
-            { sentence: "민서는 BTS 집에 잠시 (들렀다가, 들렸다가) 갈 거라고 했다.", answer: "들렀다가" },
-
-            { sentence: "현민이가 얼마나 배고팠(던지, 든지) 냉장고를 통째로 먹었다.", answer: "던지" },
-
-            { sentence: "피자를 먹(던지, 든지) 치킨을 먹(던지, 든지) 얼른 시켜.", answer: "든지" },
-
-            { sentence: "영민아, 내 월급날이 (몇 일이지, 며칠이지)?", answer: "며칠이지" },
-
-            { sentence: "마노는 영민이를 (설레이게, 설레게) 한다.", answer: "설레게" },
-
-            { sentence: "희원아, 로또 1등 당첨되길 (바래, 바라).", answer: "바라" },
-
-            { sentence: "성훈이는 라면에 (알맞는, 알맞은) 물 양을 조절했다.", answer: "알맞은" },
-
-            { sentence: "마노는 오늘따라 (웬지, 왠지) 머리에 새가 앉을 것 같았다.", answer: "왠지" },
-
-            { sentence: "병현이는 코를 팠다. (그리고 나서, 그러고 나서) 손을 씻었다.", answer: "그러고 나서" }
-
-        ];
-
-
-
-        // 통합 데이터셋 (ALL)
-
-        const SPELLING_DATA_ALL = [...SPELLING_DATA_BASIC, ...SPELLING_DATA_EXTENDED];
+        // CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES, SPELLING_DATA는 modules/constants.js에서 import됨
 
 
 
         // --- 빈칸 자동 너비 조정 (답변 길이에 맞춤) ---
 
-        // 입력 요소와 동일한 폰트를 사용하여 캔버스로 텍스트 너비 측정
-
-        function measureTextWidthForElement(text, element) {
-
-            const canvas = measureTextWidthForElement._canvas || (measureTextWidthForElement._canvas = document.createElement('canvas'));
-
-            const context = canvas.getContext('2d');
-
-            const cs = getComputedStyle(element);
-
-            // 캔버스용 적절한 폰트 약어 생성
-
-            const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-
-            context.font = font;
-
-            const metrics = context.measureText(text || '');
-
-            return metrics.width;
-
-        }
-
-
-
-        function getAnswerCandidates(input) {
-
-            const answers = [];
-
-            const dataAnswer = input.getAttribute('data-answer');
-
-            if (dataAnswer) {
-                const trimmedAnswer = dataAnswer.trim();
-                answers.push(trimmedAnswer);
-
-                // 괄호가 있는 경우 추가 정답 후보 생성
-                const parenMatch = trimmedAnswer.match(/([^(]*)\(([^)]*)\)(.*)/);
-                if (parenMatch) {
-                    const beforeParen = parenMatch[1];
-                    const parenContent = parenMatch[2];
-                    const afterParen = parenMatch[3] || '';
-
-                    // 괄호 제거 버전
-                    const withoutParen = beforeParen + afterParen;
-                    if (withoutParen && withoutParen !== trimmedAnswer) {
-                        answers.push(withoutParen);
-                    }
-
-                    // 괄호 내용이 앞 단어에 붙은 버전
-                    if (beforeParen && parenContent) {
-                        const mergedWithBefore = beforeParen + parenContent + afterParen;
-                        if (mergedWithBefore && mergedWithBefore !== trimmedAnswer && mergedWithBefore !== withoutParen) {
-                            answers.push(mergedWithBefore);
-                        }
-                    }
-
-                    // 괄호 내용만 있는 버전
-                    if (parenContent && parenContent !== trimmedAnswer) {
-                        answers.push(parenContent + afterParen);
-                    }
-                }
-            }
-
-            const accept = input.getAttribute('data-accept') || input.getAttribute('data-alias') || input.getAttribute('data-aliases');
-
-            if (accept) accept.split(',').forEach(s => { const t = s.trim(); if (t) answers.push(t); });
-
-            return answers.length ? answers : [''];
-
-        }
-
-
-
-        function getLongestReferenceText(input) {
-
-            const answers = getAnswerCandidates(input);
-
-            return answers.reduce((longest, current) => current.length > longest.length ? current : longest, '');
-
-        }
-
-
-
-        function setInputWidthToText(input, text) {
-
-            // 홈 프로젝트 파트 내부의 입력 필드는 너비 조정하지 않음
-            if (input.closest('.home-project-part')) {
-                return;
-            }
-
-            const cs = getComputedStyle(input);
-
-            const padding = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-
-            const border = (parseFloat(cs.borderLeftWidth) || 0) + (parseFloat(cs.borderRightWidth) || 0);
-
-            const extra = 16; // slightly more breathing room
-
-            const textWidth = measureTextWidthForElement(text, input);
-
-            const widthPx = Math.ceil(textWidth + padding + border + extra);
-
-            input.style.width = `${widthPx}px`;
-
-        }
-
-
-
-        function applyAutoWidthForContainer(container) {
-
-            if (!container) return;
-
-            const inputs = container.querySelectorAll('.overview-question input[data-answer]');
-
-            inputs.forEach(input => {
-
-                // 홈 프로젝트 파트 내부의 입력 필드는 자동 너비 조정에서 제외
-                if (input.closest('.home-project-part')) {
-                    return;
-                }
-
-                const reference = getLongestReferenceText(input);
-
-                const resize = () => {
-
-                    const base = reference;
-
-                    // 채점 및 입력 중에도 초기 기준 너비만 유지하여 레이아웃 변형 방지
-                    setInputWidthToText(input, base);
-
-                };
-
-                // INP 개선을 위한 리사이즈 함수 디바운스
-                let resizeTimeout;
-                const debouncedResize = () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(resize, 16); // ~60fps
-                };
-
-                resize();
-
-                input.addEventListener('input', debouncedResize);
-
-            });
-
-        }
-
-
-
-        function initAutoWidthCourse() {
-
-            ['overview-quiz-main', 'social-course-quiz-main', 'social-quiz-main', 'science-quiz-main', 'science-course-quiz-main', 'english-course-quiz-main', 'practical-course-quiz-main', 'music-course-quiz-main', 'art-course-quiz-main', 'korean-course-quiz-main', 'eastern-ethics-quiz-main', 'western-ethics-quiz-main', 'moral-psychology-quiz-main', 'integrated-guide-overview'].forEach(id => {
-
-                const container = document.getElementById(id);
-
-                applyAutoWidthForContainer(container);
-
-            });
-
-        }
+        // 빈칸 너비 조정 관련 함수들은 modules/ui.js에서 import됨
 
 
 
@@ -386,38 +80,7 @@
 
         requestAnimationFrame(() => { initAutoWidthCourse(); });
 
-        // 홈 프로젝트 파트 빈칸 너비 보호 로직
-        function protectHomeProjectInputs() {
-            const homeProjectInputs = document.querySelectorAll('.home-project-part input');
-            homeProjectInputs.forEach(input => {
-                // 기본 너비 설정
-                input.style.width = '100%';
-                
-                // MutationObserver로 스타일 변경 감지 및 방지
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                            const currentWidth = input.style.width;
-                            if (currentWidth !== '100%' && currentWidth !== '') {
-                                input.style.width = '100%';
-                            }
-                        }
-                    });
-                });
-                
-                observer.observe(input, {
-                    attributes: true,
-                    attributeFilter: ['style']
-                });
-
-                // 클래스 변경 시에도 너비 복원
-                input.addEventListener('classChange', () => {
-                    setTimeout(() => {
-                        input.style.width = '100%';
-                    }, 0);
-                });
-            });
-        }
+        // 홈 프로젝트 파트 빈칸 너비 보호 로직은 modules/ui.js에서 import됨
 
         // 초기 실행
         requestAnimationFrame(() => {
@@ -476,6 +139,8 @@
 
         // --- 저장소 관리자 ---
         const storageManager = new StorageManager();
+        // stats.js 모듈에 StorageManager 설정
+        setStorageManager(storageManager);
 
         const SPECIAL_SUBJECTS = new Set([
 
@@ -948,47 +613,7 @@
 
         // --- 모달 포커스 헬퍼 ---
 
-        let lastFocusedElement = null;
-
-        function focusModal(modalEl) {
-
-            const content = modalEl.querySelector('.modal-content');
-
-            if (!content) return;
-
-            if (!content.hasAttribute('tabindex')) {
-
-                content.setAttribute('tabindex', '-1');
-
-            }
-
-            content.focus({ preventScroll: true });
-
-        }
-
-        function openModal(modalEl) {
-
-            lastFocusedElement = document.activeElement;
-
-            modalEl.classList.add(CONSTANTS.CSS_CLASSES.ACTIVE);
-
-            focusModal(modalEl);
-
-        }
-
-        function closeModal(modalEl) {
-
-            modalEl.classList.remove(CONSTANTS.CSS_CLASSES.ACTIVE);
-
-            if (lastFocusedElement && document.body.contains(lastFocusedElement)) {
-
-                try { lastFocusedElement.focus({ preventScroll: true }); } catch (_) {}
-
-            }
-
-            lastFocusedElement = null;
-
-        }
+        // 모달 관리 함수들은 modules/ui.js에서 import됨
 
 
 
@@ -1051,10 +676,9 @@
         
 
         // --- 유틸리티 함수 ---
+        // formatTime은 modules/utils.js에서 import됨
 
         const fmt = n => String(n).padStart(2, '0');
-
-        const formatTime = s => `${fmt(Math.floor(s / 60))}:${fmt(s % 60)}`;
 
         const formatDateKey = (date = new Date()) => {
 
@@ -1072,152 +696,7 @@
 
 
 
-        function saveDailyStats(count) {
-
-            const key = formatDateKey();
-
-            const stats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
-
-            stats[key] = (stats[key] || 0) + count;
-
-            localStorage.setItem('dailyStats', JSON.stringify(stats));
-
-        }
-
-        function saveSubjectAccuracy(subject, correctCount, totalCount) {
-
-            const key = formatDateKey();
-
-            const stats = JSON.parse(localStorage.getItem('subjectAccuracy') || '{}');
-
-            if (!stats[key]) {
-                stats[key] = {};
-            }
-
-            if (!stats[key][subject]) {
-                stats[key][subject] = { correct: 0, total: 0 };
-            }
-
-            stats[key][subject].correct += correctCount;
-            stats[key][subject].total += totalCount;
-
-            localStorage.setItem('subjectAccuracy', JSON.stringify(stats));
-
-        }
-
-        function getSubjectAccuracy(subject) {
-
-            const key = formatDateKey();
-
-            const stats = JSON.parse(localStorage.getItem('subjectAccuracy') || '{}');
-
-            if (stats[key] && stats[key][subject]) {
-                const data = stats[key][subject];
-                return data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
-            }
-
-            return 0;
-
-        }
-
-        function checkSubjectAccuracyThreshold(subject, threshold = 70) {
-
-            const accuracy = getSubjectAccuracy(subject);
-
-            return accuracy >= threshold;
-
-        }
-
-        function markSubjectAccuracyAchieved(subject) {
-
-            const key = formatDateKey();
-
-            const achievements = JSON.parse(localStorage.getItem('subjectAchievements') || '{}');
-
-            if (!achievements[key]) {
-                achievements[key] = {};
-            }
-
-            achievements[key][subject] = true;
-
-            localStorage.setItem('subjectAchievements', JSON.stringify(achievements));
-
-        }
-
-        function checkSubjectAccuracyAchieved(subject) {
-
-            const key = formatDateKey();
-
-            const achievements = JSON.parse(localStorage.getItem('subjectAchievements') || '{}');
-
-            return achievements[key] && achievements[key][subject] === true;
-
-        }
-
-        function updateSubjectButtonStates() {
-
-            const subjectButtons = document.querySelectorAll('.subject-btn');
-
-            subjectButtons.forEach(button => {
-
-                const subject = button.dataset.subject;
-
-                // 한번 달성했으면 계속 유지, 아니면 현재 정답률로 판단
-                if (subject && (checkSubjectAccuracyAchieved(subject) || checkSubjectAccuracyThreshold(subject, 70))) {
-
-                    button.classList.add('high-accuracy');
-
-                } else {
-
-                    button.classList.remove('high-accuracy');
-
-                }
-
-            });
-
-        }
-
-
-
-        function getDailyStats(days = 30) {
-
-            const stats = JSON.parse(localStorage.getItem('dailyStats') || '{}');
-
-            const result = [];
-
-            for (let i = days - 1; i >= 0; i--) {
-
-                const d = new Date();
-
-                d.setDate(d.getDate() - i);
-
-                const key = formatDateKey(d);
-
-                result.push({ date: key, count: stats[key] || 0 });
-
-            }
-
-            return result;
-
-        }
-
-
-
-        function updateHeatmapTitle(stats) {
-
-            const countEl = document.getElementById('heatmap-count');
-
-            if (!countEl) return;
-
-            const todayKey = formatDateKey();
-
-            const today = stats.find(s => s.date === todayKey);
-
-            const count = today ? today.count : 0;
-
-            countEl.textContent = String(count);
-
-        }
+        // 통계 관련 함수들은 modules/stats.js에서 import됨
 
         function showSpecialBlankCountPopup(count) {
             // 기존 팝업 제거 (중복 방지)
@@ -1261,180 +740,12 @@
             }, 3000);
         }
 
-        function updateTodayBlankCount() {
-            try {
-                // localStorage에서 최신 데이터 강제 로드
-                const dailyStatsStr = localStorage.getItem('dailyStats');
-                const stats = dailyStatsStr ? JSON.parse(dailyStatsStr) : {};
-
-                const todayKey = formatDateKey();
-                const count = stats[todayKey] || 0;
-
-
-                const countEl = document.getElementById('today-blank-count-number');
-                if (countEl) {
-                    countEl.textContent = String(count);
-                }
-
-                // 50의 배수일 경우 특별 팝업 표시 (이미 표시된 카운트거나 강제 종료 시에는 표시하지 않음)
-                if (count > 0 && count % 50 === 0 && count !== gameState.lastSpecialPopupCount && !gameState.isForceQuit) {
-                    showSpecialBlankCountPopup(count);
-                }
-
-                // 강제 종료 플래그 초기화
-                if (gameState.isForceQuit) {
-                    gameState.isForceQuit = false;
-                }
-            } catch (error) {
-                console.warn('Failed to update today blank count:', error);
-                // 오류 발생 시 안전하게 0으로 표시
-                const countEl = document.getElementById('today-blank-count-number');
-                if (countEl) {
-                    countEl.textContent = '0';
-                }
-            }
-        }
+        // updateTodayBlankCount는 modules/stats.js에서 import됨
+        // showSpecialBlankCountPopup은 gameState와 오디오에 의존하므로 app.js에 유지
 
 
 
-       function renderHeatmap(stats) {
-
-           const container = document.getElementById('activity-heatmap');
-
-           if (!container) return;
-
-           container.innerHTML = '';
-
-            if (stats.length === 0) return;
-
-
-
-            const firstDate = new Date(stats[0].date);
-
-            let offset = (firstDate.getDay() + 6) % 7; // 월요일 = 0
-
-            for (let i = 0; i < offset; i++) {
-
-                const empty = document.createElement('div');
-
-                empty.classList.add('heatmap-cell', 'empty');
-
-                container.appendChild(empty);
-
-            }
-
-
-
-            const max = Math.max(...stats.map(s => s.count), 0);
-
-            stats.forEach(({ date, count }) => {
-
-                const cell = document.createElement('div');
-
-                cell.classList.add('heatmap-cell');
-
-                if (max > 0 && count > 0) {
-
-                    const level = Math.min(4, Math.ceil((count / max) * 4));
-
-                    cell.classList.add(`level-${level}`);
-
-                }
-
-                cell.title = `${date}: ${count}`;
-
-                container.appendChild(cell);
-
-            });
-
-            updateHeatmapTitle(stats);
-
-            renderDDay();
-
-        }
-
-
-
-        // --- 6개월 히트맵 팝업 ---
-
-        function render6MonthHeatmap() {
-            const container = document.getElementById('six-month-heatmap-container');
-            if (!container) return;
-            
-            container.innerHTML = '';
-            
-            // 6개월 (약 180일) 데이터 가져오기
-            const stats = getDailyStats(180);
-            
-            if (stats.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 2rem;">아직 학습 기록이 없습니다.</p>';
-                return;
-            }
-
-            // 월별로 그룹화
-            const monthGroups = {};
-            stats.forEach(({ date, count }) => {
-                const [year, month] = date.split('-');
-                const key = `${year}-${month}`;
-                if (!monthGroups[key]) {
-                    monthGroups[key] = [];
-                }
-                monthGroups[key].push({ date, count });
-            });
-
-            // 전체 데이터의 최대값 계산 (일관된 색상 표시를 위해)
-            const globalMax = Math.max(...stats.map(s => s.count), 0);
-            
-            // 6개월 총 푼 개수 계산
-            const totalCount = stats.reduce((sum, stat) => sum + stat.count, 0);
-            
-            // 제목 업데이트
-            const titleElement = document.getElementById('six-month-heatmap-title');
-            if (titleElement) {
-                titleElement.innerHTML = `<span style="color: var(--primary);">${totalCount}개</span> 진행 중 (6개월 기준)`;
-            }
-
-            // 각 월별로 히트맵 생성
-            Object.keys(monthGroups).sort().forEach(monthKey => {
-                const monthData = monthGroups[monthKey];
-                const [year, month] = monthKey.split('-');
-                
-                const monthSection = document.createElement('div');
-                monthSection.classList.add('month-heatmap-section');
-                
-                const monthTitle = document.createElement('h3');
-                monthTitle.classList.add('month-title');
-                monthTitle.textContent = `${year}년 ${parseInt(month)}월`;
-                monthSection.appendChild(monthTitle);
-                
-                const monthGrid = document.createElement('div');
-                monthGrid.classList.add('month-heatmap-grid');
-                
-                // 첫 날의 요일에 맞춰 빈 칸 추가
-                const firstDate = new Date(monthData[0].date);
-                let offset = (firstDate.getDay() + 6) % 7; // 월요일 = 0
-                for (let i = 0; i < offset; i++) {
-                    const empty = document.createElement('div');
-                    empty.classList.add('heatmap-cell', 'empty');
-                    monthGrid.appendChild(empty);
-                }
-                
-                // 각 날짜별 셀 생성 (전체 최대값 기준으로 레벨 계산)
-                monthData.forEach(({ date, count }) => {
-                    const cell = document.createElement('div');
-                    cell.classList.add('heatmap-cell');
-                    if (globalMax > 0 && count > 0) {
-                        const level = Math.min(4, Math.ceil((count / globalMax) * 4));
-                        cell.classList.add(`level-${level}`);
-                    }
-                    cell.title = `${date}: ${count}개`;
-                    monthGrid.appendChild(cell);
-                });
-                
-                monthSection.appendChild(monthGrid);
-                container.appendChild(monthSection);
-            });
-        }
+        // renderHeatmap와 render6MonthHeatmap은 modules/stats.js에서 import됨
 
         // 6개월 히트맵 모달 열기/닫기
         const expandHeatmapBtn = document.getElementById('expand-heatmap-btn');
@@ -1541,13 +852,13 @@
 
             }
 
-            // 11월 8일 기준. 이미 지났다면 내년 11월 8일 기준
+            // 11월 두 번째 주 토요일 기준. 이미 지났다면 내년 11월 두 번째 주 토요일 기준
 
             const now = new Date();
 
             const year = now.getFullYear();
 
-            let target = new Date(year, 10, 8); // 0-based: 10 => November
+            let target = getSecondSaturdayOfNovember(year);
 
             const today = new Date();
 
@@ -1555,7 +866,7 @@
 
             if (target < today) {
 
-                target = new Date(year + 1, 10, 8);
+                target = getSecondSaturdayOfNovember(year + 1);
 
             }
 
@@ -1831,174 +1142,63 @@
 
 
 
-        function playSound(audioElement) {
+        // 오디오 요소를 오디오 타입으로 매핑하는 헬퍼 함수
+        function getAudioTypeFromElement(audioElement) {
+            if (!audioElement || !audioElement.src) return null;
+            
+            const src = audioElement.src;
+            if (src.includes('success.mp3')) return 'success';
+            if (src.includes('timeup.mp3')) return 'timeup';
+            if (src.includes('start.mp3')) return 'start';
+            if (src.includes('fail.mp3')) return 'fail';
+            if (src.includes('clear.mp3')) return 'clear';
+            if (src.includes('random.mp3')) return 'random';
+            if (src.includes('click.mp3')) return 'click';
+            if (src.includes('hit.mp3')) return 'slotWin';
+            if (src.includes('great.mp3')) return 'great'; // AudioManager에 없을 수 있음
+            
+            return null;
+        }
 
+        function playSound(audioElement) {
             // 효과음 스위치가 OFF인 경우 재생하지 않음
             if (window.isSoundEnabled && !window.isSoundEnabled()) {
                 return;
             }
 
-            if (!audioElement || typeof audioElement.play !== 'function') {
-
+            if (!audioElement) {
                 console.error('Provided element is not a valid audio element.');
-
                 return;
-
             }
 
-
-
-            const play = () => {
-
-                try {
-
-                    audioElement.currentTime = 0;
-
-                    const playPromise = audioElement.play();
-
-                    
-
-                    if (playPromise !== undefined) {
-
-                        playPromise.catch(err => {
-
+            // AudioManager를 사용하여 재생
+            const audioType = getAudioTypeFromElement(audioElement);
+            if (audioType) {
+                // AudioManager에 없는 타입('great')은 직접 재생
+                if (audioType === 'great') {
+                    if (typeof audioElement.play === 'function') {
+                        audioElement.currentTime = 0;
+                        audioElement.play().catch(err => {
                             console.error(`Audio playback failed for ${audioElement.src}:`, err);
-
-                            // 브라우저에서 자동재생이 차단된 경우를 위한 추가 처리
-
-                            if (err.name === 'NotAllowedError') {
-
-                                console.warn('Audio autoplay was prevented. User interaction may be required.');
-
-                            }
-
                         });
-
                     }
-
-                } catch (err) {
-
-                    console.error(`Error playing audio ${audioElement.src}:`, err);
-
+                } else {
+                    audioManager.playSound(audioType);
                 }
-
-            };
-
-
-
-            // AudioContext 상태 확인 및 복구
-
-            if (audioContext.state === 'suspended') {
-
-                audioContext
-
-                    .resume()
-
-                    .then(() => {
-
-                        play();
-
-                    })
-
-                    .catch(err => {
-
-                        console.warn('Failed to resume AudioContext:', err);
-
-                        // AudioContext 복구에 실패해도 일반 재생 시도
-
-                        play();
-
-                    });
-
             } else {
-
-                play();
-
+                // 매핑되지 않은 경우 직접 재생 (하위 호환성)
+                if (typeof audioElement.play === 'function') {
+                    audioElement.currentTime = 0;
+                    audioElement.play().catch(err => {
+                        console.error(`Audio playback failed for ${audioElement.src}:`, err);
+                    });
+                }
             }
-
         }
 
 
 
-        function normalizeAnswer(str) {
-
-            const ignoreParticleEui =
-
-                gameState.selectedTopic === CONSTANTS.TOPICS.MODEL ||
-
-                (
-
-                    gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM &&
-
-                    (
-
-                                        gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
-
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
-
-                (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
-
-                    )
-
-                );
-
-            const pattern = ignoreParticleEui ? /[\s⋅·의]+/g : /[\s⋅·]+/g;
-
-            const removeChevrons =
-
-                gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
-
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_MODEL;
-
-
-
-            // '기타' 주제 '음악요소'의 경우 괄호 내용을 제거하지 않음
-
-            const shouldRemoveParentheses = !(
-
-                gameState.selectedTopic === CONSTANTS.TOPICS.MORAL && 
-
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS
-
-            );
-
-
-
-            let result = str;
-
-            
-
-            if (shouldRemoveParentheses) {
-
-                result = result.replace(/\([^)]*\)/g, '');
-
-            }
-
-            
-
-            result = result
-
-                .trim()
-
-                .replace(/,/g, '')  // 콤마 무시
-
-                .replace(pattern, '')
-
-                .toLowerCase();
-
-
-
-            if (removeChevrons) {
-
-                result = result.replace(/>/g, '');
-
-            }
-
-
-
-            return result;
-
-        }
+        // normalizeAnswer는 modules/game-utils.js에서 import됨
 
 
 
@@ -2039,7 +1239,9 @@
         // === 오답 추적 관련 함수들 ===
 
         // 문제 ID 생성 함수
-        function generateQuestionId(input) {
+        // generateQuestionId는 modules/game-utils.js에서 import됨
+        // 로컬 함수로 유지 (기존 코드와의 호환성)
+        function generateQuestionIdLocal(input) {
             const section = input.closest('section');
             const sectionId = section ? section.id : 'unknown';
             const answer = input.dataset.answer || '';
@@ -2078,7 +1280,7 @@
 
         // 오답 표시 업데이트 함수
         function updateWrongAnswerIndicators() {
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
             const inputs = document.querySelectorAll(`#${mainId} input[data-answer]`);
             const { selectedSubject, selectedTopic } = gameState;
 
@@ -2281,11 +1483,7 @@
 
         // --- UI 업데이트 함수 ---
 
-        function updateTimeSettingDisplay() {
-
-            timeSettingDisplay.textContent = formatTime(gameState.duration);
-
-        }
+        // updateTimeSettingDisplay는 modules/ui.js에서 import됨
 
         // --- 슬롯 머신 ---
 
@@ -2437,19 +1635,7 @@
 
 
 
-       function focusFirstInput(container) {
-
-           const firstInput = container.querySelector('input[data-answer]:not([disabled])');
-
-           if (firstInput) {
-
-               firstInput.focus();
-
-               firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-           }
-
-       }
+       // focusFirstInput은 modules/ui.js에서 import됨
 
 
 
@@ -2643,7 +1829,7 @@
 
             if (gameState.selectedTopic !== CONSTANTS.TOPICS.BASIC) return;
 
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
 
             document
 
@@ -2802,7 +1988,8 @@
 
             const stats = getDailyStats(30);
 
-            renderHeatmap(stats);
+            renderHeatmapStats(stats);
+            renderDDay();
 
             updateHeatmapTitle(stats);
 
@@ -2810,7 +1997,7 @@
             updateSubjectButtonStates();
 
             // 시간 설정 표시 업데이트
-            updateTimeSettingDisplay();
+            updateTimeSettingDisplay(timeSettingDisplay, gameState.duration);
 
         }
 
@@ -2946,7 +2133,7 @@
 
         function advanceToNextStage(showProgressIfNoNext = true) {
 
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
 
             const main = document.getElementById(mainId);
 
@@ -3125,7 +2312,7 @@
 
                 // 일반 퀴즈 및 맞춤법 빈칸 모드의 경우 입력 요소 기준으로 계산
 
-                const mainId = getMainElementId();
+                const mainId = getMainElementId(gameState);
 
                 const allInputs = document.querySelectorAll(`#${mainId} input[data-answer]`);
 
@@ -3141,7 +2328,7 @@
                 // saveDailyStats(correctCount);
 
                 // 오늘 푼 빈칸 수 표시 요소 업데이트
-                updateTodayBlankCount();
+                updateTodayBlankCount(gameState, showSpecialBlankCountPopup);
 
                 // 과목별 정답률 저장
                 saveSubjectAccuracy(gameState.selectedSubject, correctCount, totalCount);
@@ -3270,11 +2457,11 @@
 
         function handleGameOver() {
 
-            clearInterval(gameState.timerId);
-
+            // TimerManager를 사용하여 타이머 정지
+            timerManager.stop();
             gameState.timerId = null;
 
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
 
             document.querySelectorAll(`#${mainId} input[data-answer]`).forEach(i => i.disabled = true);
 
@@ -3338,8 +2525,8 @@
 
         function resetGame(showStartModal = true) {
 
-            clearInterval(gameState.timerId);
-
+            // TimerManager를 사용하여 타이머 정지
+            timerManager.stop();
             gameState.timerId = null;
 
             // 오늘 푼 빈칸 수 표시 요소 숨김
@@ -3493,7 +2680,7 @@
 
            // 주제와 과목에 따라 올바른 메인 요소 결정
 
-           const mainId = getMainElementId();
+           const mainId = getMainElementId(gameState);
 
            
 
@@ -3733,15 +2920,14 @@
 
             gameState.total = gameState.duration;
 
-            timeEl.textContent = formatTime(gameState.total);
+            // TimerManager와 gameState 동기화
+            timerManager.setDuration(gameState.duration);
+            timerManager.setGameMode(gameState.gameMode);
+            timerManager.reset();
 
-            barEl.style.width = '100%';
-
-            if (gameState.timerId === null) {
-
-                gameState.timerId = setInterval(tick, 1000);
-
-            }
+            // TimerManager를 사용하여 타이머 시작
+            timerManager.start();
+            gameState.timerId = timerManager.timerId; // 동기화를 위해 유지
 
             setCharacterState('idle');
 
@@ -3819,51 +3005,13 @@
 
 
 
-        function getMainElementId() {
-
-            // 주제와 과목에 따라 올바른 메인 요소 결정
-
-            if (gameState.selectedTopic === CONSTANTS.TOPICS.BASIC) {
-
-                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC) {
-
-                    return 'music-basic-quiz-main';
-
-                } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ENGLISH) {
-
-                    return 'english-quiz-main';
-
-                } else if (gameState.selectedSubject === CONSTANTS.SUBJECTS.ART_BASIC) {
-
-                    return 'art-basic-quiz-main';
-
-                } else {
-
-                    return `${gameState.selectedSubject}-quiz-main`;
-
-                }
-
-            } else {
-
-                if (gameState.selectedSubject === CONSTANTS.SUBJECTS.INTEGRATED_GUIDE) {
-
-                    return 'integrated-guide-overview';
-
-                } else {
-
-                    return `${gameState.selectedSubject}-quiz-main`;
-
-                }
-
-            }
-
-        }
+        // getMainElementId는 modules/game-utils.js에서 import됨
 
 
 
         function isQuizComplete() {
 
-            const main = document.getElementById(getMainElementId());
+            const main = document.getElementById(getMainElementId(gameState));
 
             if (!main) return false;
 
@@ -3941,10 +3089,12 @@
 
                 advanceToNextStage(false);
 
-                if (gameState.total > 0 && gameState.timerId === null) {
-
-                    gameState.timerId = setInterval(tick, 1000);
-
+                if (gameState.total > 0 && !timerManager.isRunning()) {
+                    // TimerManager와 gameState 동기화
+                    timerManager.setDuration(gameState.duration);
+                    timerManager.setGameMode(gameState.gameMode);
+                    timerManager.start();
+                    gameState.timerId = timerManager.timerId;
                 }
 
                 if (isQuizComplete()) {
@@ -3973,7 +3123,7 @@
 
             const sectionId = sectionElement.id;
 
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
 
             const main = document.getElementById(mainId);
 
@@ -4051,10 +3201,12 @@
 
                 advanceToNextStage(false);
 
-                if (gameState.total > 0 && gameState.timerId === null) {
-
-                    gameState.timerId = setInterval(tick, 1000);
-
+                if (gameState.total > 0 && !timerManager.isRunning()) {
+                    // TimerManager와 gameState 동기화
+                    timerManager.setDuration(gameState.duration);
+                    timerManager.setGameMode(gameState.gameMode);
+                    timerManager.start();
+                    gameState.timerId = timerManager.timerId;
                 }
 
             }, duration);
@@ -4076,7 +3228,7 @@
 
             const section = input.closest('section');
 
-            const userAnswer = normalizeAnswer(input.value);
+            const userAnswer = normalizeAnswer(input.value, gameState, isSpellingBlankMode);
 
             const stripModelWord = (str) => str.replace(/모형/g, '').replace(/\s+/g, ' ').trim();
 
@@ -4128,7 +3280,7 @@
                 const answers = Array.from(group.querySelectorAll('input[data-answer]')).map(i => i.dataset.answer);
                 const typedSet = new Set(
                     Array.from(group.querySelectorAll('input[data-answer]'))
-                        .map(i => normalizeAnswer(i.value))
+                        .map(i => normalizeAnswer(i.value, gameState, isSpellingBlankMode))
                         .filter(v => v)
                 );
 
@@ -4138,14 +3290,14 @@
 
                 let remaining = answers.filter(ans => !correctAnswers.includes(ans));
                 if (isScienceModelTitleForGrading) {
-                    remaining = remaining.filter(ans => !typedSet.has(normalizeAnswer(ans)));
+                    remaining = remaining.filter(ans => !typedSet.has(normalizeAnswer(ans, gameState, isSpellingBlankMode)));
                 }
 
                 const candidates = getAnswerCandidates(input);
 
                 for (const candidate of candidates) {
 
-                    const canonical = normalizeAnswer(candidate);
+                    const canonical = normalizeAnswer(candidate, gameState, isSpellingBlankMode);
 
                     const canonicalNorm = canonical;
 
@@ -4169,7 +3321,7 @@
 
             } else {
 
-                const correctAnswers = getAnswerCandidates(input).map(answer => normalizeAnswer(answer));
+                const correctAnswers = getAnswerCandidates(input).map(answer => normalizeAnswer(answer, gameState, isSpellingBlankMode));
 
 
 
@@ -4180,7 +3332,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS) {
 
                     // 괄호 내용까지 정확히 입력해야 정답으로 처리 (원본 정답만 사용)
-                    const originalAnswer = normalizeAnswer(input.dataset.answer);
+                    const originalAnswer = normalizeAnswer(input.dataset.answer, gameState, isSpellingBlankMode);
 
                     if (userAnswer === originalAnswer) {
 
@@ -4432,9 +3584,9 @@
 
         function revealCompetencyAnswers() {
 
-            const normalize = str => normalizeAnswer(str);
+            const normalize = str => normalizeAnswer(str, gameState, isSpellingBlankMode);
 
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
 
             document
 
@@ -4629,7 +3781,7 @@
 
             const section = input.closest('section');
 
-            const userAnswer = normalizeAnswer(input.value);
+            const userAnswer = normalizeAnswer(input.value, gameState, isSpellingBlankMode);
 
             const stripModelWord = (str) => str.replace(/모형/g, '').replace(/\s+/g, ' ').trim();
 
@@ -4692,7 +3844,7 @@
                 // Process answers more efficiently
                 inputs.forEach(inp => {
                     const original = inp.dataset.answer.trim();
-                    const normalized = normalizeAnswer(original);
+                    const normalized = normalizeAnswer(original, gameState, isSpellingBlankMode);
 
                     answerMap.set(normalized, original);
 
@@ -4721,7 +3873,7 @@
 
                     const canonical = answerMap.get(candidate);
 
-                    const canonicalNorm = normalizeAnswer(canonical);
+                    const canonicalNorm = normalizeAnswer(canonical, gameState, isSpellingBlankMode);
 
                     
 
@@ -4745,7 +3897,7 @@
 
             } else {
 
-                const correctAnswers = getAnswerCandidates(input).map(answer => normalizeAnswer(answer));
+                const correctAnswers = getAnswerCandidates(input).map(answer => normalizeAnswer(answer, gameState, isSpellingBlankMode));
 
 
 
@@ -4756,7 +3908,7 @@
                     gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS) {
 
                     // 괄호 내용까지 정확히 입력해야 정답으로 처리 (원본 정답만 사용)
-                    const originalAnswer = normalizeAnswer(input.dataset.answer);
+                    const originalAnswer = normalizeAnswer(input.dataset.answer, gameState, isSpellingBlankMode);
 
                     if (userAnswer === originalAnswer) {
 
@@ -4874,7 +4026,7 @@
                 localStorage.setItem('dailyStats', JSON.stringify(dailyStats));
 
                 // UI 즉시 업데이트
-                updateTodayBlankCount();
+                updateTodayBlankCount(gameState, showSpecialBlankCountPopup);
 
                 slotMachine.stopNext();
 
@@ -5118,10 +4270,12 @@
 
                         advanceToNextStage(false);
 
-                        if (gameState.total > 0 && gameState.timerId === null) {
-
-                            gameState.timerId = setInterval(tick, 1000);
-
+                        if (gameState.total > 0 && !timerManager.isRunning()) {
+                            // TimerManager와 gameState 동기화
+                            timerManager.setDuration(gameState.duration);
+                            timerManager.setGameMode(gameState.gameMode);
+                            timerManager.start();
+                            gameState.timerId = timerManager.timerId;
                         }
 
                     }, CONSTANTS.NEXT_STAGE_DELAY);
@@ -5638,10 +4792,12 @@
 
                         advanceToNextStage(false);
 
-                        if (gameState.total > 0 && gameState.timerId === null) {
-
-                            gameState.timerId = setInterval(tick, 1000);
-
+                        if (gameState.total > 0 && !timerManager.isRunning()) {
+                            // TimerManager와 gameState 동기화
+                            timerManager.setDuration(gameState.duration);
+                            timerManager.setGameMode(gameState.gameMode);
+                            timerManager.start();
+                            gameState.timerId = timerManager.timerId;
                         }
 
                     }, CONSTANTS.NEXT_STAGE_DELAY);
@@ -5868,9 +5024,8 @@
 
 
 
-                randomAudio.loop = true;
-
-                playSound(randomAudio);
+                // AudioManager를 사용하여 랜덤 오디오 루프 재생
+                audioManager.startRandomAudio();
 
 
 
@@ -5892,11 +5047,8 @@
 
                         clearInterval(randomInterval);
 
-                        randomAudio.pause();
-
-                        randomAudio.currentTime = 0;
-
-                        randomAudio.loop = false;
+                        // AudioManager를 사용하여 랜덤 오디오 정지
+                        audioManager.stopRandomAudio();
 
 
 
@@ -6017,7 +5169,7 @@
                     
                     // Normal 모드로 돌아올 때 저장된 duration 복원
                     gameState.duration = gameState.normalModeDuration;
-                    updateTimeSettingDisplay();
+                    updateTimeSettingDisplay(timeSettingDisplay, gameState.duration);
                 } else {
                     timeSetterWrapper.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
                     document.getElementById('hard-core-description').classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
@@ -6718,7 +5870,7 @@
 
                 // 개수 블럭 표시 및 최신 데이터로 업데이트
                 todayBlankCount.classList.remove('hidden');
-                updateTodayBlankCount();
+                updateTodayBlankCount(gameState, showSpecialBlankCountPopup);
 
                 // 1.5초 후 자동 숨김
                 countBlockTimer = setTimeout(() => {
@@ -6771,7 +5923,7 @@
             ) {
                 revealCompetencyAnswers();
             } else {
-                const mainId = getMainElementId();
+                const mainId = getMainElementId(gameState);
                 document
                     .querySelectorAll(`#${mainId} input[data-answer]`)
                     .forEach(input => {
@@ -6790,7 +5942,7 @@
                     });
             }
 
-            const mainId = getMainElementId();
+            const mainId = getMainElementId(gameState);
             const main = document.getElementById(mainId);
             if (main) main.dataset.answersRevealed = 'true';
 
@@ -7583,7 +6735,7 @@
                 gameState.duration -= 300;
                 gameState.normalModeDuration = gameState.duration; // Normal 모드 duration도 함께 업데이트
 
-                updateTimeSettingDisplay();
+                updateTimeSettingDisplay(timeSettingDisplay, gameState.duration);
 
             }
 
@@ -7601,7 +6753,7 @@
                 gameState.duration += 300;
                 gameState.normalModeDuration = gameState.duration; // Normal 모드 duration도 함께 업데이트
 
-                updateTimeSettingDisplay();
+                updateTimeSettingDisplay(timeSettingDisplay, gameState.duration);
 
             }
 
@@ -7627,7 +6779,7 @@
 
                 if (titleSection) {
 
-                    const normalize = str => normalizeAnswer(str);
+                    const normalize = str => normalizeAnswer(str, gameState, isSpellingBlankMode);
 
                     const groups = titleSection.querySelectorAll('[data-group]');
 
@@ -7767,7 +6919,7 @@
 
                     if (titleSection) {
 
-                        const normalize = str => normalizeAnswer(str);
+                        const normalize = str => normalizeAnswer(str, gameState, isSpellingBlankMode);
 
                         const groups = titleSection.querySelectorAll('[data-group]');
 
@@ -8759,10 +7911,12 @@
 
             barEl.style.width = '100%';
 
-            if (gameState.timerId === null) {
-
-                gameState.timerId = setInterval(tick, 1000);
-
+            if (!timerManager.isRunning()) {
+                // TimerManager와 gameState 동기화
+                timerManager.setDuration(gameState.duration);
+                timerManager.setGameMode(gameState.gameMode);
+                timerManager.start();
+                gameState.timerId = timerManager.timerId;
             }
 
             setCharacterState('idle');
