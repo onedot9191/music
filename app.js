@@ -3,7 +3,7 @@
     import { CONSTANTS, SUBJECT_NAMES, TOPIC_NAMES, SPELLING_DATA_BASIC, SPELLING_DATA_EXTENDED, SPELLING_DATA_ALL } from './modules/constants.js';
     import { AudioManager } from './modules/audio.js';
     import { TimerManager } from './modules/timer.js';
-    import { formatTime, formatDateKey, getSecondSaturdayOfNovember, updateHeatmapTitle } from './modules/utils.js';
+    import { formatTime, formatDateKey, getNextDDay, updateHeatmapTitle } from './modules/utils.js';
     import {
         measureTextWidthForElement,
         getAnswerCandidates,
@@ -854,21 +854,11 @@
 
             // 11월 두 번째 주 토요일 기준. 이미 지났다면 내년 11월 두 번째 주 토요일 기준
 
-            const now = new Date();
-
-            const year = now.getFullYear();
-
-            let target = getSecondSaturdayOfNovember(year);
+            const target = getNextDDay();
 
             const today = new Date();
 
             today.setHours(0, 0, 0, 0);
-
-            if (target < today) {
-
-                target = getSecondSaturdayOfNovember(year + 1);
-
-            }
 
 
 
@@ -1989,7 +1979,6 @@
             const stats = getDailyStats(30);
 
             renderHeatmapStats(stats);
-            renderDDay();
 
             updateHeatmapTitle(stats);
 
