@@ -2,8 +2,8 @@
 // 통계 및 데이터 관리 관련 함수들을 제공합니다.
 
 import { StorageManager } from './storage.js';
-import { formatDateKey, getSecondSaturdayOfNovember } from './utils.js';
-import { updateHeatmapTitle, renderHeatmap, calculateDDayText } from './utils.js';
+import { formatDateKey } from './utils.js';
+import { updateHeatmapTitle, renderHeatmap, calculateDDayText, getNextDDay } from './utils.js';
 
 // renderDDay는 복잡한 DOM 조작이 필요하므로 app.js에 유지
 // 여기서는 간단한 버전만 제공
@@ -161,7 +161,7 @@ export function updateSubjectButtonStates() {
 export function renderHeatmapStats(stats) {
     renderHeatmap(stats);
     updateHeatmapTitle(stats);
-    // renderDDay는 app.js에서 호출하도록 함 (DOM 조작이 복잡함)
+    renderDDay();
 }
 
 /**
@@ -257,16 +257,10 @@ export function renderDDay(playSound = null) {
     if (!el) return;
     
     // 11월 두 번째 주 토요일 기준. 이미 지났다면 내년 11월 두 번째 주 토요일 기준
-    const now = new Date();
-    const year = now.getFullYear();
-    let target = getSecondSaturdayOfNovember(year);
+    const target = getNextDDay();
     
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    if (target < today) {
-        target = getSecondSaturdayOfNovember(year + 1);
-    }
     
     // 텍스트 D-Day 표시
     const text = calculateDDayText(target);
