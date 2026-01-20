@@ -1811,7 +1811,7 @@ input.activity-input {
   letter-spacing: 1px;
 }
 
-/* D-Day Race (D-100 트랙) */
+/* D-Day Race (D-365 트랙) */
 #dday-race {
   position: relative;
   margin-top: 1.2rem; /* 간격 증가 */
@@ -1859,16 +1859,16 @@ input.activity-input {
   width: 2px;
   height: 18px; /* 다른 세로선과 동일한 높이 */
 }
-/* D-100 위치 세로선 */
+/* D-365 위치 세로선 (중간 표시용) */
 .dday-tick.d100-tick {
   background: rgba(255,255,255,0.25);
   width: 2px;
   height: 18px; /* 다른 세로선과 동일한 높이 */
 }
-/* D-Day 위치 세로선 - 붉게 표기 */
+/* D-Day 위치 세로선 - 일반 색상 */
 .dday-tick.dday-tick-end {
-  background: var(--primary);
-  box-shadow: 0 0 4px var(--primary);
+  background: rgba(255,255,255,0.25);
+  box-shadow: none;
   width: 2px;
   height: 18px; /* 다른 세로선과 동일한 높이 */
 }
@@ -1915,11 +1915,17 @@ input.activity-input {
 }
 .dday-label.left { 
   left: 0; 
-  transform: translateX(0); /* 왼쪽 정렬 유지, JavaScript에서 중앙 계산 */
+  transform: translateX(calc(-50% + 1px)); /* 라벨 중앙이 좌측 세로선(2px 너비)의 중앙에 오도록 */
 }
-/* D-Day 라벨 강조 - JavaScript에서 위치 조정 */
+/* D-100 라벨 - 중간 위치에 배치 */
+.dday-label.d100-label {
+  left: 72.6%; /* D-100 위치 (265/365 * 100) */
+  transform: translateX(calc(-50% + 1px)); /* 라벨 중앙이 D-100 세로선(2px 너비)의 중앙에 오도록 */
+}
+/* D-Day 라벨 강조 - 우측 끝 세로선에 라벨 중앙이 위치하도록 */
 .dday-label.right {
-  /* right와 left는 JavaScript에서 동적으로 설정됨 */
+  right: 1px; /* 세로선 중앙 위치 (우측 끝에서 1px 왼쪽) */
+  transform: translateX(50%); /* 라벨 중앙이 세로선 중앙에 오도록 */
   font-size: 0.9rem; /* 다른 라벨과 동일한 크기 */
   font-weight: 600; /* 다른 라벨과 동일한 굵기 */
   color: var(--primary); /* 이전 색상으로 복원 */
@@ -1930,7 +1936,7 @@ input.activity-input {
   text-shadow: 1px 1px 0px var(--bg-dark); /* 다른 라벨과 동일한 텍스트 그림자 */
   z-index: 3; /* 다른 라벨과 동일한 z-index */
 }
-/* D-100 마커 스타일 - D-365와 동일하게 */
+/* D-365 마커 스타일 */
 .dday-label.d100-marker {
   transform: translateX(-50%);
   font-size: 0.9rem; /* D-365와 동일한 크기 */
@@ -2000,8 +2006,8 @@ input.activity-input {
   background: rgba(255, 255, 255, 0.25); /* 다른 세로선과 동일한 색상 */
 }
 
-/* D-100 위치의 구분선은 약간 더 밝게 */
-.dday-divider:nth-child(9) { /* 270일 = 9 * 30일, D-100 근처 */
+/* D-365 위치의 구분선은 약간 더 밝게 */
+.dday-divider:nth-child(9) { /* 270일 = 9 * 30일, D-365 근처 */
   width: 2px; /* 동일한 두께 유지 */
   height: 18px; /* 동일한 높이 유지 */
   background: rgba(255, 255, 255, 0.3); /* 약간 더 밝게만 */
