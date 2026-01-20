@@ -105,6 +105,28 @@ export function renderHeatmap(stats) {
 }
 
 // === D-Day 관련 ===
+/**
+ * 주어진 연도의 11월 두 번째 주 토요일을 계산합니다.
+ * @param {number} year - 연도
+ * @returns {Date} 11월 두 번째 주 토요일
+ */
+export function getSecondSaturdayOfNovember(year) {
+    // 11월 1일 구하기 (월은 0-based이므로 10 = 11월)
+    const novFirst = new Date(year, 10, 1);
+    const dayOfWeek = novFirst.getDay(); // 0=일요일, 6=토요일
+    
+    // 첫 번째 토요일 계산
+    // 만약 11월 1일이 토요일(6)이면 첫 번째 토요일은 1일
+    // 그 외의 경우: (7 - dayOfWeek)일이 첫 번째 토요일
+    //   일요일(0): 7일, 월요일(1): 6일, 화요일(2): 5일, 수요일(3): 4일, 목요일(4): 3일, 금요일(5): 2일
+    const firstSaturday = dayOfWeek === 6 ? 1 : (7 - dayOfWeek);
+    
+    // 두 번째 토요일 = 첫 번째 토요일 + 7일
+    const secondSaturday = firstSaturday + 7;
+    
+    return new Date(year, 10, secondSaturday);
+}
+
 export function calculateDDayText(targetDate) {
     const msPerDay = 24 * 60 * 60 * 1000;
     const today = new Date();
