@@ -8,18 +8,18 @@
   color: var(--accent) !important; /* 보라색 텍스트 */
 }
 :root {
-  --bg-dark: #1a1a2e;
+  --bg-dark: #0A122A; /* 짙은 네이비 - 메인 배경색 */
   --bg-light: #16213e;
-  --primary: #e94560;
-  --secondary: #0f3460;
-  --accent: #533483;
-  --text-light: #f0f0f0;
-  --text-dark: #a0a0a0;
-  --correct: #00ffff; /* 시안색 (revealed와 통일) */
-  --incorrect: #e94560; /* 빨간색 (primary와 통일) */
-  --retrying: #ffc300; /* Amber/Yellow for retry */
-  --revealed: #00ffff; /* Cyan */
-  --subject-high-accuracy: #6a1b9a; /* 진한 보라색 - 과목 정답률 10% 이상 */
+  --primary: #DC143C; /* 레드 - 버튼 및 강조 요소 (Crimson Red) */
+  --secondary: #000000; /* 검은색 - 외곽선 */
+  --accent: #DC143C; /* 레드 - 포인트 컬러 */
+  --text-light: #FFFFFF; /* 흰색 - 텍스트 (가독성 향상) */
+  --text-dark: #E0E0E0; /* 밝은 회색 - 비활성 상태 */
+  --correct: #2ECC71; /* 에메랄드 그린 - 정답 (개선안 3) */
+  --incorrect: #DC143C; /* 빨간색 - 오답 */
+  --retrying: #FF9800; /* 주황색 - 재시도 (개선안 3) */
+  --revealed: #00BCD4; /* 시안색 - 정답 보기 (개선안 3) */
+  --subject-high-accuracy: #DC143C; /* 레드 - 과목 정답률 10% 이상 */
 
   /* Typography */
   --font-base: 'Noto Sans KR', sans-serif;
@@ -60,6 +60,22 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
   font-weight: 400;
+  /* 실크스크린 인쇄물 같은 미세한 질감 효과 */
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
 }
 
 /* Global UX enhancements */
@@ -300,40 +316,40 @@ header h1 {
   font-family: var(--font-base);
   font-weight: 700;
   color: var(--text-light);
-  background: var(--accent);
-  border: 3px solid var(--primary);
+  background: var(--primary); /* 레드 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 - 버섯 캐릭터와 동일 두께 */
   padding: var(--space-sm) var(--space-md);
-  box-shadow: 5px 5px 0px var(--secondary);
-  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: none; /* 평면 디자인 - 그림자 제거 */
+  transition: transform 0.1s;
   font-size: 1.4rem;
   white-space: nowrap;
-  border-radius: var(--space-sm);
+  border-radius: 0; /* 완전한 평면 형태 */
 }
 .btn:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0px var(--secondary);
+  transform: none; /* 평면 디자인 - 호버 시 변환 없음 */
+  box-shadow: none;
 }
 .btn:active {
-  transform: translate(5px, 5px);
-  box-shadow: 0px 0px 0px var(--secondary);
+  transform: translateY(2px); /* 클릭 시 아래로만 이동 */
+  box-shadow: none;
 }
 .btn.hidden {
   display: none;
 }
 .btn:disabled {
-  background: #444;
-  color: #888;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-dark); /* 크림색 - 비활성 상태 */
   cursor: not-allowed;
-  border-color: #555;
+  border-color: #000000; /* 검은색 외곽선 유지 */
   box-shadow: none;
   transform: none;
 }
 
 #combo-counter {
-  color: var(--incorrect);
+  color: var(--incorrect); /* 레드 */
   font-size: 2.2rem; /* Match H1 size */
   font-weight: 800;
-  text-shadow: 2px 2px 0px var(--primary);
+  text-shadow: none; /* 평면 디자인 - 텍스트 그림자 제거 */
 }
 .combo-pop {
   animation: combo-pop-animation 0.3s ease-out;
@@ -381,20 +397,22 @@ main,
   flex: 1;
   text-align: center;
   padding: 1.2rem 0;
-  background: var(--secondary);
-  border: 3px solid var(--primary);
+  background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--text-dark); /* 크림색 텍스트 */
   transition: all 0.2s;
-  border-radius: 8px;
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 .tab.active {
-  background: var(--primary);
-  color: var(--text-light);
-  transform: translateY(3px);
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  background: var(--primary); /* 레드 배경 */
+  color: var(--text-light); /* 크림색 텍스트 */
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
+  border: 4px solid #000000; /* 두꺼운 검은색 테두리 */
 }
 /* Blur titles for disabled sections in Practical model */
 /* Generic blur for disabled tabs across all model subjects */
@@ -423,14 +441,15 @@ section.active {
 
 h2 {
   text-align: center;
-  color: var(--text-light);
+  color: var(--text-light); /* 크림색 텍스트 */
   margin: 2rem 0 3rem 0;
   font-size: 2.4rem;
   font-weight: 900;
-  background: var(--accent);
+  background: var(--primary); /* 레드 배경 */
   padding: 1.5rem;
-  border: 3px solid var(--primary);
-  border-radius: 12px;
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 .grade-container {
@@ -442,21 +461,22 @@ h2 {
 .grade-container > div {
   flex: 1;
   min-width: 280px;
-  background: var(--bg-light);
-  border: 3px solid var(--primary);
+  background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 .grade-title {
-  background: var(--primary);
+  background: var(--primary); /* 레드 배경 */
   padding: 1rem;
   font-size: 1.8rem;
   font-weight: 900;
   text-align: center;
-  color: var(--text-light);
+  color: var(--text-light); /* 크림색 텍스트 */
   margin: -2rem -2rem 2rem -2rem;
-  border-bottom: 3px solid var(--primary);
-  border-radius: 8px 8px 0 0;
+  border-bottom: 3px solid #000000; /* 검은색 외곽선 */
+  border-radius: 0; /* 평면 형태 */
 }
 
 table {
@@ -526,14 +546,14 @@ td input {
   width: 100%;
   padding: 1.2rem;
   font-size: 1.4rem;
-  border: 2px solid var(--text-dark); /* subtle gray border */
+  border: 3px solid #000000; /* 검은색 외곽선 - 모던 레트로 스타일 */
   background: var(--bg-dark);
   color: var(--text-light);
   font-family: 'Noto Sans KR', sans-serif;
   caret-color: var(--primary);
   margin-bottom: 0; /* Removed margin as gap is used now */
   transition: all 0.2s ease;
-  border-radius: 8px;
+  border-radius: 0; /* 평면 형태 */
 }
 td input.fit-answer {
   width: auto;
@@ -1202,7 +1222,12 @@ input.activity-input {
   display: flex;
   flex-direction: row;
   gap: 0.6rem;
-  margin: 0.1rem 0 0 0;
+  margin: 0.3rem 0 0 0; /* 위로 올리기 - margin-top 증가 */
+  justify-content: center;
+}
+
+.time-section {
+  /* flex 컨테이너로서 자식 요소 중앙 정렬을 위해 */
   justify-content: center;
 }
 
@@ -1310,52 +1335,40 @@ input.activity-input {
   border-left: 2px solid var(--primary);
 }
 
-/* 모드 버튼 세그먼트 스타일 */
+/* 모드 버튼 세그먼트 스타일 - 평면 디자인 */
 .mode-btn-group {
   display: inline-flex;
   gap: 0;
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 
-    2px 2px 0px var(--secondary),
-    0 0 10px rgba(83, 52, 131, 0.2);
-  background: var(--secondary);
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  border-radius: 0; /* 평면 형태 */
+  overflow: visible;
+  box-shadow: none; /* 평면 디자인 */
+  background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
   position: relative;
 }
 
-/* 슬라이딩 배경 */
+/* 슬라이딩 배경 제거 */
 .mode-btn-group::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: var(--accent);
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
-  border-radius: 8px;
+  display: none;
 }
 
-/* Hard 모드 선택 시 오른쪽으로 이동 */
+/* Hard 모드 선택 시 - 사용 안 함 */
 .mode-btn-group[data-selected="hard-core"]::before {
-  transform: translateX(100%);
+  display: none;
 }
 
 .mode-btn-group .mode-btn {
-  border-radius: 0;
+  border-radius: 0; /* 평면 형태 */
   margin: 0;
-  border: none;
+  border: none !important;
   box-shadow: none;
   background: transparent;
-  color: var(--text-light);
+  color: var(--text-dark); /* 비활성 상태 */
   min-width: 70px;
   max-width: 90px;
   padding: 0.5rem 0.8rem;
   font-size: 1.2rem;
-  transition: color 0.3s ease, font-weight 0.3s ease;
+  transition: all 0.2s ease;
   position: relative;
   z-index: 1;
 }
@@ -1364,23 +1377,25 @@ input.activity-input {
   transform: none;
   box-shadow: none;
   background: transparent;
+  color: var(--text-light);
 }
 
 .mode-btn-group .mode-btn:active {
-  transform: none;
+  transform: translateY(2px); /* 클릭 시 아래로만 이동 */
   box-shadow: none;
 }
 
 .mode-btn-group .mode-btn + .mode-btn {
-  border-left: none;
+  border-left: 3px solid #000000 !important; /* 버튼 사이 구분선 */
 }
 
 .mode-btn-group .mode-btn.selected {
-  color: var(--text-light) !important;
+  color: var(--text-light) !important; /* 흰색 텍스트 */
   font-weight: 900;
-  background: transparent !important;
+  background: var(--primary) !important; /* 레드 배경 */
   transform: none !important;
   box-shadow: none !important;
+  border: none !important;
 }
 
 /* Group curriculum buttons (총론, 창체) with visual grouping */
@@ -1468,30 +1483,33 @@ input.activity-input {
 .subject-btn.selected,
 .mode-btn.selected,
 .topic-btn.selected {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
-  color: #ffffff !important;
+  /* 점 패턴 제거 - 단순한 레드 배경 */
+  background: var(--primary) !important; /* 레드 배경 */
+  color: var(--text-light) !important; /* 흰색 텍스트 */
   font-weight: 900;
-  transform: translateY(2px);
-  box-shadow: 
-    0 0 20px rgba(255, 23, 68, 0.6),
-    3px 3px 0px rgba(15, 52, 96, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
-  border-color: #ff1744 !important;
+  transform: none;
+  box-shadow: none; /* 평면 디자인 */
+  border: 4px solid #000000 !important; /* 두꺼운 검은색 테두리 */
+  border-radius: 0; /* 평면 형태 */
 }
 
-/* 비선택된 버튼 스타일 강화 */
+/* 비선택된 버튼 스타일 강화 - 평면 디자인 */
 .subject-btn:not(.selected),
 .topic-btn:not(.selected) {
-  background: rgba(83, 52, 131, 0.3) !important;
-  border-color: rgba(233, 69, 96, 0.3) !important;
-  color: rgba(240, 240, 240, 0.7) !important;
+  background: rgba(10, 18, 42, 0.5) !important; /* 네이비 배경 */
+  border: 3px solid #000000 !important; /* 검은색 외곽선 */
+  color: var(--text-dark) !important; /* 크림색 텍스트 (비활성) */
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 .subject-btn:not(.selected):hover,
 .topic-btn:not(.selected):hover {
-  background: rgba(83, 52, 131, 0.5) !important;
-  border-color: rgba(233, 69, 96, 0.5) !important;
-  color: rgba(240, 240, 240, 0.9) !important;
+  background: rgba(10, 18, 42, 0.7) !important;
+  border: 3px solid #000000 !important;
+  color: var(--text-light) !important; /* 호버 시 밝은 크림색 */
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
 }
 
 /* 하위 메뉴 버튼 비선택 상태 스타일 - .btn 기본 스타일 덮어쓰기 */
@@ -1506,14 +1524,14 @@ button.topic-sub-btn:not(.selected) {
   font-size: 1.2rem !important;
   padding: 0.5rem 0.6rem !important;
   transition: all 0.2s ease !important;
-  background: rgba(83, 52, 131, 0.3) !important;
-  border: 3px solid rgba(233, 69, 96, 0.3) !important;
-  border-color: rgba(233, 69, 96, 0.3) !important;
-  color: rgba(240, 240, 240, 0.7) !important;
-  box-shadow: 3px 3px 0px rgba(15, 52, 96, 0.5) !important;
+  background: rgba(10, 18, 42, 0.5) !important; /* 네이비 배경 */
+  border: 3px solid #000000 !important; /* 검은색 외곽선 */
+  border-color: #000000 !important;
+  color: var(--text-dark) !important; /* 크림색 텍스트 (비활성) */
+  box-shadow: none !important; /* 평면 디자인 */
   font-weight: normal !important;
   white-space: nowrap !important;
-  border-radius: var(--space-sm) !important;
+  border-radius: 0 !important; /* 평면 형태 */
   cursor: pointer !important;
 }
 
@@ -1525,11 +1543,11 @@ button.topic-sub-btn:not(.selected) {
 button.btn.topic-sub-btn:not(.selected):hover,
 .topic-sub-btn:not(.selected):hover,
 button.topic-sub-btn:not(.selected):hover {
-  background: rgba(83, 52, 131, 0.5) !important;
-  border-color: rgba(233, 69, 96, 0.5) !important;
-  color: rgba(240, 240, 240, 0.9) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 2px 2px 0px rgba(15, 52, 96, 0.5) !important;
+  background: rgba(10, 18, 42, 0.7) !important;
+  border: 3px solid #000000 !important;
+  color: var(--text-light) !important; /* 호버 시 밝은 크림색 */
+  transform: none !important; /* 평면 디자인 */
+  box-shadow: none !important;
 }
 
 [id$="-submenu"] .btn.topic-sub-btn:not(.selected):active,
@@ -1540,50 +1558,41 @@ button.topic-sub-btn:not(.selected):hover {
 button.btn.topic-sub-btn:not(.selected):active,
 .topic-sub-btn:not(.selected):active,
 button.topic-sub-btn:not(.selected):active {
-  transform: translateY(0px) !important;
-  box-shadow: 1px 1px 0px rgba(15, 52, 96, 0.5) !important;
+  transform: translateY(2px) !important; /* 클릭 시 아래로만 이동 */
+  box-shadow: none !important;
 }
 
 .subject-btn.is-selecting {
-  background: var(--accent);
-  transform: scale(1.1) translateY(0);
-  box-shadow: 0 0 15px var(--accent);
+  background: var(--primary); /* 레드 배경 */
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
   transition: all 0.1s ease-in-out;
+  border: 4px solid #000000; /* 두꺼운 검은색 테두리 */
 }
 
 .subject-btn:active {
-  transform: translate(5px, 5px);
-  box-shadow: 0px 0px 0px var(--secondary);
+  transform: translateY(2px); /* 클릭 시 아래로만 이동 */
+  box-shadow: none; /* 평면 디자인 */
 }
 
 .subject-btn.high-accuracy {
-  border-color: var(--primary) !important;
+  border-color: #000000 !important; /* 검은색 외곽선 */
+  border-width: 4px !important; /* 두꺼운 테두리 */
   color: var(--text-light);
   position: relative;
-  box-shadow:
-    0 0 0 3px rgba(156, 39, 176, 1.0),
-    0 0 0 5px rgba(156, 39, 176, 0.8),
-    0 0 0 8px rgba(156, 39, 176, 0.4);
+  box-shadow: none; /* 평면 디자인 */
 }
 
 .subject-btn.high-accuracy:hover {
-  border-color: var(--primary) !important;
-  transform: translate(2px, 2px);
-  box-shadow:
-    3px 3px 0px var(--secondary),
-    0 0 0 4px rgba(156, 39, 176, 1.0),
-    0 0 0 7px rgba(156, 39, 176, 0.9),
-    0 0 0 10px rgba(156, 39, 176, 0.5);
+  border-color: #000000 !important;
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
 }
 
 .subject-btn.high-accuracy:active {
-  border-color: var(--primary) !important;
-  transform: translate(5px, 5px);
-  box-shadow:
-    0px 0px 0px var(--secondary),
-    0 0 0 3px rgba(156, 39, 176, 1.0),
-    0 0 0 6px rgba(156, 39, 176, 0.7),
-    0 0 0 9px rgba(156, 39, 176, 0.3);
+  border-color: #000000 !important;
+  transform: translateY(2px); /* 클릭 시 아래로만 이동 */
+  box-shadow: none;
 }
 #random-subject-btn {
   background-color: #524360; /* 채도가 ??? 보라??*/
@@ -1591,86 +1600,48 @@ button.topic-sub-btn:not(.selected):active {
 
 
 #start-game-btn {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 30%, #ff1744 70%, #ff6b6b 100%);
-  background-size: 200% 200%;
-  color: var(--text-light);
+  background: var(--primary); /* 레드 배경 - 단순한 평면 */
+  color: var(--text-light); /* 크림색 텍스트 */
   padding: 1.5rem 3.5rem;
   margin-top: 1rem;
   margin-bottom: 0;
   font-size: 2.6rem;
   font-weight: 900;
-  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
-  border: 5px solid #ff1744;
+  text-shadow: none; /* 평면 디자인 - 텍스트 그림자 제거 */
+  border: 5px solid #000000; /* 굵은 검은색 테두리 - 버섯 캐릭터 몸통처럼 */
   width: 100%;
   justify-self: center;
-  box-shadow: 
-    8px 8px 0px var(--secondary),
-    0 0 30px rgba(255, 23, 68, 0.6),
-    0 0 60px rgba(255, 23, 68, 0.3);
+  box-shadow: none; /* 평면 디자인 - 그림자 제거 */
   position: relative;
-  overflow: hidden;
-  animation: pulse-start-btn 1.5s ease-in-out infinite, gradient-shift 2s ease infinite;
+  overflow: visible;
+  animation: none; /* 애니메이션 제거 */
   z-index: 10;
+  border-radius: 0; /* 완전한 직사각형 */
+  transition: transform 0.1s ease; /* 클릭 피드백만 */
 }
 
 #start-game-btn::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 70%
-  );
-  transform: rotate(45deg);
-  animation: shine 3s ease-in-out infinite;
-  pointer-events: none;
+  display: none; /* ::before 제거 */
 }
 
 #start-game-btn:hover {
-  transform: translate(4px, 4px) scale(1.03);
-  box-shadow: 
-    4px 4px 0px var(--secondary),
-    0 0 40px rgba(255, 23, 68, 0.8),
-    0 0 80px rgba(255, 23, 68, 0.4);
-  animation: pulse-start-btn 0.8s ease-in-out infinite, gradient-shift 1.5s ease infinite;
+  transform: none; /* 호버 시 변화 없음 */
+  box-shadow: none;
+  animation: none;
 }
 
 #start-game-btn:active {
-  transform: translate(6px, 6px) scale(0.98);
-  box-shadow: 
-    0px 0px 0px var(--secondary),
-    0 0 15px rgba(233, 69, 96, 0.4);
+  transform: translateY(3px); /* 클릭 시 아래로만 이동 */
+  box-shadow: none;
 }
 
-@keyframes pulse-start-btn {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
-}
-
+/* pulse-start-btn 애니메이션 제거 */
 @keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  /* 제거됨 */
 }
 
 @keyframes shine {
-  0% {
-    left: -100%;
-    top: -100%;
-  }
-  50%, 100% {
+  /* 제거됨 */
     left: 100%;
     top: 100%;
   }
@@ -1679,13 +1650,13 @@ button.topic-sub-btn:not(.selected):active {
 #hard-core-description {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
   align-items: center;
   justify-content: center;
-  padding: 0.1rem 0 0.9rem 0;
+  padding: 0;
   margin: 0;
   flex: 1;
-  min-height: 100px;
+  min-height: 0; /* 부모 높이에 맞춤 */
+  height: 100%; /* 부모의 전체 높이 사용 */
 }
 
 #hard-core-description.hidden {
@@ -1709,18 +1680,20 @@ button.topic-sub-btn:not(.selected):active {
   color: var(--text-light);
   text-align: center;
   line-height: 1.8;
+  /* flex 컨테이너의 중앙 정렬을 위해 */
+  align-self: center;
 }
 
-/* Activity Heatmap */
+/* Activity Heatmap - 모던 레트로 스타일 */
 #activity-heatmap {
   /* Minimal, GitHub-like grid */
   --heatmap-cell-size: 18px;
   --heatmap-gap: 8px;
-  --heatmap-neutral: #2b233a; /* 퍼플 기운의 중립 배경 */
-  --heatmap-l1: #ffe6f1; /* 옅은 핑크 */
-  --heatmap-l2: #f5b3d9; /* 연한 핑크 */
-  --heatmap-l3: #cf7acb; /* 보랏빛 핑크 */
-  --heatmap-l4: #6f54c7; /* 진한 퍼플 */
+  --heatmap-neutral: rgba(10, 18, 42, 0.6); /* 네이비 중립 배경 */
+  --heatmap-l1: #FFB6C1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
+  --heatmap-l2: #FF7F7F; /* 연한 레드 - 레벨 2 */
+  --heatmap-l3: #FF4444; /* 중간 레드 - 레벨 3 */
+  --heatmap-l4: #DC143C; /* 진한 레드 - 레벨 4 (포인트 컬러) */
 
   display: grid;
   grid-template-columns: repeat(7, var(--heatmap-cell-size));
@@ -1733,25 +1706,39 @@ button.topic-sub-btn:not(.selected):active {
   width: var(--heatmap-cell-size);
   height: var(--heatmap-cell-size);
   background: var(--heatmap-neutral);
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0; /* 평면 형태 */
+  border: 1px solid #000000; /* 검은색 외곽선 */
   transition: transform 0.06s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: none; /* 평면 디자인 */
 }
 .heatmap-cell:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.28);
+  transform: scale(1.05); /* 약한 확대만 */
+  box-shadow: 0 0 0 1px #000000; /* 검은색 외곽선 강조 */
+  border: 1px solid #000000;
 }
 .heatmap-cell:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
-.heatmap-cell.level-1 { background: var(--heatmap-l1); }
-.heatmap-cell.level-2 { background: var(--heatmap-l2); }
-.heatmap-cell.level-3 { background: var(--heatmap-l3); }
-.heatmap-cell.level-4 { background: var(--heatmap-l4); }
+.heatmap-cell.level-1 { 
+  background: var(--heatmap-l1); 
+  border: 1px solid #000000;
+}
+.heatmap-cell.level-2 { 
+  background: var(--heatmap-l2); 
+  border: 1px solid #000000;
+}
+.heatmap-cell.level-3 { 
+  background: var(--heatmap-l3); 
+  border: 1px solid #000000;
+}
+.heatmap-cell.level-4 { 
+  background: var(--heatmap-l4); 
+  border: 2px solid #000000; /* 최고 레벨은 두꺼운 테두리 */
+}
 .heatmap-cell.empty {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(10, 18, 42, 0.3); /* 네이비 - 투명도 높임 */
+  border-color: rgba(0, 0, 0, 0.3); /* 연한 검은색 테두리 */
 }
 
 /* Heatmap panel placement next to settings */
@@ -2271,7 +2258,7 @@ button.topic-sub-btn:not(.selected):active {
 .mushroom-cap {
   width: 100%;
   height: 65%;
-  background: #d9534f;
+  background: var(--primary); /* #DC143C - 웹사이트 포인트 컬러 */
   border: 3px solid #000;
   border-radius: 50% 50% 20% 20%;
   position: absolute;
@@ -2388,7 +2375,7 @@ button.topic-sub-btn:not(.selected):active {
 }
 
 #character-assistant.sad .mushroom-cap {
-  background-color: #533483;
+  background-color: rgba(10, 18, 42, 0.8); /* 네이비 - 슬픔 상태에서 어둡게 */
 }
 #character-assistant.sad .mushroom {
   transform: rotate(-15deg) translateY(5px);
@@ -5395,12 +5382,12 @@ input.wrong-answer-indicator {
 }
 
 .month-heatmap-grid {
-  /* 히트맵 색상 변수 */
-  --heatmap-neutral: #2b233a; /* 퍼플 기운의 중립 배경 */
-  --heatmap-l1: #ffe6f1; /* 옅은 핑크 */
-  --heatmap-l2: #f5b3d9; /* 연한 핑크 */
-  --heatmap-l3: #cf7acb; /* 보랏빛 핑크 */
-  --heatmap-l4: #6f54c7; /* 진한 퍼플 */
+  /* 히트맵 색상 변수 - 모던 레트로 스타일 */
+  --heatmap-neutral: rgba(10, 18, 42, 0.6); /* 네이비 중립 배경 */
+  --heatmap-l1: #FFB6C1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
+  --heatmap-l2: #FF7F7F; /* 연한 레드 - 레벨 2 */
+  --heatmap-l3: #FF4444; /* 중간 레드 - 레벨 3 */
+  --heatmap-l4: #DC143C; /* 진한 레드 - 레벨 4 (포인트 컬러) */
   
   display: grid;
   grid-template-columns: repeat(7, 24px);
@@ -5412,24 +5399,38 @@ input.wrong-answer-indicator {
 .month-heatmap-grid .heatmap-cell {
   width: 24px;
   height: 24px;
-  background: var(--heatmap-neutral);
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--heatmap-neutral); /* 네이비 중립 배경 */
+  border-radius: 0; /* 평면 형태 */
+  border: 1px solid #000000; /* 검은색 외곽선 */
   transition: transform 0.06s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: none; /* 평면 디자인 */
 }
 
 .month-heatmap-grid .heatmap-cell:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.28);
+  transform: scale(1.05); /* 약한 확대만 */
+  box-shadow: 0 0 0 1px #000000; /* 검은색 외곽선 강조 */
+  border: 1px solid #000000;
 }
 
-.month-heatmap-grid .heatmap-cell.level-1 { background: var(--heatmap-l1); }
-.month-heatmap-grid .heatmap-cell.level-2 { background: var(--heatmap-l2); }
-.month-heatmap-grid .heatmap-cell.level-3 { background: var(--heatmap-l3); }
-.month-heatmap-grid .heatmap-cell.level-4 { background: var(--heatmap-l4); }
+.month-heatmap-grid .heatmap-cell.level-1 { 
+  background: var(--heatmap-l1); 
+  border: 1px solid #000000;
+}
+.month-heatmap-grid .heatmap-cell.level-2 { 
+  background: var(--heatmap-l2); 
+  border: 1px solid #000000;
+}
+.month-heatmap-grid .heatmap-cell.level-3 { 
+  background: var(--heatmap-l3); 
+  border: 1px solid #000000;
+}
+.month-heatmap-grid .heatmap-cell.level-4 { 
+  background: var(--heatmap-l4); 
+  border: 2px solid #000000; /* 최고 레벨은 두꺼운 테두리 */
+}
 .month-heatmap-grid .heatmap-cell.empty {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(10, 18, 42, 0.3); /* 네이비 - 투명도 높임 */
+  border-color: rgba(0, 0, 0, 0.3); /* 연한 검은색 테두리 */
 }
 
 /* 반응형 디자인 */
