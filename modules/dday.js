@@ -91,6 +91,12 @@ export function createDDayRenderer() {
                 tick0.className = 'dday-tick dday-tick-start';
                 tick0.style.left = '0';
                 
+                // D-200 위치 세로선 계산
+                const d200Position = ((365 - 200) / 365) * 100;
+                const tickD200 = document.createElement('div');
+                tickD200.className = 'dday-tick d200-tick';
+                tickD200.style.left = `calc(${d200Position}% - 1px)`;
+                
                 // D-100 위치 세로선 계산
                 const d100Position = ((365 - 100) / 365) * 100;
                 const tickD100 = document.createElement('div');
@@ -153,6 +159,10 @@ export function createDDayRenderer() {
                 leftLabel.className = 'dday-label left';
                 leftLabel.textContent = 'D-365';
                 
+                const d200Label = document.createElement('div');
+                d200Label.className = 'dday-label d200-label';
+                d200Label.textContent = 'D-200';
+                
                 const d100Label = document.createElement('div');
                 d100Label.className = 'dday-label d100-label';
                 d100Label.textContent = 'D-100';
@@ -168,11 +178,13 @@ export function createDDayRenderer() {
                 race.appendChild(line);
                 race.appendChild(progress);
                 race.appendChild(tick0);
+                race.appendChild(tickD200);
                 race.appendChild(tickD100);
                 race.appendChild(tick100);
                 race.appendChild(runner);
                 race.appendChild(finish);
                 race.appendChild(leftLabel);
+                race.appendChild(d200Label);
                 race.appendChild(d100Label);
                 race.appendChild(rightLabel);
                 race.appendChild(ddayChip);
@@ -196,14 +208,46 @@ export function createDDayRenderer() {
             const range = Math.max(0, race.clientWidth - finishOffset);
             const pos = Math.round((percent / 100) * range);
             
-            runnerEl.style.left = `${pos}px`;
-            if (progressEl) progressEl.style.width = `${pos}px`;
+            // 초기 상태 설정: 시작점에 배치
+            runnerEl.style.left = '0px';
+            runnerEl.style.transition = 'left 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
             
-            if (chipEl) {
-                chipEl.textContent = text;
-                let chipX = pos;
-                chipEl.style.left = `${chipX}px`;
+            if (progressEl) {
+                progressEl.style.width = '0px';
+                progressEl.style.transition = 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
             }
+            
+            // D-Day 텍스트 초기 숨김
+            el.classList.remove('visible');
+            if (chipEl) {
+                chipEl.classList.remove('visible');
+                chipEl.textContent = text;
+                chipEl.style.left = '0px';
+                chipEl.style.transition = 'opacity 0.3s ease-in 0.6s, left 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+            }
+            
+            // 다음 프레임에서 애니메이션 시작 (레이아웃이 완전히 계산된 후)
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // 버섯과 진행 바를 목표 위치로 이동
+                    runnerEl.style.left = `${pos}px`;
+                    if (progressEl) {
+                        progressEl.style.width = `${pos}px`;
+                    }
+                    
+                    if (chipEl) {
+                        chipEl.style.left = `${pos}px`;
+                    }
+                    
+                    // 애니메이션 중간에 텍스트 표시
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                        if (chipEl) {
+                            chipEl.classList.add('visible');
+                        }
+                    }, 600); // 0.6초 후
+                });
+            });
             
             race.setAttribute('aria-label', `디데이 경주 진행도 ${Math.round(percent)}%`);
         }
