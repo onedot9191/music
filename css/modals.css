@@ -129,26 +129,329 @@
 /* === 시작 모달 === */
 #start-modal .modal-content {
   max-width: 800px;
+  min-height: 650px;
+  max-height: none;
+  height: auto !important;
+}
+
+/* settings-panel 높이 자동 조정 */
+#start-modal #settings-panel {
+  height: auto !important;
+  min-height: auto !important;
 }
 
 #start-modal .topic-selector {
   display: grid;
-  gap: 1rem;
-  margin-bottom: var(--space-lg);
+  gap: 0.6rem;
+  margin-bottom: 0;
+  padding: 1.2rem;
+  background: rgba(15, 52, 96, 0.4);
+  border-radius: 10px;
+  border: 2px solid rgba(233, 69, 96, 0.4);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#start-modal .topic-selector .topic-btn {
+  background: rgba(83, 52, 131, 0.3) !important;
+  border-color: rgba(233, 69, 96, 0.3) !important;
+  color: rgba(240, 240, 240, 0.7) !important;
+  transition: all 0.2s ease;
+}
+
+#start-modal .topic-selector .topic-btn:hover {
+  background: rgba(83, 52, 131, 0.5) !important;
+  border-color: rgba(233, 69, 96, 0.5) !important;
+  color: rgba(240, 240, 240, 0.9) !important;
+  transform: translateY(-1px);
+}
+
+#start-modal .topic-selector .topic-btn.selected {
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
+  border-color: #ff1744 !important;
+  color: #ffffff !important;
+  font-weight: 900;
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 0.6),
+    3px 3px 0px rgba(15, 52, 96, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  transform: translateY(2px);
 }
 
 @media (min-width: 900px) {
   #start-modal .topic-selector {
-    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
   }
 }
 
+#settings-panel .subject-selector,
 .subject-selector {
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  gap: 0.6rem;
+  margin-bottom: 0;
+  flex-wrap: unset !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  flex-direction: unset !important;
+  padding: 1.2rem;
+  background: rgba(15, 52, 96, 0.4);
+  border-radius: 10px;
+  border: 2px solid rgba(233, 69, 96, 0.4);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .subject-selector {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+.subject-selector .subject-btn {
+  font-size: 1.4rem;
+  padding: 0.9rem;
+  min-height: 50px;
+  background: rgba(83, 52, 131, 0.3);
+  border: 2px solid rgba(233, 69, 96, 0.3);
+  color: rgba(240, 240, 240, 0.7);
+  transition: all 0.2s ease;
+}
+
+.subject-selector .subject-btn:hover {
+  background: rgba(83, 52, 131, 0.5);
+  border-color: rgba(233, 69, 96, 0.5);
+  color: rgba(240, 240, 240, 0.9);
+  transform: translateY(-1px);
+}
+
+.subject-selector .subject-btn.selected {
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
+  border-color: #ff1744 !important;
+  color: #ffffff !important;
+  font-weight: 900;
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 0.6),
+    3px 3px 0px rgba(15, 52, 96, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  transform: translateY(2px);
+}
+
+/* data-subject 속성을 가진 중복 버튼 숨기기 (subject-selector 밖에 있는 것들) */
+#settings-panel > .subject-btn[data-subject]:not([data-subject-group]),
+.subject-selector ~ .subject-btn[data-subject]:not([data-subject-group]),
+#settings-panel .subject-btn[data-subject]:not([data-subject-group]):not(.topic-sub-btn),
+button.subject-btn[data-subject]:not([data-subject-group]),
+#settings-panel button.subject-btn[data-subject]:not([data-subject-group]),
+#settings-panel button.btn.subject-btn[data-subject]:not([data-subject-group]),
+.subject-selector ~ button.btn.subject-btn[data-subject]:not([data-subject-group]),
+#settings-panel .subject-btn[data-subject][data-topic]:not([data-subject-group]),
+#settings-panel .subject-btn-group .subject-btn[data-subject],
+#settings-panel .curriculum-group .subject-btn[data-subject] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  pointer-events: none !important;
+}
+
+/* curriculum-break, model-break 등 불필요한 요소 숨기기 */
+#curriculum-break,
+#model-break,
+.subject-btn-group,
+.curriculum-group {
+  display: none !important;
+}
+
+/* subject-selector 밖에 있는 모든 subject-btn 숨기기 (data-subject-group이 없는 것들) */
+#settings-panel > button.subject-btn:not([data-subject-group]),
+.subject-selector ~ button.subject-btn:not([data-subject-group]) {
+  display: none !important;
+}
+
+/* 과목 그룹 스타일 */
+.subject-group {
+  border: 3px solid var(--secondary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: rgba(15, 52, 96, 0.4);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.subject-group:hover {
+  border-color: var(--primary);
+  background: rgba(15, 52, 96, 0.6);
+  box-shadow: 0 6px 12px rgba(233, 69, 96, 0.3);
+  transform: translateY(-2px);
+}
+
+.subject-group.selected {
+  border-color: var(--primary);
+  background: rgba(233, 69, 96, 0.15);
+  box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+}
+
+.subject-group-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--secondary);
+}
+
+.subject-group-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-light);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.subject-group.selected .subject-group-name {
+  color: var(--primary);
+}
+
+.subject-group-topics {
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.subject-group.selected .subject-group-topics {
+  color: var(--text-light);
+}
+
+.subject-group-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: var(--space-lg);
+  gap: 0.8rem;
+}
+
+/* 비선택된 하위 버튼 기본 스타일 - 높은 특이성으로 강제 적용 */
+/* .btn 클래스의 기본 스타일을 완전히 덮어쓰기 */
+[id$="-submenu"] .topic-sub-btn:not(.selected),
+[id$="-submenu"] .btn.topic-sub-btn:not(.selected),
+[id$="-submenu"] button.topic-sub-btn:not(.selected),
+[id$="-submenu"] button.btn.topic-sub-btn:not(.selected),
+.topic-sub-btn:not(.selected),
+.btn.topic-sub-btn:not(.selected),
+button.topic-sub-btn:not(.selected),
+button.btn.topic-sub-btn:not(.selected) {
+  font-size: 1.2rem !important;
+  padding: 0.5rem 0.6rem !important;
+  transition: all 0.2s ease !important;
+  background: rgba(83, 52, 131, 0.3) !important;
+  border: 3px solid rgba(233, 69, 96, 0.3) !important;
+  border-color: rgba(233, 69, 96, 0.3) !important;
+  color: rgba(240, 240, 240, 0.7) !important;
+  box-shadow: 3px 3px 0px rgba(15, 52, 96, 0.5) !important;
+  font-weight: normal !important;
+  white-space: nowrap !important;
+  border-radius: var(--space-sm) !important;
+  cursor: pointer !important;
+}
+
+[id$="-submenu"] .topic-sub-btn:not(.selected):hover,
+[id$="-submenu"] .btn.topic-sub-btn:not(.selected):hover,
+[id$="-submenu"] button.topic-sub-btn:not(.selected):hover,
+[id$="-submenu"] button.btn.topic-sub-btn:not(.selected):hover,
+.topic-sub-btn:not(.selected):hover,
+.btn.topic-sub-btn:not(.selected):hover,
+button.topic-sub-btn:not(.selected):hover,
+button.btn.topic-sub-btn:not(.selected):hover {
+  background: rgba(83, 52, 131, 0.5) !important;
+  border-color: rgba(233, 69, 96, 0.5) !important;
+  color: rgba(240, 240, 240, 0.9) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 2px 2px 0px rgba(15, 52, 96, 0.5) !important;
+}
+
+[id$="-submenu"] .topic-sub-btn:not(.selected):active,
+[id$="-submenu"] .btn.topic-sub-btn:not(.selected):active,
+[id$="-submenu"] button.topic-sub-btn:not(.selected):active,
+[id$="-submenu"] button.btn.topic-sub-btn:not(.selected):active,
+.topic-sub-btn:not(.selected):active,
+.btn.topic-sub-btn:not(.selected):active,
+button.topic-sub-btn:not(.selected):active,
+button.btn.topic-sub-btn:not(.selected):active {
+  transform: translateY(0px) !important;
+  box-shadow: 1px 1px 0px rgba(15, 52, 96, 0.5) !important;
+}
+
+/* 하위 메뉴 컴팩트 스타일 */
+[id$="-submenu"] {
+  margin-top: 0.5rem !important;
+  padding: 0.6rem !important;
+  background: rgba(15, 52, 96, 0.35) !important;
+  border-radius: 8px !important;
+  border: 2px solid rgba(233, 69, 96, 0.4) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[id$="-submenu"] h3 {
+  font-size: 1.2rem !important;
+  margin-bottom: 0.5rem !important;
+  color: var(--text-light) !important;
+  font-weight: 700;
+}
+
+[id$="-submenu"] > div {
+  gap: 0.5rem !important;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+}
+
+/* 하위 선택지 버튼 선택 상태 - 더 구체적인 선택자 사용 */
+.btn.topic-sub-btn.selected,
+.topic-sub-btn.selected,
+button.topic-sub-btn.selected {
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
+  color: #ffffff !important;
+  font-weight: 900;
+  transform: translateY(2px) !important;
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 0.6),
+    3px 3px 0px rgba(15, 52, 96, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
+  border-color: #ff1744 !important;
+}
+
+.btn.topic-sub-btn.selected:hover,
+.topic-sub-btn.selected:hover,
+button.topic-sub-btn.selected:hover {
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
+  color: #ffffff !important;
+  transform: translateY(2px) !important;
+  box-shadow: 
+    0 0 25px rgba(255, 23, 68, 0.7),
+    3px 3px 0px rgba(15, 52, 96, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
+}
+
+.btn.topic-sub-btn.selected:active,
+.topic-sub-btn.selected:active,
+button.topic-sub-btn.selected:active {
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
+  color: #ffffff !important;
+  transform: translateY(4px) !important;
+  box-shadow: 
+    0 0 15px rgba(255, 23, 68, 0.5),
+    1px 1px 0px rgba(15, 52, 96, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 기존 중복 버튼 숨기기 */
+.subject-selector > .subject-btn[data-topic],
+.subject-selector > .subject-btn-group,
+.subject-selector > .subject-break,
+.subject-selector > .curriculum-group {
+  display: none !important;
 }
 
 .subject-btn-group {
