@@ -7,14 +7,15 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: var(--bg-light);
-  border-bottom: 4px solid var(--primary);
+  background: rgba(10, 18, 42, 0.95); /* 네이비 배경 */
+  border-bottom: 4px solid #000000; /* 검은색 외곽선 */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-sm) var(--space-lg);
   z-index: 100;
   flex-wrap: wrap;
+  box-shadow: none; /* 평면 디자인 */
 }
 
 .hud-left,
@@ -46,8 +47,8 @@ header {
 header h1 {
   font-family: var(--font-display);
   font-size: 2.2rem;
-  color: var(--primary);
-  text-shadow: 3px 3px 0px var(--secondary);
+  color: var(--primary); /* 레드 */
+  text-shadow: none; /* 평면 디자인 - 텍스트 그림자 제거 */
 }
 
 /* === 메인 컨테이너 === */
