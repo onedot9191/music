@@ -3409,7 +3409,7 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 #western-ethics-quiz-main .overview-question.overview-top,
 #moral-psychology-quiz-main .overview-question.overview-top,
 #integrated-guide-overview .overview-question.overview-top {
-  margin-left: 0;
+  margin-left: 4rem;
 }
 #overview-quiz-main .overview-question.overview-sub,
 #eastern-ethics-quiz-main .overview-question.overview-sub,
