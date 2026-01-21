@@ -1693,7 +1693,7 @@ button.topic-sub-btn:not(.selected):active {
   --heatmap-l1: #FFB6C1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
   --heatmap-l2: #FF7F7F; /* 연한 레드 - 레벨 2 */
   --heatmap-l3: #FF4444; /* 중간 레드 - 레벨 3 */
-  --heatmap-l4: #DC143C; /* 진한 레드 - 레벨 4 (포인트 컬러) */
+  --heatmap-l4: #B71C1C; /* 매우 진한 레드 - 레벨 4 (포인트 컬러, 레벨 3과 명확한 위계) */
 
   display: grid;
   grid-template-columns: repeat(7, var(--heatmap-cell-size));
@@ -5387,7 +5387,7 @@ input.wrong-answer-indicator {
   --heatmap-l1: #FFB6C1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
   --heatmap-l2: #FF7F7F; /* 연한 레드 - 레벨 2 */
   --heatmap-l3: #FF4444; /* 중간 레드 - 레벨 3 */
-  --heatmap-l4: #DC143C; /* 진한 레드 - 레벨 4 (포인트 컬러) */
+  --heatmap-l4: #B71C1C; /* 매우 진한 레드 - 레벨 4 (포인트 컬러, 레벨 3과 명확한 위계) */
   
   display: grid;
   grid-template-columns: repeat(7, 24px);
