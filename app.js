@@ -1719,12 +1719,13 @@
                            const firstBtn = submenu.querySelector('.topic-sub-btn');
                            if (firstBtn) {
                                firstBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                               firstBtn.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
-                               firstBtn.style.color = '#ffffff';
-                               firstBtn.style.fontWeight = '900';
-                               firstBtn.style.transform = 'translateY(2px)';
-                               firstBtn.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
-                               firstBtn.style.borderColor = '#ff1744';
+                               // 인라인 스타일 제거 - CSS가 적용되도록
+                               firstBtn.style.background = '';
+                               firstBtn.style.color = '';
+                               firstBtn.style.fontWeight = '';
+                               firstBtn.style.transform = '';
+                               firstBtn.style.boxShadow = '';
+                               firstBtn.style.borderColor = '';
                                // gameState도 업데이트
                                gameState.selectedSubject = firstBtn.dataset.subject;
                                gameState.selectedTopic = firstBtn.dataset.topic;
@@ -4694,23 +4695,25 @@
                         const currentSelectedBtn = submenu.querySelector(`.topic-sub-btn[data-subject="${gameState.selectedSubject}"]`);
                         if (currentSelectedBtn) {
                             currentSelectedBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                            currentSelectedBtn.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
-                            currentSelectedBtn.style.color = '#ffffff';
-                            currentSelectedBtn.style.fontWeight = '900';
-                            currentSelectedBtn.style.transform = 'translateY(2px)';
-                            currentSelectedBtn.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
-                            currentSelectedBtn.style.borderColor = '#ff1744';
+                            // 인라인 스타일 제거 - CSS가 적용되도록
+                            currentSelectedBtn.style.background = '';
+                            currentSelectedBtn.style.color = '';
+                            currentSelectedBtn.style.fontWeight = '';
+                            currentSelectedBtn.style.transform = '';
+                            currentSelectedBtn.style.boxShadow = '';
+                            currentSelectedBtn.style.borderColor = '';
                 } else {
                             // 첫 번째 버튼을 기본 선택
                             const firstBtn = submenu.querySelector('.topic-sub-btn');
                             if (firstBtn) {
                                 firstBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                                firstBtn.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
-                                firstBtn.style.color = '#ffffff';
-                                firstBtn.style.fontWeight = '900';
-                                firstBtn.style.transform = 'translateY(2px)';
-                                firstBtn.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
-                                firstBtn.style.borderColor = '#ff1744';
+                                // 인라인 스타일 제거 - CSS가 적용되도록
+                                firstBtn.style.background = '';
+                                firstBtn.style.color = '';
+                                firstBtn.style.fontWeight = '';
+                                firstBtn.style.transform = '';
+                                firstBtn.style.boxShadow = '';
+                                firstBtn.style.borderColor = '';
                                 // gameState도 업데이트
                                 gameState.selectedSubject = firstBtn.dataset.subject;
                                 gameState.selectedTopic = firstBtn.dataset.topic;
