@@ -1164,41 +1164,45 @@ input.activity-input {
 /* 게임 모드와 제한 시간 2열 배치 */
 .mode-time-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 0 0 1.5rem 0;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8rem;
+  margin: 0;
 }
 
 .mode-section,
-.time-section {
+.time-section,
+.sound-section {
   background: rgba(255, 255, 255, 0.03);
-  border: 3px solid var(--accent);
-  border-radius: var(--space-md);
-  padding: 0.8rem 1rem;
-  box-shadow: 4px 4px 0px var(--secondary);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  box-shadow: 2px 2px 0px var(--secondary);
   display: flex;
   flex-direction: column;
   gap: 0;
   max-width: 100%;
   overflow: hidden;
-  min-height: 120px;
+  height: 98px;
+  min-height: 98px;
+  max-height: 98px;
 }
 
 .mode-section h2,
-.time-section h2 {
-  font-size: 2rem;
-  margin: 0 0 0.6rem 0;
+.time-section h2,
+.sound-section h2 {
+  font-size: 1.4rem;
+  margin: 0 0 0.3rem 0;
   text-align: center;
   color: var(--accent);
   font-family: var(--font-display);
-  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
 }
 
 .mode-section .mode-selector {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  margin: 0.2rem 0 0 0;
+  gap: 0.6rem;
+  margin: 0.1rem 0 0 0;
   justify-content: center;
 }
 
@@ -1210,11 +1214,11 @@ input.activity-input {
 }
 
 .time-section #time-setter-wrapper h2 {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.3rem;
 }
 
 .time-section #time-setter-wrapper .time-setter {
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
 }
 
 .time-section #time-setter-wrapper.hidden {
@@ -1228,7 +1232,7 @@ input.activity-input {
   flex-direction: row !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 1rem !important;
+  gap: 0.6rem !important;
   flex-wrap: nowrap !important;
 }
 
@@ -1245,33 +1249,36 @@ input.activity-input {
   }
   
   .mode-btn-group .mode-btn {
-    min-width: 80px;
-    max-width: 110px;
-    font-size: 1.2rem;
-    padding: 0.9rem 0.8rem;
+    min-width: 60px;
+    max-width: 80px;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
   }
   
   .mode-btn-group::before {
-    border-radius: 6px;
+    border-radius: 4px;
   }
   
   .mode-section,
-  .time-section {
-    padding: 0.8rem 0.8rem;
+  .time-section,
+  .sound-section {
+    padding: 0.4rem 0.6rem;
+    height: auto;
+    min-height: 60px;
+    max-height: none;
   }
   
   .mode-time-grid .time-control-btn {
-    font-size: 2rem;
-    padding: 0.7rem 1.2rem;
+    font-size: 1.4rem;
+    padding: 0.4rem 0.6rem;
   }
   
   .mode-time-grid #time-setting-display {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
   }
 }
 
 .time-setter,
-.subject-selector,
 .mode-selector,
 .topic-selector {
   display: flex;
@@ -1307,12 +1314,12 @@ input.activity-input {
 .mode-btn-group {
   display: inline-flex;
   gap: 0;
-  border: 4px solid var(--accent);
-  border-radius: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 
-    4px 4px 0px var(--secondary),
-    0 0 20px rgba(83, 52, 131, 0.3);
+    2px 2px 0px var(--secondary),
+    0 0 10px rgba(83, 52, 131, 0.2);
   background: var(--secondary);
   position: relative;
 }
@@ -1344,10 +1351,10 @@ input.activity-input {
   box-shadow: none;
   background: transparent;
   color: var(--text-light);
-  min-width: 90px;
-  max-width: 120px;
-  padding: 1rem 1.2rem;
-  font-size: 1.4rem;
+  min-width: 70px;
+  max-width: 90px;
+  padding: 0.5rem 0.8rem;
+  font-size: 1.2rem;
   transition: color 0.3s ease, font-weight 0.3s ease;
   position: relative;
   z-index: 1;
@@ -1365,7 +1372,7 @@ input.activity-input {
 }
 
 .mode-btn-group .mode-btn + .mode-btn {
-  border-left: 3px solid var(--accent);
+  border-left: none;
 }
 
 .mode-btn-group .mode-btn.selected {
@@ -1428,20 +1435,21 @@ input.activity-input {
 }
 
 .mode-time-grid #time-setting-display {
-  font-size: 2.5rem;
-  width: 6.5ch;
+  font-size: 1.8rem;
+  width: 5ch;
 }
 .time-control-btn {
-  font-size: 2rem;
-  padding: 0.8rem 1.5rem;
-  min-width: 50px;
+  font-size: 1.6rem;
+  padding: 0.5rem 0.8rem;
+  min-width: 40px;
   flex-shrink: 0;
   border-color: var(--accent) !important;
 }
 
 .mode-time-grid .time-control-btn {
-  font-size: 2.2rem;
-  padding: 0.8rem 1.5rem;
+  font-size: 1.6rem;
+  padding: 0.5rem 0.8rem;
+  min-width: 35px;
 }
 .subject-btn,
 .mode-btn,
@@ -1460,10 +1468,80 @@ input.activity-input {
 .subject-btn.selected,
 .mode-btn.selected,
 .topic-btn.selected {
-  background: var(--primary);
-  color: var(--text-light);
-  transform: translateY(3px);
-  box-shadow: 3px 3px 0px var(--secondary);
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
+  color: #ffffff !important;
+  font-weight: 900;
+  transform: translateY(2px);
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 0.6),
+    3px 3px 0px rgba(15, 52, 96, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  border-color: #ff1744 !important;
+}
+
+/* 비선택된 버튼 스타일 강화 */
+.subject-btn:not(.selected),
+.topic-btn:not(.selected) {
+  background: rgba(83, 52, 131, 0.3) !important;
+  border-color: rgba(233, 69, 96, 0.3) !important;
+  color: rgba(240, 240, 240, 0.7) !important;
+}
+
+.subject-btn:not(.selected):hover,
+.topic-btn:not(.selected):hover {
+  background: rgba(83, 52, 131, 0.5) !important;
+  border-color: rgba(233, 69, 96, 0.5) !important;
+  color: rgba(240, 240, 240, 0.9) !important;
+}
+
+/* 하위 메뉴 버튼 비선택 상태 스타일 - .btn 기본 스타일 덮어쓰기 */
+[id$="-submenu"] .btn.topic-sub-btn:not(.selected),
+[id$="-submenu"] button.btn.topic-sub-btn:not(.selected),
+[id$="-submenu"] .topic-sub-btn:not(.selected),
+[id$="-submenu"] button.topic-sub-btn:not(.selected),
+.btn.topic-sub-btn:not(.selected),
+button.btn.topic-sub-btn:not(.selected),
+.topic-sub-btn:not(.selected),
+button.topic-sub-btn:not(.selected) {
+  font-size: 1.2rem !important;
+  padding: 0.5rem 0.6rem !important;
+  transition: all 0.2s ease !important;
+  background: rgba(83, 52, 131, 0.3) !important;
+  border: 3px solid rgba(233, 69, 96, 0.3) !important;
+  border-color: rgba(233, 69, 96, 0.3) !important;
+  color: rgba(240, 240, 240, 0.7) !important;
+  box-shadow: 3px 3px 0px rgba(15, 52, 96, 0.5) !important;
+  font-weight: normal !important;
+  white-space: nowrap !important;
+  border-radius: var(--space-sm) !important;
+  cursor: pointer !important;
+}
+
+[id$="-submenu"] .btn.topic-sub-btn:not(.selected):hover,
+[id$="-submenu"] button.btn.topic-sub-btn:not(.selected):hover,
+[id$="-submenu"] .topic-sub-btn:not(.selected):hover,
+[id$="-submenu"] button.topic-sub-btn:not(.selected):hover,
+.btn.topic-sub-btn:not(.selected):hover,
+button.btn.topic-sub-btn:not(.selected):hover,
+.topic-sub-btn:not(.selected):hover,
+button.topic-sub-btn:not(.selected):hover {
+  background: rgba(83, 52, 131, 0.5) !important;
+  border-color: rgba(233, 69, 96, 0.5) !important;
+  color: rgba(240, 240, 240, 0.9) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 2px 2px 0px rgba(15, 52, 96, 0.5) !important;
+}
+
+[id$="-submenu"] .btn.topic-sub-btn:not(.selected):active,
+[id$="-submenu"] button.btn.topic-sub-btn:not(.selected):active,
+[id$="-submenu"] .topic-sub-btn:not(.selected):active,
+[id$="-submenu"] button.topic-sub-btn:not(.selected):active,
+.btn.topic-sub-btn:not(.selected):active,
+button.btn.topic-sub-btn:not(.selected):active,
+.topic-sub-btn:not(.selected):active,
+button.topic-sub-btn:not(.selected):active {
+  transform: translateY(0px) !important;
+  box-shadow: 1px 1px 0px rgba(15, 52, 96, 0.5) !important;
 }
 
 .subject-btn.is-selecting {
@@ -1513,22 +1591,26 @@ input.activity-input {
 
 
 #start-game-btn {
-  background: linear-gradient(135deg, var(--primary) 0%, #ff6b6b 50%, var(--primary) 100%);
+  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 30%, #ff1744 70%, #ff6b6b 100%);
   background-size: 200% 200%;
   color: var(--text-light);
   padding: 1.5rem 3.5rem;
-  margin-top: 3rem;
-  margin-bottom: 0.5rem;
-  font-size: 2.4rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-size: 2.6rem;
   font-weight: 900;
-  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
-  border: 4px solid var(--primary);
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+  border: 5px solid #ff1744;
+  width: 100%;
+  justify-self: center;
   box-shadow: 
-    6px 6px 0px var(--secondary),
-    0 0 20px rgba(233, 69, 96, 0.3);
+    8px 8px 0px var(--secondary),
+    0 0 30px rgba(255, 23, 68, 0.6),
+    0 0 60px rgba(255, 23, 68, 0.3);
   position: relative;
   overflow: hidden;
-  animation: pulse-start-btn 2s ease-in-out infinite, gradient-shift 3s ease infinite;
+  animation: pulse-start-btn 1.5s ease-in-out infinite, gradient-shift 2s ease infinite;
+  z-index: 10;
 }
 
 #start-game-btn::before {
@@ -1550,11 +1632,12 @@ input.activity-input {
 }
 
 #start-game-btn:hover {
-  transform: translate(3px, 3px) scale(1.02);
+  transform: translate(4px, 4px) scale(1.03);
   box-shadow: 
-    3px 3px 0px var(--secondary),
-    0 0 25px rgba(233, 69, 96, 0.5);
-  animation: pulse-start-btn 1s ease-in-out infinite, gradient-shift 2s ease infinite;
+    4px 4px 0px var(--secondary),
+    0 0 40px rgba(255, 23, 68, 0.8),
+    0 0 80px rgba(255, 23, 68, 0.4);
+  animation: pulse-start-btn 0.8s ease-in-out infinite, gradient-shift 1.5s ease infinite;
 }
 
 #start-game-btn:active {
@@ -1599,7 +1682,7 @@ input.activity-input {
   gap: 0.8rem;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 0.1rem 0 0.9rem 0;
   margin: 0;
   flex: 1;
   min-height: 100px;
@@ -1620,6 +1703,7 @@ input.activity-input {
 
 #hard-core-description p {
   margin: 0;
+  padding: 0;
   font-size: 1.5rem;
   font-family: var(--font-display);
   color: var(--text-light);
@@ -1682,13 +1766,31 @@ input.activity-input {
   width: 600px;
   max-width: 600px;
   flex-shrink: 0;
-  overflow-y: auto;
-  padding: 3rem 2rem !important;
+  overflow-y: visible;
+  padding: 2rem 1.5rem !important;
+  min-height: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 #settings-panel h2 {
-  margin-top: 2.5rem;
-  margin-bottom: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-align: left;
+  padding: 0.8rem 1rem;
+  padding-bottom: 0.8rem;
+  background: rgba(233, 69, 96, 0.15);
+  border-bottom: 3px solid rgba(233, 69, 96, 0.5);
+  border-radius: 6px 6px 0 0;
+  font-family: var(--font-display);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #settings-panel h2:first-of-type {
@@ -1814,6 +1916,12 @@ input.activity-input {
   font-size: 2.4rem;
   color: var(--primary);
   letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in 0.6s; /* 애니메이션 중간에 표시 */
+}
+
+#dday.visible {
+  opacity: 1;
 }
 
 /* D-Day Race (D-365 트랙) */
@@ -1833,6 +1941,7 @@ input.activity-input {
   width: 32px;
   height: 32px;
   z-index: 10;
+  transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .dday-runner canvas { width: 32px; height: 32px; image-rendering: pixelated; image-rendering: crisp-edges; }
 
@@ -1861,6 +1970,12 @@ input.activity-input {
 .dday-tick.dday-tick-start {
   background: var(--primary);
   box-shadow: 0 0 4px var(--primary);
+  width: 2px;
+  height: 18px; /* 다른 세로선과 동일한 높이 */
+}
+/* D-200 위치 세로선 (중간 표시용) */
+.dday-tick.d200-tick {
+  background: rgba(255,255,255,0.25);
   width: 2px;
   height: 18px; /* 다른 세로선과 동일한 높이 */
 }
@@ -1900,6 +2015,7 @@ input.activity-input {
   background: var(--primary);
   width: 0;
   z-index: 1; /* 베이스선 위로 */
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 좌/우 라벨 */
@@ -1921,6 +2037,11 @@ input.activity-input {
 .dday-label.left { 
   left: 0; 
   transform: translateX(calc(-50% + 1px)); /* 라벨 중앙이 좌측 세로선(2px 너비)의 중앙에 오도록 */
+}
+/* D-200 라벨 - 중간 위치에 배치 */
+.dday-label.d200-label {
+  left: 45.2%; /* D-200 위치 (165/365 * 100) */
+  transform: translateX(calc(-50% + 1px)); /* 라벨 중앙이 D-200 세로선(2px 너비)의 중앙에 오도록 */
 }
 /* D-100 라벨 - 중간 위치에 배치 */
 .dday-label.d100-label {
@@ -1987,6 +2108,12 @@ input.activity-input {
   text-shadow: 2px 2px 0px var(--bg-dark);
   box-shadow: 0 0 10px var(--primary), 2px 2px 0px var(--secondary);
   z-index: 11;
+  opacity: 0;
+  transition: opacity 0.3s ease-in 0.6s, left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dday-chip.visible {
+  opacity: 1;
 }
 
 /* 진행 바 구분선 컨테이너 */
@@ -4940,16 +5067,15 @@ input.wrong-answer-indicator {
 
 /* === 오답 기록 초기화 버튼 === */
 #clear-wrong-answers-btn {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  position: static;
   background: var(--secondary);
-  border: none;
+  border: 2px solid var(--accent);
   color: var(--text-light);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  box-shadow: 3px 3px 0px var(--bg-dark);
+  padding: 0.5rem 1rem;
+  box-shadow: 2px 2px 0px var(--bg-dark);
+  align-self: flex-start;
   transition: transform 0.1s, box-shadow 0.1s;
   border-radius: 6px;
   width: auto;
