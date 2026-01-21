@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -340,11 +340,7 @@
 
     #sound-toggle-container {
 
-      position: absolute;
-
-      bottom: var(--space-lg);
-
-      right: var(--space-lg);
+      position: static;
 
       z-index: 10;
 
@@ -30579,309 +30575,173 @@
 
                 <h2 id="start-modal-title" class="sr-only">게임 시작 설정</h2>
 
+            <h2 style="margin-bottom: 0.8rem; font-size: 2rem;">과목 선택</h2>
 
-
-            <h2>주제 선택</h2>
-
-
-
-            <div class="topic-selector">
-
-
-
-                <button class="btn topic-btn selected" data-topic="curriculum">내체표</button>
-
-
-
-                <button class="btn topic-btn" data-topic="model">모형</button>
-
-
-
-                <button class="btn topic-btn" data-topic="course">교육과정</button>
-
-
-
-                <button class="btn topic-btn" data-topic="achievement">[성취기준]</button>
-
-
-
-                <button class="btn topic-btn" data-topic="competency">역량</button>
-
-
-
-                <button class="btn topic-btn" data-topic="area">영역</button>
-
-
-
-                <button class="btn topic-btn" data-topic="basic">기본이론</button>
-
-
-
-                <button class="btn topic-btn moral-btn" data-topic="moral">기타</button>
-
-
-
+            <div class="subject-selector" style="display: grid !important; grid-template-columns: repeat(6, 1fr) !important;">
+                <button class="btn subject-btn" data-subject-group="overview-creative">총창</button>
+                <button class="btn subject-btn" data-subject-group="korean">국어</button>
+                <button class="btn subject-btn" data-subject-group="math">수학</button>
+                <button class="btn subject-btn" data-subject-group="english">영어</button>
+                <button class="btn subject-btn" data-subject-group="social">사회</button>
+                <button class="btn subject-btn" data-subject-group="science">과학</button>
+                <button class="btn subject-btn" data-subject-group="ethics">도덕</button>
+                <button class="btn subject-btn" data-subject-group="pe">체육</button>
+                <button class="btn subject-btn selected" data-subject-group="music">음악</button>
+                <button class="btn subject-btn" data-subject-group="art">미술</button>
+                <button class="btn subject-btn" data-subject-group="practical">실과</button>
+                <button class="btn subject-btn" data-subject-group="integrated">통합</button>
             </div>
 
-
-
-            <h2 id="subject-selection-title">과목 선택</h2>
-
-
-
-            <div class="subject-selector">
-
-
-
-                <button id="random-subject-btn" class="btn" data-subject="random" data-topic="curriculum course model basic achievement moral">랜덤</button>
-
-
-
-                <button class="btn subject-btn" data-subject="korean" data-topic="curriculum">국어</button>
-
-
-
-                <button class="btn subject-btn selected" data-subject="music" data-topic="curriculum">음악</button>
-
-
-
-
-
-
-                <button class="btn subject-btn" data-subject="art" data-topic="curriculum">미술</button>
-
-
-
-                <button class="btn subject-btn" data-subject="pe" data-topic="curriculum">체육</button>
-
-
-
-                <button class="btn subject-btn" data-subject="pe-lite" data-topic="curriculum">체육(lite)</button>
-
-
-
-                <div id="curriculum-break" class="subject-break"></div>
-
-
-
-                <button class="btn subject-btn" data-subject="ethics-lite" data-topic="curriculum">도덕(lite)</button>
-
-
-
-                <button class="btn subject-btn" data-subject="practical-lite" data-topic="curriculum">실과(lite)</button>
-
-
-
-                <button class="btn subject-btn" data-subject="life" data-topic="curriculum">바생</button>
-
-
-
-                <button class="btn subject-btn" data-subject="wise" data-topic="curriculum">슬생</button>
-
-
-
-                <button class="btn subject-btn" data-subject="joy" data-topic="curriculum">즐생</button>
-
-
-
-                <button class="btn subject-btn" data-subject="science-curriculum" data-topic="curriculum">과학</button>
-
-
-
-                <button class="btn subject-btn" data-subject="english" data-topic="basic">영어</button>
-
-                <button class="btn subject-btn" data-subject="eastern-ethics" data-topic="basic">동양윤리</button>
-
-                <button class="btn subject-btn" data-subject="western-ethics" data-topic="basic">서양윤리</button>
-
-                <button class="btn subject-btn" data-subject="moral-psychology" data-topic="basic">도덕 심리학</button>
-
-
-
-                <span class="subject-btn-group hidden">
-
-
-
-                <button class="btn subject-btn" data-subject="practical" data-topic="model">실과</button>
-
-
-
-                <button class="btn subject-btn" data-subject="integrated-model" data-topic="model">통합</button>
-
-
-
-                </span>
-
-
-
-                <button class="btn subject-btn" data-subject="pe-model" data-topic="model">체육</button>
-
-
-
-                <button class="btn subject-btn" data-subject="ethics" data-topic="model">도덕</button>
-
-
-
-                <div id="model-break" class="subject-break hidden"></div>
-
-
-
-                <button class="btn subject-btn" data-subject="korean-model" data-topic="model">국어</button>
-
-
-
-                <span class="subject-btn-group hidden">
-
-
-
-                <button class="btn subject-btn" data-subject="art-model" data-topic="model">미술</button>
-
-
-
-                <button class="btn subject-btn" data-subject="math-model" data-topic="model">수학</button>
-
-
-
-                </span>
-
-
-
-                <button class="btn subject-btn" data-subject="social" data-topic="model">사회</button>
-
-
-
-                <button class="btn subject-btn" data-subject="science" data-topic="model">과학</button>
-
-
-
-
-                <button class="btn subject-btn" data-subject="korean-std" data-topic="achievement">국어</button>
-
-
-                <button class="btn subject-btn" data-subject="science-std" data-topic="achievement">과학</button>
-            
-
-                <button class="btn subject-btn" data-subject="social-34" data-topic="achievement">사회34</button>
-
-
-                <button class="btn subject-btn" data-subject="social-56" data-topic="achievement">사회56</button>
-
-
-                <button class="btn subject-btn" data-subject="english-std" data-topic="achievement">영어</button>
-
-
-
-                <button class="btn subject-btn" data-subject="practical-std" data-topic="achievement">실과</button>
-
-
-
-                <button class="btn subject-btn" data-subject="music-std" data-topic="achievement">음악</button>
-
-
-
-                <button class="btn subject-btn" data-subject="art-std" data-topic="achievement">미술</button>
-
-
-                <button class="btn subject-btn" data-subject="life-achievement" data-topic="achievement">바른</button>
-
-                <button class="btn subject-btn" data-subject="wise-achievement" data-topic="achievement">슬기</button>
-
-                <button class="btn subject-btn" data-subject="joy-achievement" data-topic="achievement">즐</button>
-
-
-
-                <button class="btn subject-btn" data-subject="math-operation" data-topic="achievement">수와 연산</button>
-
-                <button class="btn subject-btn" data-subject="change-relation" data-topic="achievement">변화와 관계</button>
-
-                <button class="btn subject-btn" data-subject="geometry-measure" data-topic="achievement">도형과 측정</button>
-
-                <button class="btn subject-btn" data-subject="data-probability" data-topic="achievement">자료와 가능성</button>
-
-
-
-
-
-
-                <div class="curriculum-group">
-
-                    <button class="btn subject-btn" data-subject="overview" data-topic="course">총론</button>
-
-                    <button class="btn subject-btn" data-subject="creative" data-topic="course">창체</button>
-
+            <h2 id="topic-selection-title" class="hidden" style="margin-top: 1.5rem; margin-bottom: 0.8rem; font-size: 2rem;">주제 선택</h2>
+
+            <div class="topic-selector hidden">
+                <!-- 주제 버튼들이 동적으로 생성됨 -->
+            </div>
+
+            <!-- 수학 성취기준 하위 선택지 -->
+            <div id="math-achievement-submenu" class="hidden">
+                <h3>성취기준 선택</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                    <button class="btn topic-sub-btn" data-subject="math-operation" data-topic="achievement">수와 연산</button>
+                    <button class="btn topic-sub-btn" data-subject="change-relation" data-topic="achievement">변화와 관계</button>
+                    <button class="btn topic-sub-btn" data-subject="geometry-measure" data-topic="achievement">도형과 측정</button>
+                    <button class="btn topic-sub-btn" data-subject="data-probability" data-topic="achievement">자료와 가능성</button>
+                </div>
+            </div>
+
+            <!-- 사회 성취기준 하위 선택지 -->
+            <div id="social-achievement-submenu" class="hidden">
+                <h3>성취기준 선택</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                    <button class="btn topic-sub-btn" data-subject="social-34" data-topic="achievement">사회34</button>
+                    <button class="btn topic-sub-btn" data-subject="social-56" data-topic="achievement">사회56</button>
+                </div>
+            </div>
+
+            <!-- 통합교과 내체표 하위 선택지 -->
+            <div id="integrated-curriculum-submenu" class="hidden">
+                <h3>내체표 선택</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                    <button class="btn topic-sub-btn" data-subject="life" data-topic="curriculum">바생</button>
+                    <button class="btn topic-sub-btn" data-subject="wise" data-topic="curriculum">슬생</button>
+                    <button class="btn topic-sub-btn" data-subject="joy" data-topic="curriculum">즐생</button>
+                </div>
+            </div>
+
+            <!-- 통합교과 성취기준 하위 선택지 -->
+            <div id="integrated-achievement-submenu" class="hidden">
+                <h3>성취기준 선택</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                    <button class="btn topic-sub-btn" data-subject="life-achievement" data-topic="achievement">바른</button>
+                    <button class="btn topic-sub-btn" data-subject="wise-achievement" data-topic="achievement">슬기</button>
+                    <button class="btn topic-sub-btn" data-subject="joy-achievement" data-topic="achievement">즐</button>
+                </div>
+            </div>
+
+            <!-- 체육 내체표 하위 선택지 -->
+            <div id="pe-curriculum-submenu" class="hidden">
+                <h3>내체표 선택</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                    <button class="btn topic-sub-btn" data-subject="pe" data-topic="curriculum">체육</button>
+                    <button class="btn topic-sub-btn" data-subject="pe-lite" data-topic="curriculum">체육(lite)</button>
+                </div>
+            </div>
+
+            <!-- 도덕 기본이론 하위 선택지 -->
+            <div id="ethics-basic-submenu" class="hidden">
+                <h3>기본이론 선택</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                    <button class="btn topic-sub-btn" data-subject="eastern-ethics" data-topic="basic">동양윤리</button>
+                    <button class="btn topic-sub-btn" data-subject="western-ethics" data-topic="basic">서양윤리</button>
+                    <button class="btn topic-sub-btn" data-subject="moral-psychology" data-topic="basic">도덕 심리학</button>
+                </div>
                 </div>
 
+            <!-- 숨겨진 과목 버튼들 (실제 data-subject 매핑용) -->
+            <div class="hidden-subject-mapping" style="display: none;">
+                <!-- 총론, 창의적 체험활동 -->
+                <button data-subject="overview" data-topics="course"></button>
+                <button data-subject="creative" data-topics="course"></button>
 
+                <!-- 국어 -->
+                <button data-subject="korean" data-topics="curriculum"></button>
+                <button data-subject="korean-model" data-topics="model"></button>
+                <button data-subject="korean-std" data-topics="achievement"></button>
+                <button data-subject="korean-course" data-topics="course"></button>
+                <button data-subject="spelling" data-topics="moral"></button>
 
-                <button class="btn subject-btn" data-subject="integrated-course" data-topic="course">통합</button>
+                <!-- 수학 -->
+                <button data-subject="math-model" data-topics="model"></button>
+                <button data-subject="math-operation" data-topics="achievement"></button>
+                <button data-subject="change-relation" data-topics="achievement"></button>
+                <button data-subject="geometry-measure" data-topics="achievement"></button>
+                <button data-subject="data-probability" data-topics="achievement"></button>
+                <button data-subject="math-course" data-topics="course"></button>
+                <button data-subject="geometry" data-topics="moral"></button>
 
+                <!-- 영어 -->
+                <button data-subject="english" data-topics="basic"></button>
+                <button data-subject="english-std" data-topics="achievement"></button>
+                <button data-subject="english-course" data-topics="course"></button>
 
+                <!-- 사회 -->
+                <button data-subject="social" data-topics="model"></button>
+                <button data-subject="social-34" data-topics="achievement"></button>
+                <button data-subject="social-56" data-topics="achievement"></button>
+                <button data-subject="social-course" data-topics="course"></button>
 
-                <button class="btn subject-btn" data-subject="moral-course" data-topic="course">도덕</button>
+                <!-- 도덕 -->
+                <button data-subject="ethics-lite" data-topics="curriculum"></button>
+                <button data-subject="ethics" data-topics="model"></button>
+                <button data-subject="moral-course" data-topics="course"></button>
+                <button data-subject="eastern-ethics" data-topics="basic"></button>
+                <button data-subject="western-ethics" data-topics="basic"></button>
+                <button data-subject="moral-psychology" data-topics="basic"></button>
+                <button data-subject="moral-principles" data-topics="moral"></button>
 
+                <!-- 과학 -->
+                <button data-subject="science-curriculum" data-topics="curriculum"></button>
+                <button data-subject="science" data-topics="model"></button>
+                <button data-subject="science-std" data-topics="achievement"></button>
+                <button data-subject="science-course" data-topics="course"></button>
 
+                <!-- 체육 -->
+                <button data-subject="pe" data-topics="curriculum"></button>
+                <button data-subject="pe-lite" data-topics="curriculum"></button>
+                <button data-subject="pe-model" data-topics="model"></button>
+                <button data-subject="pe-course" data-topics="course"></button>
+                <button data-subject="pe-back" data-topics="moral"></button>
+                <button data-subject="physical-activity" data-topics="moral"></button>
+                <button data-subject="sports-functions" data-topics="moral"></button>
 
-                <button class="btn subject-btn" data-subject="english-course" data-topic="course">영어</button>
+                <!-- 음악 -->
+                <button data-subject="music" data-topics="curriculum"></button>
+                <button data-subject="music-std" data-topics="achievement"></button>
+                <button data-subject="music-course" data-topics="course"></button>
+                <button data-subject="music-elements" data-topics="moral"></button>
 
-                <button class="btn subject-btn" data-subject="practical-course" data-topic="course">실과</button>
+                <!-- 미술 -->
+                <button data-subject="art" data-topics="curriculum"></button>
+                <button data-subject="art-model" data-topics="model"></button>
+                <button data-subject="art-std" data-topics="achievement"></button>
+                <button data-subject="art-course" data-topics="course"></button>
 
+                <!-- 실과 -->
+                <button data-subject="practical-lite" data-topics="curriculum"></button>
+                <button data-subject="practical" data-topics="model"></button>
+                <button data-subject="practical-std" data-topics="achievement"></button>
+                <button data-subject="practical-course" data-topics="course"></button>
 
-
-                <button class="btn subject-btn" data-subject="korean-course" data-topic="course">국어</button>
-
-
-
-                <button class="btn subject-btn" data-subject="math-course" data-topic="course">수학</button>
-
-
-
-                <button class="btn subject-btn" data-subject="social-course" data-topic="course">사회</button>
-
-
-
-                <button class="btn subject-btn" data-subject="science-course" data-topic="course">과학</button>
-
-                <button class="btn subject-btn" data-subject="music-course" data-topic="course">음악</button>
-
-
-                <button class="btn subject-btn" data-subject="art-course" data-topic="course">미술</button>
-
-                <button class="btn subject-btn" data-subject="pe-course" data-topic="course">체육</button>
-
-
-
-                <button class="btn subject-btn" data-subject="moral-principles" data-topic="moral">도덕과 학습 지도 원리와 방법</button>
-
-
-
-                <button class="btn subject-btn" data-subject="pe-back" data-topic="moral">체육(뒷교)</button>
-
-
-
-                <button class="btn subject-btn" data-subject="music-elements" data-topic="moral">음악요소</button>
-
-
-
-                <button class="btn subject-btn" data-subject="physical-activity" data-topic="moral">신체활동 예시</button>
-
-
-
-                <button class="btn subject-btn" data-subject="spelling" data-topic="moral">맞춤법</button>
-
-
-
-                <button class="btn subject-btn" data-subject="geometry" data-topic="moral">도형</button>
-
-
-
-                <button class="btn subject-btn" data-subject="integrated-guide" data-topic="moral">통합 지도서</button>
-
-
-
-                <button class="btn subject-btn" data-subject="sports-functions" data-topic="moral">기본 기능&전략</button>
-
-
-
+                <!-- 통합교과 -->
+                <button data-subject="life" data-topics="curriculum"></button>
+                <button data-subject="wise" data-topics="curriculum"></button>
+                <button data-subject="joy" data-topics="curriculum"></button>
+                <button data-subject="integrated-model" data-topics="model"></button>
+                <button data-subject="life-achievement" data-topics="achievement"></button>
+                <button data-subject="wise-achievement" data-topics="achievement"></button>
+                <button data-subject="joy-achievement" data-topics="achievement"></button>
+                <button data-subject="integrated-course" data-topics="course"></button>
+                <button data-subject="integrated-guide" data-topics="moral"></button>
             </div>
 
 
@@ -30926,39 +30786,32 @@
 
                     <div id="hard-core-description" class="notice-text hidden">
 
-                        <p>제한시간 60초,<br>정답 시 +5초가 주어집니다.</p>
+                        <p>제한시간 60초,<br>정답 시 +5초 제공</p>
 
+                    </div>
+
+                </div>
+
+                <div class="sound-section">
+
+                    <h2>효과음</h2>
+
+                    <div id="sound-toggle-container" style="display: flex; justify-content: center; align-items: center; padding: 0.5rem 0;">
+                        <label for="sound-toggle" class="sound-toggle-label">
+                            <span class="sound-toggle-text">효과음</span>
+                            <div class="sound-toggle-switch">
+                                <input type="checkbox" id="sound-toggle" checked>
+                                <span class="sound-toggle-slider"></span>
+                            </div>
+                        </label>
                     </div>
 
                 </div>
 
             </div>
 
-            <!-- 오답 기록 초기화 버튼 -->
-                <button id="clear-wrong-answers-btn" class="btn secondary-btn">Reset</button>
 
-            <!-- 효과음 ON/OFF 스위치 -->
-
-            <div id="sound-toggle-container">
-
-                <label for="sound-toggle" class="sound-toggle-label">
-
-                    <span class="sound-toggle-text">효과음</span>
-
-                    <div class="sound-toggle-switch">
-
-                        <input type="checkbox" id="sound-toggle" checked>
-
-                        <span class="sound-toggle-slider"></span>
-
-                    </div>
-
-                </label>
-
-            </div>
-
-
-
+            <!-- 시작 버튼 -->
             <button id="start-game-btn" class="btn">시작</button>
 
 
