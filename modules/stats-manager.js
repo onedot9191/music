@@ -201,7 +201,7 @@ export function render6MonthHeatmap() {
     // 제목 업데이트
     const titleElement = document.getElementById('six-month-heatmap-title');
     if (titleElement) {
-        titleElement.innerHTML = `<span style="color: var(--primary);">${totalCount}개</span> 진행 중 (6개월 기준)`;
+        titleElement.innerHTML = `<span style="color: #FFFFFF; font-weight: 700;">${totalCount}개</span> 진행 중 (6개월 기준)`;
     }
     
     // 각 월별로 히트맵 생성
