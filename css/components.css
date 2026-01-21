@@ -6,32 +6,32 @@
   cursor: pointer;
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--text-light);
-  background: var(--accent);
-  border: 3px solid var(--primary);
+  color: var(--text-light); /* 크림색 텍스트 */
+  background: var(--primary); /* 레드 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 - 버섯 캐릭터와 동일 두께 */
   padding: var(--space-sm) var(--space-md);
-  box-shadow: 5px 5px 0px var(--secondary);
-  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: none; /* 평면 디자인 */
+  transition: transform 0.1s;
   font-size: 1.4rem;
   white-space: nowrap;
-  border-radius: var(--space-sm);
+  border-radius: 0; /* 완전한 평면 형태 */
 }
 
 .btn:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0px var(--secondary);
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
 }
 
 .btn:active {
-  transform: translate(5px, 5px);
-  box-shadow: 0px 0px 0px var(--secondary);
+  transform: translateY(2px); /* 클릭 시 아래로만 이동 */
+  box-shadow: none;
 }
 
 .btn:disabled {
-  background: #444;
-  color: #888;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-dark); /* 크림색 - 비활성 상태 */
   cursor: not-allowed;
-  border-color: #555;
+  border-color: #000000; /* 검은색 외곽선 유지 */
   box-shadow: none;
   transform: none;
 }
@@ -45,30 +45,30 @@
   font-size: 1.1rem;
   padding: 0.6rem 1rem;
   font-weight: 800;
-  background: var(--primary);
-  border: 3px solid var(--accent);
-  color: var(--text-light);
-  box-shadow: 4px 4px 0px var(--secondary);
+  background: var(--primary); /* 레드 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  color: var(--text-light); /* 크림색 텍스트 */
+  box-shadow: none; /* 평면 디자인 */
   vertical-align: middle;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+  text-shadow: none; /* 텍스트 그림자 제거 */
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   cursor: pointer;
-  transition: all 0.15s ease;
-  border-radius: 6px;
+  transition: transform 0.1s ease;
+  border-radius: 0; /* 평면 형태 */
 }
 
 .copy-tab-btn:hover {
-  background: var(--accent);
-  border-color: var(--primary);
-  box-shadow: 3px 3px 0px var(--secondary);
-  transform: translate(1px, 1px);
-  color: var(--text-dark);
+  background: var(--primary);
+  border-color: #000000;
+  box-shadow: none;
+  transform: none; /* 평면 디자인 */
+  color: var(--text-light);
 }
 
 .copy-tab-btn:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0px var(--secondary);
+  transform: translateY(2px); /* 클릭 시 아래로만 이동 */
+  box-shadow: none;
 }
 
 .copy-tab-btn.loading {
@@ -97,44 +97,46 @@
   flex: 1;
   text-align: center;
   padding: 1.2rem 0;
-  background: var(--secondary);
-  border: 3px solid var(--primary);
+  background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 700;
   font-family: var(--font-display);
-  color: var(--text-dark);
+  color: var(--text-dark); /* 크림색 텍스트 */
   transition: all 0.2s;
-  border-radius: 8px;
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 .tab.active {
-  background: var(--primary);
-  color: var(--text-light);
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 var(--secondary);
+  background: var(--primary); /* 레드 배경 */
+  color: var(--text-light); /* 크림색 텍스트 */
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
+  border: 4px solid #000000; /* 두꺼운 검은색 테두리 */
 }
 
 .tab:hover:not(.active) {
-  background: var(--accent);
-  color: var(--text-light);
+  background: rgba(10, 18, 42, 0.7);
+  color: var(--text-light); /* 호버 시 밝은 크림색 */
 }
 
 /* === 키치 박스 (레트로 스타일 컨테이너) === */
 .kitsch-box {
-  background: var(--secondary);
+  background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
   padding: var(--space-sm) var(--space-md);
-  border: 3px solid var(--primary);
-  box-shadow: 4px 4px 0px var(--bg-dark);
-  border-radius: var(--space-sm);
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  box-shadow: none; /* 평면 디자인 */
+  border-radius: 0; /* 평면 형태 */
 }
 
 /* === 콤보 카운터 === */
 #combo-counter {
-  color: var(--incorrect);
+  color: var(--incorrect); /* 레드 */
   font-size: 2.2rem;
   font-weight: 800;
-  text-shadow: 2px 2px 0px var(--primary);
+  text-shadow: none; /* 평면 디자인 - 텍스트 그림자 제거 */
   font-family: var(--font-display);
 }
 
@@ -146,27 +148,28 @@
 #bar {
   width: 16rem;
   height: 1rem;
-  background: var(--bg-dark);
-  border: 2px solid var(--primary);
-  border-radius: 6px;
+  background: rgba(10, 18, 42, 0.8); /* 네이비 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  border-radius: 0; /* 평면 형태 */
   overflow: hidden;
   position: relative;
+  box-shadow: none; /* 그림자 제거 */
 }
 
 #bar > div {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  background: var(--primary); /* 레드 배경 - 그라데이션 제거 */
   transition: width 0.3s ease;
-  border-radius: 3px;
+  border-radius: 0; /* 평면 형태 */
 }
 
 /* === 카드 스타일 === */
 .card {
-  background: var(--bg-light);
-  border: 2px solid var(--primary);
-  border-radius: var(--space-md);
+  background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  border-radius: 0; /* 평면 형태 */
   padding: var(--space-lg);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: none; /* 그림자 제거 */
 }
 
 /* === 배지 === */
