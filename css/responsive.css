@@ -72,7 +72,9 @@
   
   /* 과목 선택기 */
   .subject-selector {
-    gap: 1.5rem;
+    gap: 0.8rem;
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
   }
   
   /* 모달 */
