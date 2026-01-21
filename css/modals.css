@@ -26,16 +26,16 @@
 
 /* === 모달 컨텐츠 === */
 .modal-content {
-  background: var(--bg-light);
+  background: rgba(10, 18, 42, 0.95); /* 네이비 배경 */
   padding: var(--space-lg) var(--space-xl);
   text-align: center;
-  border: 4px solid var(--primary);
-  box-shadow: 10px 10px 0px var(--secondary);
+  border: 4px solid #000000; /* 검은색 외곽선 */
+  box-shadow: none; /* 평면 디자인 */
   transform: scale(0.9);
   transition: transform 0.3s ease;
   width: 90%;
   max-width: 600px;
-  border-radius: var(--space-md);
+  border-radius: 0; /* 평면 형태 */
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -145,36 +145,38 @@
   gap: 0.6rem;
   margin-bottom: 0;
   padding: 1.2rem;
-  background: rgba(15, 52, 96, 0.4);
-  border-radius: 10px;
-  border: 2px solid rgba(233, 69, 96, 0.4);
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
+  border-radius: 0; /* 평면 형태 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 #start-modal .topic-selector .topic-btn {
-  background: rgba(83, 52, 131, 0.3) !important;
-  border-color: rgba(233, 69, 96, 0.3) !important;
-  color: rgba(240, 240, 240, 0.7) !important;
+  background: rgba(10, 18, 42, 0.5) !important; /* 네이비 배경 */
+  border: 3px solid #000000 !important; /* 검은색 외곽선 */
+  color: var(--text-dark) !important; /* 크림색 텍스트 (비활성) */
   transition: all 0.2s ease;
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 #start-modal .topic-selector .topic-btn:hover {
-  background: rgba(83, 52, 131, 0.5) !important;
-  border-color: rgba(233, 69, 96, 0.5) !important;
-  color: rgba(240, 240, 240, 0.9) !important;
-  transform: translateY(-1px);
+  background: rgba(10, 18, 42, 0.7) !important;
+  border: 3px solid #000000 !important;
+  color: var(--text-light) !important; /* 호버 시 밝은 크림색 */
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
 }
 
 #start-modal .topic-selector .topic-btn.selected {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
-  border-color: #ff1744 !important;
-  color: #ffffff !important;
+  /* 점 패턴 제거 - 단순한 레드 배경 */
+  background: var(--primary) !important; /* 레드 배경 */
+  border: 4px solid #000000 !important; /* 두꺼운 검은색 테두리 */
+  color: var(--text-light) !important; /* 흰색 텍스트 */
   font-weight: 900;
-  box-shadow: 
-    0 0 20px rgba(255, 23, 68, 0.6),
-    3px 3px 0px rgba(15, 52, 96, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
-  transform: translateY(2px);
+  box-shadow: none; /* 평면 디자인 */
+  transform: none;
+  border-radius: 0; /* 평면 형태 */
 }
 
 @media (min-width: 900px) {
@@ -194,10 +196,10 @@
   align-items: unset !important;
   flex-direction: unset !important;
   padding: 1.2rem;
-  background: rgba(15, 52, 96, 0.4);
-  border-radius: 10px;
-  border: 2px solid rgba(233, 69, 96, 0.4);
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
+  border-radius: 0; /* 평면 형태 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 @media (max-width: 768px) {
@@ -210,29 +212,31 @@
   font-size: 1.4rem;
   padding: 0.9rem;
   min-height: 50px;
-  background: rgba(83, 52, 131, 0.3);
-  border: 2px solid rgba(233, 69, 96, 0.3);
-  color: rgba(240, 240, 240, 0.7);
+  background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
+  border: 3px solid #000000; /* 검은색 외곽선 */
+  color: var(--text-dark); /* 크림색 텍스트 (비활성) */
   transition: all 0.2s ease;
+  border-radius: 0; /* 평면 형태 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 .subject-selector .subject-btn:hover {
-  background: rgba(83, 52, 131, 0.5);
-  border-color: rgba(233, 69, 96, 0.5);
-  color: rgba(240, 240, 240, 0.9);
-  transform: translateY(-1px);
+  background: rgba(10, 18, 42, 0.7);
+  border: 3px solid #000000;
+  color: var(--text-light); /* 호버 시 밝은 크림색 */
+  transform: none; /* 평면 디자인 */
+  box-shadow: none;
 }
 
 .subject-selector .subject-btn.selected {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
-  border-color: #ff1744 !important;
-  color: #ffffff !important;
+  /* 점 패턴 제거 - 단순한 레드 배경 */
+  background: var(--primary) !important; /* 레드 배경 */
+  border: 4px solid #000000 !important; /* 두꺼운 검은색 테두리 */
+  color: var(--text-light) !important; /* 흰색 텍스트 */
   font-weight: 900;
-  box-shadow: 
-    0 0 20px rgba(255, 23, 68, 0.6),
-    3px 3px 0px rgba(15, 52, 96, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
-  transform: translateY(2px);
+  box-shadow: none; /* 평면 디자인 */
+  transform: none;
+  border-radius: 0; /* 평면 형태 */
 }
 
 /* data-subject 속성을 가진 중복 버튼 숨기기 (subject-selector 밖에 있는 것들) */
@@ -411,39 +415,35 @@ button.btn.topic-sub-btn:not(.selected):active {
 .btn.topic-sub-btn.selected,
 .topic-sub-btn.selected,
 button.topic-sub-btn.selected {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
-  color: #ffffff !important;
+  /* 점 패턴 제거 - 단순한 레드 배경 */
+  background: var(--primary) !important; /* 레드 배경 */
+  color: var(--text-light) !important; /* 흰색 텍스트 */
   font-weight: 900;
-  transform: translateY(2px) !important;
-  box-shadow: 
-    0 0 20px rgba(255, 23, 68, 0.6),
-    3px 3px 0px rgba(15, 52, 96, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
-  border-color: #ff1744 !important;
+  transform: none !important; /* 평면 디자인 */
+  box-shadow: none !important; /* 평면 디자인 */
+  border: 4px solid #000000 !important; /* 두꺼운 검은색 테두리 */
+  border-radius: 0 !important; /* 평면 형태 */
 }
 
 .btn.topic-sub-btn.selected:hover,
 .topic-sub-btn.selected:hover,
 button.topic-sub-btn.selected:hover {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
-  color: #ffffff !important;
-  transform: translateY(2px) !important;
-  box-shadow: 
-    0 0 25px rgba(255, 23, 68, 0.7),
-    3px 3px 0px rgba(15, 52, 96, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
+  /* 점 패턴 제거 - 단순한 레드 배경 */
+  background: var(--primary) !important;
+  color: var(--text-light) !important;
+  transform: none !important; /* 평면 디자인 */
+  box-shadow: none !important;
+  border: 4px solid #000000 !important;
 }
 
 .btn.topic-sub-btn.selected:active,
 .topic-sub-btn.selected:active,
 button.topic-sub-btn.selected:active {
-  background: linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%) !important;
-  color: #ffffff !important;
-  transform: translateY(4px) !important;
-  box-shadow: 
-    0 0 15px rgba(255, 23, 68, 0.5),
-    1px 1px 0px rgba(15, 52, 96, 0.8),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2) !important;
+  /* 점 패턴 제거 - 단순한 레드 배경 */
+  background: var(--primary) !important;
+  color: var(--text-light) !important;
+  transform: translateY(2px) !important; /* 클릭 시 아래로만 이동 */
+  box-shadow: none !important;
 }
 
 /* 기존 중복 버튼 숨기기 */
