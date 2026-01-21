@@ -36,6 +36,23 @@
     } from './modules/stats-manager.js';
 
     document.addEventListener('DOMContentLoaded', () => {
+        // 효과음 토글 텍스트 업데이트
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundToggleText = document.querySelector('.sound-toggle-text');
+        
+        function updateSoundToggleText() {
+            if (soundToggleText) {
+                soundToggleText.textContent = soundToggle && soundToggle.checked ? 'On' : 'Off';
+            }
+        }
+        
+        // 초기 텍스트 설정
+        updateSoundToggleText();
+        
+        // 체크박스 변경 시 텍스트 업데이트
+        if (soundToggle) {
+            soundToggle.addEventListener('change', updateSoundToggleText);
+        }
 
 
 
@@ -151,7 +168,6 @@
 
         const resetBtn = document.getElementById('reset-btn');
 
-        const clearWrongAnswersBtn = document.getElementById('clear-wrong-answers-btn');
 
         const character = document.getElementById('character-assistant');
 
@@ -184,6 +200,7 @@
         const subjectSelector = document.querySelector('.subject-selector');
 
         const subjectSelectionTitle = document.getElementById('subject-selection-title');
+        const topicSelectionTitle = document.getElementById('topic-selection-title');
 
         const curriculumBreak = document.getElementById('curriculum-break');
 
@@ -1487,9 +1504,12 @@
 
             if (!settingsPanel.dataset.fixedHeight) {
 
-                settingsPanel.style.height = `${settingsPanel.offsetHeight}px`;
+                // 높이를 고정하지 않고 자동으로 조정되도록 함
+                settingsPanel.style.height = 'auto';
+                settingsPanel.style.minHeight = 'auto';
 
-                settingsPanel.dataset.fixedHeight = 'true';
+                // data-fixed-height 제거하여 동적 높이 조정 허용
+                settingsPanel.removeAttribute('data-fixed-height');
 
             }
 
@@ -1497,87 +1517,227 @@
 
 
 
-       function updateStartModalUI() {
+       // 과목별 주제 매핑
+       const subjectTopicMapping = {
+           'overview-creative': [
+               { name: '총론', subject: 'overview', topic: 'course' },
+               { name: '창체', subject: 'creative', topic: 'course' }
+           ],
+           'korean': [
+               { name: '내체표', subject: 'korean', topic: 'curriculum' },
+               { name: '모형', subject: 'korean-model', topic: 'model' },
+               { name: '성취기준', subject: 'korean-std', topic: 'achievement' },
+               { name: '교육과정', subject: 'korean-course', topic: 'course' },
+               { name: '맞춤법', subject: 'spelling', topic: 'moral' }
+           ],
+           'math': [
+               { name: '모형', subject: 'math-model', topic: 'model' },
+               { name: '성취기준', subject: 'math-operation', topic: 'achievement', hasSubmenu: true },
+               { name: '교육과정', subject: 'math-course', topic: 'course' },
+               { name: '도형', subject: 'geometry', topic: 'moral' }
+           ],
+           'english': [
+               { name: '기본이론', subject: 'english', topic: 'basic' },
+               { name: '성취기준', subject: 'english-std', topic: 'achievement' },
+               { name: '교육과정', subject: 'english-course', topic: 'course' }
+           ],
+           'social': [
+               { name: '모형', subject: 'social', topic: 'model' },
+               { name: '성취기준', subject: 'social-34', topic: 'achievement', hasSubmenu: true },
+               { name: '교육과정', subject: 'social-course', topic: 'course' }
+           ],
+           'ethics': [
+               { name: '내체표', subject: 'ethics-lite', topic: 'curriculum' },
+               { name: '모형', subject: 'ethics', topic: 'model' },
+               { name: '교육과정', subject: 'moral-course', topic: 'course' },
+               { name: '기본이론', subject: 'eastern-ethics', topic: 'basic', hasSubmenu: true },
+               { name: '지도 원리·방법', subject: 'moral-principles', topic: 'moral' }
+           ],
+           'science': [
+               { name: '내체표', subject: 'science-curriculum', topic: 'curriculum' },
+               { name: '모형', subject: 'science', topic: 'model' },
+               { name: '성취기준', subject: 'science-std', topic: 'achievement' },
+               { name: '교육과정', subject: 'science-course', topic: 'course' }
+           ],
+           'pe': [
+               { name: '내체표', subject: 'pe', topic: 'curriculum', hasSubmenu: true },
+               { name: '모형', subject: 'pe-model', topic: 'model' },
+               { name: '교육과정', subject: 'pe-course', topic: 'course' },
+               { name: '체육(뒷교)', subject: 'pe-back', topic: 'moral' },
+               { name: '신체활동 예시', subject: 'physical-activity', topic: 'moral' },
+               { name: '기본 기능&전략', subject: 'sports-functions', topic: 'moral' }
+           ],
+           'music': [
+               { name: '내체표', subject: 'music', topic: 'curriculum' },
+               { name: '성취기준', subject: 'music-std', topic: 'achievement' },
+               { name: '교육과정', subject: 'music-course', topic: 'course' },
+               { name: '음악요소', subject: 'music-elements', topic: 'moral' }
+           ],
+           'art': [
+               { name: '내체표', subject: 'art', topic: 'curriculum' },
+               { name: '모형', subject: 'art-model', topic: 'model' },
+               { name: '성취기준', subject: 'art-std', topic: 'achievement' },
+               { name: '교육과정', subject: 'art-course', topic: 'course' }
+           ],
+           'practical': [
+               { name: '내체표', subject: 'practical-lite', topic: 'curriculum' },
+               { name: '모형', subject: 'practical', topic: 'model' },
+               { name: '성취기준', subject: 'practical-std', topic: 'achievement' },
+               { name: '교육과정', subject: 'practical-course', topic: 'course' }
+           ],
+           'integrated': [
+               { name: '내체표', subject: 'life', topic: 'curriculum', hasSubmenu: true },
+               { name: '모형', subject: 'integrated-model', topic: 'model' },
+               { name: '성취기준', subject: 'life-achievement', topic: 'achievement', hasSubmenu: true },
+               { name: '교육과정', subject: 'integrated-course', topic: 'course' },
+               { name: '통합 지도서', subject: 'integrated-guide', topic: 'moral' }
+           ]
+       };
 
-            const subjectButtons = subjectSelector.querySelectorAll('.btn');
+       // 수학 성취기준 하위 선택지
+       const mathAchievementSubmenu = [
+           { name: '수와 연산', subject: 'math-operation', topic: 'achievement' },
+           { name: '변화와 관계', subject: 'change-relation', topic: 'achievement' },
+           { name: '도형과 측정', subject: 'geometry-measure', topic: 'achievement' },
+           { name: '자료와 가능성', subject: 'data-probability', topic: 'achievement' }
+       ];
 
-            const randomBtn = document.getElementById('random-subject-btn');
+       // 과목 그룹과 주제를 기반으로 실제 data-subject 찾기
+       function findActualSubjectForGroup(groupName, topic) {
+           const mapping = subjectTopicMapping[groupName];
+           if (!mapping) return null;
 
-            const topic = gameState.selectedTopic;
+           const topicItem = mapping.find(item => item.topic === topic);
+           if (topicItem) {
+               return topicItem.subject;
+           }
 
+           return mapping[0]?.subject || null;
+       }
 
+       // 주제 선택기 동적 생성
+       function renderTopicSelector(groupName) {
+           const topics = subjectTopicMapping[groupName];
+           if (!topics) {
+               topicSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+               topicSelectionTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+               return;
+           }
 
-            if (
+           topicSelector.innerHTML = '';
+           
+           topics.forEach((item, index) => {
+               const btn = document.createElement('button');
+               btn.className = 'btn topic-btn';
+               btn.textContent = item.name;
+               btn.dataset.subject = item.subject;
+               btn.dataset.topic = item.topic;
+               
+               if (index === 0) {
+                   btn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                   gameState.selectedSubject = item.subject;
+                   gameState.selectedTopic = item.topic;
+               }
+               
+               topicSelector.appendChild(btn);
+           });
 
-                topic === CONSTANTS.TOPICS.CURRICULUM ||
+           topicSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+           topicSelectionTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
 
-                topic === CONSTANTS.TOPICS.MODEL ||
+           // 모든 하위 선택지 숨기기
+           const submenus = [
+               'math-achievement-submenu',
+               'social-achievement-submenu',
+               'integrated-curriculum-submenu',
+               'integrated-achievement-submenu',
+               'pe-curriculum-submenu',
+               'ethics-basic-submenu'
+           ];
+           submenus.forEach(id => {
+               const submenu = document.getElementById(id);
+               if (submenu) {
+                   submenu.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+               }
+           });
 
-                topic === CONSTANTS.TOPICS.COURSE ||
-
-                topic === CONSTANTS.TOPICS.BASIC ||
-
-                topic === CONSTANTS.TOPICS.ACHIEVEMENT ||
-
-                topic === CONSTANTS.TOPICS.MORAL
-
-            ) {
-
-                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                subjectButtons.forEach(btn => {
-
-                    const btnTopics = (btn.dataset.topic || '').split(' ');
-
-                    const visible = btnTopics.includes(topic) || btnTopics.length === 0;
-
-                    btn.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, !visible);
-
-                    btn.disabled = false;
-
-                });
-
-                
-
-                // '기타' 주제일 때 랜덤 버튼 숨기기
-
-                if (topic === CONSTANTS.TOPICS.MORAL) {
-
-                    randomBtn.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                } else {
-
-                    randomBtn.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                }
-
-                
-
-                curriculumBreak.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.CURRICULUM);
-
-                if (modelBreak) modelBreak.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.MODEL);
-
-                // show grouped subject button segments only for model topic
-
-                document.querySelectorAll('.subject-btn-group').forEach(g => {
-
-                    g.classList.toggle(CONSTANTS.CSS_CLASSES.HIDDEN, topic !== CONSTANTS.TOPICS.MODEL);
-
-                });
-
+           // 주제별 시간 설정
+           const firstTopic = topics[0]?.topic;
+           if (firstTopic) {
+               if (firstTopic === CONSTANTS.TOPICS.CURRICULUM ||
+                   firstTopic === CONSTANTS.TOPICS.COMPETENCY ||
+                   firstTopic === CONSTANTS.TOPICS.AREA) {
+                   gameState.duration = 1200; // 20분
             } else {
+                   gameState.duration = 2400; // 40분
+               }
+           }
+           
+           // 첫 번째 주제에 하위 메뉴가 있으면 표시
+           const firstTopicItem = topics[0];
+           if (firstTopicItem?.hasSubmenu) {
+               const submenus = {
+                   'math-achievement-submenu': false,
+                   'social-achievement-submenu': false,
+                   'integrated-curriculum-submenu': false,
+                   'integrated-achievement-submenu': false,
+                   'pe-curriculum-submenu': false,
+                   'ethics-basic-submenu': false
+               };
+               
+               if (groupName === 'math' && firstTopicItem.topic === 'achievement') {
+                   submenus['math-achievement-submenu'] = true;
+               } else if (groupName === 'social' && firstTopicItem.topic === 'achievement') {
+                   submenus['social-achievement-submenu'] = true;
+               } else if (groupName === 'integrated' && firstTopicItem.topic === 'curriculum') {
+                   submenus['integrated-curriculum-submenu'] = true;
+               } else if (groupName === 'integrated' && firstTopicItem.topic === 'achievement') {
+                   submenus['integrated-achievement-submenu'] = true;
+               } else if (groupName === 'pe' && firstTopicItem.topic === 'curriculum') {
+                   submenus['pe-curriculum-submenu'] = true;
+               } else if (groupName === 'ethics' && firstTopicItem.topic === 'basic') {
+                   submenus['ethics-basic-submenu'] = true;
+               }
+               
+               // 하위 선택지 표시/숨김 처리
+               Object.keys(submenus).forEach(id => {
+                   const submenu = document.getElementById(id);
+                   if (submenu) {
+                       if (submenus[id]) {
+                           submenu.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                           // 모든 버튼의 선택 상태 초기화
+                           submenu.querySelectorAll('.topic-sub-btn').forEach(b => {
+                               b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED);
+                               b.style.background = '';
+                               b.style.color = '';
+                               b.style.transform = '';
+                               b.style.boxShadow = '';
+                               b.style.borderColor = '';
+                               b.style.fontWeight = '';
+                           });
+                           // 첫 번째 버튼을 기본 선택
+                           const firstBtn = submenu.querySelector('.topic-sub-btn');
+                           if (firstBtn) {
+                               firstBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                               firstBtn.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
+                               firstBtn.style.color = '#ffffff';
+                               firstBtn.style.fontWeight = '900';
+                               firstBtn.style.transform = 'translateY(2px)';
+                               firstBtn.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
+                               firstBtn.style.borderColor = '#ff1744';
+                               // gameState도 업데이트
+                               gameState.selectedSubject = firstBtn.dataset.subject;
+                               gameState.selectedTopic = firstBtn.dataset.topic;
+                           }
+                       } else {
+                           submenu.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                       }
+                   }
+               });
+           }
+       }
 
-                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                subjectButtons.forEach(btn => btn.disabled = true);
-
-                curriculumBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                if (modelBreak) modelBreak.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                document.querySelectorAll('.subject-btn-group').forEach(g => g.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN));
-
-            }
+       function updateStartModalUI() {
 
             const stats = getDailyStats(30);
 
@@ -4463,7 +4623,7 @@
 
         document.querySelector('.topic-selector').addEventListener('click', e => {
 
-            if (!e.target.matches('.btn')) return;
+            if (!e.target.matches('.topic-btn')) return;
 
             // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
             setTimeout(() => playSound(clickAudio), 0);
@@ -4475,102 +4635,92 @@
             });
 
             const topic = e.target.dataset.topic;
+            const subject = e.target.dataset.subject;
 
             gameState.selectedTopic = topic;
+            gameState.selectedSubject = subject;
 
-            
+            // 모든 하위 선택지 처리
+            const submenus = {
+                'math-achievement-submenu': false,
+                'social-achievement-submenu': false,
+                'integrated-curriculum-submenu': false,
+                'integrated-achievement-submenu': false,
+                'pe-curriculum-submenu': false,
+                'ethics-basic-submenu': false
+            };
 
-            // INP 개선: subject-btn 조작도 다음 프레임으로 지연
-            requestAnimationFrame(() => {
-                // 기본이론 주제 선택 시 특별한 시각적 효과 적용
-                if (topic === CONSTANTS.TOPICS.BASIC) {
-                    document.querySelectorAll('.subject-btn').forEach(btn => {
-                        if (btn.dataset.topic === 'basic') {
-                            btn.classList.add('basic-topic-highlight');
-                        } else {
-                            btn.classList.remove('basic-topic-highlight');
-                        }
-                    });
+            const selectedSubjectBtn = document.querySelector('.subject-btn[data-subject-group].selected');
+            if (selectedSubjectBtn) {
+                const groupName = selectedSubjectBtn.dataset.subjectGroup;
+                const topics = subjectTopicMapping[groupName];
+                const selectedTopicItem = topics?.find(item => item.topic === topic && item.subject === subject);
+                
+                if (selectedTopicItem?.hasSubmenu) {
+                    // 하위 선택지 표시
+                    if (groupName === 'math' && topic === 'achievement') {
+                        submenus['math-achievement-submenu'] = true;
+                    } else if (groupName === 'social' && topic === 'achievement') {
+                        submenus['social-achievement-submenu'] = true;
+                    } else if (groupName === 'integrated' && topic === 'curriculum') {
+                        submenus['integrated-curriculum-submenu'] = true;
+                    } else if (groupName === 'integrated' && topic === 'achievement') {
+                        submenus['integrated-achievement-submenu'] = true;
+                    } else if (groupName === 'pe' && topic === 'curriculum') {
+                        submenus['pe-curriculum-submenu'] = true;
+                    } else if (groupName === 'ethics' && topic === 'basic') {
+                        submenus['ethics-basic-submenu'] = true;
+                    }
+                }
+            }
+
+            // 하위 선택지 표시/숨김 처리
+            Object.keys(submenus).forEach(id => {
+                const submenu = document.getElementById(id);
+                if (submenu) {
+                    if (submenus[id]) {
+                        submenu.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                        // 모든 버튼의 선택 상태 초기화
+                        submenu.querySelectorAll('.topic-sub-btn').forEach(b => {
+                            b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED);
+                            b.style.background = '';
+                            b.style.color = '';
+                            b.style.transform = '';
+                            b.style.boxShadow = '';
+                            b.style.borderColor = '';
+                            b.style.fontWeight = '';
+                        });
+                        // 현재 선택된 항목에 selected 클래스와 스타일 추가
+                        const currentSelectedBtn = submenu.querySelector(`.topic-sub-btn[data-subject="${gameState.selectedSubject}"]`);
+                        if (currentSelectedBtn) {
+                            currentSelectedBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                            currentSelectedBtn.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
+                            currentSelectedBtn.style.color = '#ffffff';
+                            currentSelectedBtn.style.fontWeight = '900';
+                            currentSelectedBtn.style.transform = 'translateY(2px)';
+                            currentSelectedBtn.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
+                            currentSelectedBtn.style.borderColor = '#ff1744';
                 } else {
-                    document.querySelectorAll('.subject-btn').forEach(btn => {
-                        btn.classList.remove('basic-topic-highlight');
-                    });
+                            // 첫 번째 버튼을 기본 선택
+                            const firstBtn = submenu.querySelector('.topic-sub-btn');
+                            if (firstBtn) {
+                                firstBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                                firstBtn.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
+                                firstBtn.style.color = '#ffffff';
+                                firstBtn.style.fontWeight = '900';
+                                firstBtn.style.transform = 'translateY(2px)';
+                                firstBtn.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
+                                firstBtn.style.borderColor = '#ff1744';
+                                // gameState도 업데이트
+                                gameState.selectedSubject = firstBtn.dataset.subject;
+                                gameState.selectedTopic = firstBtn.dataset.topic;
+                            }
+                        }
+            } else {
+                        submenu.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                    }
                 }
             });
-
-            
-
-            if (
-
-                topic === CONSTANTS.TOPICS.CURRICULUM ||
-
-                topic === CONSTANTS.TOPICS.MODEL ||
-
-                topic === CONSTANTS.TOPICS.COURSE ||
-
-                topic === CONSTANTS.TOPICS.BASIC ||
-
-                topic === CONSTANTS.TOPICS.ACHIEVEMENT ||
-
-                topic === CONSTANTS.TOPICS.MORAL
-
-            ) {
-
-                subjectSelector.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                subjectSelectionTitle.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-
-                let defaultSubject;
-
-                if (topic === CONSTANTS.TOPICS.MODEL) {
-
-                    defaultSubject = CONSTANTS.SUBJECTS.ETHICS;
-
-                } else if (topic === CONSTANTS.TOPICS.COURSE) {
-
-                    defaultSubject = CONSTANTS.SUBJECTS.CREATIVE;
-
-                } else if (topic === CONSTANTS.TOPICS.BASIC) {
-
-                    defaultSubject = CONSTANTS.SUBJECTS.ENGLISH;
-
-                } else if (topic === CONSTANTS.TOPICS.ACHIEVEMENT) {
-
-                    defaultSubject = CONSTANTS.SUBJECTS.MATH_OPERATION;
-
-                } else if (topic === CONSTANTS.TOPICS.MORAL) {
-
-                    defaultSubject = CONSTANTS.SUBJECTS.MORAL_PRINCIPLES;
-
-                } else {
-
-                    defaultSubject = CONSTANTS.SUBJECTS.MUSIC;
-
-                }
-
-                const defaultBtn = document.querySelector(`.subject-btn[data-subject="${defaultSubject}"]`);
-
-                if (defaultBtn) defaultBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-
-                gameState.selectedSubject = defaultSubject;
-
-            } else {
-
-                subjectSelector.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                subjectSelectionTitle.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-
-                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-
-                gameState.selectedSubject = topic === CONSTANTS.TOPICS.COMPETENCY
-
-                    ? CONSTANTS.SUBJECTS.COMPETENCY
-
-                    : CONSTANTS.SUBJECTS.AREA;
-
-            }
 
             // 주제별 시간 설정: 내체표, 역량, 영역 주제는 20분, 나머지는 40분
             if (topic === CONSTANTS.TOPICS.CURRICULUM ||
@@ -4598,84 +4748,25 @@
 
         subjectSelector.addEventListener('click', e => {
 
-            if (!e.target.matches('.btn') || gameState.isRandomizing) return;
-
-
+            if (!e.target.matches('.subject-btn[data-subject-group]') || gameState.isRandomizing) return;
 
             const clickedBtn = e.target;
 
-            const subject = clickedBtn.dataset.subject;
-
-            
-
-            if (subject !== CONSTANTS.SUBJECTS.RANDOM) {
+            const groupName = clickedBtn.dataset.subjectGroup;
 
                  // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
             setTimeout(() => playSound(clickAudio), 0);
 
-            }
+            // 과목 선택 상태 업데이트
+            document.querySelectorAll('.subject-btn[data-subject-group]').forEach(btn => {
+                btn.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED);
+            });
+            clickedBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
 
+            // 주제 선택기 동적 생성
+            renderTopicSelector(groupName);
 
-
-            if (subject === CONSTANTS.SUBJECTS.RANDOM) {
-
-                gameState.isRandomizing = true;
-
-                const subjectBtns = Array.from(document.querySelectorAll('.subject-btn:not([data-subject="random"]):not(.hidden)'));
-
-                const allSelectorBtns = document.querySelectorAll('.subject-selector .btn');
-
-                
-
-                allSelectorBtns.forEach(b => b.disabled = true);
-
-                subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-
-
-
-                // AudioManager의 startRandomAudio 사용 (loop 자동 설정)
-                audioManager.startRandomAudio();
-
-
-
-                let shuffleCount = 0;
-
-                const maxShuffles = CONSTANTS.RANDOM_ANIMATION_DURATION / CONSTANTS.RANDOM_ANIMATION_INTERVAL;
-
-
-
-                const randomInterval = setInterval(() => {
-
-                    shuffleCount++;
-
-                    subjectBtns.forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.IS_SELECTING));
-
-
-
-                    if (shuffleCount >= maxShuffles) {
-
-                        clearInterval(randomInterval);
-
-                        // AudioManager의 stopRandomAudio 사용
-                        audioManager.stopRandomAudio();
-
-
-
-                        const randomIndex = Math.floor(Math.random() * subjectBtns.length);
-
-                        const chosenBtn = subjectBtns[randomIndex];
-
-                        
-
-                        chosenBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-
-                        gameState.selectedSubject = chosenBtn.dataset.subject;
-
-                        
-
-                        allSelectorBtns.forEach(b => b.disabled = false);
-
-                        gameState.isRandomizing = false;
+            updateStartModalUI();
 
                         // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
                         setTimeout(() => {
@@ -4697,51 +4788,80 @@
                         // 오답 표시 업데이트
                         updateWrongAnswerIndicators();
 
-                        return;
-
-                    }
-
-                    
-
-                    const currentIndex = shuffleCount % subjectBtns.length;
-
-                    subjectBtns[currentIndex].classList.add(CONSTANTS.CSS_CLASSES.IS_SELECTING);
-
-                }, CONSTANTS.RANDOM_ANIMATION_INTERVAL);
-
-            } else {
-
-                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
-
-                clickedBtn.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-
-                gameState.selectedSubject = subject;
-
-                // 과학 모형 및 기타 도형 조건에 따른 스타일 적용
-                setTimeout(() => {
-                    // 보라색 텍스트는 지정된 과목에서만 적용
-                    if (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
-                        gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE) {
-                        applyPurpleTextStyles(gameState, CONSTANTS);
-                    } else if (gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
-                               gameState.selectedSubject === CONSTANTS.SUBJECTS.GEOMETRY) {
-                    } else {
-                        // 다른 과목에서는 보라색 클래스 제거
-                        const overviewQuestions = document.querySelectorAll('.overview-question');
-                        overviewQuestions.forEach(question => {
-                            question.classList.remove('science-model-purple-text');
-                        });
-                    }
-                }, 100);
-
-                // 오답 표시 업데이트
-                updateWrongAnswerIndicators();
-
-            }
-
         });
 
+        // 모든 하위 선택지 이벤트 핸들러
+        const submenuIds = [
+            'math-achievement-submenu',
+            'social-achievement-submenu',
+            'integrated-curriculum-submenu',
+            'integrated-achievement-submenu',
+            'pe-curriculum-submenu',
+            'ethics-basic-submenu'
+        ];
 
+        submenuIds.forEach(submenuId => {
+            const submenuEl = document.getElementById(submenuId);
+            if (submenuEl) {
+                submenuEl.addEventListener('click', e => {
+                    if (!e.target.matches('.topic-sub-btn')) return;
+
+                    setTimeout(() => playSound(clickAudio), 0);
+
+                    // 같은 하위 메뉴 내의 버튼만 선택 상태 업데이트
+                    const parentSubmenu = e.target.closest('[id$="-submenu"]');
+                    if (parentSubmenu) {
+                        parentSubmenu.querySelectorAll('.topic-sub-btn').forEach(b => {
+                            b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED);
+                            // 스타일도 직접 제거
+                            b.style.background = '';
+                            b.style.color = '';
+                            b.style.transform = '';
+                            b.style.boxShadow = '';
+                            b.style.borderColor = '';
+                            b.style.fontWeight = '';
+                        });
+                    }
+                    // 선택된 버튼에 클래스와 스타일 추가
+                    e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                    e.target.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
+                    e.target.style.color = '#ffffff';
+                    e.target.style.fontWeight = '900';
+                    e.target.style.transform = 'translateY(2px)';
+                    e.target.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
+                    e.target.style.borderColor = '#ff1744';
+
+                    const subject = e.target.dataset.subject;
+                    const topic = e.target.dataset.topic;
+
+                gameState.selectedSubject = subject;
+                    gameState.selectedTopic = topic;
+
+                    // 주제 버튼도 업데이트
+                    const selectedSubjectBtn = document.querySelector('.subject-btn[data-subject-group].selected');
+                    if (selectedSubjectBtn) {
+                        document.querySelectorAll('.topic-btn').forEach(b => {
+                            if (b.dataset.topic === topic) {
+                                b.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
+                    } else {
+                                b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED);
+                            }
+                        });
+                    }
+
+                    updateStartModalUI();
+                });
+            }
+        });
+
+        // 초기화 시 음악 주제 표시
+        setTimeout(() => {
+            const initialMusicBtn = document.querySelector('.subject-btn[data-subject-group="music"].selected');
+            if (initialMusicBtn) {
+                renderTopicSelector('music');
+                updateStartModalUI();
+            }
+        }, 100);
 
         document.querySelector('.mode-selector').addEventListener('click', e => {
 
@@ -5412,13 +5532,6 @@
         });
 
         // 오답 기록 초기화 버튼 이벤트 리스너
-        clearWrongAnswersBtn.addEventListener('click', () => {
-            if (confirm('정말로 모든 오답 기록을 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
-                storageManager.clearWrongAnswers();
-                storageManager.clearCorrectAnswers();
-                alert('오답 기록이 초기화되었습니다.');
-            }
-        });
 
         
 
