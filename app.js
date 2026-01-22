@@ -1334,8 +1334,37 @@
            const creativeMain = document.getElementById('creative-quiz-main');
            if (!creativeMain) return;
 
+           // 지정된 빈칸만 대상으로 함
+           const targetAnswers = [
+               '주제 탐구 활동',
+               '적응 및 개척 활동',
+               '프로젝트형 봉사활동',
+               '기본생활습관 형성 활동',
+               '관계 형성 및 소통 활동',
+               '공동체 자치활동',
+               '학술 동아리',
+               '예술 동아리',
+               '스포츠 동아리',
+               '놀이 동아리',
+               '교내 봉사활동',
+               '지역 사회 봉사활동',
+               '청소년 단체 활동',
+               '자아탐색 활동',
+               '진로 이해 활동',
+               '직업 이해 활동',
+               '정보 탐색 활동',
+               '진로 준비 활동',
+               '진로계획 활동',
+               '진로체험 활동'
+           ];
+
            // creative-question 내의 모든 input 찾기
-           const inputs = creativeMain.querySelectorAll('.creative-question input[data-answer]');
+           const allInputs = creativeMain.querySelectorAll('.creative-question input[data-answer]');
+           
+           // 지정된 답안을 가진 input만 필터링
+           const inputs = Array.from(allInputs).filter(input => 
+               targetAnswers.includes(input.dataset.answer)
+           );
            
            inputs.forEach(input => {
                // 이미 처리된 input은 건너뛰기
