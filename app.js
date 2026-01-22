@@ -1329,7 +1329,100 @@
 
        }
 
+       // 창의적 체험활동: input이 비활성화될 때 옆 텍스트 표시
+       function setupCreativeQuestionTextReveal() {
+           const creativeMain = document.getElementById('creative-quiz-main');
+           if (!creativeMain) return;
 
+           // creative-question 내의 모든 input 찾기
+           const inputs = creativeMain.querySelectorAll('.creative-question input[data-answer]');
+           
+           inputs.forEach(input => {
+               // 이미 처리된 input은 건너뛰기
+               if (input.dataset.textRevealSetup === 'true') return;
+               input.dataset.textRevealSetup = 'true';
+
+               // input 다음의 텍스트 노드 찾기
+               let nextNode = input.nextSibling;
+               let textContent = '';
+               
+               // 다음 형제 노드들을 순회하며 텍스트 수집 (br 태그 전까지)
+               while (nextNode) {
+                   if (nextNode.nodeType === Node.TEXT_NODE) {
+                       const text = nextNode.textContent.trim();
+                       if (text) {
+                           textContent += text;
+                       }
+                   } else if (nextNode.nodeType === Node.ELEMENT_NODE) {
+                       // br 태그를 만나면 중단
+                       if (nextNode.tagName === 'BR') {
+                           break;
+                       }
+                       // 다른 요소가 있으면 그 안의 텍스트도 포함
+                       if (nextNode.textContent) {
+                           textContent += nextNode.textContent;
+                       }
+                   }
+                   nextNode = nextNode.nextSibling;
+               }
+
+               // 텍스트가 있으면 span으로 감싸기
+               let textSpan = null;
+               if (textContent) {
+                   // 기존 텍스트 노드들을 하나의 span으로 감싸기
+                   textSpan = document.createElement('span');
+                   textSpan.className = 'creative-answer-text';
+                   textSpan.style.display = 'none'; // 초기에는 숨김
+                   
+                   // input 다음의 모든 형제 노드를 span으로 이동
+                   nextNode = input.nextSibling;
+                   const nodesToMove = [];
+                   while (nextNode) {
+                       if (nextNode.nodeType === Node.ELEMENT_NODE && nextNode.tagName === 'BR') {
+                           break;
+                       }
+                       nodesToMove.push(nextNode);
+                       nextNode = nextNode.nextSibling;
+                   }
+                   
+                   // 노드들을 span으로 이동
+                   nodesToMove.forEach(node => {
+                       textSpan.appendChild(node);
+                   });
+                   
+                   // span을 input 다음에 삽입
+                   if (input.parentNode) {
+                       input.parentNode.insertBefore(textSpan, input.nextSibling);
+                   }
+               }
+
+               // 텍스트 span이 있는 경우에만 observer 설정
+               if (textSpan) {
+                   // MutationObserver로 disabled 속성 변경 감지
+                   const observer = new MutationObserver(mutations => {
+                       mutations.forEach(mutation => {
+                           if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
+                               if (input.disabled) {
+                                   textSpan.style.display = 'inline';
+                               } else {
+                                   textSpan.style.display = 'none';
+                               }
+                           }
+                       });
+                   });
+
+                   observer.observe(input, {
+                       attributes: true,
+                       attributeFilter: ['disabled']
+                   });
+
+                   // 초기 상태 확인
+                   if (input.disabled) {
+                       textSpan.style.display = 'inline';
+                   }
+               }
+           });
+       }
 
        // 과학 성취기준: '탐구 활동' 제목과 그 다음 항목들을 하나의 박스로 래핑
 
@@ -2437,6 +2530,8 @@
                updateStartModalUI();
 
                adjustCreativeInputWidths();
+
+               setupCreativeQuestionTextReveal();
 
                adjustEnglishInputWidths();
 
@@ -7650,6 +7745,8 @@
             resetGame(false); // Reset state without showing any modal
 
             adjustCreativeInputWidths();
+
+            setupCreativeQuestionTextReveal();
 
             updateStartModalUI();
 
