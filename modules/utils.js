@@ -204,53 +204,13 @@ export function extractChoices(text) {
 }
 
 // === Overview 계층 들여쓰기 ===
+// 이 함수는 더 이상 사용되지 않습니다.
+// 들여쓰기는 app.js와 modules/ui-styling.js의 applyOverviewHierarchyIndentation 함수에서
+// CSS 클래스(overview-top: 4rem, overview-sub: 2rem)를 통해 일관성 있게 처리됩니다.
 export function applyOverviewHierarchyIndentation() {
-    const overviewMain = document.getElementById('overview-quiz-main');
-    if (!overviewMain) return;
-    const items = overviewMain.querySelectorAll('.overview-question');
-    items.forEach((el) => {
-        const textStart = (el.textContent || '').trim();
-        const sectionEl = el.closest('section');
-        const inDesignSection = sectionEl && sectionEl.id === 'design';
-        const inStandardSection = sectionEl && sectionEl.id === 'standard';
-        let inStandardElementaryBlock = false;
-        if (inStandardSection) {
-            const block = el.closest('.creative-block');
-            if (block) {
-                const titleEl = block.querySelector('.outline-title');
-                if (titleEl && (titleEl.textContent || '').trim().startsWith('2. 초등학교')) {
-                    inStandardElementaryBlock = true;
-                }
-            }
-        }
-
-        // 섹션 II(설계와 운영) 전용 규칙:
-        // - 상위: '가.' '나.' 등 한글+'.' 시작은 왼쪽 정렬
-        // - 하위: '1)' '2)' 등 숫자+')' 시작은 1단계 들여쓰기
-        // - 하위: '가)' '나)' 등 한글+')' 시작은 2단계 들여쓰기
-        if (inDesignSection) {
-            if (/^[가-힣]\.\s/.test(textStart)) {
-                el.style.marginLeft = '0';
-            } else if (/^\d+\)\s/.test(textStart)) {
-                el.style.marginLeft = '2rem';
-            } else if (/^[가-힣]\)\s/.test(textStart)) {
-                el.style.marginLeft = '4rem';
-            }
-        }
-        // 섹션 III(편성·운영 기준) 전용 규칙:
-        // - 하위: '가.' '나.' 등 한글+'.' 시작은 1단계 들여쓰기
-        // - 하위: '1)' '2)' 등 숫자+')' 시작은 2단계 들여쓰기
-        // - 하위: '가)' '나)' 등 한글+')' 시작은 3단계 들여쓰기
-        else if (inStandardSection && inStandardElementaryBlock) {
-            if (/^[가-힣]\.\s/.test(textStart)) {
-                el.style.marginLeft = '2rem';
-            } else if (/^\d+\)\s/.test(textStart)) {
-                el.style.marginLeft = '4rem';
-            } else if (/^[가-힣]\)\s/.test(textStart)) {
-                el.style.marginLeft = '6rem';
-            }
-        }
-    });
+    // 이 함수는 더 이상 사용되지 않으며, CSS 클래스를 통한 일관성 있는 들여쓰기가 적용됩니다.
+    // 모든 섹션에서 overview-top은 4rem, overview-sub는 2rem으로 통일되어 있습니다.
+    return;
 }
 
 // === 랜덤 선택 애니메이션 ===
