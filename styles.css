@@ -5491,3 +5491,16 @@ input.wrong-answer-indicator {
     height: 14px;
   }
 }
+
+/* 배지 스타일 */
+.activity-badge {
+  display: inline-block;
+  background-color: var(--primary);
+  color: var(--text-light);
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-right: 0.8rem;
+  border: 1px solid var(--secondary);
+}
