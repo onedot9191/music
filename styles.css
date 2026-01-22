@@ -3404,19 +3404,29 @@ body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
 }
 
 /* Overview (총론, 동양윤리) 계층 ?�여?�기 */
+/* Overview (총론, 동양윤리) 계층 들여쓰기 - 모든 섹션에 일관성 있게 적용 */
+/* 총론의 5가지 섹션(교육과정의 성격, 구성의 방향, 설계와 운영, 편성·운영, 학교 교육과정 지원) 모두 동일한 들여쓰기 적용 */
+/* 상위 항목(overview-top): 2rem, 하위 항목(overview-sub): 0rem (들여쓰기 없음) */
 #overview-quiz-main .overview-question.overview-top,
 #eastern-ethics-quiz-main .overview-question.overview-top,
 #western-ethics-quiz-main .overview-question.overview-top,
 #moral-psychology-quiz-main .overview-question.overview-top,
 #integrated-guide-overview .overview-question.overview-top {
-  margin-left: 4rem;
+  margin-left: 2rem;
 }
 #overview-quiz-main .overview-question.overview-sub,
 #eastern-ethics-quiz-main .overview-question.overview-sub,
 #western-ethics-quiz-main .overview-question.overview-sub,
 #moral-psychology-quiz-main .overview-question.overview-sub,
 #integrated-guide-overview .overview-question.overview-sub {
-  margin-left: 2rem;
+  margin-left: 0;
+}
+
+/* 총론 섹션의 말머리 기호 스타일 - 덜 눈에 띄게 */
+#overview-quiz-main .overview-question .label {
+  color: rgba(255, 255, 255, 0.6); /* 본문보다 약간 어둡게 */
+  font-weight: 400; /* 기본 굵기 */
+  opacity: 0.7; /* 약간 투명하게 */
 }
 
 /* 동양윤리, 서양윤리, 도덕 심리학 Title 강조 스타일 */
