@@ -3205,7 +3205,10 @@
                 isGenericModelTitle(input) ||
 
                 // Allow order-agnostic grading for explicitly marked groups (e.g., #yosho)
-                input.closest('[data-ignore-order]')
+                input.closest('[data-ignore-order]') ||
+
+                // Allow group-based grading for inputs with data-group attribute
+                input.closest('[data-group]')
 
             ) {
 
@@ -3757,7 +3760,10 @@
 
                 isGenericModelTitle(input) ||
 
-                input.closest('[data-ignore-order]')
+                input.closest('[data-ignore-order]') ||
+
+                // Allow group-based grading for inputs with data-group attribute
+                input.closest('[data-group]')
 
             ) {
 
@@ -4984,7 +4990,7 @@
                     if (parentSubmenu) {
                         parentSubmenu.querySelectorAll('.topic-sub-btn').forEach(b => {
                             b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED);
-                            // 스타일도 직접 제거
+                            // 인라인 스타일 제거 - CSS가 적용되도록
                             b.style.background = '';
                             b.style.color = '';
                             b.style.transform = '';
@@ -4993,14 +4999,15 @@
                             b.style.fontWeight = '';
                         });
                     }
-                    // 선택된 버튼에 클래스와 스타일 추가
+                    // 선택된 버튼에 클래스만 추가 - CSS가 적용되도록
                     e.target.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                    e.target.style.background = 'linear-gradient(135deg, #ff1744 0%, #ff6b6b 100%)';
-                    e.target.style.color = '#ffffff';
-                    e.target.style.fontWeight = '900';
-                    e.target.style.transform = 'translateY(2px)';
-                    e.target.style.boxShadow = '0 0 20px rgba(255, 23, 68, 0.6), 3px 3px 0px rgba(15, 52, 96, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.2)';
-                    e.target.style.borderColor = '#ff1744';
+                    // 인라인 스타일 제거 - CSS가 적용되도록
+                    e.target.style.background = '';
+                    e.target.style.color = '';
+                    e.target.style.fontWeight = '';
+                    e.target.style.transform = '';
+                    e.target.style.boxShadow = '';
+                    e.target.style.borderColor = '';
 
                     const subject = e.target.dataset.subject;
                     const topic = e.target.dataset.topic;
