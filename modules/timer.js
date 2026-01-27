@@ -60,7 +60,7 @@ export class TimerManager {
         this.updateDisplay();
     }
 
-    // 게임 모드 설정
+    // 난이도 설정
     setGameMode(mode) {
         this.gameMode = mode;
     }
