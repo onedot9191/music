@@ -1181,7 +1181,7 @@ input.activity-input {
   font-family: var(--font-display);
 }
 
-/* 게임 모드와 제한 시간 2열 배치 */
+/* 난이도와 제한 시간 2열 배치 */
 .mode-time-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
