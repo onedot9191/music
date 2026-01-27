@@ -959,6 +959,11 @@ input.activity-input {
   padding-bottom: 1.5rem;
 }
 
+/* 통합 섹션의 박스에 빨간색 테두리 적용 */
+#integrated .grade-container > div {
+  border: 3px solid var(--primary);
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
