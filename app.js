@@ -1685,7 +1685,9 @@
        const subjectTopicMapping = {
            'overview-creative': [
                { name: '총론', subject: 'overview', topic: 'course' },
-               { name: '창체', subject: 'creative', topic: 'course' }
+               { name: '창체', subject: 'creative', topic: 'course' },
+               { name: '역량', subject: 'competency', topic: 'competency' },
+               { name: '영역', subject: 'area', topic: 'area' }
            ],
            'korean': [
                { name: '내체표', subject: 'korean', topic: 'curriculum' },
