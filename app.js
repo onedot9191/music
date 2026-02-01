@@ -1716,7 +1716,6 @@
                { name: '내체표', subject: 'ethics-lite', topic: 'curriculum' },
                { name: '모형', subject: 'ethics', topic: 'model' },
                { name: '교육과정', subject: 'moral-course', topic: 'course' },
-               { name: '기본이론', subject: 'eastern-ethics', topic: 'basic', hasSubmenu: true },
                { name: '지도 원리·방법', subject: 'moral-principles', topic: 'moral' }
            ],
            'science': [
