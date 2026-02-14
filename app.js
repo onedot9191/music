@@ -103,6 +103,12 @@
 
             selectedTopic: CONSTANTS.TOPICS.CURRICULUM,
 
+            /** 도덕 버튼 연속 클릭 횟수. 3회 시 기본이론 하위 목록 표시 */
+            ethicsConsecutiveClicks: 0,
+            useEasternEthicsBasic: false,
+            /** 기본이론 하위 목록에서 선택 대기 중이면 true, 선택 후 startGame 호출 */
+            pendingEthicsBasicStart: false,
+
             gameMode: CONSTANTS.MODES.NORMAL,
             
             normalModeDuration: CONSTANTS.DEFAULT_DURATION, // Normal 모드의 duration 저장
@@ -2555,6 +2561,20 @@
 
            if (showStartModal) {
 
+               gameState.ethicsConsecutiveClicks = 0;
+               gameState.useEasternEthicsBasic = false;
+               gameState.pendingEthicsBasicStart = false;
+               document.getElementById('ethics-basic-submenu')?.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+               // 화면에 보이는 과목/주제와 상태 동기화 (기본이론 퀴즈 후 다시 시작 시 첫 주제로)
+               const selectedSubjectBtn = document.querySelector('.subject-btn[data-subject-group].selected');
+               if (selectedSubjectBtn && subjectTopicMapping) {
+                   const groupName = selectedSubjectBtn.dataset.subjectGroup;
+                   const topics = subjectTopicMapping[groupName];
+                   if (topics && topics.length) {
+                       gameState.selectedSubject = topics[0].subject;
+                       gameState.selectedTopic = topics[0].topic;
+                   }
+               }
                openModal(startModal);
 
                updateStartModalUI();
@@ -4930,6 +4950,17 @@
 
             const groupName = clickedBtn.dataset.subjectGroup;
 
+            // 도덕 3회 클릭 시 기본이론(eastern-ethics) 진입 플래그
+            if (groupName === 'ethics') {
+                gameState.ethicsConsecutiveClicks = (gameState.ethicsConsecutiveClicks || 0) + 1;
+                if (gameState.ethicsConsecutiveClicks >= 3) {
+                    gameState.useEasternEthicsBasic = true;
+                }
+            } else {
+                gameState.ethicsConsecutiveClicks = 0;
+                gameState.useEasternEthicsBasic = false;
+            }
+
                  // INP 개선: 사운드 재생을 지연시켜 즉시 응답성 향상
             setTimeout(() => playSound(clickAudio), 0);
 
@@ -5027,6 +5058,14 @@
                     }
 
                     updateStartModalUI();
+
+                    // 도덕 3회 클릭 후 기본이론 하위 목록에서 선택한 경우 → 바로 게임 시작
+                    if (gameState.pendingEthicsBasicStart && parentSubmenu?.id === 'ethics-basic-submenu') {
+                        gameState.pendingEthicsBasicStart = false;
+                        gameState.useEasternEthicsBasic = false;
+                        gameState.ethicsConsecutiveClicks = 0;
+                        startGame();
+                    }
                 });
             }
         });
@@ -5688,6 +5727,19 @@
                 e.preventDefault();
                 e.stopPropagation();
                 try {
+                    if (gameState.useEasternEthicsBasic) {
+                        gameState.pendingEthicsBasicStart = true;
+                        ['math-achievement-submenu', 'social-achievement-submenu', 'integrated-curriculum-submenu', 'integrated-achievement-submenu', 'pe-curriculum-submenu'].forEach(id => {
+                            document.getElementById(id)?.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
+                        });
+                        const ethicsBasicSubmenu = document.getElementById('ethics-basic-submenu');
+                        if (ethicsBasicSubmenu) {
+                            ethicsBasicSubmenu.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+                            ethicsBasicSubmenu.querySelectorAll('.topic-sub-btn').forEach(b => b.classList.remove(CONSTANTS.CSS_CLASSES.SELECTED));
+                            ethicsBasicSubmenu.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                        return;
+                    }
                     startGame();
                 } catch (error) {
                     console.error('startGame 함수 실행 중 에러:', error);
