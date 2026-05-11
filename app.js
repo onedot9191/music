@@ -2565,14 +2565,27 @@
                gameState.useEasternEthicsBasic = false;
                gameState.pendingEthicsBasicStart = false;
                document.getElementById('ethics-basic-submenu')?.classList.add(CONSTANTS.CSS_CLASSES.HIDDEN);
-               // 화면에 보이는 과목/주제와 상태 동기화 (기본이론 퀴즈 후 다시 시작 시 첫 주제로)
+               // 화면에 보이는 과목/주제와 상태 동기화
                const selectedSubjectBtn = document.querySelector('.subject-btn[data-subject-group].selected');
                if (selectedSubjectBtn && subjectTopicMapping) {
                    const groupName = selectedSubjectBtn.dataset.subjectGroup;
                    const topics = subjectTopicMapping[groupName];
                    if (topics && topics.length) {
-                       gameState.selectedSubject = topics[0].subject;
-                       gameState.selectedTopic = topics[0].topic;
+                       const visibleSelectedSubBtn = document.querySelector(
+                           '[id$="-submenu"]:not(.hidden) .topic-sub-btn.selected'
+                       );
+                       const selectedTopicBtn = document.querySelector('.topic-btn.selected');
+
+                       if (visibleSelectedSubBtn) {
+                           gameState.selectedSubject = visibleSelectedSubBtn.dataset.subject;
+                           gameState.selectedTopic = visibleSelectedSubBtn.dataset.topic;
+                       } else if (selectedTopicBtn) {
+                           gameState.selectedSubject = selectedTopicBtn.dataset.subject;
+                           gameState.selectedTopic = selectedTopicBtn.dataset.topic;
+                       } else {
+                           gameState.selectedSubject = topics[0].subject;
+                           gameState.selectedTopic = topics[0].topic;
+                       }
                    }
                }
                openModal(startModal);
@@ -7878,7 +7891,6 @@
         }
 
     });
-
 
 
 
