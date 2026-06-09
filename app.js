@@ -1646,6 +1646,27 @@
 
        }
 
+       function adjustCurriculumInputWidths() {
+
+            if (gameState.selectedTopic !== CONSTANTS.TOPICS.CURRICULUM) return;
+
+            const main = document.getElementById(getMainElementId());
+
+            if (!main) return;
+
+            main.querySelectorAll('input[data-answer]').forEach(input => {
+
+                input.removeAttribute('size');
+                input.style.setProperty('display', 'block', 'important');
+                input.style.setProperty('box-sizing', 'border-box', 'important');
+                input.style.setProperty('width', '100%', 'important');
+                input.style.setProperty('min-width', '100%', 'important');
+                input.style.setProperty('max-width', '100%', 'important');
+
+            });
+
+       }
+
 
 
        function shuffleSocialityFunctionList() {
@@ -2600,6 +2621,8 @@
 
                adjustBasicTopicInputWidths();
 
+               adjustCurriculumInputWidths();
+
                fixSettingsPanelHeight();
 
            }
@@ -2740,6 +2763,8 @@
             }
 
             adjustBasicTopicInputWidths();
+
+            adjustCurriculumInputWidths();
 
             
 
@@ -3246,7 +3271,7 @@
 
                 const group = input.closest('[data-group]') || section;
 
-                let ignoreOrder = group.hasAttribute('data-ignore-order');
+                const ignoreOrder = isIgnoreOrderScope(group, input);
 
 
 
@@ -3254,58 +3279,22 @@
 
                 const usedSet = usedAnswersMap.get(group);
 
-                // 과학-모형 타이틀에서는 채점 시 순서 무시를 강제로 비활성화
-                const groupSection = input.closest('section') || section;
-                const isScienceModelTitleForGrading = (
-                    gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
-                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE &&
-                    groupSection && groupSection.id && groupSection.id.toLowerCase().includes('title')
-                );
+                const inputs = Array.from(group.querySelectorAll('input[data-answer]'));
+                const canonical = ignoreOrder
+                    ? findScopedAnswer(input, userAnswer, inputs)
+                    : (matchesOwnAnswer(input, userAnswer) ? input.dataset.answer : null);
 
-                if (isScienceModelTitleForGrading) {
-                    ignoreOrder = false;
-                }
+                if (canonical) {
+                    const canonicalNorm = normalizeAnswer(canonical);
 
-                const answers = Array.from(group.querySelectorAll('input[data-answer]')).map(i => i.dataset.answer);
-                const typedSet = new Set(
-                    Array.from(group.querySelectorAll('input[data-answer]'))
-                        .map(i => normalizeAnswer(i.value))
-                        .filter(v => v)
-                );
-
-                const correctAnswers = Array.from(group.querySelectorAll('input[data-answer]'))
-                    .filter(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT))
-                    .map(input => input.dataset.answer);
-
-                let remaining = answers.filter(ans => !correctAnswers.includes(ans));
-                if (isScienceModelTitleForGrading) {
-                    remaining = remaining.filter(ans => !typedSet.has(normalizeAnswer(ans)));
-                }
-
-                const candidates = getAnswerCandidates(input);
-
-                for (const candidate of candidates) {
-
-                    const canonical = normalizeAnswer(candidate);
-
-                    const canonicalNorm = canonical;
-
-                    if (userAnswer === canonicalNorm && !usedSet.has(canonicalNorm)) {
-
+                    if (ignoreOrder || !usedSet.has(canonicalNorm)) {
                         isCorrect = true;
-
-                        displayAnswer = candidate;
+                        displayAnswer = canonical;
 
                         if (!ignoreOrder) {
-
                             usedSet.add(canonicalNorm);
-
                         }
-
-                        break;
-
                     }
-
                 }
 
             } else {
@@ -3591,19 +3580,9 @@
 
                             const inputs = group.querySelectorAll('input[data-answer]');
 
-                            const ignoreOrder = group.hasAttribute('data-ignore-order');
+                            const ignoreOrder = isIgnoreOrderScope(group, inputs[0]);
 
                             const answers = Array.from(inputs).map(i => i.dataset.answer);
-                            const typedSet = new Set(
-                                Array.from(inputs)
-                                    .map(i => normalize(i.value))
-                                    .filter(v => v)
-                            );
-                            const isScienceModelTitle = (
-                                gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
-                                gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE &&
-                                section.id && section.id.toLowerCase().includes('title')
-                            );
 
                             let remaining;
 
@@ -3615,24 +3594,15 @@
 
                                     .filter(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT))
 
-                                    .map(input => input.dataset.answer);
+                                    .map(input => normalize(input.value || input.dataset.answer));
 
-                                remaining = answers.filter(ans => !correctAnswers.includes(ans));
-                                if (isScienceModelTitle) {
-                                    remaining = remaining.filter(ans => !typedSet.has(normalize(ans)));
-                                }
+                                remaining = answers.filter(ans => !correctAnswers.includes(normalize(ans)));
 
                             } else {
 
-                                // 일반적인 경우: 사용되지 않은 답안만 사용
+                                // 순서 무시가 아닌 경우: 각 빈칸에는 자기 data-answer만 표시
 
-                                const usedSet = usedAnswersMap.get(group) || new Set();
-
-                                remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
-                                if (isScienceModelTitle) {
-                                    remaining = remaining.filter(ans => !typedSet.has(normalize(ans)));
-                                }
-
+                                remaining = [];
                             }
 
                             let idx = 0;
@@ -3649,17 +3619,21 @@
 
                                 if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
 
-                                    const userNorm = normalize(input.value);
-                                    let pick = remaining[idx];
-                                    if (pick == null) {
-                                        const alt = answers.find(a => normalize(a) !== userNorm);
-                                        pick = alt ?? input.dataset.answer;
-                                    }
-                                    if (pick != null && normalize(pick) !== userNorm) {
-                                        input.value = pick;
-                                    }
+                                    if (ignoreOrder) {
+                                        const userNorm = normalize(input.value);
+                                        let pick = remaining[idx];
+                                        if (pick == null) {
+                                            const alt = answers.find(a => normalize(a) !== userNorm);
+                                            pick = alt ?? input.dataset.answer;
+                                        }
+                                        if (pick != null && normalize(pick) !== userNorm) {
+                                            input.value = pick;
+                                        }
 
-                                    idx++;
+                                        idx++;
+                                    } else {
+                                        input.value = input.dataset.answer;
+                                    }
 
                                     input.classList.add(
                                         CONSTANTS.CSS_CLASSES.CORRECT,
@@ -3678,19 +3652,9 @@
 
                         const inputs = section.querySelectorAll('input[data-answer]');
 
-                        const ignoreOrder = section.hasAttribute('data-ignore-order');
+                        const ignoreOrder = isIgnoreOrderScope(section, inputs[0]);
 
                         const answers = Array.from(inputs).map(i => i.dataset.answer);
-                        const typedSet = new Set(
-                            Array.from(inputs)
-                                .map(i => normalize(i.value))
-                                .filter(v => v)
-                        );
-                        const isScienceModelTitle = (
-                            gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
-                            gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE &&
-                            section.id && section.id.toLowerCase().includes('title')
-                        );
 
                         let remaining;
 
@@ -3702,24 +3666,15 @@
 
                                 .filter(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT))
 
-                                .map(input => input.dataset.answer);
+                                .map(input => normalize(input.value || input.dataset.answer));
 
-                            remaining = answers.filter(ans => !correctAnswers.includes(ans));
-                            if (isScienceModelTitle) {
-                                remaining = remaining.filter(ans => !typedSet.has(normalize(ans)));
-                            }
+                            remaining = answers.filter(ans => !correctAnswers.includes(normalize(ans)));
 
                         } else {
 
-                            // 일반적인 경우: 사용되지 않은 답안만 사용
+                            // 순서 무시가 아닌 경우: 각 빈칸에는 자기 data-answer만 표시
 
-                            const usedSet = usedAnswersMap.get(section) || new Set();
-
-                            remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
-                            if (isScienceModelTitle) {
-                                remaining = remaining.filter(ans => !typedSet.has(normalize(ans)));
-                            }
-
+                            remaining = [];
                         }
 
                         let idx = 0;
@@ -3736,9 +3691,12 @@
 
                             if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
 
-                                input.value = remaining[idx] ?? input.dataset.answer;
-
-                                idx++;
+                                if (ignoreOrder) {
+                                    input.value = remaining[idx] ?? input.dataset.answer;
+                                    idx++;
+                                } else {
+                                    input.value = input.dataset.answer;
+                                }
 
                                 input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
 
@@ -3801,24 +3759,13 @@
 
                 const group = input.closest('[data-group]') || section;
 
-                let ignoreOrder = group.hasAttribute('data-ignore-order');
+                let ignoreOrder = isIgnoreOrderScope(group, input);
 
                 
 
                 if (!usedAnswersMap.has(group)) usedAnswersMap.set(group, new Set());
 
                 const usedSet = usedAnswersMap.get(group);
-
-                // 과학-모형 타이틀에서는 채점 시 순서 무시를 강제로 비활성화
-                const groupSection = input.closest('section') || section;
-                const isScienceModelTitleForGrading = (
-                    gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
-                    gameState.selectedSubject === CONSTANTS.SUBJECTS.SCIENCE &&
-                    groupSection && groupSection.id && groupSection.id.toLowerCase().includes('title')
-                );
-                if (isScienceModelTitleForGrading) {
-                    ignoreOrder = false;
-                }
 
                 // [성취기준] 미술 과목에서는 일반 채점 시스템 사용 (순서 무시 비활성화)
                 if (gameState.selectedTopic === CONSTANTS.TOPICS.ACHIEVEMENT &&
@@ -3830,41 +3777,11 @@
 
                 // Cache DOM query result to improve performance
                 const inputs = Array.from(group.querySelectorAll('input[data-answer]'));
-                const answerMap = new Map();
-                const isModelTopic = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL;
+                const canonical = ignoreOrder
+                    ? findScopedAnswer(input, userAnswer, inputs)
+                    : (matchesOwnAnswer(input, userAnswer) ? input.dataset.answer : null);
 
-                // Process answers more efficiently
-                inputs.forEach(inp => {
-                    const original = inp.dataset.answer.trim();
-                    const normalized = normalizeAnswer(original);
-
-                    answerMap.set(normalized, original);
-
-                    const alias = normalized.replace(/역량$/, '');
-                    if (alias !== normalized) {
-                        answerMap.set(alias, original);
-                    }
-
-                    if (isModelTopic) {
-                        const modelAlias = stripModelWord(normalized);
-                        if (modelAlias && modelAlias !== normalized) {
-                            answerMap.set(modelAlias, original);
-                        }
-                    }
-                });
-
-
-
-                const candidate = answerMap.has(userAnswer)
-
-                    ? userAnswer
-
-                    : (gameState.selectedTopic === CONSTANTS.TOPICS.MODEL ? stripModelWord(userAnswer) : null);
-
-                if (candidate && answerMap.has(candidate)) {
-
-                    const canonical = answerMap.get(candidate);
-
+                if (canonical) {
                     const canonicalNorm = normalizeAnswer(canonical);
 
                     
@@ -4558,6 +4475,49 @@
 
             );
 
+        }
+
+        function isIgnoreOrderScope(scope, input) {
+            if (!scope || !input) return false;
+
+            const marker = input.closest('[data-ignore-order]');
+            return !!marker && (
+                marker === scope ||
+                marker.contains(scope) ||
+                scope.contains(marker)
+            );
+        }
+
+        function findScopedAnswer(input, userAnswer, inputs) {
+            const isModelTopic = gameState.selectedTopic === CONSTANTS.TOPICS.MODEL;
+
+            for (const inp of inputs) {
+                const original = inp.dataset.answer.trim();
+                const normalized = normalizeAnswer(original);
+                const candidates = [normalized];
+
+                const competencyAlias = normalized.replace(/역량$/, '');
+                if (competencyAlias !== normalized) {
+                    candidates.push(competencyAlias);
+                }
+
+                if (isModelTopic) {
+                    const modelAlias = stripModelWord(normalized);
+                    if (modelAlias && modelAlias !== normalized) {
+                        candidates.push(modelAlias);
+                    }
+                }
+
+                if (candidates.includes(userAnswer)) {
+                    return original;
+                }
+            }
+
+            return null;
+        }
+
+        function matchesOwnAnswer(input, userAnswer) {
+            return findScopedAnswer(input, userAnswer, [input]) !== null;
         }
 
 
@@ -5306,6 +5266,8 @@
 
                     adjustCreativeInputWidths();
 
+                    adjustCurriculumInputWidths();
+
                 }
 
 
@@ -5374,6 +5336,8 @@
                         ) {
 
                             adjustCreativeInputWidths();
+
+                            adjustCurriculumInputWidths();
 
                         }
 
@@ -5528,6 +5492,8 @@
                         ) {
 
                             adjustCreativeInputWidths();
+
+                            adjustCurriculumInputWidths();
 
                         }
 
@@ -6657,11 +6623,17 @@
 
                             const inputs = group.querySelectorAll('input[data-answer]');
 
-                            const usedSet = usedAnswersMap.get(group) || new Set();
+                            const ignoreOrder = isIgnoreOrderScope(group, inputs[0]);
 
                             const answers = Array.from(inputs).map(i => i.dataset.answer);
 
-                            const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                            const correctAnswers = Array.from(inputs)
+                                .filter(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT))
+                                .map(input => normalize(input.value || input.dataset.answer));
+
+                            const remaining = ignoreOrder
+                                ? answers.filter(ans => !correctAnswers.includes(normalize(ans)))
+                                : [];
 
                             let idx = 0;
 
@@ -6677,9 +6649,11 @@
 
                                 if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
 
-                                    input.value = remaining[idx] ?? input.dataset.answer;
+                                    input.value = ignoreOrder
+                                        ? (remaining[idx] ?? input.dataset.answer)
+                                        : input.dataset.answer;
 
-                                    idx++;
+                                    if (ignoreOrder) idx++;
 
                                     input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
 
@@ -6797,11 +6771,17 @@
 
                                 const inputs = group.querySelectorAll('input[data-answer]');
 
-                                const usedSet = usedAnswersMap.get(group) || new Set();
+                                const ignoreOrder = isIgnoreOrderScope(group, inputs[0]);
 
                                 const answers = Array.from(inputs).map(i => i.dataset.answer);
 
-                                const remaining = answers.filter(ans => !usedSet.has(normalize(ans)));
+                                const correctAnswers = Array.from(inputs)
+                                    .filter(input => input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT))
+                                    .map(input => normalize(input.value || input.dataset.answer));
+
+                                const remaining = ignoreOrder
+                                    ? answers.filter(ans => !correctAnswers.includes(normalize(ans)))
+                                    : [];
 
                                 let idx = 0;
 
@@ -6817,9 +6797,11 @@
 
                                     if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
 
-                                        input.value = remaining[idx] ?? input.dataset.answer;
+                                        input.value = ignoreOrder
+                                            ? (remaining[idx] ?? input.dataset.answer)
+                                            : input.dataset.answer;
 
-                                        idx++;
+                                        if (ignoreOrder) idx++;
 
                                         input.classList.add(CONSTANTS.CSS_CLASSES.REVEALED);
 
@@ -7848,6 +7830,8 @@
 
             adjustCreativeInputWidths();
 
+            adjustCurriculumInputWidths();
+
             setupCreativeQuestionTextReveal();
 
             updateStartModalUI();
@@ -7891,6 +7875,3 @@
         }
 
     });
-
-
-
