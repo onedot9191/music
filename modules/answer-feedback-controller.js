@@ -9,6 +9,7 @@ import { showMiniRevealButton } from './answer-reveal-button.js';
 
 export function createAnswerFeedbackController({
     CONSTANTS,
+    comboAudio,
     comboCounter,
     failAudio,
     focusNextAvailableInput,
@@ -146,6 +147,10 @@ export function createAnswerFeedbackController({
         spawnTypingParticles(input, '#39ff14');
 
         if (gameState.combo >= 5 && gameState.combo % 5 === 0) {
+            if (comboAudio) {
+                playSound(comboAudio);
+            }
+
             spawnComboConfetti(input);
         }
     }
