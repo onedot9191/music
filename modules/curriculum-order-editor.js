@@ -177,7 +177,7 @@ function setupMain(main) {
 
     const resetButton = document.createElement('button');
     resetButton.type = 'button';
-    resetButton.className = 'curriculum-order-reset-main';
+    resetButton.className = 'curriculum-order-reset-main hidden';
     resetButton.textContent = '전체 초기화';
 
     toolbar.append(toggleButton, resetButton);
@@ -213,14 +213,22 @@ function refreshToolbarVisibility() {
 }
 
 function refreshToolbarState(main) {
+    const toolbar = document.querySelector(
+        `.curriculum-order-toolbar[data-owner-main-id="${main.id}"]`
+    );
+    if (!toolbar) return;
+
     const toggleButton = document.querySelector(
         `.curriculum-order-toolbar[data-owner-main-id="${main.id}"] .curriculum-order-toggle`
     );
-    if (!toggleButton) return;
+    const resetButton = toolbar.querySelector('.curriculum-order-reset-main');
 
     const editing = main.classList.contains(ACTIVE_CLASS);
-    toggleButton.textContent = editing ? '편집 완료' : '순서 편집';
-    toggleButton.setAttribute('aria-pressed', String(editing));
+    if (toggleButton) {
+        toggleButton.textContent = editing ? '편집 완료' : '순서 편집';
+        toggleButton.setAttribute('aria-pressed', String(editing));
+    }
+    resetButton?.classList.toggle('hidden', !editing);
 }
 
 function getToolbarMain(element) {

@@ -50,7 +50,10 @@ function readDocumentedCssOrder(readme) {
 }
 
 function normalizeCssPath(href) {
-    return href.replace(/^\.?\//, '').replace(/^css\//, '');
+    return href
+        .split(/[?#]/, 1)[0]
+        .replace(/^\.?\//, '')
+        .replace(/^css\//, '');
 }
 
 function uniqueDuplicates(items) {
@@ -100,7 +103,9 @@ async function validateCssOrder(html, readme) {
     }
 
     await assertAllExist(
-        localCssLinks(html).filter((href) => !/^https?:\/\//.test(href)),
+        localCssLinks(html)
+            .filter((href) => !/^https?:\/\//.test(href))
+            .map((href) => href.split(/[?#]/, 1)[0]),
         'CSS files'
     );
 }

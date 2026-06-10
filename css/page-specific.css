@@ -18,3 +18,37 @@
     font-weight: 700;
     margin-right: 1rem;
 }
+
+#start-modal,
+#start-modal *,
+#start-modal *::before,
+#start-modal *::after {
+    font-family: 'Galmuri9', var(--font-display) !important;
+}
+
+#start-modal input,
+#start-modal textarea,
+#start-modal select,
+#start-modal button,
+#start-modal input::placeholder,
+#start-modal textarea::placeholder {
+    font-family: 'Galmuri9', var(--font-display) !important;
+}
+
+header,
+header *,
+header *::before,
+header *::after,
+.curriculum-order-toolbar button,
+.curriculum-order-row-tools button {
+    font-family: 'Galmuri9', var(--font-display) !important;
+}
+
+header .slot-machine .reel {
+    font-family: 'Press Start 2P', cursive !important;
+}
+
+#quiz-partials-root .tabs .tab,
+#quiz-partials-root .competency-tabs .tab {
+    font-family: 'Galmuri9', var(--font-display) !important;
+}
