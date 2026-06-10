@@ -1,0 +1,216 @@
+/* 성취기준과 해설을 짝으로 나타내는 스타일 */
+
+.overview-question.achievement-standard {
+    background: linear-gradient(135deg, var(--primary) 0%, #c73650 100%);
+
+    border: 2px solid var(--primary);
+
+    border-radius: 1rem;
+
+    padding: var(--space-lg);
+
+    margin-bottom: var(--space-sm);
+
+    color: var(--text-light);
+
+    font-weight: 600;
+
+    box-shadow: 0 0.4rem 1.6rem rgba(233, 69, 96, 0.3);
+
+    position: relative;
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overview-question.achievement-standard::before {
+    content: '성취기준';
+
+    position: absolute;
+
+    top: -0.8rem;
+
+    left: var(--space-md);
+
+    background: var(--primary);
+
+    color: var(--text-light);
+
+    padding: 0.3rem var(--space-sm);
+
+    border-radius: 0.5rem;
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05rem;
+
+    z-index: 10;
+}
+
+.overview-question.achievement-explanation {
+    background: linear-gradient(135deg, var(--secondary) 0%, #2a5a8f 100%);
+
+    border: 2px solid var(--secondary);
+
+    border-radius: 1rem;
+
+    padding: var(--space-lg);
+
+    margin-bottom: var(--space-lg);
+
+    color: var(--text-light);
+
+    font-weight: 500;
+
+    box-shadow: 0 0.4rem 1.6rem rgba(83, 52, 131, 0.3);
+
+    position: relative;
+
+    margin-left: 3rem !important; /* 성취기준보다 더 들여쓰기 */
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overview-question.achievement-explanation::before {
+    content: '해설';
+
+    position: absolute;
+
+    top: -0.8rem;
+
+    left: var(--space-md);
+
+    background: var(--secondary);
+
+    color: var(--text-light);
+
+    padding: 0.3rem var(--space-sm);
+
+    border-radius: 0.5rem;
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05rem;
+
+    z-index: 10;
+}
+
+.overview-question.achievement-explanation.consideration-item::before {
+    content: '고려사항';
+
+    position: absolute;
+
+    top: -0.8rem;
+
+    left: var(--space-md);
+
+    background: var(--secondary);
+
+    color: var(--text-light);
+
+    padding: 0.3rem var(--space-sm);
+
+    border-radius: 0.5rem;
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05rem;
+
+    z-index: 10;
+}
+
+/* 각론 클래스 */
+
+.overview-question.achievement-notes {
+    background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+
+    border: 2px solid #ff1493;
+
+    border-radius: 1rem;
+
+    padding: var(--space-lg);
+
+    margin-bottom: var(--space-lg);
+
+    color: var(--text-light);
+
+    font-weight: 500;
+
+    box-shadow: 0 0.4rem 1.6rem rgba(255, 20, 147, 0.3);
+
+    position: relative;
+
+    margin-left: 3rem !important; /* 성취기준보다 더 들여쓰기 */
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.overview-question.achievement-notes::before {
+    content: '각론';
+
+    position: absolute;
+
+    top: -0.8rem;
+
+    left: var(--space-md);
+
+    background: #ff1493;
+
+    color: var(--text-light);
+
+    padding: 0.3rem var(--space-sm);
+
+    border-radius: 0.5rem;
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05rem;
+
+    z-index: 10;
+}
+
+/* 성취기준과 해설을 짝으로 묶는 컨테이너 */
+
+.achievement-pair {
+    position: relative;
+
+    margin-bottom: var(--space-lg);
+}
+
+/* 호버 효과 */
+
+.overview-question.achievement-standard:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 0.6rem 2rem rgba(233, 69, 96, 0.4);
+}
+
+.overview-question.achievement-explanation:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 0.6rem 2rem rgba(83, 52, 131, 0.4);
+}
+
+/* 반응형 디자인 */
+
+@media (max-width: 768px) {
+    .overview-question.achievement-explanation,
+    .overview-question.achievement-notes {
+        margin-left: var(--space-md);
+    }
+
+    .overview-question.achievement-standard::before,
+    .overview-question.achievement-explanation::before,
+    .overview-question.achievement-notes::before {
+        font-size: 1rem;
+
+        padding: 0.2rem var(--space-xs);
+    }
+}

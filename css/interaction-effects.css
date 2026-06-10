@@ -1,0 +1,96 @@
+/* Typing particles (정답/오답 무음 파티클) */
+.typing-particle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: typing-pop 450ms ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes typing-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9) translate(0, 0);
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1)
+            translate(var(--tx), var(--ty));
+    }
+}
+
+/* Mini confetti (콤보 보상) */
+.confetti-piece {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: confetti-pop 600ms ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes confetti-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translate(0, 0) rotate(0);
+    }
+    15% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translate(var(--dx), var(--dy))
+            rotate(var(--dr));
+    }
+}
+
+/* 모바일에서 파티클 효과 비활성화 */
+@media (max-width: 768px) {
+    .typing-particle,
+    .confetti-piece {
+        display: none !important;
+    }
+}
+
+/* 배터리 절약 모드나 저성능 기기에서 파티클 비활성화 */
+@media (prefers-reduced-motion: reduce) {
+    .typing-particle,
+    .confetti-piece {
+        display: none !important;
+    }
+}
+
+/* ------------------------------------------------------------
+   Mobile responsive baseline enhancements
+   - Fluid media elements
+   - Prevent iOS Safari input zoom (font-size >= 16px)
+   - Ensure comfortable touch targets for buttons/tabs
+------------------------------------------------------------ */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+iframe {
+    max-width: 100%;
+}
+
+/* iOS Safari: prevent auto-zoom on focus when font-size < 16px */
+@supports (-webkit-touch-callout: none) {
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 16px;
+    }
+}

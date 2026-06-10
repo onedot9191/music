@@ -1,0 +1,373 @@
+/* Creative subject-specific quiz styles */
+
+/* Creative question cards */
+#creative-quiz-main .creative-block {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+}
+#creative-quiz-main .outline-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+#creative-quiz-main .creative-question {
+    display: block;
+    line-height: 2.2;
+    font-size: 2rem;
+    font-weight: 500;
+    overflow-wrap: anywhere; /* handle long questions gracefully */
+    padding: 2.5rem;
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+#creative-quiz-main .creative-question:last-child {
+    margin-bottom: 1rem;
+}
+
+/* Mobile creative layout */
+@media (max-width: 768px) {
+    #creative-quiz-main .creative-question {
+        padding: 2rem 1.5rem;
+        font-size: 1.7rem;
+        line-height: 2;
+    }
+
+    /* Creative blank inputs */
+    #creative-quiz-main .creative-question input {
+        font-size: 1.6rem;
+        padding: 0.5rem 0.8rem;
+        margin: 0.2rem 0.4rem;
+        min-width: 8ch;
+    }
+
+    #creative-quiz-main .assessment-list {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    #creative-quiz-main .sub-list {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    #creative-quiz-main .assessment-list > li > input.fit-answer:first-child {
+        min-width: 150px;
+        font-size: 1.6rem;
+    }
+
+    #creative-quiz-main
+        .assessment-list
+        > li
+        > ul
+        > li
+        > input.fit-answer:first-child {
+        width: 140px !important;
+        min-width: 140px !important;
+        font-size: 1.3rem;
+    }
+
+    #creative-quiz-main .assessment-list input.fit-answer {
+        font-size: 1.2rem;
+        padding: 0.4rem 0.6rem;
+        min-width: 80px !important;
+        max-width: 100px !important;
+    }
+
+    #creative-quiz-main .sub-list .inline-item input.fit-answer {
+        min-width: 80px !important;
+        font-size: 1.2rem;
+    }
+}
+#creative-quiz-main .creative-question input {
+    font-size: 1.9rem;
+    padding: 0.6rem 1rem;
+    margin: 0 0.6rem;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    background: var(--bg-light);
+    color: var(--text-light);
+    text-align: center;
+    width: auto;
+    min-width: 10ch;
+    /* max-width: 100%; */ /* 최대 너비 제한 해제 */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+#creative-quiz-main .creative-question input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--bg-light);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2),
+        inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+#creative-quiz-main .creative-question input.correct {
+    border-color: var(--correct);
+    color: var(--correct);
+    background: rgba(46, 204, 113, 0.1);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+
+#creative-quiz-main .creative-question input.incorrect {
+    border-color: var(--incorrect);
+    color: var(--incorrect);
+    background: rgba(231, 76, 60, 0.1);
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+#creative-quiz-main .creative-question input.retrying {
+    border-color: var(--retrying);
+    color: var(--retrying);
+    background: rgba(243, 156, 18, 0.1);
+    box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2);
+}
+
+#creative-quiz-main .creative-question input.revealed {
+    color: var(--revealed);
+    border-color: var(--revealed);
+    background: rgba(142, 68, 173, 0.1);
+    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+}
+
+/* Creative activity hierarchy inputs */
+#creative-quiz-main
+    .assessment-list
+    > li
+    > ul
+    > li
+    > input.fit-answer:first-child {
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    padding: 0.6rem 1rem;
+    margin: 0.3rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    background: var(--accent);
+    color: var(--text-light);
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+#creative-quiz-main .assessment-list input.fit-answer {
+    width: auto !important;
+    min-width: 80px !important;
+    max-width: 120px !important;
+    padding: 0.4rem 0.6rem;
+    margin: 0.2rem 0.3rem;
+    font-size: 1.3rem;
+    border: 1px solid var(--text-dark);
+    border-radius: 4px;
+    background: var(--secondary);
+    color: var(--text-light);
+    text-align: center;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+#creative-quiz-main .assessment-list input.fit-answer:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2),
+        inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Creative activity card layout */
+#creative-quiz-main .assessment-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+    align-items: start;
+}
+
+#creative-quiz-main .assessment-list > li {
+    background: var(--bg-light);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+#creative-quiz-main .assessment-list > li:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+#creative-quiz-main .assessment-list > li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 8px 8px 0 0;
+}
+
+#creative-quiz-main .assessment-list > li > input.fit-answer:first-child {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-light);
+    background: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: none;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    min-width: 250px;
+}
+
+#creative-quiz-main .sub-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 0.5rem 0;
+    list-style: none;
+    align-items: start;
+}
+
+#creative-quiz-main
+    .assessment-list
+    > li
+    > ul
+    > li
+    > input.fit-answer:first-child {
+    background: var(--accent);
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 1.5rem;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+#creative-quiz-main .assessment-list > li > ul > li > ul.sub-list {
+    background: var(--bg-dark);
+    border: 1px solid var(--secondary);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin: 0;
+    transition: all 0.2s ease;
+}
+
+#creative-quiz-main .assessment-list > li > ul > li > ul.sub-list:hover {
+    background: var(--bg-light);
+    border-color: var(--primary);
+    box-shadow: 0 2px 6px rgba(233, 69, 96, 0.2);
+}
+
+#creative-quiz-main .assessment-list > li > ul > li {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+#creative-quiz-main .sub-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 0;
+    list-style: none;
+    align-items: start;
+}
+
+#creative-quiz-main .sub-list .inline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0.5rem;
+    min-height: auto;
+    height: auto;
+    transition: all 0.2s ease;
+    justify-content: flex-start;
+}
+
+#creative-quiz-main .sub-list .inline-item input.fit-answer {
+    width: 100% !important;
+    min-width: 80px !important;
+    max-width: 100% !important;
+    margin: 0.2rem 0;
+    font-size: 1.2rem;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    padding: 0.6rem 0.8rem;
+    background: var(--bg-light);
+    color: var(--text-light);
+    transition: all 0.2s ease;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+#creative-quiz-main .sub-list .inline-item input.fit-answer:focus {
+    border-color: var(--primary);
+    background: var(--bg-light);
+    box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.3);
+    outline: none;
+}
+
+/* Creative examples */
+#creative-quiz-main .example-text {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-style: italic;
+    margin-top: 0.3rem;
+    display: block;
+    opacity: 0.7;
+}
+
+#creative-quiz-main .example-text input.fit-answer {
+    display: inline-block;
+    width: auto !important;
+    min-width: 80px !important;
+    max-width: 120px !important;
+    margin: 0 0.3rem;
+    font-size: 1.1rem;
+    font-style: normal;
+    background: var(--bg-dark);
+    border: 1px solid var(--text-dark);
+    color: var(--text-dark);
+    padding: 0.3rem 0.5rem;
+    opacity: 0.8;
+}
+
+/* Tablet creative layout */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #creative-quiz-main .assessment-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    #creative-quiz-main .sub-list {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.8rem;
+    }
+}

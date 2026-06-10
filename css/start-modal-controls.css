@@ -1,0 +1,164 @@
+/* 시작 모달 공통 보강 */
+.modal-section-title {
+    margin-bottom: 0.8rem;
+    font-size: 2rem;
+}
+
+.topic-section-title {
+    margin-top: 1.5rem;
+}
+
+.model-next-action {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.subject-selector {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+}
+
+.topic-submenu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+.hidden-subject-mapping {
+    display: none;
+}
+
+/* 효과음 스위치 스타일 */
+
+#sound-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+    position: static;
+
+    z-index: 10;
+}
+
+.sound-toggle-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space-sm);
+
+    cursor: pointer;
+
+    font-family: var(--font-display);
+
+    font-size: 1.4rem;
+
+    color: var(--text-light);
+
+    user-select: none;
+}
+
+.sound-toggle-text {
+    font-weight: 600;
+
+    letter-spacing: 0.05rem;
+}
+
+.sound-toggle-switch {
+    position: relative;
+
+    display: inline-block;
+
+    width: 50px;
+
+    height: 24px;
+}
+
+#sound-toggle {
+    opacity: 0;
+
+    width: 0;
+
+    height: 0;
+}
+
+.sound-toggle-slider {
+    position: absolute;
+
+    cursor: pointer;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    background-color: var(--bg-dark);
+
+    border: 2px solid var(--secondary);
+
+    border-radius: 24px;
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.sound-toggle-slider:before {
+    position: absolute;
+
+    content: '';
+
+    height: 16px;
+
+    width: 16px;
+
+    left: 2px;
+
+    bottom: 2px;
+
+    background-color: var(--text-dark);
+
+    border-radius: 50%;
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#sound-toggle:checked + .sound-toggle-slider {
+    background-color: var(--primary);
+
+    border-color: var(--primary);
+
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 0 8px rgba(233, 69, 96, 0.3);
+}
+
+#sound-toggle:checked + .sound-toggle-slider:before {
+    transform: translateX(26px);
+
+    background-color: var(--text-light);
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.sound-toggle-label:hover .sound-toggle-slider {
+    border-color: var(--accent);
+
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
+        0 0 8px rgba(83, 52, 131, 0.2);
+}
+
+#sound-toggle:checked + .sound-toggle-slider:hover {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 0 12px rgba(233, 69, 96, 0.4);
+}
+
+/* 시작 모달 컨테이너를 relative로 설정하여 절대 위치 기준점 제공 */
+
+#settings-panel {
+    position: relative;
+}

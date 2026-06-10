@@ -1,0 +1,201 @@
+/* === 6개월 히트맵 팝업 모달 === */
+#six-month-heatmap-modal {
+    z-index: 10000;
+}
+
+#six-month-heatmap-modal.hidden {
+    display: none;
+}
+
+.six-month-heatmap-content {
+    position: relative;
+    background: var(--bg-dark);
+    border: 4px solid var(--primary);
+    border-radius: 16px;
+    padding: 3rem;
+    width: 95vw;
+    max-width: 1400px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 8px 8px 0px var(--secondary), 0 0 40px rgba(233, 69, 96, 0.4);
+}
+
+.six-month-heatmap-content h2 {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: var(--text-light);
+    border: 2px solid var(--secondary);
+    border-radius: 50%;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0px var(--secondary);
+}
+
+.close-modal-btn:hover {
+    background: var(--accent);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 3px 3px 0px var(--secondary);
+}
+
+.close-modal-btn:active {
+    transform: scale(0.95) rotate(90deg) translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--secondary);
+}
+
+#six-month-heatmap-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 1200px) {
+    #six-month-heatmap-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.month-heatmap-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(233, 69, 96, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.month-heatmap-section:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(233, 69, 96, 0.2);
+}
+
+.month-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.month-heatmap-grid {
+    /* 히트맵 색상 변수 - 모던 레트로 스타일 */
+    --heatmap-neutral: rgba(10, 18, 42, 0.6); /* 네이비 중립 배경 */
+    --heatmap-l1: #ffb6c1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
+    --heatmap-l2: #ff7f7f; /* 연한 레드 - 레벨 2 */
+    --heatmap-l3: #ff4444; /* 중간 레드 - 레벨 3 */
+    --heatmap-l4: #b71c1c; /* 매우 진한 레드 - 레벨 4 (포인트 컬러, 레벨 3과 명확한 위계) */
+
+    display: grid;
+    grid-template-columns: repeat(7, 24px);
+    grid-auto-rows: 24px;
+    gap: 8px;
+    justify-content: center;
+}
+
+.month-heatmap-grid .heatmap-cell {
+    width: 24px;
+    height: 24px;
+    background: var(--heatmap-neutral); /* 네이비 중립 배경 */
+    border-radius: 0; /* 평면 형태 */
+    border: 1px solid #000000; /* 검은색 외곽선 */
+    transition: transform 0.06s ease, box-shadow 0.15s ease,
+        background-color 0.15s ease;
+    box-shadow: none; /* 평면 디자인 */
+}
+
+.month-heatmap-grid .heatmap-cell:hover {
+    transform: scale(1.05); /* 약한 확대만 */
+    box-shadow: 0 0 0 1px #000000; /* 검은색 외곽선 강조 */
+    border: 1px solid #000000;
+}
+
+.month-heatmap-grid .heatmap-cell.level-1 {
+    background: var(--heatmap-l1);
+    border: 1px solid #000000;
+}
+.month-heatmap-grid .heatmap-cell.level-2 {
+    background: var(--heatmap-l2);
+    border: 1px solid #000000;
+}
+.month-heatmap-grid .heatmap-cell.level-3 {
+    background: var(--heatmap-l3);
+    border: 1px solid #000000;
+}
+.month-heatmap-grid .heatmap-cell.level-4 {
+    background: var(--heatmap-l4);
+    border: 2px solid #000000; /* 최고 레벨은 두꺼운 테두리 */
+}
+.month-heatmap-grid .heatmap-cell.empty {
+    background: rgba(10, 18, 42, 0.3); /* 네이비 - 투명도 높임 */
+    border-color: rgba(0, 0, 0, 0.3); /* 연한 검은색 테두리 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .six-month-heatmap-content {
+        padding: 2rem;
+        max-width: 95vw;
+    }
+
+    .six-month-heatmap-content h2 {
+        font-size: 2.2rem;
+    }
+
+    #six-month-heatmap-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .month-heatmap-grid {
+        grid-template-columns: repeat(7, 18px);
+        grid-auto-rows: 18px;
+        gap: 5px;
+    }
+
+    .month-heatmap-grid .heatmap-cell {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .six-month-heatmap-content {
+        padding: 1.5rem;
+    }
+
+    .six-month-heatmap-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .month-heatmap-grid {
+        grid-template-columns: repeat(7, 14px);
+        grid-auto-rows: 14px;
+        gap: 4px;
+    }
+
+    .month-heatmap-grid .heatmap-cell {
+        width: 14px;
+        height: 14px;
+    }
+}

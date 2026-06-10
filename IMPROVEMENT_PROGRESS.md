@@ -1,47 +1,24 @@
-# 코드 개선 진행 상황
+# 코드 개선 진행 기록
 
-## ✅ 완료된 작업
+## 완료
 
-### 1단계: 데이터셋 모듈화 ✅
-- **완료일**: 현재
-- **변경사항**:
-  - `modules/spelling-data.js` 생성
-  - SPELLING_DATA_BASIC, SPELLING_DATA_EXTENDED, SPELLING_DATA_ALL 분리
-  - app.js에서 약 200줄 제거
-- **효과**: 데이터 관리 용이성 향상, 재사용성 증가
+- `app.js`에서 상수, 오디오, 스토리지, 통계, 타이머, 게임 세션, 입력 처리, 결과 처리, 시작 모달, 맞춤법 퀴즈 로직을 모듈로 분리했다.
+- 대형 퀴즈 HTML을 `partials/quiz-mains/`와 `partials/quiz-main-sections/`로 분리했다.
+- 대형 CSS를 `css/` 아래 책임별 파일로 분리했다.
+- `styles.css`는 호환용 엔트리로 축소했다.
+- partial 검증 스크립트와 npm `check/test/lint` 흐름을 정리했다.
 
-### 2단계: 중복 오디오 코드 제거 ✅
-- **완료일**: 현재
-- **변경사항**:
-  - `createAudioElement` 함수 제거 (중복)
-  - 개별 오디오 변수들을 AudioManager의 audioElements로 매핑
-  - `playSound` 함수를 AudioManager 사용하도록 변경 (기존 시그니처 유지)
-  - randomAudio의 loop 처리를 AudioManager 메서드로 변경
-  - slotWinAudio의 pause 처리를 AudioManager 메서드로 변경
-- **효과**: 약 50줄 감소, 코드 중복 제거, 유지보수성 향상
-- **안전장치**: 기존 함수 시그니처 유지로 호환성 보장
+## 현재 점검 포인트
 
-## 📊 현재 상태
+- `app.js`는 새 기능 구현 장소가 아니라 조립 장소로 유지한다.
+- `modules/storage.js`, `modules/audio.js` 같은 facade는 외부 API 호환을 위해 유지한다.
+- 새 과목 콘텐츠는 가능하면 partial 섹션으로 추가한다.
+- 새 스타일은 가장 가까운 책임의 CSS 파일에 배치한다.
 
-- **app.js**: 약 4,515줄 (이전 4,765줄에서 약 250줄 감소)
-- **모듈화 진행률**: 2/5 단계 완료
-- **기능 상태**: ✅ 모든 기능 정상 작동 (호환성 유지)
+## 기본 검증
 
-## 🔄 다음 단계
-
-### 3단계: 기능별 모듈 분리 (예정)
-- 게임 로직 모듈 분리
-- UI 핸들러 모듈 분리
-- 퀴즈 로직 모듈 분리
-
-### 4단계: HTML 인라인 스타일 제거 (예정)
-- CSS 클래스로 이동
-
-### 5단계: 중복 함수 통합 (예정)
-- 공통 유틸리티 함수 추출
-
-## ⚠️ 주의사항
-
-- 모든 변경은 기존 기능을 해치지 않는 범위에서 진행
-- 각 단계마다 충분한 테스트 필요
-- 변경 전 백업 필수
+```bash
+npm test
+npm run lint
+npx prettier --check index.html README_MODULES.md app.js modules/*.js css/*.css scripts/*.js
+```

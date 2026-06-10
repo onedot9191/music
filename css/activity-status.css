@@ -1,0 +1,258 @@
+/* Activity Heatmap - 모던 레트로 스타일 */
+#activity-heatmap {
+    /* Minimal, GitHub-like grid */
+    --heatmap-cell-size: 18px;
+    --heatmap-gap: 8px;
+    --heatmap-neutral: rgba(10, 18, 42, 0.6); /* 네이비 중립 배경 */
+    --heatmap-l1: #ffb6c1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
+    --heatmap-l2: #ff7f7f; /* 연한 레드 - 레벨 2 */
+    --heatmap-l3: #ff4444; /* 중간 레드 - 레벨 3 */
+    --heatmap-l4: #b71c1c; /* 매우 진한 레드 - 레벨 4 (포인트 컬러, 레벨 3과 명확한 위계) */
+
+    display: grid;
+    grid-template-columns: repeat(7, var(--heatmap-cell-size));
+    grid-auto-rows: var(--heatmap-cell-size);
+    gap: var(--heatmap-gap);
+    justify-content: center;
+    margin: 1rem auto 0;
+}
+.heatmap-cell {
+    width: var(--heatmap-cell-size);
+    height: var(--heatmap-cell-size);
+    background: var(--heatmap-neutral);
+    border-radius: 0; /* 평면 형태 */
+    border: 1px solid #000000; /* 검은색 외곽선 */
+    transition: transform 0.06s ease, box-shadow 0.15s ease,
+        background-color 0.15s ease;
+    box-shadow: none; /* 평면 디자인 */
+}
+.heatmap-cell:hover {
+    transform: scale(1.05); /* 약한 확대만 */
+    box-shadow: 0 0 0 1px #000000; /* 검은색 외곽선 강조 */
+    border: 1px solid #000000;
+}
+.heatmap-cell:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+.heatmap-cell.level-1 {
+    background: var(--heatmap-l1);
+    border: 1px solid #000000;
+}
+.heatmap-cell.level-2 {
+    background: var(--heatmap-l2);
+    border: 1px solid #000000;
+}
+.heatmap-cell.level-3 {
+    background: var(--heatmap-l3);
+    border: 1px solid #000000;
+}
+.heatmap-cell.level-4 {
+    background: var(--heatmap-l4);
+    border: 2px solid #000000; /* 최고 레벨은 두꺼운 테두리 */
+}
+.heatmap-cell.empty {
+    background: rgba(10, 18, 42, 0.3); /* 네이비 - 투명도 높임 */
+    border-color: rgba(0, 0, 0, 0.3); /* 연한 검은색 테두리 */
+}
+
+/* Heatmap panel placement next to settings */
+#start-modal .modal-boxes {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+#settings-panel {
+    position: relative;
+    width: 600px;
+    max-width: 600px;
+    flex-shrink: 0;
+    overflow-y: visible;
+    padding: 2rem 1.5rem !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#settings-panel h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary);
+    text-align: left;
+    padding: 0.8rem 1rem;
+    padding-bottom: 0.8rem;
+    background: rgba(233, 69, 96, 0.15);
+    border-bottom: 3px solid rgba(233, 69, 96, 0.5);
+    border-radius: 6px 6px 0 0;
+    font-family: var(--font-display);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#settings-panel h2:first-of-type {
+    margin-top: 0;
+}
+#heatmap-panel {
+    max-width: 260px;
+    text-align: center;
+    flex-shrink: 0;
+}
+#heatmap-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    max-width: 260px;
+}
+
+/* Responsive: stack panels and allow full width on small screens */
+@media (max-width: 900px) {
+    #settings-panel {
+        width: 100%;
+        max-width: none;
+    }
+    #heatmap-group,
+    #heatmap-panel,
+    #dday-panel {
+        max-width: none;
+        width: 100%;
+    }
+    #heatmap-panel,
+    #dday-panel {
+        box-sizing: border-box;
+    }
+    #activity-heatmap {
+        --heatmap-cell-size: 16px;
+        --heatmap-gap: 6px;
+    }
+}
+
+@media (max-width: 600px) {
+    #activity-heatmap {
+        --heatmap-cell-size: 14px;
+        --heatmap-gap: 5px;
+    }
+}
+
+@media (max-width: 420px) {
+    #activity-heatmap {
+        --heatmap-cell-size: 12px;
+        --heatmap-gap: 4px;
+    }
+}
+
+/* If screen space is insufficient, hide heatmap and D-Day to prioritize buttons */
+@media (max-width: 900px), (max-height: 750px) {
+    #heatmap-group {
+        display: none !important;
+    }
+}
+#heatmap-panel {
+    position: relative;
+}
+
+#heatmap-panel h2 {
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+    font-family: var(--font-display);
+    word-break: keep-all;
+    color: var(--primary);
+}
+
+/* Heatmap title: emphasize label in red */
+#heatmap-panel .heatmap-label {
+    color: var(--primary);
+    font-weight: 700;
+}
+#heatmap-panel #heatmap-count {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* 히트맵 확장 버튼 */
+.expand-heatmap-btn {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 22px;
+    height: 22px;
+    background: var(--primary);
+    color: var(--text-light);
+    border: 2px solid var(--secondary);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0px var(--secondary);
+}
+
+.expand-heatmap-btn:hover {
+    background: var(--accent);
+    transform: scale(1.1);
+    box-shadow: 3px 3px 0px var(--secondary);
+}
+
+.expand-heatmap-btn:active {
+    transform: scale(0.95) translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--secondary);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    :root {
+        font-size: 8px;
+    }
+    /* Avoid horizontal scroll due to large fixed widths */
+    body {
+        overflow-x: hidden;
+    }
+    header {
+        padding: 1rem;
+        flex-direction: column;
+        height: auto;
+        gap: 1rem;
+    }
+    .hud-left,
+    .hud-center,
+    .hud-right {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+    }
+    .hud-right {
+        flex-wrap: wrap;
+    }
+    header h1 {
+        margin-bottom: 1rem;
+    }
+    main {
+        padding-top: 22rem; /* Adjust based on new header height */
+    }
+    .tabs {
+        flex-wrap: wrap;
+    }
+    .tab {
+        flex-basis: 48%;
+    }
+    .grade-container {
+        flex-direction: column;
+    }
+}
+@media (max-width: 480px) {
+    .hud-center {
+        flex-direction: column;
+    }
+    main {
+        padding-top: 28rem;
+    }
+}

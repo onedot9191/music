@@ -1,0 +1,121 @@
+/* 맞춤법 퀴즈 선택 피드백과 콤보 효과 */
+.spelling-choice-btn.correct-answer {
+    background: var(--correct) !important;
+    border-color: var(--correct) !important;
+    color: var(--bg-dark) !important;
+    font-weight: 700 !important;
+    animation: correctPulse 0.4s ease-out;
+    box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3) !important;
+}
+
+.spelling-choice-btn.wrong-answer {
+    background: var(--incorrect) !important;
+    border-color: var(--incorrect) !important;
+    color: var(--text-light) !important;
+    animation: wrongShake 0.4s ease-out;
+    box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3) !important;
+}
+
+.spelling-question-item.answer-correct {
+    animation: itemCorrect 0.6s ease-out;
+}
+
+.spelling-question-item.answer-wrong {
+    animation: itemWrong 0.5s ease-out;
+}
+
+.spelling-combo-effect {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    z-index: 9999;
+    pointer-events: none;
+    animation: comboFade 1s ease-out forwards;
+}
+
+@keyframes correctPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes wrongShake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes itemCorrect {
+    0% {
+        border-color: var(--secondary);
+    }
+
+    50% {
+        border-color: var(--correct);
+    }
+
+    100% {
+        border-color: var(--secondary);
+    }
+}
+
+@keyframes itemWrong {
+    0% {
+        border-color: var(--secondary);
+    }
+
+    50% {
+        border-color: var(--incorrect);
+    }
+
+    100% {
+        border-color: var(--secondary);
+    }
+}
+
+@keyframes comboFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}

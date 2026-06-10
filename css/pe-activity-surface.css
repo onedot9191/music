@@ -1,0 +1,250 @@
+/* PE and physical activity input layout fixes */
+#pe-quiz-main #activity-examples table,
+#physical-activity-quiz-main table {
+    table-layout: fixed; /* keep wide second column for inputs */
+}
+
+#pe-quiz-main #activity-examples th.sub-area-cell,
+#physical-activity-quiz-main th.sub-area-cell {
+    width: 20rem; /* narrower than before to free space for right column */
+}
+
+#pe-quiz-main #activity-examples th.sub-area-cell,
+#pe-quiz-main #activity-examples td,
+#physical-activity-quiz-main th.sub-area-cell,
+#physical-activity-quiz-main td {
+    vertical-align: top;
+}
+
+#pe-quiz-main #activity-examples td,
+#physical-activity-quiz-main td {
+    display: flex; /* ensure column layout fills full width */
+    flex-direction: column;
+}
+
+#pe-quiz-main #activity-examples .activity-group,
+#physical-activity-quiz-main .activity-group {
+    width: 100%; /* groups span entire td width */
+    display: flex;
+    flex-direction: column; /* place activity first, examples below */
+}
+
+#pe-quiz-main #activity-examples .activity-group > .activity-input,
+#physical-activity-quiz-main .activity-group > .activity-input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.8rem; /* separate from examples */
+    border: 3px solid #8a2be2 !important;
+}
+
+#pe-quiz-main #activity-examples .activity-group > .example-input,
+#physical-activity-quiz-main .activity-group > .example-input {
+    width: auto;
+}
+
+#pe-quiz-main #activity-examples th.sub-area-cell .sub-area-input,
+#physical-activity-quiz-main th.sub-area-cell .sub-area-input {
+    display: block;
+    width: 100%;
+    transition: all 0.2s ease; /* match other inputs */
+}
+
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.correct,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.correct {
+    border-color: var(--correct) !important;
+    color: var(--correct) !important;
+    background: rgba(57, 255, 20, 0.2) !important;
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.3) !important;
+}
+
+#pe-quiz-main
+    #activity-examples
+    th.sub-area-cell
+    input.sub-area-input.incorrect,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.incorrect {
+    border-color: var(--incorrect) !important;
+    color: var(--incorrect) !important;
+    background: rgba(255, 87, 51, 0.2) !important;
+    box-shadow: 0 0 8px rgba(255, 87, 51, 0.3) !important;
+}
+
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.retrying,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.retrying {
+    border-color: var(--retrying) !important;
+    color: var(--retrying) !important;
+    background: rgba(255, 195, 0, 0.2) !important;
+    box-shadow: 0 0 8px rgba(255, 195, 0, 0.3) !important;
+}
+
+#pe-quiz-main #activity-examples th.sub-area-cell input.sub-area-input.revealed,
+#physical-activity-quiz-main th.sub-area-cell input.sub-area-input.revealed {
+    border-color: var(--revealed) !important;
+    color: var(--revealed) !important;
+    background: rgba(142, 68, 173, 0.2) !important;
+    box-shadow: 0 0 8px rgba(142, 68, 173, 0.3) !important;
+}
+
+.activity-input-purple {
+    border: 3px solid #8a2be2 !important;
+}
+
+td input.activity-input {
+    border: 3px solid #8a2be2;
+    background: var(--primary);
+    font-weight: 800;
+    color: var(--text-light);
+}
+
+td input.activity-input.correct {
+    border-color: var(--correct);
+    color: var(--correct);
+}
+
+td input.activity-input.incorrect {
+    border-color: var(--incorrect);
+    color: var(--incorrect);
+}
+
+td input.activity-input.retrying {
+    border-color: var(--retrying);
+    color: var(--retrying);
+}
+
+td input.activity-input.revealed {
+    border-color: var(--revealed);
+    color: var(--revealed);
+    background: rgba(142, 68, 173, 0.1);
+    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+}
+
+td input.example-input {
+    border: 2px dashed var(--text-dark);
+    background: var(--bg-light);
+    margin-left: 0;
+    border-left: none;
+}
+
+td input.example-input.correct {
+    border-color: var(--correct);
+    color: var(--correct);
+    border-style: solid;
+}
+
+td input.example-input.incorrect {
+    border-color: var(--incorrect);
+    color: var(--incorrect);
+    border-style: solid;
+}
+
+td input.example-input.retrying {
+    border-color: var(--retrying);
+    color: var(--retrying);
+    border-style: solid;
+}
+
+td input.example-input.revealed {
+    border-color: var(--revealed);
+    color: var(--revealed);
+    background: rgba(142, 68, 173, 0.1);
+    border-style: solid;
+    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+}
+
+td input.sub-step {
+    margin-left: 1rem;
+    width: calc(100% - 1rem);
+    border: 2px dashed var(--primary);
+    background: var(--bg-light);
+}
+
+#psr-pe td input.sub-step,
+#psr-pe td input[placeholder='?�계 ?�명'] {
+    border-style: dashed;
+    border-color: var(--primary);
+    background: var(--bg-light);
+}
+
+td input.activity-input:not(:first-child) {
+    margin-top: 1.5rem;
+}
+
+.activity-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.2rem;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    margin-bottom: 1rem; /* prevent overlap with next group */
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.activity-group .activity-input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border: 3px solid #8a2be2 !important;
+}
+
+.activity-group .example-input {
+    width: auto;
+    min-width: 12ch;
+    max-width: 20ch;
+    text-align: center;
+    padding: 1.2rem;
+    margin: 0.2rem 0.3rem;
+    display: inline-block;
+}
+
+.activity-group + .activity-group {
+    margin-top: 1.5rem;
+}
+
+#physical-activity-quiz-main .activity-group .example-input {
+    margin: 0.3rem 0.4rem;
+    min-width: 10ch;
+    max-width: 18ch;
+    font-size: 1.1rem;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#physical-activity-quiz-main .activity-group {
+    margin-bottom: 1.5rem;
+    padding: 1.4rem;
+}
+
+.activity-group .examples-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    align-items: flex-start;
+}
+
+#physical-activity-quiz-main td {
+    padding: 1rem;
+}
+
+.activity-group .activity-input + .example-input {
+    margin-top: 0.8rem;
+}
+
+.activity-group .example-input:first-of-type {
+    margin-left: 0;
+}
+
+.activity-group .example-input + .example-input {
+    margin-left: 0.5rem;
+}
+
+.activity-group:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.2s ease;
+}
+
+#physical-activity-quiz-main input.activity-input,
+.activity-group input.activity-input,
+input.activity-input {
+    border: 3px solid #8a2be2 !important;
+}

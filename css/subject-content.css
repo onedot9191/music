@@ -1,0 +1,459 @@
+.inline-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.inline-item input {
+    flex: 0 0 auto;
+    width: auto;
+}
+
+.inline-answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.assessment-list {
+    list-style-type: disc;
+    margin: 0 0 0 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sub-list {
+    list-style-type: circle;
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#moral-principles .assessment-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#moral-principles .assessment-list .inline-item {
+    flex: 1 1 300px;
+}
+
+#moral-methods .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+#moral-methods .method-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#moral-principles-quiz-main .assessment-list {
+    list-style: none;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+#moral-principles-quiz-main .sub-list {
+    list-style: none;
+    margin-left: 1rem;
+    gap: 0.5rem;
+}
+
+#moral-principles-quiz-main .grade-container {
+    gap: 1.5rem;
+}
+
+#moral-principles-quiz-main .grade-container > div {
+    padding: 1rem;
+}
+#overview-quiz-main .creative-block,
+#integrated-course-quiz-main .creative-block,
+#social-course-quiz-main .creative-block,
+#moral-course-quiz-main .creative-block,
+#science-course-quiz-main .creative-block,
+#korean-course-quiz-main .creative-block,
+#english-course-quiz-main .creative-block,
+#practical-course-quiz-main .creative-block,
+#music-course-quiz-main .creative-block,
+#pe-course-quiz-main .creative-block,
+#art-course-quiz-main .creative-block {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+}
+
+/* 체육 과목 major-section 시각적 구분 */
+#pe-course-quiz-main .major-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(15, 52, 96, 0.1); /* secondary 색상의 투명 버전 */
+    border: 1px solid rgba(15, 52, 96, 0.3); /* secondary 색상의 연한 테두리 */
+    border-left: 3px solid var(--secondary); /* 왼쪽은 더 진한 테두리 */
+    border-radius: 6px;
+}
+
+#science-std-quiz-main .achievement-block,
+#english-std-quiz-main .achievement-block,
+#practical-std-quiz-main .achievement-block,
+#practical-std-quiz-main #info-education .achievement-block,
+#social-34-quiz-main .achievement-block,
+#social-56-quiz-main .achievement-block,
+#life-achievement-quiz-main .achievement-block,
+#wise-achievement-quiz-main .achievement-block,
+#joy-achievement-quiz-main .achievement-block,
+#music-std-quiz-main .achievement-block,
+#art-std-quiz-main .achievement-block,
+#math-operation-quiz-main .achievement-block,
+#change-relation-quiz-main .achievement-block,
+#geometry-measure-quiz-main .achievement-block,
+#data-probability-quiz-main .achievement-block {
+    margin: 3rem 0 2rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border: 3px solid var(--secondary);
+    border-radius: 8px;
+    position: relative;
+}
+#science-std-quiz-main .achievement-block::before,
+#english-std-quiz-main .achievement-block::before,
+#art-std-quiz-main .achievement-block::before,
+#math-operation-quiz-main .achievement-block::before,
+#change-relation-quiz-main .achievement-block::before,
+#geometry-measure-quiz-main .achievement-block::before,
+#data-probability-quiz-main .achievement-block::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 8px 8px 0 0;
+}
+
+#science-std-quiz-main .topic-divider,
+#english-std-quiz-main .topic-divider {
+    height: 14px;
+    margin: 1.6rem 0 0.8rem;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--secondary) 14%,
+        var(--secondary) 86%,
+        transparent
+    );
+    border-radius: 8px;
+}
+#science-std-quiz-main .outline-title,
+#english-std-quiz-main .outline-title,
+#practical-std-quiz-main .outline-title,
+#practical-std-quiz-main #info-education .outline-title,
+#social-34-quiz-main .outline-title,
+#social-56-quiz-main .outline-title,
+#life-achievement-quiz-main .outline-title,
+#wise-achievement-quiz-main .outline-title,
+#joy-achievement-quiz-main .outline-title,
+#korean-std-quiz-main .outline-title,
+#music-std-quiz-main .outline-title,
+#art-std-quiz-main .outline-title,
+#math-operation-quiz-main .outline-title,
+#change-relation-quiz-main .outline-title,
+#geometry-measure-quiz-main .outline-title,
+#data-probability-quiz-main .outline-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ff5555;
+}
+
+#science-std-quiz-main .outline-title[data-is-topic='true'] {
+    font-size: 2.6rem;
+}
+#science-std-quiz-main .activity-box {
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 0.8rem 0.8rem 0.2rem;
+    margin-bottom: 2rem;
+    background: transparent;
+}
+#science-std-quiz-main .activity-box .overview-question {
+    margin-bottom: 1.2rem;
+}
+#science-std-quiz-main .activity-box .overview-question:last-child {
+    margin-bottom: 0.6rem;
+}
+#overview-quiz-main .outline-title,
+#integrated-course-quiz-main .outline-title,
+#social-course-quiz-main .outline-title,
+#moral-course-quiz-main .outline-title,
+#science-course-quiz-main .outline-title,
+#korean-course-quiz-main .outline-title,
+#english-course-quiz-main .outline-title,
+#practical-course-quiz-main .outline-title,
+#music-course-quiz-main .outline-title,
+#pe-course-quiz-main .outline-title,
+#art-course-quiz-main .outline-title,
+#spelling-quiz-main .outline-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+#overview-quiz-main .sub-title,
+#integrated-course-quiz-main .sub-title,
+#social-course-quiz-main .sub-title,
+#moral-course-quiz-main .sub-title,
+#science-course-quiz-main .sub-title,
+#korean-course-quiz-main .sub-title,
+#english-course-quiz-main .sub-title,
+#practical-course-quiz-main .sub-title,
+#music-course-quiz-main .sub-title,
+#pe-course-quiz-main .sub-title,
+#art-course-quiz-main .sub-title,
+#spelling-quiz-main .sub-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    color: var(--accent);
+}
+#overview-quiz-main .overview-question,
+#integrated-course-quiz-main .overview-question,
+#social-course-quiz-main .overview-question,
+#moral-course-quiz-main .overview-question,
+#eastern-ethics-quiz-main .overview-question,
+#western-ethics-quiz-main .overview-question,
+#moral-psychology-quiz-main .overview-question,
+#science-course-quiz-main .overview-question,
+#korean-course-quiz-main .overview-question,
+#english-course-quiz-main .overview-question,
+#practical-course-quiz-main .overview-question,
+#music-course-quiz-main .overview-question,
+#pe-course-quiz-main .overview-question,
+#art-course-quiz-main .overview-question,
+#science-std-quiz-main .overview-question,
+#english-std-quiz-main .overview-question,
+#practical-std-quiz-main .overview-question,
+#practical-std-quiz-main #info-education .overview-question,
+#social-34-quiz-main .overview-question,
+#social-56-quiz-main .overview-question,
+#geometry-quiz-main .overview-question,
+#life-achievement-quiz-main .overview-question,
+#wise-achievement-quiz-main .overview-question,
+#joy-achievement-quiz-main .overview-question,
+#korean-std-quiz-main .overview-question,
+#music-std-quiz-main .overview-question,
+#art-std-quiz-main .overview-question,
+#math-operation-quiz-main .overview-question,
+#practical-quiz-main .overview-question,
+#math-course-quiz-main .overview-question,
+#spelling-quiz-main .overview-question,
+#change-relation-quiz-main .overview-question,
+#geometry-measure-quiz-main .overview-question,
+#data-probability-quiz-main .overview-question,
+#integrated-guide-overview .overview-question {
+    display: block;
+    line-height: 2.2;
+    font-size: 2rem;
+    font-weight: 500;
+    overflow-wrap: anywhere; /* handle long questions gracefully */
+    padding: 2.5rem;
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: 12px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#overview-quiz-main #standard .standard-emphasis,
+#math-core-idea .standard-emphasis,
+#math-teaching-competency .standard-emphasis {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
+}
+#overview-quiz-main .overview-question:last-child,
+#integrated-course-quiz-main .overview-question:last-child,
+#social-course-quiz-main .overview-question:last-child,
+#moral-course-quiz-main .overview-question:last-child,
+#eastern-ethics-quiz-main .overview-question:last-child,
+#western-ethics-quiz-main .overview-question:last-child,
+#moral-psychology-quiz-main .overview-question:last-child,
+#science-course-quiz-main .overview-question:last-child,
+#english-course-quiz-main .overview-question:last-child,
+#practical-course-quiz-main .overview-question:last-child,
+#music-course-quiz-main .overview-question:last-child,
+#pe-course-quiz-main .overview-question:last-child,
+#art-course-quiz-main .overview-question:last-child,
+#korean-course-quiz-main .overview-question:last-child,
+#science-std-quiz-main .overview-question:last-child,
+#english-std-quiz-main .overview-question:last-child,
+#practical-std-quiz-main .overview-question:last-child,
+#art-std-quiz-main .overview-question:last-child,
+#math-operation-quiz-main .overview-question:last-child,
+#geometry-measure-quiz-main .overview-question:last-child,
+#data-probability-quiz-main .overview-question:last-child,
+#practical-quiz-main .overview-question:last-child,
+#math-course-quiz-main .overview-question:last-child,
+#spelling-quiz-main .overview-question:last-child,
+#change-relation-quiz-main .overview-question:last-child,
+#integrated-guide-overview .overview-question:last-child {
+    margin-bottom: 1rem;
+}
+
+/* Overview (총론, 동양윤리) 계층 들여쓰기 - 모든 섹션에 일관성 있게 적용 */
+/* 총론의 5가지 섹션(교육과정의 성격, 구성의 방향, 설계와 운영, 편성·운영, 학교 교육과정 지원) 모두 동일한 들여쓰기 적용 */
+/* 상위 항목(overview-top): 2rem, 하위 항목(overview-sub): 0rem (들여쓰기 없음) */
+#overview-quiz-main .overview-question.overview-top,
+#eastern-ethics-quiz-main .overview-question.overview-top,
+#western-ethics-quiz-main .overview-question.overview-top,
+#moral-psychology-quiz-main .overview-question.overview-top,
+#integrated-guide-overview .overview-question.overview-top {
+    margin-left: 2rem;
+}
+#overview-quiz-main .overview-question.overview-sub,
+#eastern-ethics-quiz-main .overview-question.overview-sub,
+#western-ethics-quiz-main .overview-question.overview-sub,
+#moral-psychology-quiz-main .overview-question.overview-sub,
+#integrated-guide-overview .overview-question.overview-sub {
+    margin-left: 0;
+}
+
+/* 총론 섹션의 말머리 기호 스타일 - 덜 눈에 띄게 */
+#overview-quiz-main .overview-question .label {
+    color: rgba(255, 255, 255, 0.6); /* 본문보다 약간 어둡게 */
+    font-weight: 400; /* 기본 굵기 */
+    opacity: 0.7; /* 약간 투명하게 */
+}
+
+/* 동양윤리, 서양윤리, 도덕 심리학 Title 강조 스타일 */
+#eastern-ethics-quiz-main .overview-question.title-highlight,
+#western-ethics-quiz-main .overview-question.title-highlight,
+#moral-psychology-quiz-main .overview-question.title-highlight {
+    border: 3px solid var(--accent) !important;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    background: rgba(83, 52, 131, 0.05);
+    box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.2);
+}
+
+/* 동양윤리, 서양윤리, 도덕 심리학 빈칸 스타일 - 총론과 동일하게 적용 */
+#eastern-ethics-quiz-main .overview-question input,
+#western-ethics-quiz-main .overview-question input,
+#moral-psychology-quiz-main .overview-question input {
+    font-size: 1.9rem;
+    padding: 0.6rem 1rem;
+    margin: 0 0.6rem;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    background: var(--bg-light);
+    color: var(--text-light);
+    text-align: center; /* 중앙 정렬 적용 */
+    width: auto;
+    min-width: 10ch !important; /* 좁은 최소 너비 적용 */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    resize: horizontal;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    #overview-quiz-main .overview-question,
+    #integrated-course-quiz-main .overview-question,
+    #social-course-quiz-main .overview-question,
+    #moral-course-quiz-main .overview-question,
+    #science-course-quiz-main .overview-question,
+    #korean-course-quiz-main .overview-question,
+    #english-course-quiz-main .overview-question,
+    #practical-course-quiz-main .overview-question,
+    #music-course-quiz-main .overview-question,
+    #pe-course-quiz-main .overview-question,
+    #art-course-quiz-main .overview-question,
+    #science-std-quiz-main .overview-question,
+    #english-std-quiz-main .overview-question,
+    #practical-std-quiz-main .overview-question,
+    #practical-std-quiz-main #info-education .overview-question,
+    #social-34-quiz-main .overview-question,
+    #social-56-quiz-main .overview-question,
+    #life-achievement-quiz-main .overview-question,
+    #wise-achievement-quiz-main .overview-question,
+    #joy-achievement-quiz-main .overview-question,
+    #korean-std-quiz-main .overview-question,
+    #music-std-quiz-main .overview-question,
+    #art-std-quiz-main .overview-question,
+    #math-operation-quiz-main .overview-question,
+    #change-relation-quiz-main .overview-question,
+    #geometry-measure-quiz-main .overview-question,
+    #data-probability-quiz-main .overview-question,
+    #practical-quiz-main .overview-question,
+    #math-course-quiz-main .overview-question,
+    #spelling-quiz-main .overview-question {
+        padding: 2rem 1.5rem;
+        font-size: 1.7rem;
+        line-height: 2;
+    }
+}
+
+#moral .moral-wrapper {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+#moral .moral-block {
+    flex: 1;
+    min-width: 260px;
+}
+
+#moral .moral-block h3 {
+    margin: 0 0 1rem;
+}
+
+#moral .grade-container > div {
+    padding: 1rem;
+}
+
+#art-basic-quiz-main .tabs {
+    margin-bottom: 1.6rem;
+}
+
+#art-basic-quiz-main h2 {
+    margin: 1.2rem 0 2rem;
+    padding: 1.2rem;
+}
+
+#art-basic-quiz-main .grade-container > div {
+    padding: 1.2rem;
+}
+
+#art-basic-quiz-main table {
+    border-spacing: 0 0.8rem;
+}
+
+#art-basic-quiz-main td {
+    gap: 0.6rem;
+}
+#art-basic-quiz-main td input {
+    width: auto; /* prevent 100% width inside Art Basic */
+}
+
+#art-basic-quiz-main .assessment-list,
+#art-basic-quiz-main .sub-list {
+    list-style: none;
+    margin-left: 0;
+    gap: 0.6rem;
+}
+
+#art-basic-quiz-main .inline-item {
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+}

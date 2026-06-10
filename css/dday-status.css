@@ -1,0 +1,249 @@
+/* D-Day panel and race track */
+#dday-panel {
+    max-width: 260px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+#dday {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    color: var(--primary);
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in 0.6s; /* 애니메이션 중간에 표시 */
+}
+
+#dday.visible {
+    opacity: 1;
+}
+
+#dday-race {
+    position: relative;
+    margin-top: 1.2rem; /* 간격 증가 */
+    margin-bottom: 0.4rem; /* 하단 여백 추가 */
+    height: 90px; /* 세로 길이 증가로 가독성 향상 */
+}
+
+#dday-race::before {
+    content: none;
+}
+
+.dday-track-labels {
+    display: none;
+}
+
+.dday-runner {
+    position: absolute;
+    left: 0%;
+    top: calc(50% - 18px); /* 위로 더 올려서 라벨과 충분한 간격 확보 */
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    z-index: 10;
+    transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dday-runner canvas {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+@keyframes dday-runner-float {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-2px);
+    }
+}
+
+.dday-finish-flag {
+    position: absolute;
+    display: none; /* 피니시 마커 제거 */
+}
+
+.dday-tick {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 18px; /* 통일된 높이 */
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.dday-tick.dday-tick-start {
+    background: var(--primary);
+    box-shadow: 0 0 4px var(--primary);
+    width: 2px;
+    height: 18px; /* 다른 세로선과 동일한 높이 */
+}
+
+.dday-tick.d200-tick,
+.dday-tick.d100-tick,
+.dday-tick.dday-tick-end {
+    background: rgba(255, 255, 255, 0.25);
+    width: 2px;
+    height: 18px; /* 다른 세로선과 동일한 높이 */
+}
+
+.dday-tick.dday-tick-end {
+    box-shadow: none;
+}
+
+.dday-line {
+    position: absolute;
+    left: 0;
+    right: 0; /* 끝까지 */
+    top: 50%;
+    height: 3px; /* 두껍게 */
+    transform: translateY(-50%);
+    background: var(--secondary);
+    z-index: 0;
+}
+
+.dday-progress {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 3px; /* 라인과 동일 두께 */
+    transform: translateY(-50%);
+    background: var(--primary);
+    width: 0;
+    z-index: 1; /* 베이스선 위로 */
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dday-label {
+    position: absolute;
+    top: calc(50% + 20px); /* 캐릭터와 충분한 간격 확보 */
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-light);
+    white-space: nowrap; /* 줄바꿈 방지 */
+    text-shadow: 1px 1px 0px var(--bg-dark);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-family: var(--font-display);
+    z-index: 3;
+}
+
+.dday-label.left {
+    left: 0;
+    transform: translateX(calc(-50% + 1px));
+}
+
+.dday-label.d200-label {
+    left: 45.2%; /* D-200 위치 (165/365 * 100) */
+    transform: translateX(calc(-50% + 1px));
+}
+
+.dday-label.d100-label {
+    left: 72.6%; /* D-100 위치 (265/365 * 100) */
+    transform: translateX(calc(-50% + 1px));
+}
+
+.dday-label.right {
+    right: 1px; /* 세로선 중앙 위치 (우측 끝에서 1px 왼쪽) */
+    transform: translateX(50%);
+    color: var(--primary);
+}
+
+.dday-label.d100-marker {
+    transform: translateX(-50%);
+    color: var(--text-light);
+    opacity: 1;
+    box-shadow: none;
+}
+
+.dday-label.d100-marker .d100-line {
+    position: absolute;
+    top: -18px; /* 진행 바 중앙에서 위로 9px */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px; /* 다른 세로선과 동일한 두께 */
+    height: 18px; /* 다른 세로선과 동일한 높이 */
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: none;
+}
+
+.dday-percent,
+.dday-chip {
+    position: absolute;
+    top: calc(50% - 58px);
+    transform: translateX(-50%);
+    background: var(--bg-dark);
+    border: 3px solid var(--primary);
+    color: var(--text-light);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+    text-shadow: 2px 2px 0px var(--bg-dark);
+    box-shadow: 0 0 10px var(--primary), 2px 2px 0px var(--secondary);
+    z-index: 11;
+    opacity: 0;
+    transition: opacity 0.3s ease-in 0.6s,
+        left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dday-chip.visible {
+    opacity: 1;
+}
+
+.dday-divider-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 24px; /* 진행 바 주변으로만 제한 */
+    pointer-events: none;
+    z-index: 2;
+}
+
+.dday-divider {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.dday-divider:nth-child(9) {
+    width: 2px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 600px) {
+    #dday {
+        font-size: 2rem;
+    }
+
+    #dday-race {
+        height: 80px;
+    }
+
+    .dday-runner,
+    .dday-runner .mushroom {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 420px) {
+    #dday {
+        font-size: 1.8rem;
+    }
+}

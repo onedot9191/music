@@ -1,0 +1,341 @@
+main,
+.container {
+    padding: 12rem var(--space-md) var(--space-lg);
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-md);
+}
+
+.icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    fill: currentColor;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 1.2rem 0;
+    background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
+    border: 3px solid #000000; /* 검은색 외곽선 */
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark); /* 크림색 텍스트 */
+    transition: all 0.2s;
+    border-radius: 0; /* 평면 형태 */
+    box-shadow: none; /* 그림자 제거 */
+}
+.tab.active {
+    background: var(--primary); /* 레드 배경 */
+    color: var(--text-light); /* 크림색 텍스트 */
+    transform: none; /* 평면 디자인 */
+    box-shadow: none;
+    border: 4px solid #000000; /* 두꺼운 검은색 테두리 */
+}
+/* Blur titles for disabled sections in Practical model */
+/* Generic blur for disabled tabs across all model subjects */
+.tabs .tab.practical-disabled {
+    filter: blur(8px);
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+/* Generic blur for disabled sections across all model subjects */
+section.practical-section-disabled {
+    filter: blur(8px);
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    display: none;
+}
+section.active {
+    display: block;
+}
+
+h2 {
+    text-align: center;
+    color: var(--text-light); /* 크림색 텍스트 */
+    margin: 2rem 0 3rem 0;
+    font-size: 2.4rem;
+    font-weight: 900;
+    background: var(--primary); /* 레드 배경 */
+    padding: 1.5rem;
+    border: 3px solid #000000; /* 검은색 외곽선 */
+    border-radius: 0; /* 평면 형태 */
+    box-shadow: none; /* 그림자 제거 */
+}
+
+.grade-container {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.grade-container > div {
+    flex: 1;
+    min-width: 280px;
+    background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
+    border: 3px solid #000000; /* 검은색 외곽선 */
+    padding: 2rem;
+    border-radius: 0; /* 평면 형태 */
+    box-shadow: none; /* 그림자 제거 */
+}
+.grade-title {
+    background: var(--primary); /* 레드 배경 */
+    padding: 1rem;
+    font-size: 1.8rem;
+    font-weight: 900;
+    text-align: center;
+    color: var(--text-light); /* 크림색 텍스트 */
+    margin: -2rem -2rem 2rem -2rem;
+    border-bottom: 3px solid #000000; /* 검은색 외곽선 */
+    border-radius: 0; /* 평면 형태 */
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 1.5rem;
+    table-layout: fixed; /* prevent wide content from expanding container */
+}
+th,
+td {
+    padding: 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+th {
+    padding-right: 1.5rem;
+    color: var(--text-dark);
+    min-width: 7rem; /* Ensure header text is fully visible */
+    width: 11rem; /* Reduce header column width so inputs can expand */
+    white-space: nowrap;
+}
+
+td {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Consistent spacing between inputs */
+    word-break: break-word; /* ensure long text wraps within cell */
+}
+
+.two-col-answers,
+td.two-col-answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+td.one-col-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+td.one-col-answers input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Force one-column layout for model topic sections */
+#ethics-quiz-main td.two-col-answers,
+#practical-quiz-main td.two-col-answers {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 480px) {
+    .two-col-answers,
+    td.two-col-answers {
+        grid-template-columns: 1fr;
+    }
+}
+
+td input {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.4rem;
+    border: 3px solid #000000; /* 검은색 외곽선 - 모던 레트로 스타일 */
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Noto Sans KR', sans-serif;
+    caret-color: var(--primary);
+    margin-bottom: 0; /* Removed margin as gap is used now */
+    transition: all 0.2s ease;
+    border-radius: 0; /* 평면 형태 */
+}
+td input.fit-answer {
+    width: auto;
+    display: inline-block;
+    min-width: 14ch;
+}
+
+/* 홈 프로젝트 파트 빈칸 너비 강제 고정 - 최고 우선순위 */
+.home-project-part input,
+.home-project-part input.correct,
+.home-project-part input.incorrect,
+.home-project-part input.retrying,
+.home-project-part input.revealed,
+.home-project-part input.fit-answer,
+.home-project-part input[style] {
+    width: 100% !important;
+    display: block !important;
+}
+td input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--secondary);
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+td input.correct {
+    border-color: var(--correct);
+    color: var(--correct);
+    background: transparent;
+}
+td input.incorrect {
+    border-color: var(--incorrect);
+    color: var(--incorrect);
+    background: transparent;
+}
+td input.retrying {
+    border-color: var(--retrying);
+    color: var(--retrying);
+    background: transparent;
+}
+td input.revealed {
+    color: var(--revealed);
+    border-color: var(--revealed);
+    background: rgba(142, 68, 173, 0.1);
+    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+}
+
+td input.shake {
+    animation: dori-dori 0.3s;
+}
+
+@keyframes dori-dori {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+/* Correct answer subtle pulse (distinct from wrong shake) - COMPLETELY DISABLED */
+td input.correct.correct-pulse {
+    /* animation: correct-pulse 420ms ease-out; */
+    animation: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* DISABLED KEYFRAMES */
+/*
+@keyframes correct-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
+  }
+  40% {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.45);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
+  }
+}
+*/
+
+th.sub-area-cell {
+    min-width: 22rem;
+}
+
+/* Make sub-area inputs styled consistently regardless of container */
+input.sub-area-input {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.4rem;
+    border: 3px solid var(--accent);
+    background: var(--primary);
+    color: var(--text-light);
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/* Universal sub-area input state styles - CRITICAL OVERRIDE */
+.sub-area-input.correct,
+input.sub-area-input.correct,
+th.sub-area-cell .sub-area-input.correct {
+    border: 3px solid #39ff14 !important;
+    color: #39ff14 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.5) !important;
+}
+
+.sub-area-input.incorrect,
+input.sub-area-input.incorrect,
+th.sub-area-cell .sub-area-input.incorrect {
+    border: 3px solid #ff5733 !important;
+    color: #ff5733 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 8px rgba(255, 87, 51, 0.5) !important;
+}
+
+.sub-area-input.retrying,
+input.sub-area-input.retrying,
+th.sub-area-cell .sub-area-input.retrying {
+    border: 3px solid #ffc300 !important;
+    color: #ffc300 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 8px rgba(255, 195, 0, 0.5) !important;
+}
+
+.sub-area-input.revealed,
+input.sub-area-input.revealed,
+th.sub-area-cell .sub-area-input.revealed {
+    border: 3px solid #00ffff !important;
+    color: #00ffff !important;
+    background: rgba(142, 68, 173, 0.1) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2) !important;
+}
+
+.grade-container table tr:not(:last-child) > * {
+    border-bottom: 3px dotted var(--secondary);
+    padding-bottom: 1.5rem;
+}
+
+/* 통합 섹션의 박스에 빨간색 테두리 적용 */
+#integrated .grade-container > div {
+    border: 3px solid var(--primary);
+}

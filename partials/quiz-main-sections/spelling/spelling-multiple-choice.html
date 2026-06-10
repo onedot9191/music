@@ -1,0 +1,54 @@
+<section id="spelling-multiple-choice" class="active">
+    <h2>맞춤법</h2>
+
+    <!-- 데이터셋 선택 화면 -->
+
+    <div id="spelling-dataset-selection" class="dataset-selection">
+        <h3>문제 유형을 선택해주세요</h3>
+
+        <div class="dataset-options">
+            <button class="dataset-btn" data-dataset="basic">
+                <div class="dataset-title">22 지도서</div>
+
+                <div class="dataset-description">기본 맞춤법 문제 (41문항)</div>
+            </button>
+
+            <button class="dataset-btn" data-dataset="extended">
+                <div class="dataset-title">15 지도서</div>
+
+                <div class="dataset-description">추가 맞춤법 문제 (43문항)</div>
+            </button>
+
+            <button class="dataset-btn" data-dataset="all">
+                <div class="dataset-title">ALL</div>
+
+                <div class="dataset-description">모든 문제 통합 (84문항)</div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 퀴즈 진행 화면 -->
+
+    <div id="spelling-container" class="hidden">
+        <div id="spelling-progress-container">
+            <div id="spelling-progress-text">
+                <span id="spelling-current-progress">0</span> /
+                <span id="spelling-total-questions">0</span>
+            </div>
+
+            <div id="spelling-progress-bar">
+                <div id="spelling-progress-fill"></div>
+            </div>
+        </div>
+
+        <div id="spelling-questions-list">
+            <!-- 문항들이 여기에 쌓입니다 -->
+        </div>
+
+        <div id="spelling-completed-message" class="hidden">
+            <p>이번 라운드를 완료했습니다! 새로운 라운드를 시작합니다...</p>
+        </div>
+
+        <button id="spelling-back-btn" class="back-btn">선택 화면으로</button>
+    </div>
+</section>

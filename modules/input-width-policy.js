@@ -1,0 +1,32 @@
+export function createAutoWidthSubjects(CONSTANTS) {
+    return new Set([
+        CONSTANTS.SUBJECTS.CREATIVE,
+        CONSTANTS.SUBJECTS.OVERVIEW,
+        CONSTANTS.SUBJECTS.INTEGRATED_COURSE,
+        CONSTANTS.SUBJECTS.SOCIAL_COURSE,
+        CONSTANTS.SUBJECTS.MATH_COURSE,
+        CONSTANTS.SUBJECTS.MUSIC_COURSE,
+        CONSTANTS.SUBJECTS.ART_COURSE,
+        CONSTANTS.SUBJECTS.MORAL_COURSE,
+        CONSTANTS.SUBJECTS.PE_BACK,
+        CONSTANTS.SUBJECTS.SCIENCE_STD,
+        CONSTANTS.SUBJECTS.ENGLISH_STD,
+        CONSTANTS.SUBJECTS.PRACTICAL_STD,
+        CONSTANTS.SUBJECTS.ART_STD,
+        CONSTANTS.SUBJECTS.MATH_OPERATION,
+        CONSTANTS.SUBJECTS.CHANGE_RELATION,
+        CONSTANTS.SUBJECTS.GEOMETRY_MEASURE,
+        CONSTANTS.SUBJECTS.DATA_PROBABILITY,
+    ]);
+}
+
+export function shouldUseAdaptiveInputWidth(
+    subject,
+    CONSTANTS,
+    isSpellingBlankMode = () => false
+) {
+    return (
+        createAutoWidthSubjects(CONSTANTS).has(subject) ||
+        (subject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode())
+    );
+}

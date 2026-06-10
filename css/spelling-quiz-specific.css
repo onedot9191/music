@@ -1,0 +1,342 @@
+#spelling-quiz-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem var(--space-lg) var(--space-xl) var(--space-lg);
+    min-height: calc(100vh - 12rem);
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    scroll-padding-bottom: var(--space-lg);
+}
+
+#spelling-quiz-main h2 {
+    font-family: var(--font-display);
+    font-size: 3.2rem;
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    margin-top: 0;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+    position: relative;
+
+    padding-top: var(--space-lg);
+
+    line-height: 1.2;
+}
+
+.spelling-question {
+    font-size: 2rem;
+
+    line-height: 2.4;
+
+    text-align: center;
+
+    margin-bottom: 3rem;
+
+    padding: 4rem 3rem;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border-radius: 20px;
+
+    min-height: 200px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    word-break: keep-all;
+
+    word-wrap: break-word;
+
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    border: 2px solid rgba(255, 255, 255, 0.15);
+
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.spelling-question:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.spelling-choice-btn {
+    display: inline-block;
+    margin: 0 var(--space-sm);
+
+    padding: var(--space-md) var(--space-lg);
+    background: linear-gradient(135deg, var(--primary) 0%, #c73650 100%);
+    border: 2px solid var(--primary);
+    border-radius: 0.8rem;
+    color: var(--text-light);
+    font-family: var(--font-base);
+    font-size: 1.6rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    vertical-align: middle;
+    min-width: 12rem;
+    text-align: center;
+    position: relative;
+    word-break: keep-all;
+    white-space: nowrap;
+    letter-spacing: 0.05rem;
+    line-height: 1.3;
+
+    flex-shrink: 0;
+    box-shadow: 0 0.2rem 0.8rem rgba(233, 69, 96, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.spelling-choice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff6b7a 0%, #e94560 100%);
+    border-color: #ff6b7a;
+    transform: translateY(-2px) scale(1.02) !important;
+    transition-duration: 0.15s !important;
+    box-shadow: 0 0.4rem 1.6rem rgba(233, 69, 96, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.spelling-choice-btn:active:not(:disabled) {
+    transform: translateY(-0.1rem) scale(1.01);
+    transition-duration: 0.1s;
+}
+
+.spelling-choice-btn:disabled {
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.8;
+}
+
+#spelling-container {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    position: relative;
+
+    width: 100%;
+}
+
+#spelling-questions-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2rem;
+
+    margin-bottom: 3rem;
+}
+
+.spelling-question-item {
+    background: linear-gradient(
+        135deg,
+        var(--bg-light) 0%,
+        rgba(15, 52, 96, 0.8) 100%
+    );
+
+    border-radius: 1.2rem;
+
+    border: 2px solid var(--secondary);
+
+    box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    opacity: 0;
+
+    transform: translateY(-var(--space-lg));
+
+    animation: slideInFromTop 0.5s ease-out forwards;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.spelling-question-item.answered {
+    opacity: 0.6;
+
+    pointer-events: none;
+
+    filter: grayscale(0.3);
+}
+
+.spelling-question-item.current {
+    border-color: var(--accent);
+
+    box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    transform: scale(1.01);
+
+    z-index: 10;
+
+    position: relative;
+}
+
+@keyframes slideInFromTop {
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+/* 기존 문항들이 아래로 밀려나는 효과 */
+
+.spelling-question-item:not(.current) {
+    animation-delay: 0.1s;
+}
+
+.spelling-question-content {
+    font-family: var(--font-base);
+
+    font-size: 1.8rem;
+
+    line-height: 1.6;
+
+    text-align: center;
+
+    padding: var(--space-xl) var(--space-lg);
+
+    min-height: 16rem;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 500;
+
+    color: var(--text-light);
+
+    letter-spacing: 0.02rem;
+
+    word-break: keep-all;
+
+    flex-wrap: nowrap;
+
+    white-space: nowrap;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    max-width: 100%;
+
+    box-sizing: border-box;
+}
+
+/* 반응형 디자인 */
+
+@media (max-width: 768px) {
+    #spelling-quiz-main {
+        padding: var(--space-xl) var(--space-md) var(--space-xl) var(--space-md);
+    }
+
+    #spelling-quiz-main h2 {
+        font-size: 2.2rem;
+
+        margin-bottom: var(--space-lg);
+
+        letter-spacing: 0.1rem;
+
+        padding: 0 var(--space-md);
+
+        text-align: center;
+    }
+
+    .spelling-question {
+        font-size: 1.6rem;
+
+        line-height: 1.8;
+
+        padding: 2.5rem 1.5rem;
+
+        margin-bottom: 2rem;
+
+        min-height: 150px;
+    }
+
+    .spelling-question-content {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: var(--space-lg);
+
+        font-size: 1.6rem;
+
+        padding: var(--space-md);
+
+        min-height: 14rem;
+
+        line-height: 1.7;
+
+        white-space: normal;
+
+        flex-wrap: wrap;
+
+        text-align: center;
+    }
+
+    .spelling-choice-btn {
+        margin: var(--space-xs) var(--space-xs);
+
+        padding: var(--space-lg) var(--space-md);
+
+        font-size: 1.5rem;
+
+        min-width: 12rem;
+
+        min-height: 5rem;
+
+        line-height: 1.3;
+
+        flex: 1;
+
+        max-width: calc(50% - var(--space-sm));
+
+        -webkit-tap-highlight-color: transparent;
+
+        -webkit-user-select: none;
+
+        -moz-user-select: none;
+
+        -ms-user-select: none;
+
+        user-select: none;
+
+        touch-action: manipulation;
+
+        transition: all 0.2s ease;
+    }
+
+    .spelling-choice-btn:active {
+        transform: translateY(-1px) scale(0.98);
+
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    }
+
+    .spelling-choice-btn:hover {
+        transform: none;
+    }
+}
+
+section#spelling-blank .overview-question input[data-answer] {
+    min-width: 6ch !important;
+    width: auto !important;
+}

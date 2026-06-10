@@ -1,0 +1,260 @@
+/* Unify blanks width across Art Basic; override scattered inline min-widths */
+#art-basic-quiz-main .inline-item input.fit-answer {
+    width: 12ch !important;
+    min-width: 12ch !important;
+    max-width: 100%;
+    text-align: center;
+}
+
+/* Apply same width even when input is not wrapped by .inline-item */
+#art-basic-quiz-main input.fit-answer {
+    width: 12ch !important;
+    min-width: 12ch !important;
+    max-width: 100%;
+    text-align: center;
+}
+
+#art-basic-quiz-main .sub-list .inline-item input.fit-answer {
+    width: 12ch !important;
+    min-width: 12ch !important;
+}
+
+/* Multi-column card layout for Art Basic lists */
+#art-basic-quiz-main .assessment-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+}
+
+#art-basic-quiz-main .assessment-list > li {
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+}
+
+#art-basic-quiz-main .sub-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
+    gap: 0.6rem 1rem;
+    margin-left: 0;
+}
+
+#art-basic-quiz-main .sub-list .inline-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Integrated Model combined section layout */
+#integrated-model-quiz-main #integrated-all td {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(12ch, 1fr));
+    gap: 0.6rem 1rem; /* row-gap, col-gap */
+    align-items: start;
+}
+
+#integrated-model-quiz-main #integrated-all td input {
+    width: 100%;
+}
+
+/* CRITICAL: Sub-area input color override - HIGHEST SPECIFICITY */
+[id*='quiz-main'] th.sub-area-cell input.sub-area-input.correct,
+[id*='quiz-main'] input.sub-area-input.correct {
+    border-color: #39ff14 !important;
+    color: #39ff14 !important;
+    background-color: rgba(57, 255, 20, 0.25) !important;
+    text-shadow: 0 0 4px rgba(57, 255, 20, 0.5) !important;
+}
+
+[id*='quiz-main'] th.sub-area-cell input.sub-area-input.incorrect,
+[id*='quiz-main'] input.sub-area-input.incorrect {
+    border-color: #ff5733 !important;
+    color: #ff5733 !important;
+    background-color: rgba(255, 87, 51, 0.25) !important;
+    text-shadow: 0 0 4px rgba(255, 87, 51, 0.5) !important;
+}
+
+[id*='quiz-main'] th.sub-area-cell input.sub-area-input.retrying,
+[id*='quiz-main'] input.sub-area-input.retrying {
+    border-color: #ffc300 !important;
+    color: #ffc300 !important;
+    background-color: rgba(255, 195, 0, 0.25) !important;
+    text-shadow: 0 0 4px rgba(255, 195, 0, 0.5) !important;
+}
+
+[id*='quiz-main'] th.sub-area-cell input.sub-area-input.revealed,
+[id*='quiz-main'] input.sub-area-input.revealed {
+    border-color: #00ffff !important;
+    color: #00ffff !important;
+    background-color: rgba(142, 68, 173, 0.1) !important;
+    text-shadow: 0 0 4px rgba(142, 68, 173, 0.3) !important;
+}
+
+/* Mini reveal button (2nd wrong attempt) */
+.reveal-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.mini-reveal-btn {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--secondary);
+    background: var(--bg-light);
+    color: var(--text-dark);
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+    z-index: 2;
+}
+
+.reveal-wrapper > input.incorrect + .mini-reveal-btn {
+    display: inline-block;
+}
+
+.mini-reveal-btn:hover {
+    background: var(--secondary);
+    color: var(--text-light);
+}
+
+@media (max-width: 520px) {
+    #integrated-model-quiz-main #integrated-all td {
+        grid-template-columns: 1fr;
+    }
+
+    /* Math Operation & Change Relation 모바일 최적화 */
+    #math-operation-quiz-main .tabs,
+    #change-relation-quiz-main .tabs,
+    #geometry-measure-quiz-main .tabs,
+    #data-probability-quiz-main .tabs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #math-operation-quiz-main .tab,
+    #change-relation-quiz-main .tab,
+    #geometry-measure-quiz-main .tab,
+    #data-probability-quiz-main .tab {
+        padding: 0.6rem 1rem;
+        font-size: 1.4rem;
+    }
+}
+
+/* Model: 단계명 vs 세부 단계 테두리 스타일 구분 */
+input[placeholder='단계명'] {
+    border-width: 2px;
+    border-style: solid;
+}
+
+input[placeholder='세부 단계'] {
+    border-width: 1px;
+    border-style: dashed;
+}
+
+/* Moral: 가치 분석 수업모형 '검사이름/검사 이름'도 세부 단계처럼 점선 표기 */
+#moral-course-quiz-main input[placeholder='검사이름'],
+#moral-course-quiz-main input[placeholder='검사 이름'] {
+    border-width: 1px !important;
+    border-style: dashed !important;
+}
+
+/* Moral: 세부 단계가 테마 기본 테두리에 덮이지 않도록 우선순위 보강 */
+#moral-course-quiz-main input[placeholder='세부 단계'] {
+    border-width: 1px !important;
+    border-style: dashed !important;
+}
+
+/* Moral: '검사'를 포함한 placeholder(검사 이름 등) 점선 처리 */
+#moral-course-quiz-main input[placeholder*='검사'] {
+    border-width: 1px !important;
+    border-style: dashed !important;
+}
+
+/* Practical(실과): 기술적 문제해결 과정의 하위 단계 점선 처리 */
+#practical-quiz-main #technical-problem-solving input.sub-step,
+#practical-quiz-main #technical-problem-solving input[placeholder='하위 단계'],
+#practical-quiz-main
+    #technical-problem-solving
+    ul.sub-list
+    .inline-item
+    input[placeholder='활동'] {
+    border-width: 1px !important;
+    border-style: dashed !important;
+}
+
+#practical-quiz-main #technical-problem-solving .sub-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0 1rem 0;
+    list-style: none;
+}
+
+#practical-quiz-main
+    #technical-problem-solving
+    .sub-list
+    .inline-item
+    input.fit-answer {
+    width: auto;
+    min-width: 120px;
+    max-width: 100%;
+}
+
+/* Math Operation, Change Relation & Geometry Measure: 과목 탭 스타일 */
+#math-operation-quiz-main .tabs,
+#change-relation-quiz-main .tabs,
+#geometry-measure-quiz-main .tabs,
+#data-probability-quiz-main .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--secondary);
+    padding-bottom: 1rem;
+}
+
+#math-operation-quiz-main .tab,
+#change-relation-quiz-main .tab,
+#geometry-measure-quiz-main .tab,
+#data-probability-quiz-main .tab {
+    padding: 0.8rem 1.5rem;
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    color: var(--text-dark);
+}
+
+#math-operation-quiz-main .tab:hover,
+#change-relation-quiz-main .tab:hover,
+#geometry-measure-quiz-main .tab:hover,
+#data-probability-quiz-main .tab:hover {
+    background: var(--secondary);
+    color: var(--text-light);
+    transform: translateY(-2px);
+}
+
+#math-operation-quiz-main .tab.active,
+#change-relation-quiz-main .tab.active,
+#geometry-measure-quiz-main .tab.active,
+#data-probability-quiz-main .tab.active {
+    background: var(--primary);
+    color: var(--text-light);
+    border-color: var(--primary);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Global fallback: '검사 이름' 류 필드가 어느 섹션이든 점선 유지 */
+input[placeholder='검사 이름'],
+input[placeholder='검사이름'],
+input[placeholder*='검사 '],
+input[placeholder*='검사' i] {
+    border-width: 1px !important;
+    border-style: dashed !important;
+}

@@ -1,0 +1,282 @@
+/* English acquisition sections use a single-column layout. */
+#english-quiz-main #acquisition .grade-container {
+    flex-direction: column;
+}
+#english-quiz-main #acquisition .grade-container > div {
+    flex: none;
+    width: 100%;
+}
+
+/* English functional language guidance stays in one column. */
+#english-quiz-main #functional .grade-container {
+    flex-direction: column;
+}
+#english-quiz-main #functional .grade-container > div {
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+}
+
+/* Keep the first element-language block full-width. */
+#english-quiz-main #element .grade-container > div:first-child {
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+}
+
+/* Keep the first activity-centered block full-width. */
+#english-quiz-main #activity .grade-container > div:first-child {
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+}
+
+/* Default English sections to a single-column layout. */
+#english-quiz-main .grade-container {
+    flex-direction: column;
+}
+#english-quiz-main .grade-container > div {
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+}
+
+/* Nested English lists keep visible hierarchy. */
+#english-quiz-main .sub-list .sub-list {
+    margin-left: 3rem;
+    list-style-type: square;
+}
+
+#english-quiz-main .sub-list .sub-list .sub-list {
+    margin-left: 4rem;
+    list-style-type: disc;
+}
+
+/* Add visual separation between top-level English items. */
+#english-quiz-main .assessment-list > li:not(:last-child) {
+    border-bottom: 2px solid var(--text-dark);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+#english-quiz-main .sub-list {
+    border-left: 2px dashed var(--secondary);
+    padding-left: 1rem;
+}
+
+/* English readability: reset list markers and increase spacing. */
+#english-quiz-main .assessment-list,
+#english-quiz-main .sub-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#english-quiz-main .assessment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+/* Cards provide the item separation, so remove the older divider. */
+#english-quiz-main .assessment-list > li:not(:last-child) {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* Top-level items read as cards with a left guide line. */
+#english-quiz-main .assessment-list > li {
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem 1.2rem 1.4rem;
+}
+
+/* Nested items use guide lines and consistent indentation. */
+#english-quiz-main .sub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    border-left: 2px dashed var(--secondary);
+    padding-left: 1.2rem;
+}
+#english-quiz-main .sub-list .sub-list {
+    border-left: 2px dotted var(--text-dark);
+    padding-left: 1.2rem;
+}
+#english-quiz-main .sub-list .sub-list .sub-list {
+    border-left: 2px dotted rgba(255, 255, 255, 0.25);
+    padding-left: 1.2rem;
+}
+
+/* Sentence and phrase groups need generous spacing. */
+#english-quiz-main li,
+#english-quiz-main .inline-item {
+    line-height: 1.9;
+}
+#english-quiz-main .inline-item {
+    gap: 1.4rem;
+    row-gap: 1.6rem;
+}
+
+/* Answer blanks align with text flow and scale by hierarchy. */
+#english-quiz-main input.fit-answer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.8rem;
+    margin: 0.5rem 0.6rem;
+    padding-bottom: 0.6rem;
+    line-height: 1.9;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+/* Keep arrow sequences together for readability. */
+#english-quiz-main .arrow-seq {
+    white-space: nowrap;
+}
+
+/* Keep manually grouped arrow text on one line. */
+#english-quiz-main .arrow-keep {
+    white-space: nowrap;
+}
+
+/* Reserve space for the mini answer badge. */
+#english-quiz-main .reveal-wrapper input.fit-answer {
+    padding-right: 2.6rem;
+}
+
+/* Higher-level blanks are larger and heavier. */
+#english-quiz-main .assessment-list > li input.fit-answer {
+    font-size: 1.6rem;
+    font-weight: 800;
+    min-width: 18ch;
+    border-width: 3px;
+}
+#english-quiz-main .sub-list > li input.fit-answer {
+    font-size: 1.45rem;
+    font-weight: 700;
+    min-width: 14ch;
+}
+#english-quiz-main .sub-list .sub-list > li input.fit-answer {
+    font-size: 1.35rem;
+    font-weight: 600;
+    min-width: 12ch;
+}
+#english-quiz-main .sub-list .sub-list .sub-list > li input.fit-answer {
+    font-size: 1.25rem;
+    font-weight: 600;
+    min-width: 10ch;
+}
+
+/* English basic-theory hierarchy uses progressively lighter guides. */
+#english-quiz-main .sub-list {
+    border-left-width: 3px;
+}
+#english-quiz-main .sub-list .sub-list {
+    border-left-width: 2px;
+}
+#english-quiz-main .sub-list .sub-list .sub-list {
+    border-left-width: 1px;
+}
+
+/* Deeper hierarchy gets tighter indentation. */
+#english-quiz-main .assessment-list > li > .sub-list {
+    padding-left: 1.4rem;
+}
+#english-quiz-main .sub-list > li > .sub-list {
+    padding-left: 1.2rem;
+}
+
+/* Align sentence text and blanks on the baseline. */
+#english-quiz-main .inline-item {
+    align-items: baseline;
+}
+
+/* Increase English blank text for readability. */
+#english-quiz-main input.fit-answer {
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    line-height: 1.4 !important;
+    padding: 1rem 1.2rem !important;
+    letter-spacing: 0.08em !important;
+    height: auto !important;
+    min-height: 3.2rem !important;
+}
+
+/* Scale blank size by list depth. */
+#english-quiz-main .assessment-list > li input.fit-answer {
+    font-size: 2.8rem !important;
+    font-weight: 900 !important;
+    min-width: 11.2ch !important;
+    border-width: 4px !important;
+    letter-spacing: 0.1em !important;
+    min-height: 3.8rem !important;
+    padding: 1.2rem 1.4rem !important;
+}
+
+#english-quiz-main .sub-list > li input.fit-answer {
+    font-size: 2.6rem !important;
+    font-weight: 850 !important;
+    min-width: 9.6ch !important;
+    letter-spacing: 0.09em !important;
+    min-height: 3.6rem !important;
+    padding: 1.1rem 1.3rem !important;
+}
+
+#english-quiz-main .sub-list .sub-list > li input.fit-answer {
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    min-width: 8ch !important;
+    letter-spacing: 0.08em !important;
+    min-height: 3.4rem !important;
+    padding: 1rem 1.2rem !important;
+}
+
+#english-quiz-main .sub-list .sub-list .sub-list > li input.fit-answer {
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    min-width: 6.4ch !important;
+    letter-spacing: 0.07em !important;
+    min-height: 3.2rem !important;
+    padding: 0.9rem 1.1rem !important;
+}
+
+/* 모든 영어 입력 필드에 적용 (다양한 선택자 커버) */
+#english-quiz-main input[data-answer],
+#english-quiz-main input[placeholder],
+#english-quiz-main input[type='text'] {
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    padding: 1rem 1.2rem !important;
+    min-height: 3.2rem !important;
+}
+
+/* 영어 과목의 일반 텍스트도 가독성 향상 */
+#english-quiz-main li,
+#english-quiz-main .inline-item {
+    font-size: 2rem !important; /* 주변 텍스트도 크게 */
+    line-height: 2.4 !important;
+}
+
+/* 영어 과목 제목 및 라벨 크기 증가 */
+#english-quiz-main h2,
+#english-quiz-main h3 {
+    font-size: 2.8rem !important;
+    line-height: 1.4 !important;
+}
+
+#english-quiz-main .grade-title {
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+}
+
+/* 영어 과목 탭 메뉴도 크게 */
+body:has(#english-quiz-main:not(.hidden)) .tabs .tab {
+    font-size: 1.8rem !important;
+    padding: 1rem 1.5rem !important;
+}

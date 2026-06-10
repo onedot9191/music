@@ -1,0 +1,371 @@
+@media (max-width: 768px) {
+    #overview-quiz-main .overview-question input,
+    #eastern-ethics-quiz-main .overview-question input,
+    #western-ethics-quiz-main .overview-question input,
+    #moral-psychology-quiz-main .overview-question input,
+    #integrated-course-quiz-main .overview-question input,
+    #social-course-quiz-main .overview-question input,
+    #moral-course-quiz-main .overview-question input,
+    #science-course-quiz-main .overview-question input,
+    #korean-course-quiz-main .overview-question input,
+    #english-course-quiz-main .overview-question input,
+    #practical-course-quiz-main .overview-question input,
+    #music-course-quiz-main .overview-question input,
+    #pe-course-quiz-main .overview-question input,
+    #art-course-quiz-main .overview-question input,
+    #science-std-quiz-main .overview-question input,
+    #english-std-quiz-main .overview-question input,
+    #practical-std-quiz-main .overview-question input,
+    #practical-std-quiz-main #info-education .overview-question input,
+    #art-std-quiz-main .overview-question input,
+    #math-operation-quiz-main .overview-question input,
+    #change-relation-quiz-main .overview-question input,
+    #geometry-measure-quiz-main .overview-question input,
+    #data-probability-quiz-main .overview-question input,
+    #practical-quiz-main .overview-question input,
+    #math-course-quiz-main .overview-question input,
+    #korean-model-quiz-main .overview-question input,
+    #pe-model-quiz-main .overview-question input,
+    #spelling-quiz-main .overview-question input,
+    #social-34-quiz-main .overview-question input,
+    #social-56-quiz-main .overview-question input,
+    #life-achievement-quiz-main .overview-question input,
+    #wise-achievement-quiz-main .overview-question input,
+    #joy-achievement-quiz-main .overview-question input,
+    #korean-std-quiz-main .overview-question input,
+    #music-std-quiz-main .overview-question input {
+        font-size: 1.6rem;
+        padding: 0.5rem 0.8rem;
+        margin: 0.2rem 0.4rem;
+        min-width: 8ch;
+    }
+}
+#overview-quiz-main .overview-question input,
+#integrated-course-quiz-main .overview-question input,
+#social-course-quiz-main .overview-question input,
+#moral-course-quiz-main .overview-question input,
+#science-course-quiz-main .overview-question input,
+#korean-course-quiz-main .overview-question input,
+#english-course-quiz-main .overview-question input,
+#practical-course-quiz-main .overview-question input,
+#music-course-quiz-main .overview-question input,
+#pe-course-quiz-main .overview-question input,
+#art-course-quiz-main .overview-question input,
+#science-std-quiz-main .overview-question input,
+#english-std-quiz-main .overview-question input,
+#practical-std-quiz-main .overview-question input,
+#practical-std-quiz-main #info-education .overview-question input,
+#art-std-quiz-main .overview-question input,
+#math-operation-quiz-main .overview-question input,
+#change-relation-quiz-main .overview-question input,
+#geometry-measure-quiz-main .overview-question input,
+#data-probability-quiz-main .overview-question input,
+#practical-quiz-main .overview-question input,
+#math-course-quiz-main .overview-question input,
+#korean-model-quiz-main .overview-question input,
+#pe-model-quiz-main .overview-question input,
+#spelling-quiz-main .overview-question input,
+#geometry-quiz-main .overview-question input,
+#social-34-quiz-main .overview-question input,
+#social-56-quiz-main .overview-question input,
+#life-achievement-quiz-main .overview-question input,
+#wise-achievement-quiz-main .overview-question input,
+#joy-achievement-quiz-main .overview-question input,
+#korean-std-quiz-main .overview-question input,
+#music-std-quiz-main .overview-question input,
+#social-quiz-main .overview-question input,
+#science-quiz-main .overview-question input,
+#integrated-guide-overview .overview-question input {
+    font-size: 1.9rem;
+    padding: 0.6rem 1rem;
+    margin: 0 0.6rem;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    background: var(--bg-light);
+    color: var(--text-light);
+    text-align: center;
+    width: auto;
+    min-width: 10ch !important; /* 기본 최소 너비를 적절하게 조정 */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    resize: horizontal;
+    overflow: hidden;
+}
+
+/* 요쇼 섹션 입력 너비 고정 (충분히 넓게) */
+#integrated-guide-overview #basic-movement .overview-question input,
+#integrated-guide-overview #safety-elements .overview-question input {
+    width: 26ch !important;
+    min-width: 26ch !important;
+}
+
+/* 요쇼(legacy) 섹션만 고정 너비 적용 */
+#integrated-guide-overview #yosho .overview-question input {
+    width: 26ch !important;
+    min-width: 26ch !important;
+}
+
+/* 맞춤법 빈칸 섹션 - 우선순위를 높여서 적용 */
+#spelling-blank .overview-question input {
+    min-width: 4ch !important; /* 최소 너비 축소 */
+    width: auto !important;
+    max-width: 10ch !important; /* 최대 너비 축소 */
+}
+
+#social-course-quiz-main .overview-question input {
+    min-width: 5ch;
+}
+
+#practical-quiz-main .overview-question {
+    padding: 1.6rem;
+    font-size: 1.7rem;
+    line-height: 2;
+}
+#practical-quiz-main .overview-question input {
+    font-size: 1.6rem;
+    padding: 0.4rem 0.7rem;
+    min-width: 5ch;
+    margin: 0 0.4rem; /* 좌우 마진 축소 */
+}
+
+#practical-quiz-main #technical-problem-solving-detail td {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 1rem 1.5rem;
+}
+@media (max-width: 768px) {
+    #practical-quiz-main #technical-problem-solving-detail td {
+        grid-template-columns: 1fr; /* 모바??1??*/
+    }
+}
+
+#practical-quiz-main #technical-problem-solving-detail .overview-question {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+#practical-quiz-main
+    #technical-problem-solving-detail
+    .overview-question
+    input.fit-sm {
+    width: auto;
+    min-width: 5ch;
+}
+#practical-quiz-main
+    #technical-problem-solving-detail
+    .overview-question
+    input.fit-md {
+    width: auto;
+    min-width: 10ch;
+}
+
+@media (max-width: 768px) {
+    #practical-quiz-main .overview-question {
+        padding: 1.2rem;
+        font-size: 1.55rem;
+        line-height: 1.9;
+    }
+    #practical-quiz-main .overview-question input {
+        font-size: 1.45rem;
+        padding: 0.35rem 0.6rem;
+        min-width: 4ch;
+        margin: 0 0.35rem;
+    }
+}
+#overview-quiz-main .overview-question input:focus,
+#eastern-ethics-quiz-main .overview-question input:focus,
+#western-ethics-quiz-main .overview-question input:focus,
+#moral-psychology-quiz-main .overview-question input:focus,
+#integrated-course-quiz-main .overview-question input:focus,
+#social-course-quiz-main .overview-question input:focus,
+#moral-course-quiz-main .overview-question input:focus,
+#science-course-quiz-main .overview-question input:focus,
+#korean-course-quiz-main .overview-question input:focus,
+#english-course-quiz-main .overview-question input:focus,
+#practical-course-quiz-main .overview-question input:focus,
+#music-course-quiz-main .overview-question input:focus,
+#pe-course-quiz-main .overview-question input:focus,
+#art-course-quiz-main .overview-question input:focus,
+#science-std-quiz-main .overview-question input:focus,
+#english-std-quiz-main .overview-question input:focus,
+#practical-std-quiz-main .overview-question input:focus,
+#practical-std-quiz-main #info-education .overview-question input:focus,
+#integrated-guide-overview .overview-question input:focus,
+#art-std-quiz-main .overview-question input:focus,
+#math-operation-quiz-main .overview-question input:focus,
+#change-relation-quiz-main .overview-question input:focus,
+#geometry-measure-quiz-main .overview-question input:focus,
+#data-probability-quiz-main .overview-question input:focus,
+#practical-quiz-main .overview-question input:focus,
+#math-course-quiz-main .overview-question input:focus,
+#korean-model-quiz-main .overview-question input:focus,
+#pe-model-quiz-main .overview-question input:focus,
+#spelling-quiz-main .overview-question input:focus,
+#social-34-quiz-main .overview-question input:focus,
+#social-56-quiz-main .overview-question input:focus,
+#life-achievement-quiz-main .overview-question input:focus,
+#wise-achievement-quiz-main .overview-question input:focus,
+#joy-achievement-quiz-main .overview-question input:focus,
+#korean-std-quiz-main .overview-question input:focus,
+#music-std-quiz-main .overview-question input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--bg-light);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2),
+        inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+#overview-quiz-main .overview-question input.correct,
+#eastern-ethics-quiz-main .overview-question input.correct,
+#western-ethics-quiz-main .overview-question input.correct,
+#moral-psychology-quiz-main .overview-question input.correct,
+#integrated-course-quiz-main .overview-question input.correct,
+#social-course-quiz-main .overview-question input.correct,
+#moral-course-quiz-main .overview-question input.correct,
+#science-course-quiz-main .overview-question input.correct,
+#korean-course-quiz-main .overview-question input.correct,
+#english-course-quiz-main .overview-question input.correct,
+#practical-course-quiz-main .overview-question input.correct,
+#music-course-quiz-main .overview-question input.correct,
+#art-course-quiz-main .overview-question input.correct,
+#science-std-quiz-main .overview-question input.correct,
+#english-std-quiz-main .overview-question input.correct,
+#practical-std-quiz-main .overview-question input.correct,
+#practical-std-quiz-main #info-education .overview-question input.correct,
+#art-std-quiz-main .overview-question input.correct,
+#math-operation-quiz-main .overview-question input.correct,
+#change-relation-quiz-main .overview-question input.correct,
+#geometry-measure-quiz-main .overview-question input.correct,
+#data-probability-quiz-main .overview-question input.correct,
+#practical-quiz-main .overview-question input.correct,
+#math-course-quiz-main .overview-question input.correct,
+#korean-model-quiz-main .overview-question input.correct,
+#pe-model-quiz-main .overview-question input.correct,
+#social-34-quiz-main .overview-question input.correct,
+#social-56-quiz-main .overview-question input.correct,
+#life-achievement-quiz-main .overview-question input.correct,
+#wise-achievement-quiz-main .overview-question input.correct,
+#joy-achievement-quiz-main .overview-question input.correct,
+#korean-std-quiz-main .overview-question input.correct,
+#music-std-quiz-main .overview-question input.correct,
+#spelling-quiz-main .overview-question input.correct {
+    border-color: var(--correct);
+    color: var(--correct);
+    background: rgba(46, 204, 113, 0.1);
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+#overview-quiz-main .overview-question input.incorrect,
+#eastern-ethics-quiz-main .overview-question input.incorrect,
+#western-ethics-quiz-main .overview-question input.incorrect,
+#moral-psychology-quiz-main .overview-question input.incorrect,
+#integrated-course-quiz-main .overview-question input.incorrect,
+#social-course-quiz-main .overview-question input.incorrect,
+#moral-course-quiz-main .overview-question input.incorrect,
+#science-course-quiz-main .overview-question input.incorrect,
+#korean-course-quiz-main .overview-question input.incorrect,
+#english-course-quiz-main .overview-question input.incorrect,
+#practical-course-quiz-main .overview-question input.incorrect,
+#music-course-quiz-main .overview-question input.incorrect,
+#art-course-quiz-main .overview-question input.incorrect,
+#science-std-quiz-main .overview-question input.incorrect,
+#english-std-quiz-main .overview-question input.incorrect,
+#practical-std-quiz-main .overview-question input.incorrect,
+#practical-std-quiz-main #info-education .overview-question input.incorrect,
+#art-std-quiz-main .overview-question input.incorrect,
+#math-operation-quiz-main .overview-question input.incorrect,
+#change-relation-quiz-main .overview-question input.incorrect,
+#geometry-measure-quiz-main .overview-question input.incorrect,
+#data-probability-quiz-main .overview-question input.incorrect,
+#practical-quiz-main .overview-question input.incorrect,
+#math-course-quiz-main .overview-question input.incorrect,
+#korean-model-quiz-main .overview-question input.incorrect,
+#social-34-quiz-main .overview-question input.incorrect,
+#social-56-quiz-main .overview-question input.incorrect,
+#life-achievement-quiz-main .overview-question input.incorrect,
+#wise-achievement-quiz-main .overview-question input.incorrect,
+#joy-achievement-quiz-main .overview-question input.incorrect,
+#korean-std-quiz-main .overview-question input.incorrect,
+#music-std-quiz-main .overview-question input.incorrect,
+#pe-model-quiz-main .overview-question input.incorrect,
+#spelling-quiz-main .overview-question input.incorrect {
+    border-color: var(--incorrect);
+    color: var(--incorrect);
+    background: rgba(231, 76, 60, 0.1);
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+#overview-quiz-main .overview-question input.retrying,
+#integrated-course-quiz-main .overview-question input.retrying,
+#social-course-quiz-main .overview-question input.retrying,
+#moral-course-quiz-main .overview-question input.retrying,
+#science-course-quiz-main .overview-question input.retrying,
+#korean-course-quiz-main .overview-question input.retrying,
+#english-course-quiz-main .overview-question input.retrying,
+#practical-course-quiz-main .overview-question input.retrying,
+#music-course-quiz-main .overview-question input.retrying,
+#art-course-quiz-main .overview-question input.retrying,
+#science-std-quiz-main .overview-question input.retrying,
+#art-std-quiz-main .overview-question input.retrying,
+#english-std-quiz-main .overview-question input.retrying,
+#practical-std-quiz-main .overview-question input.retrying,
+#practical-std-quiz-main #info-education .overview-question input.retrying,
+#math-operation-quiz-main .overview-question input.retrying,
+#change-relation-quiz-main .overview-question input.retrying,
+#geometry-measure-quiz-main .overview-question input.retrying,
+#data-probability-quiz-main .overview-question input.retrying,
+#practical-quiz-main .overview-question input.retrying,
+#math-course-quiz-main .overview-question input.retrying,
+#korean-model-quiz-main .overview-question input.retrying,
+#social-34-quiz-main .overview-question input.retrying,
+#social-56-quiz-main .overview-question input.retrying,
+#life-achievement-quiz-main .overview-question input.retrying,
+#wise-achievement-quiz-main .overview-question input.retrying,
+#joy-achievement-quiz-main .overview-question input.retrying,
+#korean-std-quiz-main .overview-question input.retrying,
+#music-std-quiz-main .overview-question input.retrying,
+#pe-model-quiz-main .overview-question input.retrying,
+#spelling-quiz-main .overview-question input.retrying {
+    border-color: var(--retrying);
+    color: var(--retrying);
+}
+#overview-quiz-main .overview-question input.revealed,
+#eastern-ethics-quiz-main .overview-question input.revealed,
+#western-ethics-quiz-main .overview-question input.revealed,
+#moral-psychology-quiz-main .overview-question input.revealed,
+#integrated-course-quiz-main .overview-question input.revealed,
+#social-course-quiz-main .overview-question input.revealed,
+#moral-course-quiz-main .overview-question input.revealed,
+#science-course-quiz-main .overview-question input.revealed,
+#korean-course-quiz-main .overview-question input.revealed,
+#english-course-quiz-main .overview-question input.revealed,
+#practical-course-quiz-main .overview-question input.revealed,
+#music-course-quiz-main .overview-question input.revealed,
+#art-course-quiz-main .overview-question input.revealed,
+#science-std-quiz-main .overview-question input.revealed,
+#english-std-quiz-main .overview-question input.revealed,
+#practical-std-quiz-main .overview-question input.revealed,
+#practical-std-quiz-main #info-education .overview-question input.revealed,
+#math-operation-quiz-main .overview-question input.revealed,
+#change-relation-quiz-main .overview-question input.revealed,
+#geometry-measure-quiz-main .overview-question input.revealed,
+#data-probability-quiz-main .overview-question input.revealed,
+#practical-quiz-main .overview-question input.revealed,
+#math-course-quiz-main .overview-question input.revealed,
+#korean-model-quiz-main .overview-question input.revealed,
+#pe-model-quiz-main .overview-question input.revealed,
+#spelling-quiz-main .overview-question input.revealed,
+#geometry-quiz-main .overview-question input.revealed,
+#social-34-quiz-main .overview-question input.revealed,
+#social-56-quiz-main .overview-question input.revealed,
+#life-achievement-quiz-main .overview-question input.revealed,
+#wise-achievement-quiz-main .overview-question input.revealed,
+#joy-achievement-quiz-main .overview-question input.revealed,
+#korean-std-quiz-main .overview-question input.revealed,
+#music-std-quiz-main .overview-question input.revealed {
+    color: var(--revealed);
+    border-color: var(--revealed);
+    background: rgba(142, 68, 173, 0.1); /* 정답 공개 배경 */
+    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2);
+}

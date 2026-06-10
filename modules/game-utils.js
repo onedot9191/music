@@ -13,14 +13,12 @@ import { CONSTANTS } from './constants.js';
 export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
     const ignoreParticleEui =
         gameState.selectedTopic === CONSTANTS.TOPICS.MODEL ||
-        (
-            gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM &&
-            (
-                gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
+        (gameState.selectedTopic === CONSTANTS.TOPICS.CURRICULUM &&
+            (gameState.selectedSubject === CONSTANTS.SUBJECTS.OVERVIEW ||
                 gameState.selectedSubject === CONSTANTS.SUBJECTS.CREATIVE ||
-                (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING && isSpellingBlankMode && isSpellingBlankMode())
-            )
-        );
+                (gameState.selectedSubject === CONSTANTS.SUBJECTS.SPELLING &&
+                    isSpellingBlankMode &&
+                    isSpellingBlankMode())));
 
     const pattern = ignoreParticleEui ? /[\s⋅·의]+/g : /[\s⋅·]+/g;
 
@@ -30,19 +28,19 @@ export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
 
     // '기타' 주제 '음악요소'의 경우 괄호 내용을 제거하지 않음
     const shouldRemoveParentheses = !(
-        gameState.selectedTopic === CONSTANTS.TOPICS.MORAL && 
+        gameState.selectedTopic === CONSTANTS.TOPICS.MORAL &&
         gameState.selectedSubject === CONSTANTS.SUBJECTS.MUSIC_ELEMENTS
     );
 
     let result = str;
-    
+
     if (shouldRemoveParentheses) {
         result = result.replace(/\([^)]*\)/g, '');
     }
-    
+
     result = result
         .trim()
-        .replace(/,/g, '')  // 콤마 무시
+        .replace(/,/g, '') // 콤마 무시
         .replace(pattern, '')
         .toLowerCase();
 
@@ -53,7 +51,7 @@ export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
     return result;
 }
 
-// generateQuestionId는 DOM 구조에 의존하므로 app.js에 유지
+// 오답 추적과 문제 ID 생성은 wrong-answer-tracker.js에서 관리합니다.
 
 /**
  * 메인 요소 ID를 가져옵니다.
@@ -79,4 +77,60 @@ export function getMainElementId(gameState) {
             return `${gameState.selectedSubject}-quiz-main`;
         }
     }
+}
+
+export function stripModelWord(str) {
+    return str.replace(/모형/g, '').replace(/\s+/g, ' ').trim();
+}
+
+export function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+export function checkStageClear(sectionElement, classes) {
+    const inputs = sectionElement.querySelectorAll('input[data-answer]');
+
+    return (
+        inputs.length > 0 &&
+        [...inputs].every((input) => input.classList.contains(classes.CORRECT))
+    );
+}
+
+export function isSectionComplete(sectionElement) {
+    const inputs = sectionElement.querySelectorAll('input[data-answer]');
+
+    return inputs.length > 0 && [...inputs].every((input) => input.disabled);
+}
+
+export function isQuizComplete({ getMainElementId }) {
+    const main = document.getElementById(getMainElementId());
+    if (!main) return false;
+
+    const gatedInputs = main.querySelectorAll(
+        'section.practical-section-disabled input[data-answer]'
+    );
+    if (gatedInputs.length > 0) return false;
+
+    const inputs = Array.from(main.querySelectorAll('input[data-answer]'));
+
+    return inputs.length > 0 && inputs.every((input) => input.disabled);
+}
+
+export function focusNextAvailableInput(input) {
+    const main = input.closest('main');
+    if (!main) return;
+
+    const inputs = Array.from(main.querySelectorAll('input[data-answer]'));
+    const currentIndex = inputs.indexOf(input);
+    const nextInput = inputs
+        .slice(currentIndex + 1)
+        .find((candidate) => !candidate.disabled);
+
+    if (!nextInput) return;
+
+    nextInput.focus();
+    nextInput.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+    });
 }

@@ -1,0 +1,202 @@
+/* 난이도와 제한 시간 2열 배치 */
+.mode-time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin: 0;
+}
+
+.mode-section,
+.time-section,
+.sound-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    box-shadow: 2px 2px 0px var(--secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 100%;
+    overflow: hidden;
+    height: 98px;
+    min-height: 98px;
+    max-height: 98px;
+}
+
+.mode-section h2,
+.time-section h2,
+.sound-section h2 {
+    font-size: 1.4rem;
+    margin: 0 0 0.3rem 0;
+    text-align: center;
+    color: var(--accent);
+    font-family: var(--font-display);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.mode-section .mode-selector {
+    display: flex;
+    flex-direction: row;
+    gap: 0.6rem;
+    margin: 0.3rem 0 0 0; /* 위로 올리기 - margin-top 증가 */
+    justify-content: center;
+}
+
+.time-section {
+    /* flex 컨테이너로서 자식 요소 중앙 정렬을 위해 */
+    justify-content: center;
+}
+
+.time-section #time-setter-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+}
+
+.time-section #time-setter-wrapper h2 {
+    margin-bottom: 0.3rem;
+}
+
+.time-section #time-setter-wrapper .time-setter {
+    margin-top: 0.1rem;
+}
+
+.time-section #time-setter-wrapper.hidden {
+    display: none;
+}
+
+.mode-time-grid .time-setter {
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem !important;
+    flex-wrap: nowrap !important;
+}
+
+/* 반응형: 작은 화면에서는 세로 배치 */
+@media (max-width: 768px) {
+    .mode-time-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .mode-section .mode-selector {
+        flex-direction: row;
+        gap: 0.8rem;
+    }
+
+    .mode-btn-group .mode-btn {
+        min-width: 60px;
+        max-width: 80px;
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .mode-btn-group::before {
+        border-radius: 4px;
+    }
+
+    .mode-section,
+    .time-section,
+    .sound-section {
+        padding: 0.4rem 0.6rem;
+        height: auto;
+        min-height: 60px;
+        max-height: none;
+    }
+
+    .mode-time-grid .time-control-btn {
+        font-size: 1.4rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .mode-time-grid #time-setting-display {
+        font-size: 1.6rem;
+    }
+}
+
+#start-game-btn {
+    background: var(--primary); /* 레드 배경 - 단순한 평면 */
+    color: var(--text-light); /* 크림색 텍스트 */
+    padding: 1.5rem 3.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 2.6rem;
+    font-weight: 900;
+    text-shadow: none; /* 평면 디자인 - 텍스트 그림자 제거 */
+    border: 5px solid #000000; /* 굵은 검은색 테두리 - 버섯 캐릭터 몸통처럼 */
+    width: 100%;
+    justify-self: center;
+    box-shadow: none; /* 평면 디자인 - 그림자 제거 */
+    position: relative;
+    overflow: visible;
+    animation: none; /* 애니메이션 제거 */
+    z-index: 10;
+    border-radius: 0; /* 완전한 직사각형 */
+    transition: transform 0.1s ease; /* 클릭 피드백만 */
+}
+
+#start-game-btn::before {
+    display: none; /* ::before 제거 */
+}
+
+#start-game-btn:hover {
+    transform: none; /* 호버 시 변화 없음 */
+    box-shadow: none;
+    animation: none;
+}
+
+#start-game-btn:active {
+    transform: translateY(3px); /* 클릭 시 아래로만 이동 */
+    box-shadow: none;
+}
+
+/* pulse-start-btn 애니메이션 제거 */
+@keyframes gradient-shift {
+    /* 제거됨 */
+}
+
+@keyframes shine {
+    /* 제거됨 */
+}
+
+#hard-core-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    min-height: 0; /* 부모 높이에 맞춤 */
+    height: 100%; /* 부모의 전체 높이 사용 */
+}
+
+#hard-core-description.hidden {
+    display: none;
+}
+
+#hard-core-description h2 {
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    color: var(--accent);
+    font-family: var(--font-display);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+#hard-core-description p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    font-family: var(--font-display);
+    color: var(--text-light);
+    text-align: center;
+    line-height: 1.8;
+    /* flex 컨테이너의 중앙 정렬을 위해 */
+    align-self: center;
+}

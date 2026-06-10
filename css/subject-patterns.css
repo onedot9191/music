@@ -1,0 +1,334 @@
+/* Subject content patterns moved out of components.css. */
+
+#overview-quiz-main #design .design-emphasis {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(83, 52, 131, 0.35);
+}
+
+.science-model-purple-text {
+    color: var(--accent) !important;
+}
+
+/* overview-quiz-main과 creative-quiz-main의 h2 안에 버튼이 있을 때 레이아웃 */
+#overview-quiz-main section h2,
+#creative-quiz-main section h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    text-align: left;
+}
+
+/* === 미술 과목 핵심 아이디어 범주별 그룹핑 === */
+.art-category-section {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    border-radius: var(--space-md);
+    border: 2px solid var(--primary);
+    background: rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.art-category-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    border-radius: var(--space-sm) 0 0 var(--space-sm);
+}
+
+/* 미적체험 범주 */
+.art-category-aesthetic {
+    border-color: var(--accent);
+    background: rgba(255, 195, 0, 0.08);
+}
+
+.art-category-aesthetic::before {
+    background: var(--accent);
+}
+
+.art-category-aesthetic .art-category-title {
+    color: var(--accent);
+    text-shadow: 1px 1px 0px rgba(255, 195, 0, 0.3);
+}
+
+/* 표현 범주 */
+.art-category-expression {
+    border-color: var(--primary);
+    background: rgba(64, 224, 208, 0.08);
+}
+
+.art-category-expression::before {
+    background: var(--primary);
+}
+
+.art-category-expression .art-category-title {
+    color: var(--primary);
+    text-shadow: 1px 1px 0px rgba(64, 224, 208, 0.3);
+}
+
+/* 감상 범주 */
+.art-category-appreciation {
+    border-color: var(--correct);
+    background: rgba(57, 255, 20, 0.08);
+}
+
+.art-category-appreciation::before {
+    background: var(--correct);
+}
+
+.art-category-appreciation .art-category-title {
+    color: var(--correct);
+    text-shadow: 1px 1px 0px rgba(57, 255, 20, 0.3);
+}
+
+.art-category-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: var(--font-display);
+    margin-bottom: var(--space-sm);
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid currentColor;
+    display: inline-block;
+}
+
+.art-category-content {
+    margin-left: var(--space-sm);
+}
+
+/* === 홈 프로젝트 파트 구분 === */
+.home-project-part {
+    background: var(--bg-light);
+    border: 2px solid var(--secondary);
+    border-radius: var(--space-sm);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    position: relative;
+}
+
+.home-project-part:last-child {
+    margin-bottom: 0;
+}
+
+.part-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--secondary);
+    border-radius: var(--space-sm);
+    border: 2px solid #8b5cf6;
+    text-align: center;
+}
+
+.home-project-part input {
+    width: 100% !important;
+    margin-bottom: var(--space-sm);
+}
+
+.home-project-part input:last-child {
+    margin-bottom: 0;
+}
+
+/* === 정답/오답 색상 스타일 === */
+input.correct {
+    color: var(--correct) !important;
+    border-color: var(--correct) !important;
+}
+
+input.incorrect {
+    color: var(--incorrect) !important;
+    border-color: var(--incorrect) !important;
+}
+
+input.retrying {
+    color: var(--retrying) !important;
+    border-color: var(--retrying) !important;
+}
+
+input.revealed {
+    color: var(--revealed) !important;
+    border-color: var(--revealed) !important;
+}
+
+/* 홈 프로젝트 파트 입력 필드의 모든 상태에서 100% 너비 강제 적용 */
+.home-project-part input.correct,
+.home-project-part input.incorrect,
+.home-project-part input.retrying,
+.home-project-part input.revealed {
+    width: 100% !important;
+    display: block !important;
+}
+
+/* 인라인 스타일로 설정된 너비도 무시 */
+.home-project-part input[style*='width'] {
+    width: 100% !important;
+}
+
+/* 1열 빈칸 배치를 위한 스타일 */
+.single-col-answers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+}
+
+.single-col-answers input {
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: var(--space-xs);
+}
+
+.single-col-answers input:last-child {
+    margin-bottom: 0;
+}
+
+/* === 층위별 시각적 구분 - 들여쓰기로 계층 표현 === */
+
+/* 높은 층위 블록 (①, ②, ③, ④, ⑤) */
+.overview-question.standard-emphasis {
+    background: var(--primary);
+    color: white;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0 1rem 0;
+    border-radius: 8px;
+    font-weight: bold;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 낮은 층위 블록 (㉠, ㉡, ㉢, ㉣) - 들여쓰기 효과 */
+.overview-question {
+    background: rgba(22, 33, 62, 0.9);
+    color: var(--text-light);
+    padding: 0.8rem 1.2rem;
+    margin: 0.3rem 0;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* 높은 층위 블록의 자식 요소 간격 조정 */
+.overview-question.standard-emphasis + .overview-question {
+    margin-top: 0.5rem;
+}
+
+/* 호버 효과 */
+.overview-question.standard-emphasis:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+.overview-question:hover {
+    background: rgba(22, 33, 62, 1);
+    color: var(--text-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* 강제로 흰색 글자 적용 */
+.overview-question,
+.overview-question * {
+    color: var(--text-light) !important;
+}
+
+/* 코드 하이라이트 - 녹색 */
+.overview-question .code-highlight {
+    color: #4caf50 !important;
+    font-weight: bold;
+}
+
+/* === 계층별 들여쓰기 === */
+/* 상위 계층 (숫자+괄호: 1), 2), 3) 등) - 들여쓰기 없음 */
+.overview-question.level-1 {
+    margin-left: 0 !important;
+    padding-left: 1.2rem; /* 기본 padding 유지 */
+}
+
+/* 하위 계층 (한글 자모+괄호: 가), 나), 다) 등) - 들여쓰기 적용 */
+.overview-question.level-2 {
+    margin-left: 2rem !important; /* 오른쪽으로 들여쓰기 */
+    padding-left: 1.2rem; /* 기본 padding 유지 */
+}
+
+/* === 말머리 기호별 시각적 태그 스타일 === */
+
+/* 한글 자모 + 점 (가., 나., 다., 라., 마., 바., 사., 아., 자., 차., 카., 타., 파., 하.) - 골드 옐로우 배지 */
+.overview-question .label[data-marker='hangul-dot'] {
+    display: inline-block;
+    background-color: #ffc300 !important; /* 골드 옐로우 배경 */
+    color: #1a1a1a !important; /* 어두운 텍스트 */
+    font-weight: 700;
+    padding: 0.2em 0.5em;
+    border-radius: 0.4em;
+    margin-right: 0.3em;
+    font-size: 0.95em;
+    line-height: 1.2;
+}
+
+/* 한글 자모 + 괄호 (가), 나), 다), 라), 마), 바)) - 골드 옐로우 테두리 배지 */
+.overview-question .label[data-marker='hangul-paren'] {
+    display: inline-block;
+    background-color: rgba(
+        255,
+        195,
+        0,
+        0.15
+    ) !important; /* 연한 골드 옐로우 배경 */
+    color: #ffc300 !important; /* 골드 옐로우 텍스트 */
+    border: 2px solid #ffc300 !important; /* 골드 옐로우 테두리 */
+    font-weight: 600;
+    padding: 0.2em 0.5em;
+    border-radius: 0.4em;
+    margin-right: 0.3em;
+    font-size: 0.95em;
+    line-height: 1.2;
+}
+
+/* 숫자 + 괄호 (1), 2), 3), 4), 5), 6), 7)) - 크림슨 레드 배지 */
+.overview-question .label[data-marker='number-paren'] {
+    display: inline-block;
+    background-color: #dc143c !important; /* 크림슨 레드 배경 */
+    color: #ffffff !important; /* 흰색 텍스트 */
+    font-weight: 700;
+    padding: 0.25em 0.6em;
+    border-radius: 0.5em;
+    margin-right: 0.3em;
+    font-size: 0.95em;
+    line-height: 1.2;
+    box-shadow: 0 2px 4px rgba(220, 20, 60, 0.3);
+}
+
+/* 원문자 (①, ②, ③, ④, ⑤) - 에메랄드 그린 배지 */
+.overview-question .label[data-marker='circle-number'] {
+    display: inline-block;
+    background-color: #2ecc71 !important; /* 에메랄드 그린 배경 */
+    color: #ffffff !important; /* 흰색 텍스트 */
+    font-weight: 700;
+    padding: 0.25em 0.6em;
+    border-radius: 50%;
+    margin-right: 0.3em;
+    font-size: 1em;
+    line-height: 1.2;
+    min-width: 1.8em;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+}
+
+/* 서수 표현 (첫째, 둘째, 셋째, 넷째) - 퍼플 배지 */
+.overview-question .label[data-marker='ordinal'] {
+    display: inline-block;
+    background-color: #9b59b6 !important; /* 퍼플 배경 */
+    color: #ffffff !important; /* 흰색 텍스트 */
+    font-weight: 700;
+    padding: 0.25em 0.6em;
+    border-radius: 0.5em;
+    margin-right: 0.3em;
+    font-size: 0.95em;
+    line-height: 1.2;
+    box-shadow: 0 2px 4px rgba(155, 89, 182, 0.3);
+}
