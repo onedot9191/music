@@ -464,9 +464,8 @@
     --sprite-y: 0%;
     background-image: url("../mushroom-sprite-devil-generated.png?v=devil-redesign-1");
     background-size: 400% 100%;
-    animation:
-        mascot-sprite-frames 0.92s steps(1) infinite,
-        devil-hover 0.92s ease-in-out infinite;
+    background-position: 0% 0%;
+    animation: idle-rock 2.8s ease-in-out infinite;
 }
 :is(#character-assistant, [data-character-assistant]).devil-mode.happy .mushroom {
     --sprite-y: 0%;
@@ -480,9 +479,8 @@
     --sprite-y: 0%;
     background-image: url("../mushroom-sprite-devil-generated.png?v=devil-redesign-1");
     background-size: 400% 100%;
-    animation:
-        mascot-sprite-frames 1.8s steps(1) infinite,
-        idle-rock 2.8s ease-in-out infinite;
+    background-position: 0% 0%;
+    animation: idle-rock 2.8s ease-in-out infinite;
 }
 :is(#character-assistant, [data-character-assistant]).devil-mode {
     --shadow-scale: 0.86;
