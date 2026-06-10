@@ -190,6 +190,79 @@ td input.fit-answer {
     min-width: 14ch;
 }
 
+.curriculum-order-toolbar {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.curriculum-order-toolbar.hidden {
+    display: none;
+}
+
+.curriculum-order-toolbar button,
+.curriculum-order-row-tools button {
+    border: 2px solid #000000;
+    background: var(--secondary);
+    color: var(--text-light);
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+}
+
+.curriculum-order-toolbar button {
+    padding: 0.8rem 1rem;
+    font-size: 1.3rem;
+}
+
+.curriculum-order-row-tools {
+    display: none;
+}
+
+.curriculum-order-row-tools button {
+    align-self: flex-start;
+    padding: 0.5rem 0.8rem;
+    font-size: 1.1rem;
+}
+
+.curriculum-order-item {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.curriculum-order-editing .curriculum-order-item {
+    cursor: grab;
+}
+
+.curriculum-order-editing .curriculum-order-item:active {
+    cursor: grabbing;
+}
+
+.curriculum-order-dragging {
+    opacity: 0.55;
+}
+
+.curriculum-order-item input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.curriculum-order-editing .curriculum-order-item input.curriculum-order-preview {
+    border-color: #6d5dfc;
+    color: #d7d2ff;
+    box-shadow: none;
+}
+
+.curriculum-order-editing .curriculum-order-item {
+    outline: 1px dashed rgba(109, 93, 252, 0.45);
+    outline-offset: 3px;
+}
+
+.curriculum-order-editing .curriculum-order-row-tools {
+    display: flex;
+}
+
 /* 홈 프로젝트 파트 빈칸 너비 강제 고정 - 최고 우선순위 */
 .home-project-part input,
 .home-project-part input.correct,
@@ -203,9 +276,9 @@ td input.fit-answer {
 }
 td input:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: #38bdf8;
     background: var(--secondary);
-    box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.28);
 }
 td input.correct {
     border-color: var(--correct);

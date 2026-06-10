@@ -5,6 +5,7 @@ import { bindHeatmapModalEvents } from './heatmap-modal-events.js';
 import { bindModeSelectionEvents } from './mode-selection-events.js';
 import { bindModelNextEvents } from './model-next-events.js';
 import { bindPracticalModalEvents } from './practical-modal-events.js';
+import { setupCurriculumOrderEditor } from './curriculum-order-editor.js';
 import { bindResultImageActions } from './result-image-actions.js';
 import { bindQuizTabEvents } from './tab-event-bindings.js';
 import { bindStartModalSelectionEvents } from './start-modal-events.js';
@@ -78,6 +79,7 @@ export function bindAppEvents({
 }) {
     bindHeatmapModalEvents({ render6MonthHeatmap });
     bindPracticalModalEvents({ closeModal });
+    setupCurriculumOrderEditor({ refreshAdaptiveInputWidths });
 
     bindStartModalSelectionEvents({
         CONSTANTS,

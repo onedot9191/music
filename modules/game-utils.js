@@ -128,6 +128,7 @@ export function focusNextAvailableInput(input) {
 
     if (!nextInput) return;
 
+    nextInput.dataset.autoFocused = 'true';
     nextInput.focus();
     nextInput.scrollIntoView({
         behavior: 'smooth',

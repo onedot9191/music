@@ -1,4 +1,5 @@
 import { gradeInputAnswer, isIgnoreOrderScope } from './answer-input-grader.js';
+import { isCurriculumOrderEditingInput } from './curriculum-order-editor.js';
 import {
     markInputAsNonRetryableIncorrect,
     markInputCorrect,
@@ -113,14 +114,19 @@ export function createAnswerInputController({
     function handleInputChange(event) {
         const input = event.target;
 
-        if (!input.matches('input[data-answer]') || input.disabled) {
+        if (
+            !input.matches('input[data-answer]') ||
+            input.disabled ||
+            input.dataset.autoFocused === 'true' ||
+            isCurriculumOrderEditingInput(input)
+        ) {
             return;
         }
 
         const section = input.closest('section');
         const userAnswer = normalizeAnswer(input.value);
 
-        if (!userAnswer) {
+        if (!userAnswer && !event.allowEmptyAnswer) {
             return;
         }
 

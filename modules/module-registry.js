@@ -28,6 +28,7 @@ try {
         audioUnlock: await import('./audio-unlock.js'),
         buttonLoadingState: await import('./button-loading-state.js'),
         canvasShareTargets: await import('./canvas-share-targets.js'),
+        curriculumOrderEditor: await import('./curriculum-order-editor.js'),
         dailyBlankCountController: await import(
             './daily-blank-count-controller.js'
         ),
