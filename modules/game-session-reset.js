@@ -14,6 +14,7 @@ export function resetAllAnswerInputs(CONSTANTS, { root = document } = {}) {
             CONSTANTS.CSS_CLASSES.CORRECT,
             CONSTANTS.CSS_CLASSES.INCORRECT,
             CONSTANTS.CSS_CLASSES.RETRYING,
+            CONSTANTS.CSS_CLASSES.REVEALED,
             CONSTANTS.CSS_CLASSES.SHAKE,
             'wrong-answer-indicator'
         );

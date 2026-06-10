@@ -4,24 +4,28 @@
     border-color: var(--correct) !important;
     color: var(--bg-dark) !important;
     font-weight: 700 !important;
-    animation: correctPulse 0.4s ease-out;
-    box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3) !important;
+    animation: correctPulse 0.52s cubic-bezier(0.18, 0.9, 0.2, 1.35);
+    box-shadow:
+        0.28rem 0.28rem 0 var(--border-strong),
+        0 0 18px rgba(0, 200, 83, 0.44) !important;
 }
 
 .spelling-choice-btn.wrong-answer {
     background: var(--incorrect) !important;
     border-color: var(--incorrect) !important;
     color: var(--text-light) !important;
-    animation: wrongShake 0.4s ease-out;
-    box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3) !important;
+    animation: wrongShake 0.46s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    box-shadow:
+        0.28rem 0.28rem 0 var(--border-strong),
+        0 0 18px rgba(239, 68, 68, 0.36) !important;
 }
 
 .spelling-question-item.answer-correct {
-    animation: itemCorrect 0.6s ease-out;
+    animation: itemCorrect 0.72s ease-out;
 }
 
 .spelling-question-item.answer-wrong {
-    animation: itemWrong 0.5s ease-out;
+    animation: itemWrong 0.58s ease-out;
 }
 
 .spelling-combo-effect {
@@ -31,11 +35,13 @@
     transform: translate(-50%, -50%);
     font-size: 2rem;
     font-weight: 900;
-    color: #ffd700;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    color: var(--accent);
+    text-shadow:
+        0.22rem 0.22rem 0 var(--border-strong),
+        0 0 22px rgba(255, 230, 0, 0.86);
     z-index: 9999;
     pointer-events: none;
-    animation: comboFade 1s ease-out forwards;
+    animation: comboFade 1.05s cubic-bezier(0.18, 0.9, 0.2, 1.18) forwards;
 }
 
 @keyframes correctPulse {
@@ -43,7 +49,7 @@
         transform: scale(1);
     }
     50% {
-        transform: scale(1.05);
+        transform: translateY(-0.15rem) scale(1.08);
     }
     100% {
         transform: scale(1);
@@ -77,6 +83,9 @@
 
     50% {
         border-color: var(--correct);
+        box-shadow:
+            0.3rem 0.3rem 0 var(--border-strong),
+            0 0 20px rgba(0, 200, 83, 0.35);
     }
 
     100% {
@@ -91,6 +100,9 @@
 
     50% {
         border-color: var(--incorrect);
+        box-shadow:
+            0.3rem 0.3rem 0 var(--border-strong),
+            0 0 18px rgba(239, 68, 68, 0.32);
     }
 
     100% {
@@ -106,12 +118,12 @@
 
     20% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translate(-50%, -50%) scale(1.28) rotate(-2deg);
     }
 
     80% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -58%) scale(1) rotate(2deg);
     }
 
     100% {

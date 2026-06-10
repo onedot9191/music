@@ -9,6 +9,7 @@ import { setupCurriculumOrderEditor } from './curriculum-order-editor.js';
 import { bindResultImageActions } from './result-image-actions.js';
 import { bindQuizTabEvents } from './tab-event-bindings.js';
 import { bindStartModalSelectionEvents } from './start-modal-events.js';
+import { syncVisibleStartModalSelection } from './game-session-reset.js';
 import { bindTimeSettingEvents } from './time-setting-events.js';
 
 function shouldRevealCompetencyAnswers({
@@ -132,6 +133,7 @@ export function bindAppEvents({
 
     bindGameControlEvents({
         CONSTANTS,
+        SUBJECT_TOPIC_MAPPING,
         TOPIC_SUBMENU_IDS,
         character,
         closeModal,
@@ -151,6 +153,7 @@ export function bindAppEvents({
                 SPECIAL_SUBJECTS,
                 gameState,
             }),
+        syncVisibleStartModalSelection,
         startGame,
         startGameBtn,
         tick,

@@ -6,25 +6,31 @@
     cursor: pointer;
     font-family: var(--font-display);
     font-weight: 700;
-    color: var(--text-light); /* 크림색 텍스트 */
-    background: var(--primary); /* 레드 배경 */
-    border: 3px solid #000000; /* 검은색 외곽선 - 버섯 캐릭터와 동일 두께 */
-    padding: var(--space-sm) var(--space-md);
-    box-shadow: none; /* 평면 디자인 */
-    transition: transform 0.1s;
+    color: var(--text-light);
+    background: var(--primary-strong);
+    border: var(--pixel-border);
+    padding: 0.9rem 1.4rem;
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
+    transition:
+        transform 120ms ease,
+        box-shadow 120ms ease,
+        background-color 140ms ease,
+        filter 140ms ease;
     font-size: 1.4rem;
     white-space: nowrap;
-    border-radius: 0; /* 완전한 평면 형태 */
+    border-radius: var(--radius-sm);
 }
 
 .btn:hover {
-    transform: none; /* 평면 디자인 */
-    box-shadow: none;
+    background: var(--primary);
+    transform: translate(-0.1rem, -0.1rem);
+    box-shadow: 0.4rem 0.4rem 0 var(--border-strong);
+    filter: brightness(1.08);
 }
 
 .btn:active {
-    transform: translateY(2px); /* 클릭 시 아래로만 이동 */
-    box-shadow: none;
+    transform: translate(0.3rem, 0.3rem);
+    box-shadow: 0.1rem 0.1rem 0 var(--border-strong);
 }
 
 .btn:disabled {
@@ -45,10 +51,10 @@
     font-size: 1.1rem;
     padding: 0.6rem 1rem;
     font-weight: 800;
-    background: var(--primary); /* 레드 배경 */
-    border: 3px solid #000000; /* 검은색 외곽선 */
+    background: var(--primary);
+    border: var(--pixel-border);
     color: var(--text-light); /* 크림색 텍스트 */
-    box-shadow: none; /* 평면 디자인 */
+    box-shadow: 0.25rem 0.25rem 0 var(--border-strong);
     vertical-align: middle;
     text-shadow: none; /* 텍스트 그림자 제거 */
     position: relative;
@@ -61,21 +67,21 @@
 .copy-tab-btn:hover {
     background: var(--primary);
     border-color: #000000;
-    box-shadow: none;
-    transform: none; /* 평면 디자인 */
+    box-shadow: 0.4rem 0.4rem 0 var(--border-strong);
+    transform: translate(-0.1rem, -0.1rem);
     color: var(--text-light);
 }
 
 .copy-tab-btn:active {
-    transform: translateY(2px); /* 클릭 시 아래로만 이동 */
-    box-shadow: none;
+    transform: translate(0.2rem, 0.2rem);
+    box-shadow: 0.1rem 0.1rem 0 var(--border-strong);
 }
 
 .copy-tab-btn.loading {
     background: linear-gradient(
         90deg,
         var(--primary) 0%,
-        #ff6b6b 50%,
+        #fca5a5 50%,
         var(--primary) 100%
     ) !important;
     animation: none;
@@ -83,11 +89,11 @@
 
 /* === 카드 스타일 === */
 .card {
-    background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
-    border: 3px solid #000000; /* 검은색 외곽선 */
-    border-radius: 0; /* 평면 형태 */
+    background: var(--surface);
+    border: var(--pixel-border);
+    border-radius: var(--radius-md);
     padding: var(--space-lg);
-    box-shadow: none; /* 그림자 제거 */
+    box-shadow: var(--shadow-soft);
 }
 
 /* === 배지 === */
@@ -95,11 +101,12 @@
     display: inline-block;
     padding: var(--space-xs) var(--space-sm);
     background: var(--accent);
-    color: var(--text-light);
-    border-radius: var(--space-sm);
+    color: var(--bg-dark);
+    border-radius: 0;
     font-size: 1.2rem;
     font-weight: 700;
-    border: 1px solid var(--primary);
+    border: 0.2rem solid var(--border-strong);
+    box-shadow: 0.2rem 0.2rem 0 var(--border-strong);
 }
 
 .badge.success {
@@ -119,9 +126,10 @@
 /* === 알림 === */
 .alert {
     padding: var(--space-md);
-    border-radius: var(--space-sm);
+    border-radius: 0;
     margin-bottom: var(--space-md);
-    border: 2px solid;
+    border: var(--pixel-border);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
 }
 
 .alert.info {
@@ -165,7 +173,7 @@
     background: linear-gradient(
         90deg,
         var(--primary) 0%,
-        #ff6b6b 50%,
+        #fca5a5 50%,
         var(--primary) 100%
     ) !important;
     border-color: var(--primary) !important;
@@ -191,7 +199,7 @@
         rgba(255, 255, 255, 0.4),
         transparent
     );
-    animation: loadingBar 2s ease-in-out infinite;
+    animation: loadingBar 1.15s ease-in-out infinite;
     z-index: 5;
 }
 
@@ -206,7 +214,7 @@
     color: white;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
     z-index: 10;
-    animation: loadingText 1.5s ease-in-out infinite;
+    animation: loadingText 1.15s ease-in-out infinite;
 }
 
 /* 로딩바 애니메이션 */
@@ -276,9 +284,10 @@
     right: 0;
     bottom: 0;
     background-color: var(--secondary);
-    transition: 0.4s;
-    border-radius: 34px;
-    border: 2px solid var(--primary);
+    transition: none;
+    border-radius: 0;
+    border: var(--pixel-border);
+    box-shadow: 0.2rem 0.2rem 0 var(--border-strong);
 }
 
 .toggle .slider:before {
@@ -289,8 +298,8 @@
     left: 4px;
     bottom: 4px;
     background-color: var(--text-light);
-    transition: 0.4s;
-    border-radius: 50%;
+    transition: none;
+    border-radius: 0;
 }
 
 .toggle input:checked + .slider {
@@ -313,9 +322,10 @@
     background-color: var(--bg-dark);
     color: var(--text-light);
     text-align: center;
-    border-radius: var(--space-sm);
+    border-radius: 0;
     padding: var(--space-sm);
-    border: 1px solid var(--primary);
+    border: var(--pixel-border);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
     position: absolute;
     z-index: 1;
     bottom: 125%;

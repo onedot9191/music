@@ -3,11 +3,11 @@
     /* Minimal, GitHub-like grid */
     --heatmap-cell-size: 18px;
     --heatmap-gap: 8px;
-    --heatmap-neutral: rgba(10, 18, 42, 0.6); /* 네이비 중립 배경 */
-    --heatmap-l1: #ffb6c1; /* 매우 연한 핑크 - 레벨 1 (명확한 구분) */
-    --heatmap-l2: #ff7f7f; /* 연한 레드 - 레벨 2 */
-    --heatmap-l3: #ff4444; /* 중간 레드 - 레벨 3 */
-    --heatmap-l4: #b71c1c; /* 매우 진한 레드 - 레벨 4 (포인트 컬러, 레벨 3과 명확한 위계) */
+    --heatmap-neutral: rgba(15, 23, 42, 0.9);
+    --heatmap-l1: #fecaca;
+    --heatmap-l2: #f87171;
+    --heatmap-l3: #dc2626;
+    --heatmap-l4: #facc15;
 
     display: grid;
     grid-template-columns: repeat(7, var(--heatmap-cell-size));
@@ -20,16 +20,15 @@
     width: var(--heatmap-cell-size);
     height: var(--heatmap-cell-size);
     background: var(--heatmap-neutral);
-    border-radius: 0; /* 평면 형태 */
-    border: 1px solid #000000; /* 검은색 외곽선 */
-    transition: transform 0.06s ease, box-shadow 0.15s ease,
-        background-color 0.15s ease;
-    box-shadow: none; /* 평면 디자인 */
+    border-radius: 0;
+    border: 0.2rem solid #000000;
+    transition: none;
+    box-shadow: 0.1rem 0.1rem 0 #000000;
 }
 .heatmap-cell:hover {
-    transform: scale(1.05); /* 약한 확대만 */
-    box-shadow: 0 0 0 1px #000000; /* 검은색 외곽선 강조 */
-    border: 1px solid #000000;
+    transform: translate(-0.1rem, -0.1rem);
+    box-shadow: 0.2rem 0.2rem 0 #000000;
+    border: 0.2rem solid var(--accent);
 }
 .heatmap-cell:focus-visible {
     outline: 2px solid var(--primary);
@@ -59,23 +58,23 @@
 /* Heatmap panel placement next to settings */
 #start-modal .modal-boxes {
     display: flex;
-    gap: 2rem;
+    gap: 2.6rem;
     align-items: flex-start;
     flex-wrap: wrap;
 }
 #settings-panel {
     position: relative;
-    width: 600px;
-    max-width: 600px;
+    width: min(68vw, 720px);
+    max-width: 720px;
     flex-shrink: 0;
     overflow-y: visible;
-    padding: 2rem 1.5rem !important;
+    padding: 2.4rem !important;
     min-height: auto !important;
     height: auto !important;
     max-height: none !important;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.8rem;
 }
 
 #settings-panel h2 {
@@ -83,23 +82,22 @@
     margin-bottom: 1rem;
     font-size: 1.8rem;
     font-weight: 900;
-    color: var(--primary);
+    color: var(--text-light);
     text-align: left;
-    padding: 0.8rem 1rem;
-    padding-bottom: 0.8rem;
-    background: rgba(233, 69, 96, 0.15);
-    border-bottom: 3px solid rgba(233, 69, 96, 0.5);
-    border-radius: 6px 6px 0 0;
+    padding: 0 0 0.8rem;
+    background: transparent;
+    border-bottom: 0.3rem solid var(--primary);
+    border-radius: 0;
     font-family: var(--font-display);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: none;
+    box-shadow: none;
 }
 
 #settings-panel h2:first-of-type {
     margin-top: 0;
 }
 #heatmap-panel {
-    max-width: 260px;
+    max-width: 280px;
     text-align: center;
     flex-shrink: 0;
 }
@@ -107,7 +105,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    max-width: 260px;
+    max-width: 280px;
 }
 
 /* Responsive: stack panels and allow full width on small screens */
@@ -161,7 +159,7 @@
     font-size: 2.2rem;
     font-family: var(--font-display);
     word-break: keep-all;
-    color: var(--primary);
+    color: var(--text-light);
 }
 
 /* Heatmap title: emphasize label in red */
@@ -170,7 +168,7 @@
     font-weight: 700;
 }
 #heatmap-panel #heatmap-count {
-    color: var(--primary);
+    color: var(--accent);
     font-weight: 700;
 }
 
@@ -183,23 +181,23 @@
     height: 22px;
     background: var(--primary);
     color: var(--text-light);
-    border: 2px solid var(--secondary);
-    border-radius: 50%;
+    border: 0.2rem solid var(--secondary);
+    border-radius: 0;
     font-size: 1.2rem;
     font-weight: 700;
     line-height: 1;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: none;
+    box-shadow: 0.15rem 0.15rem 0 var(--border-strong);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 2px 2px 0px var(--secondary);
 }
 
 .expand-heatmap-btn:hover {
     background: var(--accent);
-    transform: scale(1.1);
-    box-shadow: 3px 3px 0px var(--secondary);
+    transform: translate(-0.1rem, -0.1rem);
+    box-shadow: 0.25rem 0.25rem 0 var(--secondary);
 }
 
 .expand-heatmap-btn:active {

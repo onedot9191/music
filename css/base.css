@@ -20,20 +20,27 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     font-weight: 400;
-    background-image: repeating-linear-gradient(
+    image-rendering: pixelated;
+    background-image: linear-gradient(
+            180deg,
+            rgba(239, 68, 68, 0.1),
+            rgba(239, 68, 68, 0) 20rem
+        ),
+        repeating-linear-gradient(
             0deg,
             transparent,
-            transparent 2px,
-            rgba(0, 0, 0, 0.03) 2px,
-            rgba(0, 0, 0, 0.03) 4px
+            transparent 1.2rem,
+            rgba(255, 255, 255, 0.018) 1.2rem,
+            rgba(255, 255, 255, 0.018) 1.3rem
         ),
         repeating-linear-gradient(
             90deg,
             transparent,
-            transparent 2px,
-            rgba(0, 0, 0, 0.03) 2px,
-            rgba(0, 0, 0, 0.03) 4px
+            transparent 1.2rem,
+            rgba(255, 255, 255, 0.014) 1.2rem,
+            rgba(255, 255, 255, 0.014) 1.3rem
         );
+    background-attachment: fixed;
 }
 
 /* === 접근성 === */
@@ -100,6 +107,7 @@ h6 {
     font-family: var(--font-display);
     line-height: 1.2;
     margin-bottom: var(--space-md);
+    letter-spacing: 0;
 }
 
 p {
@@ -130,22 +138,24 @@ input[type='text'],
 input[type='email'],
 input[type='password'],
 textarea {
-    border: 3px solid #000000; /* 검은색 외곽선 */
-    border-radius: 0; /* 평면 형태 */
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
-    color: var(--text-light); /* 크림색 텍스트 */
-    transition: border-color 0.2s ease;
-    box-shadow: none; /* 그림자 제거 */
+    border: 0.3rem solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 1rem var(--space-md);
+    background: rgba(10, 14, 24, 0.78);
+    color: var(--text-light);
+    transition: none;
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
 }
 
 input[type='text']:focus,
 input[type='email']:focus,
 input[type='password']:focus,
 textarea:focus {
-    border-color: #000000; /* 포커스 시에도 검은색 */
-    border-width: 4px; /* 포커스 시 두꺼운 테두리 */
+    border-color: var(--accent);
     outline: none;
+    background: rgba(10, 14, 24, 0.96);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong),
+        0 0 0 0.3rem rgba(250, 204, 21, 0.24);
 }
 
 /* 하위 층위 구분: '단계 활동' 및 '세부사항' 입력 들여쓰기 */

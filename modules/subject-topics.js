@@ -2,9 +2,9 @@ export const SUBJECT_TOPIC_MAPPING = {
     'overview-creative': [
         { name: '총론', subject: 'overview', topic: 'course' },
         { name: '창체', subject: 'creative', topic: 'course' },
-        { name: '역량', subject: 'competency', topic: 'competency' },
-        { name: '영역', subject: 'area', topic: 'area' },
     ],
+    competency: [{ name: '역량', subject: 'competency', topic: 'competency' }],
+    area: [{ name: '영역', subject: 'area', topic: 'area' }],
     korean: [
         { name: '내체표', subject: 'korean', topic: 'curriculum' },
         { name: '모형', subject: 'korean-model', topic: 'model' },

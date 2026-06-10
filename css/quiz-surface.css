@@ -1,7 +1,7 @@
 main,
 .container {
-    padding: 12rem var(--space-md) var(--space-lg);
-    max-width: 1024px;
+    padding: 11rem var(--space-md) var(--space-xl);
+    max-width: 1120px;
     margin: 0 auto;
 }
 
@@ -19,29 +19,45 @@ main,
 
 .tabs {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 .tab {
     flex: 1;
     text-align: center;
     padding: 1.2rem 0;
-    background: rgba(10, 18, 42, 0.5); /* 네이비 배경 */
-    border: 3px solid #000000; /* 검은색 외곽선 */
+    background: var(--surface-muted);
+    border: var(--pixel-border);
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-dark); /* 크림색 텍스트 */
-    transition: all 0.2s;
-    border-radius: 0; /* 평면 형태 */
-    box-shadow: none; /* 그림자 제거 */
+    color: var(--text-dark);
+    transition:
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        background-color 140ms ease,
+        color 140ms ease;
+    border-radius: var(--radius-sm);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
+    min-width: 11rem;
 }
 .tab.active {
-    background: var(--primary); /* 레드 배경 */
-    color: var(--text-light); /* 크림색 텍스트 */
-    transform: none; /* 평면 디자인 */
-    box-shadow: none;
-    border: 4px solid #000000; /* 두꺼운 검은색 테두리 */
+    background: var(--primary-strong);
+    color: var(--text-light);
+    transform: translate(-0.15rem, -0.15rem);
+    box-shadow: 0.4rem 0.4rem 0 var(--border-strong);
+    border: var(--pixel-border);
+}
+
+.tab:hover {
+    transform: translate(-0.12rem, -0.12rem);
+    box-shadow: 0.45rem 0.45rem 0 var(--border-strong);
+}
+
+.tab:active {
+    transform: translate(0.2rem, 0.2rem);
+    box-shadow: 0.12rem 0.12rem 0 var(--border-strong);
 }
 /* Blur titles for disabled sections in Practical model */
 /* Generic blur for disabled tabs across all model subjects */
@@ -66,46 +82,48 @@ section {
 }
 section.active {
     display: block;
+    animation: section-enter 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 h2 {
     text-align: center;
-    color: var(--text-light); /* 크림색 텍스트 */
+    color: var(--text-light);
     margin: 2rem 0 3rem 0;
     font-size: 2.4rem;
     font-weight: 900;
-    background: var(--primary); /* 레드 배경 */
-    padding: 1.5rem;
-    border: 3px solid #000000; /* 검은색 외곽선 */
-    border-radius: 0; /* 평면 형태 */
-    box-shadow: none; /* 그림자 제거 */
+    background: var(--surface);
+    padding: 1.4rem 1.6rem;
+    border: var(--pixel-border);
+    border-left: 0.8rem solid var(--primary);
+    border-radius: var(--radius-md);
+    box-shadow: 0.4rem 0.4rem 0 var(--border-strong);
 }
 
 .grade-container {
     display: flex;
-    gap: 2.5rem;
+    gap: 1.6rem;
     flex-wrap: wrap;
     margin-bottom: 2rem;
 }
 .grade-container > div {
     flex: 1;
     min-width: 280px;
-    background: rgba(10, 18, 42, 0.7); /* 네이비 배경 */
-    border: 3px solid #000000; /* 검은색 외곽선 */
+    background: var(--surface);
+    border: var(--pixel-border);
     padding: 2rem;
-    border-radius: 0; /* 평면 형태 */
-    box-shadow: none; /* 그림자 제거 */
+    border-radius: var(--radius-md);
+    box-shadow: 0.5rem 0.5rem 0 var(--border-strong);
 }
 .grade-title {
-    background: var(--primary); /* 레드 배경 */
+    background: var(--surface-muted);
     padding: 1rem;
     font-size: 1.8rem;
     font-weight: 900;
     text-align: center;
     color: var(--text-light); /* 크림색 텍스트 */
     margin: -2rem -2rem 2rem -2rem;
-    border-bottom: 3px solid #000000; /* 검은색 외곽선 */
-    border-radius: 0; /* 평면 형태 */
+    border-bottom: var(--pixel-border);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
 table {
@@ -175,14 +193,20 @@ td input {
     width: 100%;
     padding: 1.2rem;
     font-size: 1.4rem;
-    border: 3px solid #000000; /* 검은색 외곽선 - 모던 레트로 스타일 */
-    background: var(--bg-dark);
+    border: var(--pixel-border);
+    background: var(--surface-muted);
     color: var(--text-light);
     font-family: 'Noto Sans KR', sans-serif;
     caret-color: var(--primary);
     margin-bottom: 0; /* Removed margin as gap is used now */
-    transition: all 0.2s ease;
-    border-radius: 0; /* 평면 형태 */
+    transition:
+        transform 120ms ease,
+        border-color 140ms ease,
+        background-color 140ms ease,
+        box-shadow 140ms ease,
+        color 140ms ease;
+    border-radius: var(--radius-sm);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
 }
 td input.fit-answer {
     width: auto;
@@ -248,7 +272,9 @@ td input.fit-answer {
     min-width: 0;
 }
 
-.curriculum-order-editing .curriculum-order-item input.curriculum-order-preview {
+.curriculum-order-editing
+    .curriculum-order-item
+    input.curriculum-order-preview {
     border-color: #6d5dfc;
     color: #d7d2ff;
     box-shadow: none;
@@ -276,24 +302,31 @@ td input.fit-answer {
 }
 td input:focus {
     outline: none;
-    border-color: #38bdf8;
+    border-color: var(--accent);
     background: var(--secondary);
-    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.28);
+    transform: translate(-0.1rem, -0.1rem);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong),
+        0 0 0 0.3rem rgba(250, 204, 21, 0.22);
 }
 td input.correct {
     border-color: var(--correct);
     color: var(--correct);
     background: transparent;
+    box-shadow: 0.25rem 0.25rem 0 var(--border-strong),
+        0 0 0 0.25rem rgba(0, 200, 83, 0.18);
 }
 td input.incorrect {
     border-color: var(--incorrect);
     color: var(--incorrect);
     background: transparent;
+    box-shadow: 0.25rem 0.25rem 0 var(--border-strong),
+        0 0 0 0.25rem rgba(239, 68, 68, 0.18);
 }
 td input.retrying {
     border-color: var(--retrying);
     color: var(--retrying);
     background: transparent;
+    animation: retry-breathe 950ms ease-in-out infinite;
 }
 td input.revealed {
     color: var(--revealed);
@@ -303,7 +336,7 @@ td input.revealed {
 }
 
 td input.shake {
-    animation: dori-dori 0.3s;
+    animation: dori-dori 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 
 @keyframes dori-dori {
@@ -319,31 +352,63 @@ td input.shake {
     }
 }
 
-/* Correct answer subtle pulse (distinct from wrong shake) - COMPLETELY DISABLED */
 td input.correct.correct-pulse {
-    /* animation: correct-pulse 420ms ease-out; */
-    animation: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
+    animation: answer-lock-pop 520ms cubic-bezier(0.18, 0.9, 0.2, 1.35);
+    background: rgba(0, 200, 83, 0.08) !important;
 }
 
-/* DISABLED KEYFRAMES */
-/*
 @keyframes correct-pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
-  }
-  40% {
-    transform: scale(1.02);
-    box-shadow: 0 0 12px rgba(57, 255, 20, 0.45);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 rgba(57, 255, 20, 0);
-  }
+    0% {
+        transform: scale(1);
+        box-shadow: 0.25rem 0.25rem 0 var(--border-strong),
+            0 0 0 rgba(0, 200, 83, 0);
+    }
+    40% {
+        transform: scale(1.03);
+        box-shadow: 0.38rem 0.38rem 0 var(--border-strong),
+            0 0 18px rgba(0, 200, 83, 0.48);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0.25rem 0.25rem 0 var(--border-strong),
+            0 0 0 rgba(0, 200, 83, 0);
+    }
 }
-*/
+
+@keyframes answer-lock-pop {
+    0% {
+        transform: scale(0.96);
+    }
+    45% {
+        transform: scale(1.045);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes retry-breathe {
+    0%,
+    100% {
+        box-shadow: 0.25rem 0.25rem 0 var(--border-strong),
+            0 0 0 rgba(255, 159, 28, 0);
+    }
+    50% {
+        box-shadow: 0.25rem 0.25rem 0 var(--border-strong),
+            0 0 16px rgba(255, 159, 28, 0.32);
+    }
+}
+
+@keyframes section-enter {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.992);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
 th.sub-area-cell {
     min-width: 22rem;
@@ -355,52 +420,52 @@ input.sub-area-input {
     padding: 1.2rem;
     font-size: 1.4rem;
     border: 3px solid var(--accent);
-    background: var(--primary);
+    background: var(--surface-muted);
     color: var(--text-light);
-    border-radius: 4px;
+    border-radius: 0;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: none;
 }
 
 /* Universal sub-area input state styles - CRITICAL OVERRIDE */
 .sub-area-input.correct,
 input.sub-area-input.correct,
 th.sub-area-cell .sub-area-input.correct {
-    border: 3px solid #39ff14 !important;
-    color: #39ff14 !important;
+    border: 3px solid var(--correct) !important;
+    color: var(--correct) !important;
     background: transparent !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 8px rgba(57, 255, 20, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18) !important;
 }
 
 .sub-area-input.incorrect,
 input.sub-area-input.incorrect,
 th.sub-area-cell .sub-area-input.incorrect {
-    border: 3px solid #ff5733 !important;
-    color: #ff5733 !important;
+    border: 3px solid var(--incorrect) !important;
+    color: var(--incorrect) !important;
     background: transparent !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 8px rgba(255, 87, 51, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
 }
 
 .sub-area-input.retrying,
 input.sub-area-input.retrying,
 th.sub-area-cell .sub-area-input.retrying {
-    border: 3px solid #ffc300 !important;
-    color: #ffc300 !important;
+    border: 3px solid var(--retrying) !important;
+    color: var(--retrying) !important;
     background: transparent !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 8px rgba(255, 195, 0, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2) !important;
 }
 
 .sub-area-input.revealed,
 input.sub-area-input.revealed,
 th.sub-area-cell .sub-area-input.revealed {
-    border: 3px solid #00ffff !important;
-    color: #00ffff !important;
-    background: rgba(142, 68, 173, 0.1) !important;
+    border: 3px solid var(--revealed) !important;
+    color: var(--revealed) !important;
+    background: rgba(34, 211, 238, 0.1) !important;
     font-weight: 700 !important;
-    box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18) !important;
 }
 
 .grade-container table tr:not(:last-child) > * {

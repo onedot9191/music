@@ -1,6 +1,6 @@
 /* D-Day panel and race track */
 #dday-panel {
-    max-width: 260px;
+    max-width: 280px;
     text-align: center;
     flex-shrink: 0;
 }
@@ -9,7 +9,7 @@
     font-family: var(--font-display);
     font-size: 2.4rem;
     color: var(--primary);
-    letter-spacing: 1px;
+    letter-spacing: 0;
     opacity: 0;
     transition: opacity 0.3s ease-in 0.6s; /* 애니메이션 중간에 표시 */
 }
@@ -120,15 +120,15 @@
 .dday-label {
     position: absolute;
     top: calc(50% + 20px); /* 캐릭터와 충분한 간격 확보 */
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 800;
     color: var(--text-light);
     white-space: nowrap; /* 줄바꿈 방지 */
     text-shadow: 1px 1px 0px var(--bg-dark);
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2px 5px;
-    border-radius: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--surface-muted);
+    padding: 0.4rem 0.6rem;
+    border-radius: 0;
+    border: 0.2rem solid var(--border-strong);
     font-family: var(--font-display);
     z-index: 3;
 }
@@ -177,19 +177,19 @@
     position: absolute;
     top: calc(50% - 58px);
     transform: translateX(-50%);
-    background: var(--bg-dark);
-    border: 3px solid var(--primary);
+    background: var(--surface-muted);
+    border: 0.3rem solid var(--primary);
     color: var(--text-light);
     padding: 5px 10px;
-    border-radius: 6px;
+    border-radius: 0;
     font-family: var(--font-display);
     font-size: 1.2rem;
     font-weight: 800;
     line-height: 1;
     pointer-events: none;
     white-space: nowrap;
-    text-shadow: 2px 2px 0px var(--bg-dark);
-    box-shadow: 0 0 10px var(--primary), 2px 2px 0px var(--secondary);
+    text-shadow: none;
+    box-shadow: 0.25rem 0.25rem 0 var(--secondary);
     z-index: 11;
     opacity: 0;
     transition: opacity 0.3s ease-in 0.6s,

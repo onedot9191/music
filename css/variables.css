@@ -2,18 +2,27 @@
    모든 CSS 커스텀 프로퍼티(변수)들을 정의합니다. */
 
 :root {
-    --bg-dark: #0a122a;
-    --bg-light: #16213e;
-    --primary: #dc143c;
+    --bg-dark: #080d18;
+    --bg-light: #101827;
+    --surface: #1b2940;
+    --surface-elevated: #263956;
+    --surface-muted: #121b2d;
+    --primary: #ef4444;
+    --primary-strong: #b91c1c;
     --secondary: #000000;
-    --accent: #dc143c;
+    --accent: #ffe600;
+    --accent-cool: #00d9ff;
+    --accent-warm: #ff9f1c;
+    --border-strong: #03050b;
+    --border-soft: #5f6f8f;
     --text-light: #ffffff;
-    --text-dark: #e0e0e0;
-    --correct: #2ecc71; /* 에메랄드 그린 - 정답 (개선안 3) */
-    --incorrect: #dc143c; /* 빨간색 - 2차 오답 (레드 포인트 컬러와 조화) */
-    --retrying: #ff9800; /* 주황색 - 1차 오답 (개선안 3) */
-    --revealed: #00bcd4; /* 시안색 - 정답 보기 (개선안 3) */
-    --subject-high-accuracy: #dc143c; /* 레드 포인트 컬러 - 과목 정답률 10% 이상 */
+    --text-dark: #e2e8f0;
+    --text-muted: #bac7d8;
+    --correct: #00c853;
+    --incorrect: #ef4444;
+    --retrying: #ff9f1c;
+    --revealed: #00d9ff;
+    --subject-high-accuracy: #ef4444;
 
     --font-base: 'Noto Sans KR', sans-serif;
     --font-display: 'Galmuri9', 'Galmuri11', 'Press Start 2P', cursive;
@@ -24,6 +33,12 @@
     --space-md: 1.6rem;
     --space-lg: 2.4rem;
     --space-xl: 3.2rem;
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+    --pixel-border: 0.3rem solid var(--border-strong);
+    --shadow-hard: 0.5rem 0.5rem 0 var(--border-strong);
+    --shadow-soft: 0.3rem 0.3rem 0 rgba(3, 5, 11, 0.92);
 
     --mushroom-outline-width: 3px; /* 버섯 캐릭터와 동일한 외곽선 두께 */
 

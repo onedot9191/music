@@ -15,13 +15,15 @@
 
 .subject-selector {
     display: grid !important;
-    grid-template-columns: repeat(6, 1fr) !important;
+    grid-template-columns: repeat(auto-fit, minmax(8.8rem, 1fr)) !important;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 .topic-submenu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.5rem;
+    gap: 0.8rem;
 }
 
 .hidden-subject-mapping {
@@ -61,7 +63,7 @@
 .sound-toggle-text {
     font-weight: 600;
 
-    letter-spacing: 0.05rem;
+    letter-spacing: 0;
 }
 
 .sound-toggle-switch {
@@ -95,15 +97,15 @@
 
     bottom: 0;
 
-    background-color: var(--bg-dark);
+    background: var(--bg-dark);
 
-    border: 2px solid var(--secondary);
+    border: 0.2rem solid var(--border-strong);
 
-    border-radius: 24px;
+    border-radius: 0;
 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: none;
 
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0.2rem 0.2rem 0 var(--border-strong);
 }
 
 .sound-toggle-slider:before {
@@ -119,22 +121,21 @@
 
     bottom: 2px;
 
-    background-color: var(--text-dark);
+    background: var(--text-dark);
 
-    border-radius: 50%;
+    border-radius: 0;
 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: none;
 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
 }
 
 #sound-toggle:checked + .sound-toggle-slider {
-    background-color: var(--primary);
+    background: var(--primary);
 
-    border-color: var(--primary);
+    border-color: var(--border-strong);
 
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        0 0 8px rgba(233, 69, 96, 0.3);
+    box-shadow: 0.2rem 0.2rem 0 var(--border-strong);
 }
 
 #sound-toggle:checked + .sound-toggle-slider:before {
@@ -142,23 +143,27 @@
 
     background-color: var(--text-light);
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: none;
 }
 
 .sound-toggle-label:hover .sound-toggle-slider {
     border-color: var(--accent);
 
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
-        0 0 8px rgba(83, 52, 131, 0.2);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
 }
 
 #sound-toggle:checked + .sound-toggle-slider:hover {
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        0 0 12px rgba(233, 69, 96, 0.4);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
 }
 
 /* 시작 모달 컨테이너를 relative로 설정하여 절대 위치 기준점 제공 */
 
 #settings-panel {
     position: relative;
+}
+
+@media (max-width: 520px) {
+    .subject-selector {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
 }

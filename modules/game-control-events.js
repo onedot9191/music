@@ -75,9 +75,11 @@ function bindCharacterCountBlock({ character, updateTodayBlankCount }) {
 
 function bindStartButton({
     CONSTANTS,
+    SUBJECT_TOPIC_MAPPING,
     TOPIC_SUBMENU_IDS,
     gameState,
     hideTopicSubmenus,
+    syncVisibleStartModalSelection,
     startGame,
     startGameBtn,
 }) {
@@ -91,6 +93,11 @@ function bindStartButton({
         event.stopPropagation();
 
         try {
+            syncVisibleStartModalSelection({
+                SUBJECT_TOPIC_MAPPING,
+                gameState,
+            });
+
             if (gameState.useEasternEthicsBasic) {
                 showEthicsBasicSubmenu({
                     CONSTANTS,
@@ -137,6 +144,7 @@ function bindResultRevealButton({
 
 export function bindGameControlEvents({
     CONSTANTS,
+    SUBJECT_TOPIC_MAPPING,
     TOPIC_SUBMENU_IDS,
     character,
     closeModal,
@@ -151,6 +159,7 @@ export function bindGameControlEvents({
     revealCompetencyAnswers,
     scrapResultImageBtnTop,
     shouldRevealCompetencyAnswers,
+    syncVisibleStartModalSelection,
     startGame,
     startGameBtn,
     tick,
@@ -160,9 +169,11 @@ export function bindGameControlEvents({
 
     bindStartButton({
         CONSTANTS,
+        SUBJECT_TOPIC_MAPPING,
         TOPIC_SUBMENU_IDS,
         gameState,
         hideTopicSubmenus,
+        syncVisibleStartModalSelection,
         startGame,
         startGameBtn,
     });

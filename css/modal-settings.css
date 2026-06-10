@@ -4,31 +4,41 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background-color: rgba(4, 7, 13, 0.82);
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.04) 0,
+        rgba(255, 255, 255, 0.04) 0.2rem,
+        transparent 0.2rem,
+        transparent 0.6rem
+    );
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 200;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.22s ease;
     overflow-y: auto; /* allow vertical scrolling when content exceeds viewport */
     overscroll-behavior: contain; /* prevent background scroll chaining on mobile */
 }
 .modal-overlay.active {
     display: flex;
     opacity: 1;
+    animation: modal-overlay-scan 520ms ease-out;
 }
 .modal-content {
-    background: var(--bg-light);
-    padding: 1.5rem var(--space-xl);
+    background: linear-gradient(180deg, var(--surface) 0%, #162238 100%);
+    padding: 2rem var(--space-xl);
     text-align: center;
-    border: 4px solid var(--primary);
-    box-shadow: 10px 10px 0px var(--secondary);
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
+    border: var(--pixel-border);
+    box-shadow: var(--shadow-hard);
+    transform: translateY(18px) scale(0.9);
+    transition:
+        transform 0.28s cubic-bezier(0.18, 0.9, 0.2, 1.22),
+        box-shadow 0.28s ease;
     width: 90%;
     max-width: 600px;
-    border-radius: var(--space-md);
+    border-radius: var(--radius-lg);
     max-height: 90vh; /* keep inside viewport on mobile */
     overflow-y: auto; /* enable internal scroll if needed */
 
@@ -43,16 +53,16 @@
 }
 
 .modal-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    border: 2px solid var(--bg-light);
+    background: var(--surface-muted);
+    border-radius: 0;
+    border: 0.2rem solid var(--border-strong);
 }
 
 .modal-content::-webkit-scrollbar-thumb {
     background: var(--accent);
-    border-radius: 6px;
-    border: 2px solid var(--bg-light);
-    transition: background 0.2s ease;
+    border-radius: 0;
+    border: 0.2rem solid var(--border-strong);
+    transition: none;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
@@ -64,10 +74,11 @@
 }
 
 .modal-overlay.active .modal-content {
-    transform: scale(1);
+    transform: translateY(0) scale(1);
+    animation: modal-content-pop 460ms cubic-bezier(0.18, 0.9, 0.2, 1.18);
 }
 .modal-content h2 {
-    color: var(--primary);
+    color: var(--text-light);
     font-size: 3rem;
     margin-bottom: 1.2rem;
     margin-top: 0;
@@ -132,7 +143,9 @@
     margin-top: 3rem;
     background: var(--secondary);
     padding: 1rem;
-    border-radius: 8px;
+    border: 0.2rem solid var(--border-strong);
+    border-radius: 0;
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
 }
 #close-guide-btn {
     display: block;
@@ -159,11 +172,12 @@
 #result-info p {
     font-size: 1.6rem;
     margin: 0;
-    background: var(--secondary);
+    background: var(--surface-muted);
+    color: var(--text-light);
     padding: 0.5rem 1rem;
-    border: 2px solid var(--primary);
-    box-shadow: 2px 2px 0 var(--bg-dark);
-    border-radius: 6px;
+    border: 0.2rem solid var(--border-strong);
+    box-shadow: 0.2rem 0.2rem 0 var(--border-strong);
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
     white-space: nowrap;
 }
@@ -183,16 +197,23 @@
     flex: 1;
     height: 20px;
     background: var(--bg-dark);
-    border: 2px solid var(--primary);
-    box-shadow: 2px 2px 0 var(--secondary);
-    border-radius: 10px;
+    border: 0.2rem solid var(--border-strong);
+    box-shadow: 0.15rem 0.15rem 0 var(--border-strong);
+    border-radius: 0;
     overflow: hidden;
 }
 .progress-fill {
     height: 100%;
     width: 0%;
-    background: var(--primary);
-    transition: width 0.3s ease;
+    background: linear-gradient(
+        90deg,
+        var(--correct) 0%,
+        var(--accent) 58%,
+        var(--accent-cool) 100%
+    );
+    background-size: 180% 100%;
+    transition: width 0.45s steps(12, end);
+    animation: progress-fill-energy 1.1s linear infinite;
 }
 #result-percentage {
     font-size: 1.6rem;
@@ -218,4 +239,34 @@
 .result-buttons .btn {
     width: 12rem;
     font-family: var(--font-display);
+}
+
+@keyframes modal-overlay-scan {
+    0% {
+        background-position: 0 -2rem;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+@keyframes modal-content-pop {
+    0% {
+        transform: translateY(18px) scale(0.9);
+    }
+    54% {
+        transform: translateY(-4px) scale(1.025);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes progress-fill-energy {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 180% 50%;
+    }
 }

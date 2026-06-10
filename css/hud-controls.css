@@ -4,11 +4,12 @@ header {
     left: 0;
     width: 100%;
     background: var(--bg-light);
-    border-bottom: 4px solid var(--primary);
+    border-bottom: 0.4rem solid var(--border-strong);
+    box-shadow: 0 0.4rem 0 var(--primary-strong);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-sm) var(--space-lg);
+    padding: 1rem var(--space-lg);
     z-index: 100;
     flex-wrap: wrap;
 }
@@ -43,16 +44,17 @@ header {
 header h1 {
     font-family: var(--font-display);
     font-size: 2.2rem;
-    color: var(--primary);
-    text-shadow: 3px 3px 0px var(--secondary);
+    color: var(--text-light);
+    text-shadow: none;
+    margin-bottom: 0;
 }
 
 .kitsch-box {
-    background: var(--secondary);
-    padding: var(--space-sm) var(--space-md);
-    border: 3px solid var(--primary);
-    box-shadow: 4px 4px 0px var(--bg-dark);
-    border-radius: var(--space-sm);
+    background: var(--surface-muted);
+    padding: 0.8rem 1.2rem;
+    border: var(--pixel-border);
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
+    border-radius: var(--radius-md);
 }
 
 #time {
@@ -66,19 +68,19 @@ header h1 {
     width: 16rem;
     height: 1rem;
     background: var(--bg-dark);
-    border: 2px solid var(--primary);
+    border: 0.2rem solid var(--border-strong);
     overflow: hidden;
     margin-top: 0.5rem;
-    border-radius: 4px;
+    border-radius: 0;
 }
 
 #bar > div {
     height: 100%;
     width: 100%;
-    background: var(--primary) !important;
+    background: var(--accent) !important;
     background-image: none !important;
-    transition: width 1s linear;
-    border-radius: 2px;
+    transition: width 1s steps(20, end);
+    border-radius: 0;
 }
 
 .slot-machine {
@@ -91,8 +93,9 @@ header h1 {
     width: 3rem;
     height: 3rem;
     background: var(--secondary);
-    border: 3px solid var(--primary);
-    border-radius: 4px;
+    border: var(--pixel-border);
+    border-radius: 0;
+    box-shadow: 0.3rem 0.3rem 0 var(--border-strong);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,12 +175,16 @@ header h1 {
 }
 
 #combo-counter {
-    color: var(--incorrect); /* 레드 */
-    font-size: 2.2rem; /* Match H1 size */
-    font-weight: 800;
+    color: var(--accent);
+    font-size: 2.4rem;
+    font-weight: 900;
     font-family: var(--font-display);
-    text-shadow: none; /* 평면 디자인 - 텍스트 그림자 제거 */
+    letter-spacing: 0;
+    text-shadow:
+        0.18rem 0.18rem 0 var(--border-strong),
+        0 0 18px rgba(255, 230, 0, 0.52);
+    transform-origin: left center;
 }
 .combo-pop {
-    animation: combo-pop-animation 0.3s ease-out;
+    animation: combo-pop-animation 480ms cubic-bezier(0.18, 0.9, 0.2, 1.45);
 }
