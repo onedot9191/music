@@ -46,6 +46,17 @@ function getCurrentDateLabel() {
     return `${today.getMonth() + 1}월 ${today.getDate()}일`;
 }
 
+function createModalCharacterElement() {
+    const characterEl = document.createElement('div');
+    characterEl.dataset.characterAssistant = '';
+
+    const mushroom = document.createElement('div');
+    mushroom.className = 'mushroom';
+    characterEl.appendChild(mushroom);
+
+    return characterEl;
+}
+
 export function createProgressModalController({
     CONSTANTS,
     SUBJECT_NAMES,
@@ -116,22 +127,15 @@ export function createProgressModalController({
 
     function renderModalCharacter(feedback) {
         modalCharacterPlaceholder.innerHTML = '';
-        modalCharacterPlaceholder.appendChild(character.cloneNode(true));
+        const modalChar = createModalCharacterElement();
 
-        setTimeout(() => {
-            const modalChar = modalCharacterPlaceholder.querySelector(
-                '#character-assistant'
-            );
+        modalChar.classList.add(feedback.animation);
 
-            if (!modalChar) return;
+        if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+            modalChar.classList.add('devil-mode');
+        }
 
-            modalChar.className = '';
-            modalChar.classList.add(feedback.animation);
-
-            if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
-                modalChar.classList.add('devil-mode');
-            }
-        }, 100);
+        modalCharacterPlaceholder.appendChild(modalChar);
     }
 
     function showProgress() {

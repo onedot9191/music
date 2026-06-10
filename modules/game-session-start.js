@@ -22,10 +22,12 @@ export function configureSessionTimer({
     if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
         gameState.duration = CONSTANTS.HARD_CORE_DURATION;
         timerContainer?.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+        timerContainer?.classList.add('hard-core-timer');
         barEl.style.display = 'none';
     } else {
         gameState.duration = parseTimeDisplay(timeSettingDisplay.textContent);
         timerContainer?.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
+        timerContainer?.classList.remove('hard-core-timer');
         barEl.style.display = 'block';
     }
 

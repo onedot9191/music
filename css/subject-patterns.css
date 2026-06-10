@@ -257,78 +257,47 @@ input.revealed {
 
 /* === 말머리 기호별 시각적 태그 스타일 === */
 
-/* 한글 자모 + 점 (가., 나., 다., 라., 마., 바., 사., 아., 자., 차., 카., 타., 파., 하.) - 골드 옐로우 배지 */
-.overview-question .label[data-marker='hangul-dot'] {
-    display: inline-block;
-    background-color: #ffc300 !important; /* 골드 옐로우 배경 */
-    color: #1a1a1a !important; /* 어두운 텍스트 */
-    font-weight: 700;
-    padding: 0.2em 0.5em;
-    border-radius: 0.4em;
-    margin-right: 0.3em;
-    font-size: 0.95em;
-    line-height: 1.2;
-}
-
-/* 한글 자모 + 괄호 (가), 나), 다), 라), 마), 바)) - 골드 옐로우 테두리 배지 */
-.overview-question .label[data-marker='hangul-paren'] {
-    display: inline-block;
-    background-color: rgba(
-        255,
-        195,
-        0,
-        0.15
-    ) !important; /* 연한 골드 옐로우 배경 */
-    color: #ffc300 !important; /* 골드 옐로우 텍스트 */
-    border: 2px solid #ffc300 !important; /* 골드 옐로우 테두리 */
-    font-weight: 600;
-    padding: 0.2em 0.5em;
-    border-radius: 0.4em;
-    margin-right: 0.3em;
-    font-size: 0.95em;
-    line-height: 1.2;
-}
-
-/* 숫자 + 괄호 (1), 2), 3), 4), 5), 6), 7)) - 크림슨 레드 배지 */
-.overview-question .label[data-marker='number-paren'] {
-    display: inline-block;
-    background-color: #dc143c !important; /* 크림슨 레드 배경 */
-    color: #ffffff !important; /* 흰색 텍스트 */
-    font-weight: 700;
-    padding: 0.25em 0.6em;
-    border-radius: 0.5em;
-    margin-right: 0.3em;
-    font-size: 0.95em;
-    line-height: 1.2;
-    box-shadow: 0 2px 4px rgba(220, 20, 60, 0.3);
-}
-
-/* 원문자 (①, ②, ③, ④, ⑤) - 에메랄드 그린 배지 */
-.overview-question .label[data-marker='circle-number'] {
-    display: inline-block;
-    background-color: #2ecc71 !important; /* 에메랄드 그린 배경 */
-    color: #ffffff !important; /* 흰색 텍스트 */
-    font-weight: 700;
-    padding: 0.25em 0.6em;
-    border-radius: 50%;
-    margin-right: 0.3em;
-    font-size: 1em;
-    line-height: 1.2;
-    min-width: 1.8em;
+.overview-question .label[data-marker] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.2em;
+    padding: 0.12em 0.48em;
+    margin-right: 0.45em;
+    vertical-align: 0.08em;
+    background: var(--surface-muted) !important;
+    border: 0.2rem solid var(--border-strong) !important;
+    border-radius: var(--radius-sm);
+    box-shadow: 0.22rem 0.22rem 0 var(--border-strong);
+    color: var(--text-light) !important;
+    font-family: var(--font-display);
+    font-size: 0.86em;
+    font-weight: 900;
+    line-height: 1.25;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+    opacity: 1;
 }
 
-/* 서수 표현 (첫째, 둘째, 셋째, 넷째) - 퍼플 배지 */
-.overview-question .label[data-marker='ordinal'] {
-    display: inline-block;
-    background-color: #9b59b6 !important; /* 퍼플 배경 */
-    color: #ffffff !important; /* 흰색 텍스트 */
-    font-weight: 700;
-    padding: 0.25em 0.6em;
-    border-radius: 0.5em;
-    margin-right: 0.3em;
-    font-size: 0.95em;
-    line-height: 1.2;
-    box-shadow: 0 2px 4px rgba(155, 89, 182, 0.3);
+.overview-question .label[data-marker='ordinal'],
+.overview-question .label[data-marker='number-paren'] {
+    background: var(--primary-strong) !important;
+    color: var(--text-light) !important;
+}
+
+.overview-question .label[data-marker='hangul-dot'] {
+    background: var(--surface-elevated) !important;
+    border-color: var(--primary) !important;
+    color: var(--text-light) !important;
+}
+
+.overview-question .label[data-marker='hangul-paren'],
+.overview-question .label[data-marker='circle-number'] {
+    background: var(--surface-muted) !important;
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+}
+
+.overview-question .label[data-marker='circle-number'] {
+    min-width: 2em;
+    padding-inline: 0.36em;
 }

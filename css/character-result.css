@@ -2,7 +2,7 @@
 
 /* 더 작은 모바일 화면을 위한 추가 조정 */
 @media (max-width: 480px) {
-    #character-assistant {
+    :is(#character-assistant, [data-character-assistant]) {
         width: 60px;
         height: 60px;
         bottom: 10px;
@@ -10,13 +10,13 @@
     }
 
     /* 캐릭터 내부 요소들 크기 조정 */
-    #character-assistant .mushroom-cap .dot {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-cap .dot {
         width: 8px;
         height: 8px;
         border: 1px solid #000;
     }
 
-    #character-assistant .character-eye {
+    :is(#character-assistant, [data-character-assistant]) .character-eye {
         width: 4px;
         height: 5px;
     }
@@ -24,7 +24,7 @@
 
 /* 매우 작은 화면 (iPhone SE 등)을 위한 최소 크기 조정 */
 @media (max-width: 375px) {
-    #character-assistant {
+    :is(#character-assistant, [data-character-assistant]) {
         width: 52px;
         height: 52px;
         bottom: 8px;
@@ -32,22 +32,22 @@
     }
 
     /* 더 작은 내부 요소들 */
-    #character-assistant .mushroom-cap .dot {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-cap .dot {
         width: 6px;
         height: 6px;
         border: 1px solid #000;
     }
 
-    #character-assistant .character-eye {
+    :is(#character-assistant, [data-character-assistant]) .character-eye {
         width: 3px;
         height: 4px;
     }
 
-    #character-assistant .mushroom-cap {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-cap {
         border: 2px solid #000;
     }
 
-    #character-assistant .mushroom-stem {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-stem {
         border: 2px solid #000;
         border-bottom: none;
     }
@@ -55,7 +55,7 @@
 
 /* 모바일 가로 모드에서 캐릭터가 화면 밖으로 나가지 않도록 조정 */
 @media (max-height: 500px) and (orientation: landscape) {
-    #character-assistant {
+    :is(#character-assistant, [data-character-assistant]) {
         width: 56px;
         height: 56px;
         bottom: 5px;
@@ -65,46 +65,66 @@
 
 /* 작은 높이에서는 캐릭터 크기를 더 줄임 */
 @media (max-height: 400px) {
-    #character-assistant {
+    :is(#character-assistant, [data-character-assistant]) {
         width: 48px;
         height: 48px;
         bottom: 5px;
         right: 5px;
     }
 
-    #character-assistant .mushroom-cap .dot {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-cap .dot {
         width: 4px;
         height: 4px;
         border: 1px solid #000;
     }
 
-    #character-assistant .character-eye {
+    :is(#character-assistant, [data-character-assistant]) .character-eye {
         width: 2px;
         height: 3px;
     }
 
-    #character-assistant .mushroom-cap,
-    #character-assistant .mushroom-stem {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-cap,
+    :is(#character-assistant, [data-character-assistant]) .mushroom-stem {
         border: 1px solid #000;
     }
 
-    #character-assistant .mushroom-stem {
+    :is(#character-assistant, [data-character-assistant]) .mushroom-stem {
         border-bottom: none;
     }
 }
 
 /* Character Assistant Styles */
-#character-assistant {
+:is(#character-assistant, [data-character-assistant]) {
     position: fixed;
     bottom: 20px;
     right: 20px;
     width: 104px;
     height: 104px;
     z-index: 99;
+    pointer-events: auto;
     transition:
         transform 0.28s ease,
         filter 0.28s ease;
+    filter: drop-shadow(0 10px 0 rgba(13, 21, 43, 0.12));
+    isolation: isolate;
+    will-change: transform, filter;
 }
+
+:is(#character-assistant, [data-character-assistant])::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 54%;
+    height: 11%;
+    border-radius: 50%;
+    background: rgba(13, 21, 43, 0.22);
+    transform: translateX(-50%) scaleX(var(--shadow-scale, 1));
+    opacity: var(--shadow-opacity, 0.48);
+    z-index: -1;
+    filter: blur(1px);
+}
+
 .mushroom {
     --sprite-y: 0%;
     width: 100%;
@@ -118,12 +138,13 @@
     image-rendering: crisp-edges;
     transform-origin: 50% 88%;
     transition: transform 0.3s ease-out;
+    will-change: background-position, transform;
 }
 
-#character-assistant .mushroom-cap,
-#character-assistant .mushroom-stem,
-#character-assistant .devil-horns,
-#character-assistant .fire-effect {
+:is(#character-assistant, [data-character-assistant]) .mushroom-cap,
+:is(#character-assistant, [data-character-assistant]) .mushroom-stem,
+:is(#character-assistant, [data-character-assistant]) .devil-horns,
+:is(#character-assistant, [data-character-assistant]) .fire-effect {
     display: none !important;
 }
 
@@ -218,24 +239,32 @@
     }
 }
 
-#character-assistant.idle .mushroom {
+:is(#character-assistant, [data-character-assistant]).idle .mushroom {
     --sprite-y: 0%;
-    animation: idle-sway 3.2s ease-in-out infinite;
+    animation: idle-rock 2.8s ease-in-out infinite;
 }
 
-@keyframes idle-sway {
+@keyframes idle-rock {
     0%,
     100% {
-        transform: rotate(0deg);
+        transform: rotate(-2deg);
     }
     50% {
-        transform: rotate(6deg);
+        transform: rotate(2deg);
     }
 }
 
-#character-assistant.happy .mushroom {
+:is(#character-assistant, [data-character-assistant]).happy .mushroom {
     --sprite-y: 14.2857%;
-    animation: mascot-sprite-frames 1.4s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 0.92s steps(1) infinite,
+        happy-hop 0.92s cubic-bezier(0.18, 0.9, 0.22, 1.22) infinite;
+}
+:is(#character-assistant, [data-character-assistant]).happy {
+    --shadow-scale: 0.82;
+    --shadow-opacity: 0.32;
+    filter: drop-shadow(0 11px 0 rgba(13, 21, 43, 0.1))
+        drop-shadow(0 0 13px rgba(255, 90, 126, 0.22));
 }
 @keyframes happy-hop {
     0%,
@@ -268,17 +297,31 @@
     }
 }
 
-#character-assistant.sad .mushroom-cap {
+:is(#character-assistant, [data-character-assistant]).sad .mushroom-cap {
     background-color: rgba(10, 18, 42, 0.8); /* 네이비 - 슬픔 상태에서 어둡게 */
 }
-#character-assistant.sad .mushroom {
+:is(#character-assistant, [data-character-assistant]).sad .mushroom {
     --sprite-y: 28.5714%;
-    animation: mascot-sprite-frames 1.8s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 1.8s steps(1) infinite,
+        idle-rock 2.8s ease-in-out infinite;
+}
+:is(#character-assistant, [data-character-assistant]).sad {
+    --shadow-scale: 1.08;
+    --shadow-opacity: 0.56;
+    filter: grayscale(0.18) drop-shadow(0 8px 0 rgba(13, 21, 43, 0.16));
 }
 
-#character-assistant.worried .mushroom {
+:is(#character-assistant, [data-character-assistant]).worried .mushroom {
     --sprite-y: 42.8571%;
-    animation: mascot-sprite-frames 1.2s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 1.05s steps(1) infinite,
+        worried-shake 0.72s cubic-bezier(0.36, 0.07, 0.19, 0.97)
+            infinite;
+}
+:is(#character-assistant, [data-character-assistant]).worried {
+    --shadow-scale: 0.96;
+    --shadow-opacity: 0.42;
 }
 @keyframes worried-shake {
     0%,
@@ -293,9 +336,17 @@
     }
 }
 
-#character-assistant.cheer .mushroom {
+:is(#character-assistant, [data-character-assistant]).cheer .mushroom {
     --sprite-y: 57.1429%;
-    animation: mascot-sprite-frames 1.5s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 0.86s steps(1) infinite,
+        cheer-dance 0.86s cubic-bezier(0.18, 0.9, 0.2, 1.25) infinite;
+}
+:is(#character-assistant, [data-character-assistant]).cheer {
+    --shadow-scale: 0.9;
+    --shadow-opacity: 0.35;
+    filter: drop-shadow(0 12px 0 rgba(13, 21, 43, 0.1))
+        drop-shadow(0 0 16px rgba(255, 213, 79, 0.34));
 }
 @keyframes cheer-dance {
     0%,
@@ -311,22 +362,28 @@
 }
 
 /* Combo Growth Styles */
-#character-assistant.combo-level-1 .mushroom {
+:is(#character-assistant, [data-character-assistant]).combo-level-1 .mushroom {
     --sprite-y: 71.4286%;
-    animation: mascot-sprite-frames 1.4s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 1s steps(1) infinite,
+        combo-grow-1 1s ease-in-out infinite;
 }
-#character-assistant.combo-level-2 .mushroom {
+:is(#character-assistant, [data-character-assistant]).combo-level-2 .mushroom {
     --sprite-y: 71.4286%;
-    animation: mascot-sprite-frames 1.2s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 0.86s steps(1) infinite,
+        combo-grow-2 0.86s ease-in-out infinite;
 }
-#character-assistant.combo-level-2 .mushroom-cap {
+:is(#character-assistant, [data-character-assistant]).combo-level-2 .mushroom-cap {
     box-shadow: 0 0 10px gold, 0 0 15px gold;
 }
-#character-assistant.combo-level-3 .mushroom {
+:is(#character-assistant, [data-character-assistant]).combo-level-3 .mushroom {
     --sprite-y: 71.4286%;
-    animation: mascot-sprite-frames 1s steps(1) infinite;
+    animation:
+        mascot-sprite-frames 0.72s steps(1) infinite,
+        combo-grow-3 0.72s ease-in-out infinite;
 }
-#character-assistant.combo-level-3 .mushroom-cap {
+:is(#character-assistant, [data-character-assistant]).combo-level-3 .mushroom-cap {
     animation: rainbow-glow 2s infinite alternate;
 }
 
@@ -352,14 +409,16 @@
 }
 
 @keyframes sad-slump {
-    0% {
-        transform: rotate(0deg) translateY(0);
-    }
-    35% {
-        transform: rotate(-18deg) translateY(7px) scale(0.96);
-    }
+    0%,
     100% {
-        transform: rotate(-12deg) translateY(5px) scale(0.98);
+        transform: translateY(0) rotate(0deg) scale(1, 1);
+    }
+    35%,
+    72% {
+        transform: translateY(4px) rotate(-3deg) scale(1.02, 0.96);
+    }
+    86% {
+        transform: translateY(2px) rotate(-2deg) scale(1.01, 0.98);
     }
 }
 
@@ -398,33 +457,51 @@
 .fire-effect {
     display: none;
 }
-#character-assistant.devil-mode .devil-horns {
+:is(#character-assistant, [data-character-assistant]).devil-mode .devil-horns {
     display: block;
 }
-#character-assistant.devil-mode .mushroom {
-    --sprite-y: 85.7143%;
-    animation: mascot-sprite-frames 1.3s steps(1) infinite;
+:is(#character-assistant, [data-character-assistant]).devil-mode .mushroom {
+    --sprite-y: 0%;
+    background-image: url("../mushroom-sprite-devil-generated.png?v=devil-redesign-1");
+    background-size: 400% 100%;
+    animation:
+        mascot-sprite-frames 0.92s steps(1) infinite,
+        devil-hover 0.92s ease-in-out infinite;
 }
-#character-assistant.devil-mode.happy .mushroom {
-    --sprite-y: 100%;
-    animation: mascot-sprite-frames 1.1s steps(1) infinite;
+:is(#character-assistant, [data-character-assistant]).devil-mode.happy .mushroom {
+    --sprite-y: 0%;
+    background-image: url("../mushroom-sprite-devil-generated.png?v=devil-redesign-1");
+    background-size: 400% 100%;
+    animation:
+        mascot-sprite-frames 0.78s steps(1) infinite,
+        happy-hop 0.78s cubic-bezier(0.18, 0.9, 0.22, 1.22) infinite;
 }
-#character-assistant.devil-mode.sad .mushroom {
-    --sprite-y: 85.7143%;
-    animation: mascot-sprite-frames 1.6s steps(1) infinite;
+:is(#character-assistant, [data-character-assistant]).devil-mode.sad .mushroom {
+    --sprite-y: 0%;
+    background-image: url("../mushroom-sprite-devil-generated.png?v=devil-redesign-1");
+    background-size: 400% 100%;
+    animation:
+        mascot-sprite-frames 1.8s steps(1) infinite,
+        idle-rock 2.8s ease-in-out infinite;
 }
-#character-assistant.devil-mode .mushroom-cap {
+:is(#character-assistant, [data-character-assistant]).devil-mode {
+    --shadow-scale: 0.86;
+    --shadow-opacity: 0.5;
+    filter: drop-shadow(0 11px 0 rgba(13, 21, 43, 0.16))
+        drop-shadow(0 0 16px rgba(255, 43, 43, 0.26));
+}
+:is(#character-assistant, [data-character-assistant]).devil-mode .mushroom-cap {
     background: #a00000;
 }
-#character-assistant.devil-mode.happy .fire-effect {
+:is(#character-assistant, [data-character-assistant]).devil-mode.happy .fire-effect {
     display: flex;
 }
 
-#character-assistant.devil-mode.sad .mushroom-cap {
+:is(#character-assistant, [data-character-assistant]).devil-mode.sad .mushroom-cap {
     background: #2c003e; /* Very dark, menacing purple */
     box-shadow: 0 0 15px #ff0000, inset 0 0 10px #000;
 }
-#character-assistant.devil-mode.sad .character-eye {
+:is(#character-assistant, [data-character-assistant]).devil-mode.sad .character-eye {
     background: #ff0000; /* Glowing red eyes */
     box-shadow: 0 0 10px #ff0000;
 }
@@ -499,8 +576,18 @@
     }
 }
 
+@keyframes devil-hover {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-2deg) scale(1.03);
+    }
+    50% {
+        transform: translateY(-7px) rotate(3deg) scale(1.08);
+    }
+}
+
 @media (max-width: 600px) {
-    #character-assistant {
+    :is(#character-assistant, [data-character-assistant]) {
         width: 72px;
         height: 72px;
         bottom: 15px;
@@ -509,10 +596,55 @@
 }
 
 @media (max-width: 768px) {
-    #character-assistant {
+    :is(#character-assistant, [data-character-assistant]) {
         width: 72px;
         height: 72px;
         bottom: 10px;
         right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    :is(#character-assistant, [data-character-assistant]) {
+        width: 60px;
+        height: 60px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 375px) {
+    :is(#character-assistant, [data-character-assistant]) {
+        width: 52px;
+        height: 52px;
+        bottom: 8px;
+        right: 8px;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    :is(#character-assistant, [data-character-assistant]) {
+        width: 56px;
+        height: 56px;
+        bottom: 5px;
+        right: 5px;
+    }
+}
+
+@media (max-height: 400px) {
+    :is(#character-assistant, [data-character-assistant]) {
+        width: 48px;
+        height: 48px;
+        bottom: 5px;
+        right: 5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :is(#character-assistant, [data-character-assistant]),
+    :is(#character-assistant, [data-character-assistant]) .mushroom,
+    :is(#character-assistant, [data-character-assistant])::after {
+        animation: none !important;
+        transition: none !important;
     }
 }

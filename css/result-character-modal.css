@@ -19,15 +19,36 @@
 }
 
 #modal-character-placeholder {
-    width: 80px;
-    height: 80px;
+    width: 104px;
+    height: 104px;
     position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
 }
 
-#modal-character-placeholder > #character-assistant {
+#modal-character-placeholder > [data-character-assistant] {
     position: static; /* Override fixed positioning */
     bottom: auto;
     right: auto;
+    width: 100%;
+    height: 100%;
+}
+
+body.progress-modal-open > #character-assistant {
+    display: none !important;
+}
+
+body > #character-assistant.hidden-behind-progress-modal,
+body > #character-assistant.hidden-behind-modal {
+    display: none !important;
+}
+
+.modal-overlay.active ~ #character-assistant {
+    display: none !important;
+}
+
+body:has(.modal-overlay.active) > #character-assistant {
+    display: none !important;
 }
 
 .speech-bubble {
@@ -83,6 +104,11 @@
 
     #result-dialogue {
         font-size: 1.4rem;
+    }
+
+    #modal-character-placeholder {
+        width: 72px;
+        height: 72px;
     }
 
     .speech-bubble:after {

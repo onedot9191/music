@@ -11,7 +11,7 @@
     --primary-strong: #b91c1c;
     --secondary: #000000;
     --accent: #ffe600;
-    --accent-cool: #00d9ff;
+    --accent-cool: #5f9fcb;
     --accent-warm: #ff9f1c;
     --border-strong: #03050b;
     --border-soft: #5f6f8f;
@@ -21,7 +21,7 @@
     --correct: #00c853;
     --incorrect: #ef4444;
     --retrying: #ff9f1c;
-    --revealed: #00d9ff;
+    --revealed: #5f9fcb;
     --subject-high-accuracy: #ef4444;
 
     --font-base: 'Noto Sans KR', sans-serif;

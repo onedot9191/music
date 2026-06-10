@@ -103,7 +103,7 @@ export function createParticleEffects(
 
     function spawnComboConfetti(
         element,
-        colors = ['#00c853', '#ffe600', '#00d9ff', '#ff9f1c', '#ffffff']
+        colors = ['#00c853', '#ffe600', '#5f9fcb', '#ff9f1c', '#ffffff']
     ) {
         if (shouldSkipEffects()) return;
 

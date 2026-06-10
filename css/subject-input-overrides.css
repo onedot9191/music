@@ -85,10 +85,10 @@
 
 [id*='quiz-main'] th.sub-area-cell input.sub-area-input.revealed,
 [id*='quiz-main'] input.sub-area-input.revealed {
-    border-color: #00ffff !important;
-    color: #00ffff !important;
-    background-color: rgba(142, 68, 173, 0.1) !important;
-    text-shadow: 0 0 4px rgba(142, 68, 173, 0.3) !important;
+    border-color: var(--revealed) !important;
+    color: var(--revealed) !important;
+    background-color: rgba(95, 159, 203, 0.14) !important;
+    text-shadow: 0 0 4px rgba(95, 159, 203, 0.35) !important;
 }
 
 /* Mini reveal button (2nd wrong attempt) */

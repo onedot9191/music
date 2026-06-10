@@ -30,7 +30,7 @@ export function createCharacterStateController({
             character.classList.add('combo-level-3');
         } else if (gameState.combo >= 5) {
             character.classList.add('combo-level-2');
-        } else if (gameState.combo >= 2) {
+        } else if (gameState.combo >= 3) {
             character.classList.add('combo-level-1');
         }
 

@@ -111,7 +111,10 @@ async function validateCssOrder(html, readme) {
 }
 
 async function validateScripts(html) {
-    await assertAllExist(localScriptSources(html), 'Script files');
+    await assertAllExist(
+        localScriptSources(html).map((src) => src.split(/[?#]/, 1)[0]),
+        'Script files'
+    );
 }
 
 async function validateModuleRegistry() {

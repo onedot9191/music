@@ -20,6 +20,12 @@ export function showSpellingSessionControls({
     forceQuitBtn?.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
     resetBtn?.classList.remove(CONSTANTS.CSS_CLASSES.HIDDEN);
 
+    if (gameState.gameMode === CONSTANTS.MODES.HARD_CORE) {
+        timerContainer?.classList.add('hard-core-timer');
+    } else {
+        timerContainer?.classList.remove('hard-core-timer');
+    }
+
     if (timeEl) {
         timeEl.textContent = formatTime(gameState.total);
     }

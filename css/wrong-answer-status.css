@@ -1,6 +1,6 @@
 /* 오답노트 시각적 표시 */
 input.wrong-answer-indicator {
-    background: rgba(233, 69, 96, 0.15) !important; /* 연한 분홍색 배경 */
+    background: rgba(120, 53, 64, 0.28) !important;
 }
 
 /* 오답 기록 초기화 버튼 */
