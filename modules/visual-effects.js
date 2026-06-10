@@ -66,12 +66,10 @@ export function createParticleEffects(
             ring.style.height = `${Math.max(rect.height, 44)}px`;
             document.body.appendChild(ring);
             removeWhenAnimationEnds(ring);
-            pulseElement(element, 'answer-impact-hit');
             pulseElement(
                 document.body,
                 isPositive ? 'screen-correct-flash' : 'screen-wrong-flash'
             );
-            pulseElement(document.body, 'screen-hit-stop');
 
             for (let i = 0; i < 14; i++) {
                 const particle = document.createElement('span');

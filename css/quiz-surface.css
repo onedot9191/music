@@ -302,11 +302,11 @@ td input.fit-answer {
 }
 td input:focus {
     outline: none;
-    border-color: var(--accent);
+    border-color: var(--text-light);
     background: var(--secondary);
     transform: translate(-0.1rem, -0.1rem);
     box-shadow: 0.3rem 0.3rem 0 var(--border-strong),
-        0 0 0 0.3rem rgba(250, 204, 21, 0.22);
+        0 0 0 0.3rem rgba(255, 255, 255, 0.24);
 }
 td input.correct {
     border-color: var(--correct);

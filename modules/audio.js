@@ -18,7 +18,6 @@ import {
     setupWebAudioRoutingFor,
 } from './audio-fail-buffer-player.js';
 import { playStandardAudio } from './audio-standard-playback.js';
-import { playImpactLayer } from './audio-impact-synth.js';
 import { playSynthFail } from './audio-synth-fail.js';
 import { setupAudioUnlockEvents, unlockAudioContext } from './audio-unlock.js';
 
@@ -161,17 +160,6 @@ export class AudioManager {
         return playSynthFail(this);
     }
 
-    playImpactLayer(audioType) {
-        const impactType =
-            audioType === 'fail'
-                ? 'fail'
-                : audioType === 'great' || audioType === 'slotWin'
-                  ? 'combo'
-                  : 'success';
-
-        return playImpactLayer(this, impactType);
-    }
-
     // 오디오 재생 함수
     playSound(audioType) {
         const audioElement = this.audioElements[audioType];
@@ -197,7 +185,6 @@ export class AudioManager {
                 }
             }
             this.playSynthFail();
-            this.playImpactLayer('fail');
             return;
         }
         // 합성 경로 실패 시 버퍼 경로 사용
@@ -211,19 +198,10 @@ export class AudioManager {
                 }
             }
             this.playDecodedBuffer('fail');
-            this.playImpactLayer('fail');
             return;
         }
 
         playStandardAudio(this, audioType, audioElement);
-
-        if (
-            audioType === 'success' ||
-            audioType === 'great' ||
-            audioType === 'slotWin'
-        ) {
-            this.playImpactLayer(audioType);
-        }
     }
 
     // 특별한 오디오 처리 (랜덤 선택 시 루프)

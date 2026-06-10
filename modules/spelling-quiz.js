@@ -20,7 +20,6 @@ export function createSpellingQuizController({
     CONSTANTS,
     addResultProgress,
     character,
-    comboAudio,
     comboCounter,
     failAudio,
     forceQuitBtn,
@@ -85,10 +84,6 @@ export function createSpellingQuizController({
             }
 
             showSpellingComboEffect(gameState.combo);
-
-            if (gameState.combo >= 5 && gameState.combo % 5 === 0) {
-                playSound(comboAudio);
-            }
         } else {
             playSound(failAudio);
             gameState.combo = 0;

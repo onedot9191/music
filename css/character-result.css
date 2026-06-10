@@ -3,8 +3,8 @@
 /* 더 작은 모바일 화면을 위한 추가 조정 */
 @media (max-width: 480px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 60px;
-        height: 60px;
+        width: 62px;
+        height: 62px;
         bottom: 10px;
         right: 10px;
     }
@@ -25,8 +25,8 @@
 /* 매우 작은 화면 (iPhone SE 등)을 위한 최소 크기 조정 */
 @media (max-width: 375px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 52px;
-        height: 52px;
+        width: 54px;
+        height: 54px;
         bottom: 8px;
         right: 8px;
     }
@@ -56,8 +56,8 @@
 /* 모바일 가로 모드에서 캐릭터가 화면 밖으로 나가지 않도록 조정 */
 @media (max-height: 500px) and (orientation: landscape) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 56px;
-        height: 56px;
+        width: 58px;
+        height: 58px;
         bottom: 5px;
         right: 5px;
     }
@@ -66,8 +66,8 @@
 /* 작은 높이에서는 캐릭터 크기를 더 줄임 */
 @media (max-height: 400px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
         bottom: 5px;
         right: 5px;
     }
@@ -98,8 +98,8 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 104px;
-    height: 104px;
+    width: 108px;
+    height: 108px;
     z-index: 99;
     pointer-events: auto;
     transition:
@@ -485,6 +485,8 @@
 :is(#character-assistant, [data-character-assistant]).devil-mode {
     --shadow-scale: 0.86;
     --shadow-opacity: 0.5;
+    transform: scale(0.96);
+    transform-origin: right bottom;
     filter: drop-shadow(0 11px 0 rgba(13, 21, 43, 0.16))
         drop-shadow(0 0 16px rgba(255, 43, 43, 0.26));
 }
@@ -586,8 +588,8 @@
 
 @media (max-width: 600px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 72px;
-        height: 72px;
+        width: 74px;
+        height: 74px;
         bottom: 15px;
         right: 15px;
     }
@@ -595,8 +597,8 @@
 
 @media (max-width: 768px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 72px;
-        height: 72px;
+        width: 74px;
+        height: 74px;
         bottom: 10px;
         right: 10px;
     }
@@ -604,8 +606,8 @@
 
 @media (max-width: 480px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 60px;
-        height: 60px;
+        width: 62px;
+        height: 62px;
         bottom: 10px;
         right: 10px;
     }
@@ -613,8 +615,8 @@
 
 @media (max-width: 375px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 52px;
-        height: 52px;
+        width: 54px;
+        height: 54px;
         bottom: 8px;
         right: 8px;
     }
@@ -622,8 +624,8 @@
 
 @media (max-height: 500px) and (orientation: landscape) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 56px;
-        height: 56px;
+        width: 58px;
+        height: 58px;
         bottom: 5px;
         right: 5px;
     }
@@ -631,8 +633,8 @@
 
 @media (max-height: 400px) {
     :is(#character-assistant, [data-character-assistant]) {
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
         bottom: 5px;
         right: 5px;
     }

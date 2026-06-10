@@ -117,7 +117,8 @@ export function createAnswerInputController({
         if (
             !input.matches('input[data-answer]') ||
             input.disabled ||
-            input.dataset.autoFocused === 'true' ||
+            (input.dataset.autoFocused === 'true' &&
+                !event.allowEmptyAnswer) ||
             isCurriculumOrderEditingInput(input)
         ) {
             return;

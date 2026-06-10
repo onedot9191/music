@@ -212,9 +212,9 @@
 #korean-std-quiz-main .overview-question input:focus,
 #music-std-quiz-main .overview-question input:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: var(--text-light);
     background: var(--bg-light);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2),
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.24),
         inset 0 1px 3px rgba(0, 0, 0, 0.1);
     transform: translateY(-1px);
 }

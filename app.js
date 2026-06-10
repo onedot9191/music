@@ -243,7 +243,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             CONSTANTS,
             addResultProgress,
             character,
-            comboAudio: specialBlankAudio,
             comboCounter,
             failAudio,
             forceQuitBtn,
@@ -399,7 +398,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         shouldRevealSecondIncorrect,
     } = createAnswerFeedbackController({
         CONSTANTS,
-        comboAudio: specialBlankAudio,
         comboCounter,
         failAudio,
         focusNextAvailableInput,

@@ -46,11 +46,13 @@ function isComposing(event) {
 }
 
 function shouldIgnoreKeydown(event) {
+    const isEnterGrading = event.key === 'Enter';
+
     return (
         !isAnswerInput(event.target) ||
         isComposing(event) ||
         isCurriculumOrderEditingInput(event.target) ||
-        event.target.dataset[AUTO_FOCUSED_KEY] === 'true'
+        (!isEnterGrading && event.target.dataset[AUTO_FOCUSED_KEY] === 'true')
     );
 }
 
