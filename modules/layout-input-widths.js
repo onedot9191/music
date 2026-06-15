@@ -134,6 +134,21 @@ export function adjustCurriculumInputWidths({
     if (!main) return;
 
     main.querySelectorAll('input[data-answer]').forEach((input) => {
+        if (input.closest('[data-inline-order-editor]')) {
+            const desired = desiredWidthForAnswer(input, {
+                hangulFactor: 1.6,
+                latinFactor: 1.3,
+            });
+
+            input.removeAttribute('size');
+            input.style.setProperty('display', 'inline-block', 'important');
+            input.style.setProperty('box-sizing', 'border-box', 'important');
+            input.style.setProperty('width', `${desired}ch`, 'important');
+            input.style.setProperty('min-width', `${desired}ch`, 'important');
+            input.style.setProperty('max-width', 'none', 'important');
+            return;
+        }
+
         input.removeAttribute('size');
         input.style.setProperty('display', 'block', 'important');
         input.style.setProperty('box-sizing', 'border-box', 'important');

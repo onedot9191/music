@@ -40,7 +40,8 @@ header *,
 header *::before,
 header *::after,
 .curriculum-order-toolbar button,
-.curriculum-order-row-tools button {
+.curriculum-order-row-tools button,
+.curriculum-inline-order-toggle {
     font-family: 'Galmuri9', var(--font-display) !important;
 }
 

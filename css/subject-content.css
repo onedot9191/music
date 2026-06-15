@@ -34,12 +34,20 @@
 }
 
 #moral-principles .assessment-list {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+    gap: 0.8rem 1rem;
 }
 
 #moral-principles .assessment-list .inline-item {
-    flex: 1 1 300px;
+    min-width: 0;
+}
+
+#moral-principles .assessment-list .inline-item input.fit-answer {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 #moral-methods .methods-grid {

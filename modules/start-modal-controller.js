@@ -36,7 +36,7 @@ export function createStartModalController({
         timeSettingDisplay.textContent = formatTime(gameState.duration);
     }
 
-    function renderTopicSelector(groupName) {
+    function renderTopicSelector(groupName, preferredSelection = {}) {
         const topics = SUBJECT_TOPIC_MAPPING[groupName];
 
         if (!topics) {
@@ -47,6 +47,20 @@ export function createStartModalController({
 
         topicSelector.innerHTML = '';
 
+        const selectedIndex = Math.max(
+            topics.findIndex(
+                (item) =>
+                    item.subject === preferredSelection.subject &&
+                    item.topic === preferredSelection.topic
+            ),
+            topics.findIndex(
+                (item) =>
+                    item.hasSubmenu &&
+                    item.topic === preferredSelection.topic
+            )
+        );
+        const effectiveSelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
+
         topics.forEach((item, index) => {
             const button = document.createElement('button');
             button.className = 'btn topic-btn';
@@ -54,9 +68,12 @@ export function createStartModalController({
             button.dataset.subject = item.subject;
             button.dataset.topic = item.topic;
 
-            if (index === 0) {
+            if (index === effectiveSelectedIndex) {
                 button.classList.add(CONSTANTS.CSS_CLASSES.SELECTED);
-                gameState.selectedSubject = item.subject;
+                gameState.selectedSubject =
+                    item.hasSubmenu && preferredSelection.subject
+                        ? preferredSelection.subject
+                        : item.subject;
                 gameState.selectedTopic = item.topic;
             }
 
@@ -68,16 +85,17 @@ export function createStartModalController({
 
         hideTopicSubmenus();
 
-        const firstTopic = topics[0]?.topic;
-        if (firstTopic) {
-            gameState.duration = getDurationForTopic(firstTopic, CONSTANTS);
+        const selectedTopic = topics[effectiveSelectedIndex]?.topic;
+        if (selectedTopic) {
+            gameState.duration = getDurationForTopic(selectedTopic, CONSTANTS);
         }
 
-        const firstTopicItem = topics[0];
-        if (firstTopicItem?.hasSubmenu) {
+        const selectedTopicItem = topics[effectiveSelectedIndex];
+        if (selectedTopicItem?.hasSubmenu) {
             showTopicSubmenus(
-                createTopicSubmenuVisibility(groupName, firstTopicItem.topic),
+                createTopicSubmenuVisibility(groupName, selectedTopicItem.topic),
                 {
+                    selectedSubject: preferredSelection.subject,
                     onDefaultSelect: (firstButton) => {
                         gameState.selectedSubject = firstButton.dataset.subject;
                         gameState.selectedTopic = firstButton.dataset.topic;

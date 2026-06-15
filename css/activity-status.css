@@ -7,7 +7,7 @@
     --heatmap-l1: #fecaca;
     --heatmap-l2: #f87171;
     --heatmap-l3: #dc2626;
-    --heatmap-l4: #facc15;
+    --heatmap-l4: #991b1b;
 
     display: grid;
     grid-template-columns: repeat(7, var(--heatmap-cell-size));

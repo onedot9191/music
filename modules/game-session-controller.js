@@ -48,6 +48,7 @@ export function createGameSessionController({
     slotMachine,
     startAudio,
     startModal,
+    storageManager,
     tick,
     timeEl,
     timeSettingDisplay,
@@ -109,6 +110,7 @@ export function createGameSessionController({
 
     function startGame() {
         gameState.lastSpecialPopupCount = 0;
+        storageManager?.saveLastGameState(gameState);
 
         playSound(startAudio);
         closeModal(startModal);

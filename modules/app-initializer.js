@@ -20,28 +20,53 @@ function initializeModeUi({ CONSTANTS, timeSetterWrapper }) {
         ?.setAttribute('data-selected', CONSTANTS.MODES.NORMAL);
 }
 
+function selectInitialSubjectGroup(CONSTANTS, groupName) {
+    document
+        .querySelectorAll('.subject-btn[data-subject-group]')
+        .forEach((button) => {
+            button.classList.toggle(
+                CONSTANTS.CSS_CLASSES.SELECTED,
+                button.dataset.subjectGroup === groupName
+            );
+        });
+}
+
 export function initializeApp({
     CONSTANTS,
     adjustCreativeInputWidths,
     adjustCurriculumInputWidths,
+    findSubjectGroupForSelection,
     fixSettingsPanelHeight,
     gameState,
     getDurationForTopic,
     openModal,
+    renderTopicSelector,
     resetGame,
     setupCreativeQuestionTextReveal,
     startModal,
+    storageManager,
     timeSetterWrapper,
     updateStartModalUI,
 }) {
-    gameState.selectedTopic = CONSTANTS.TOPICS.CURRICULUM;
-    gameState.selectedSubject = CONSTANTS.SUBJECTS.MUSIC;
+    const lastState = storageManager.restoreLastGameState();
+    const initialSelection = findSubjectGroupForSelection(
+        lastState.lastSubject,
+        lastState.lastTopic
+    );
+
+    gameState.selectedTopic = initialSelection.topic;
+    gameState.selectedSubject = initialSelection.subject;
     gameState.duration = getDurationForTopic(
         gameState.selectedTopic,
         CONSTANTS
     );
 
     resetGame(false);
+    selectInitialSubjectGroup(CONSTANTS, initialSelection.groupName);
+    renderTopicSelector(initialSelection.groupName, {
+        subject: initialSelection.subject,
+        topic: initialSelection.topic,
+    });
 
     adjustCreativeInputWidths();
     adjustCurriculumInputWidths();

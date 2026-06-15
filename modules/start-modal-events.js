@@ -145,12 +145,15 @@ export function bindStartModalSelectionEvents({
     });
 
     setTimeout(() => {
-        const initialMusicBtn = document.querySelector(
-            '.subject-btn[data-subject-group="music"].selected'
+        const selectedSubjectBtn = document.querySelector(
+            '.subject-btn[data-subject-group].selected'
         );
-        if (!initialMusicBtn) return;
+        if (!selectedSubjectBtn) return;
 
-        renderTopicSelector('music');
+        renderTopicSelector(selectedSubjectBtn.dataset.subjectGroup, {
+            subject: gameState.selectedSubject,
+            topic: gameState.selectedTopic,
+        });
         updateStartModalUI();
     }, 100);
 }

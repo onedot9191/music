@@ -109,6 +109,70 @@ export const TOPIC_SUBMENU_IDS = [
     'ethics-basic-submenu',
 ];
 
+const SUBMENU_SELECTION_GROUPS = [
+    {
+        groupName: 'math',
+        topic: 'achievement',
+        subjects: [
+            'math-operation',
+            'change-relation',
+            'geometry-measure',
+            'data-probability',
+        ],
+    },
+    {
+        groupName: 'social',
+        topic: 'achievement',
+        subjects: ['social-34', 'social-56'],
+    },
+    {
+        groupName: 'integrated',
+        topic: 'curriculum',
+        subjects: ['life', 'wise', 'joy'],
+    },
+    {
+        groupName: 'integrated',
+        topic: 'achievement',
+        subjects: ['life-achievement', 'wise-achievement', 'joy-achievement'],
+    },
+    {
+        groupName: 'pe',
+        topic: 'curriculum',
+        subjects: ['pe', 'pe-lite'],
+    },
+    {
+        groupName: 'ethics',
+        topic: 'basic',
+        subjects: ['eastern-ethics', 'western-ethics', 'moral-psychology'],
+    },
+];
+
+export function findSubjectGroupForSelection(
+    subject,
+    topic,
+    mapping = SUBJECT_TOPIC_MAPPING
+) {
+    for (const [groupName, topics] of Object.entries(mapping)) {
+        const directMatch = topics.find(
+            (item) => item.subject === subject && item.topic === topic
+        );
+
+        if (directMatch) {
+            return { groupName, subject: directMatch.subject, topic };
+        }
+    }
+
+    const submenuMatch = SUBMENU_SELECTION_GROUPS.find(
+        (item) => item.topic === topic && item.subjects.includes(subject)
+    );
+
+    if (submenuMatch) {
+        return { groupName: submenuMatch.groupName, subject, topic };
+    }
+
+    return { groupName: 'music', subject: 'music', topic: 'curriculum' };
+}
+
 export function createTopicSubmenuVisibility(groupName, topic) {
     const visibility = Object.fromEntries(
         TOPIC_SUBMENU_IDS.map((id) => [id, false])
