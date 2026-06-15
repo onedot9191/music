@@ -77,7 +77,7 @@ header h1 {
 #bar > div {
     height: 100%;
     width: 100%;
-    background: var(--accent) !important;
+    background: #ef4444 !important;
     background-image: none !important;
     transition: width 1s steps(20, end);
     border-radius: 0;
