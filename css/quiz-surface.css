@@ -160,6 +160,13 @@ td.two-col-answers {
     gap: 1rem;
 }
 
+.three-col-answers,
+td.three-col-answers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
 td.one-col-answers {
     display: flex;
     flex-direction: column;
@@ -181,7 +188,9 @@ td.one-col-answers input {
 
 @media (max-width: 480px) {
     .two-col-answers,
-    td.two-col-answers {
+    td.two-col-answers,
+    .three-col-answers,
+    td.three-col-answers {
         grid-template-columns: 1fr;
     }
 }

@@ -9,6 +9,13 @@ export function isIgnoreOrderScope(scope, input) {
     );
 }
 
+function isSectionIgnoreOrderSubject(constants, selectedSubject) {
+    return (
+        selectedSubject === constants.SUBJECTS.COMPETENCY ||
+        selectedSubject === constants.SUBJECTS.AREA
+    );
+}
+
 function shouldUseGroupedGrading({
     input,
     sectionMatchers,
@@ -61,6 +68,10 @@ export function gradeInputAnswer({
             selectedSubject: gameState.selectedSubject,
         })
     ) {
+        const useSectionIgnoreOrder = isSectionIgnoreOrderSubject(
+            CONSTANTS,
+            gameState.selectedSubject
+        );
         const group = input.closest('[data-group]') || section;
         const ignoreOrder = shouldForceOrderedGrading({
             constants: CONSTANTS,
@@ -68,13 +79,14 @@ export function gradeInputAnswer({
             selectedTopic: gameState.selectedTopic,
         })
             ? false
-            : isIgnoreOrderScope(group, input);
+            : useSectionIgnoreOrder || isIgnoreOrderScope(group, input);
 
         return gradeGroupedAnswer({
             input,
             section,
             userAnswer,
             usedAnswersMap,
+            getAnswerCandidates,
             ignoreOrder,
             isModelTopic: gameState.selectedTopic === CONSTANTS.TOPICS.MODEL,
             normalizeAnswer,

@@ -9,14 +9,49 @@ export function isGroupedGradingInput(input, specialSubjects, selectedSubject) {
 export function findScopedAnswer({
     inputs,
     userAnswer,
+    getAnswerCandidates,
     isModelTopic,
     normalizeAnswer,
     stripModelWord,
 }) {
     for (const input of inputs) {
         const original = input.dataset.answer.trim();
-        const normalized = normalizeAnswer(original);
-        const candidates = [normalized];
+        const candidates = getAnswerCandidateList({
+            input,
+            getAnswerCandidates,
+            isModelTopic,
+            normalizeAnswer,
+            stripModelWord,
+        });
+
+        if (candidates.includes(userAnswer)) {
+            return original;
+        }
+    }
+
+    return null;
+}
+
+function incrementCount(map, key) {
+    map.set(key, (map.get(key) || 0) + 1);
+}
+
+function getAnswerCandidateList({
+    input,
+    getAnswerCandidates,
+    isModelTopic,
+    normalizeAnswer,
+    stripModelWord,
+}) {
+    const answers = getAnswerCandidates
+        ? getAnswerCandidates(input)
+        : [input.dataset.answer.trim()];
+    const candidates = [];
+
+    answers.forEach((answer) => {
+        const normalized = normalizeAnswer(answer);
+        candidates.push(normalized);
+
         const competencyAlias = normalized.replace(/역량$/, '');
 
         if (competencyAlias !== normalized) {
@@ -30,8 +65,48 @@ export function findScopedAnswer({
                 candidates.push(modelAlias);
             }
         }
+    });
 
-        if (candidates.includes(userAnswer)) {
+    return [...new Set(candidates)];
+}
+
+function findAvailableScopedAnswer({
+    inputs,
+    userAnswer,
+    getAnswerCandidates,
+    isModelTopic,
+    normalizeAnswer,
+    stripModelWord,
+}) {
+    const answerCounts = new Map();
+    const usedCounts = new Map();
+
+    inputs.forEach((input) => {
+        incrementCount(answerCounts, normalizeAnswer(input.dataset.answer));
+
+        if (input.classList.contains('correct')) {
+            incrementCount(
+                usedCounts,
+                normalizeAnswer(input.value || input.dataset.answer)
+            );
+        }
+    });
+
+    for (const input of inputs) {
+        const original = input.dataset.answer.trim();
+        const normalized = normalizeAnswer(original);
+        const candidates = getAnswerCandidateList({
+            input,
+            getAnswerCandidates,
+            isModelTopic,
+            normalizeAnswer,
+            stripModelWord,
+        });
+
+        if (
+            candidates.includes(userAnswer) &&
+            (usedCounts.get(normalized) || 0) < (answerCounts.get(normalized) || 0)
+        ) {
             return original;
         }
     }
@@ -44,6 +119,7 @@ export function gradeGroupedAnswer({
     section,
     userAnswer,
     usedAnswersMap,
+    getAnswerCandidates,
     ignoreOrder,
     isModelTopic,
     normalizeAnswer,
@@ -58,9 +134,10 @@ export function gradeGroupedAnswer({
     const usedSet = usedAnswersMap.get(group);
     const inputs = Array.from(group.querySelectorAll('input[data-answer]'));
     const canonical = ignoreOrder
-        ? findScopedAnswer({
+        ? findAvailableScopedAnswer({
               inputs,
               userAnswer,
+              getAnswerCandidates,
               isModelTopic,
               normalizeAnswer,
               stripModelWord,
@@ -68,6 +145,7 @@ export function gradeGroupedAnswer({
         : findScopedAnswer({
               inputs: [input],
               userAnswer,
+              getAnswerCandidates,
               isModelTopic,
               normalizeAnswer,
               stripModelWord,
