@@ -1,0 +1,12 @@
+Invocation: for f in .omo/evidence/agents-md-qa/*.txt; do test -s  && printf PASS:
+  || printf FAIL:
+ ; done
+
+PASS:.omo/evidence/agents-md-qa/curl-agents-http.txt
+PASS:.omo/evidence/agents-md-qa/evidence-nonempty.txt
+PASS:.omo/evidence/agents-md-qa/find-agents.txt
+PASS:.omo/evidence/agents-md-qa/npm-lint.txt
+PASS:.omo/evidence/agents-md-qa/npm-test.txt
+PASS:.omo/evidence/agents-md-qa/prettier-check-agents.txt
+PASS:.omo/evidence/agents-md-qa/readable-nonempty.txt
+PASS:.omo/evidence/agents-md-qa/wc-lines.txt

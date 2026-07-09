@@ -1,0 +1,7 @@
+Invocation: find . -path ./node_modules -prune -o -name AGENTS.md -type f -print | sort
+
+./AGENTS.md
+./css/AGENTS.md
+./modules/AGENTS.md
+./partials/AGENTS.md
+./scripts/AGENTS.md

@@ -1,0 +1,9 @@
+Invocation: wc -l AGENTS.md modules/AGENTS.md partials/AGENTS.md css/AGENTS.md scripts/AGENTS.md
+Expected: root 50-150 lines; subdirectory docs 30-80 lines.
+
+      92 AGENTS.md
+      41 modules/AGENTS.md
+      44 partials/AGENTS.md
+      43 css/AGENTS.md
+      38 scripts/AGENTS.md
+     258 total

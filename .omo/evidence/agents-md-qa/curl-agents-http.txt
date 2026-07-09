@@ -1,0 +1,320 @@
+Invocation: curl -i http://127.0.0.1:8765/<AGENTS path> for AGENTS.md modules/AGENTS.md partials/AGENTS.md css/AGENTS.md scripts/AGENTS.md
+
+===== AGENTS.md =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.9.6
+Date: Thu, 09 Jul 2026 00:35:06 GMT
+Content-type: application/octet-stream
+Content-Length: 6340
+Last-Modified: Thu, 09 Jul 2026 00:32:31 GMT
+
+# PROJECT KNOWLEDGE BASE
+
+**Generated:** 2026-07-09 09:31:05 KST
+**Commit:** da65273
+**Branch:** main
+
+## OVERVIEW
+
+Static Korean quiz web app for elementary teacher exam practice. Runtime is plain HTML/CSS plus ES modules; quiz content is loaded from HTML partials before app initialization.
+
+## STRUCTURE
+
+```text
+music/
+├── index.html                 # static shell, CSS/script load order
+├── app.js                     # bootstrap and controller wiring
+├── modules/                   # 101 ES modules for runtime behavior
+├── partials/
+│   ├── quiz-mains/            # 62 top-level quiz main partials
+│   └── quiz-main-sections/    # section partials included by quiz mains
+├── css/                       # 33 ordered CSS modules
+├── scripts/                   # Node validation and loader tests
+├── README_MODULES.md          # canonical module/CSS order documentation
+└── MODULARIZATION_GUIDE.md    # boundary guide for future changes
+```
+
+## WHERE TO LOOK
+
+| Task                           | Location                                                                     | Notes                                                       |
+| ------------------------------ | ---------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| App startup, dependency wiring | `app.js`, `modules/app-initializer.js`                                       | Keep `app.js` as orchestration, not feature logic.          |
+| Runtime feature logic          | `modules/`                                                                   | Match existing responsibility-based file split.             |
+| Subject/topic mapping          | `modules/subject-topics.js`, `modules/section-groups.js`                     | Update mappings with related partials.                      |
+| Quiz HTML content              | `partials/quiz-mains/`, `partials/quiz-main-sections/`                       | Use `quiz-include` comments for large section splits.       |
+| Partial loading                | `modules/quiz-partial-loader.js`, `modules/quiz-partials-manifest.js`        | Manifest count must match rendered main elements.           |
+| Styling                        | `css/`, `index.html`, `README_MODULES.md`                                    | CSS order is validated against docs.                        |
+| Structure checks               | `scripts/validate-project-structure.js`, `scripts/validate-quiz-partials.js` | `npm test` runs these.                                      |
+| HTML formatting helper         | `format-html.js`                                                             | Root utility that rewrites `index.html`; run intentionally. |
+
+## CODE MAP
+
+| Symbol                  | Type            | Location                                | Refs           | Role                                                              |
+| ----------------------- | --------------- | --------------------------------------- | -------------- | ----------------------------------------------------------------- |
+| `initializeApp`         | function        | `modules/app-initializer.js`            | 1              | Restores last state, renders initial selector, opens start modal. |
+| `window._modules`       | global registry | `modules/module-registry.js`            | devtools       | Dynamic imports for manual inspection.                            |
+| `QUIZ_PARTIAL_URLS`     | export          | `modules/quiz-partials-manifest.js`     | loader/tests   | Source of truth for top-level partials.                           |
+| `resolvePartial`        | function        | `scripts/validate-quiz-partials.js`     | script-local   | Expands nested `quiz-include` comments and detects cycles.        |
+| `validateCssOrder`      | function        | `scripts/100  6340  100  6340    0     0  1973k      0 --:--:-- --:--:-- --:--:-- 2063k
+validate-project-structure.js` | script-local   | Checks `index.html` CSS order against `README_MODULES.md`.        |
+| `window.isSoundEnabled` | global API      | `modules/sound-settings.js`             | audio playback | Compatibility API intentionally retained.                         |
+
+LSP was unavailable in this environment because `typescript-language-server` is not installed; code map is from codegraph plus direct file inspection.
+
+## CONVENTIONS
+
+- JavaScript is ES module based; `package.json` has `"type": "module"`.
+- Prettier uses single quotes and ES5 trailing commas.
+- EditorConfig uses LF, UTF-8, final newline, no trailing whitespace.
+- Indentation is 4 spaces for JS/HTML/CSS and 2 spaces for JSON.
+- `styles.css` is a compatibility entry and should stay minimal.
+- Keep static assets at the current root paths unless a broader asset migration is explicitly requested.
+- `README_MODULES.md` is not passive documentation; validation reads it for CSS order.
+
+## ANTI-PATTERNS (THIS PROJECT)
+
+- Do not add new feature logic to `app.js` when a responsibility-specific module fits.
+- Do not create `css/layout.css`, `css/modals.css`, `css/responsive.css`, `modules/stats.js`, `modules/timer.js`, `modules/ui.js`, or `modules/migration-helper.js`; the structure validator treats these legacy references as failures.
+- Do not reorder CSS links in `index.html` without updating `README_MODULES.md` and running `npm test`.
+- Do not edit generated/loaded partial structure without checking duplicate `<main>` ids and include cycles.
+- Do not remove `window._modules` or `window.isSoundEnabled`; both are documented compatibility surfaces.
+- Do not change placeholder text casually; some CSS selectors depend on exact placeholder strings.
+
+## UNIQUE STYLES
+
+- UI copy and quiz content are Korean.
+- The app uses static partial composition rather than a framework router.
+- Tests are mostly structure validation scripts, not Jest/Vitest specs.
+- Browser-facing changes need local server verification because partial loading uses fetch.
+
+## COMMANDS
+
+```bash
+npm run dev
+npm test
+npm run lint
+npx prettier --check index.html README_MODULES.md app.js modules/*.js css/*.css scripts/*.js
+```
+
+## NOTES
+
+- `npm test` is the same as `npm run check`.
+- There is no `build` script and no CI workflow in this repository.
+- `node --check` covers `app.js`, `modules/*.js`, and `scripts/*.js`; HTML/CSS consistency is covered by custom scripts.
+
+===== modules/AGENTS.md =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2923  100  2923    0     0  4552k      0 --:--:-- --:--:-- --:--:-- 2854k
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.9.6
+Date: Thu, 09 Jul 2026 00:35:07 GMT
+Content-type: application/octet-stream
+Content-Length: 2923
+Last-Modified: Thu, 09 Jul 2026 00:32:31 GMT
+
+# MODULES KNOWLEDGE BASE
+
+## OVERVIEW
+
+`modules/` owns runtime behavior as small ES modules imported by `app.js`, the partial loader, or the devtools registry.
+
+## WHERE TO LOOK
+
+| Task               | Location                                                                 | Notes                                                       |
+| ------------------ | ------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| App initialization | `app-initializer.js`, `app-runtime-helpers.js`                           | Startup state and orchestration helpers.                    |
+| Event wiring       | `app-event-bindings.js`, `*-events.js`                                   | Keep event registration separate from feature calculations. |
+| Game lifecycle     | `game-session-*.js`, `game-timer-controller.js`, `stage-*.js`            | Session start/reset/timer/stage flow.                       |
+| Answer handling    | `answer-*.js`, `input-*.js`                                              | Candidate extraction, grading, feedback, and input sizing.  |
+| Storage            | `storage*.js`, `local-storage-json.js`                                   | Storage facade plus focused record modules.                 |
+| Quiz partials      | `quiz-partial-loader.js`, `quiz-partials-manifest.js`                    | Must stay aligned with `partials/`.                         |
+| Start modal        | `start-modal-*.js`, `mode-selection-events.js`, `time-setting-events.js` | Subject/topic/mode/time controls.                           |
+| Spelling quiz      | `spelling-*.js`                                                          | Separate quiz mode with its own data/view/session files.    |
+| Results/share      | `progress-modal-controller.js`, `result-*.js`, `canvas-share-targets.js` | Result modal and capture/share flow.                        |
+
+## CONVENTIONS
+
+- Prefer one responsibility per file; follow existing name prefixes such as `audio-*`, `storage-*`, `game-session-*`, `start-modal-*`.
+- Keep browser globals explicit and rare. Current intentional globals are `window._modules` and `window.isSoundEnabled`.
+- If a module should be inspectable in devtools, add it to `module-registry.js` and run `npm test` to catch duplicate/missing imports.
+- DOM-heavy modules accept DOM references or query known ids/classes; do not introduce framework-style component state.
+- Keep compatibility re-exports only when an existing import path needs them.
+
+## ANTI-PATTERNS
+
+- Do not move large behavior back into `app.js`.
+- Do not bypass `quiz-partials-manifest.js` for top-level partial lists.
+- Do not silently change storage key names in `storage-config.js`; saved progress depends on them.
+- Do not remove audio fallbacks unless browser playback behavior has been manually checked.
+
+## VERIFY
+
+```bash
+npm test
+npm run lint
+```
+
+===== partials/AGENTS.md =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2196  100  2196    0     0  3920k      0 --:--:-- --:--:-- --:--:-- 2144k
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.9.6
+Date: Thu, 09 Jul 2026 00:35:07 GMT
+Content-type: application/octet-stream
+Content-Length: 2196
+Last-Modified: Thu, 09 Jul 2026 00:32:31 GMT
+
+# PARTIALS KNOWLEDGE BASE
+
+## OVERVIEW
+
+`partials/` owns quiz body HTML loaded into `#quiz-partials-root` before the main app initializes.
+
+## STRUCTURE
+
+```text
+partials/
+├── quiz-mains/                 # one top-level <main> per quiz subject/topic
+└── quiz-main-sections/         # reusable or split sections included by quiz mains
+```
+
+## WHERE TO LOOK
+
+| Task                      | Location                                                                      | Notes                                                  |
+| ------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Add/remove a quiz main    | `quiz-mains/*.html`, `modules/quiz-partials-manifest.js`                      | Manifest must list every top-level partial.            |
+| Split a large quiz file   | `quiz-main-sections/<topic>/*.html`                                           | Include with `<!-- quiz-include: partials/... -->`.    |
+| Validate rendered mains   | `scripts/validate-quiz-partials.js`                                           | Checks include cycles, duplicate main ids, and count.  |
+| Subject-specific behavior | `modules/subject-topics.js`, `modules/section-groups.js`, `css/subject-*.css` | HTML changes often need matching mapping/style checks. |
+
+## CONVENTIONS
+
+- Each top-level `quiz-mains/*.html` must render exactly one unique `<main id="...">`.
+- Section partial paths in `quiz-include` comments are repository-relative.
+- Keep ids/classes compatible with existing JS selectors; many modules query by ids, `data-*`, and `.overview-question input[data-answer]`.
+- For large curriculum pages, prefer section partials over growing a monolithic `quiz-mains` file.
+- Preserve Korean educational copy as authored unless the task is content editing.
+
+## ANTI-PATTERNS
+
+- Do not duplicate `<main>` ids across rendered partials.
+- Do not create circular `quiz-include` chains.
+- Do not add a quiz main without updating `QUIZ_PARTIAL_URLS`.
+- Do not rely on file-open testing; partial fetch requires a local server for browser QA.
+
+## VERIFY
+
+```bash
+npm test
+npm run dev
+```
+
+===== css/AGENTS.md =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  2936  100  2936    0     0  3579k      0 --:--:-- --:--:-- --:--:-- 2867k
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.9.6
+Date: Thu, 09 Jul 2026 00:35:07 GMT
+Content-type: application/octet-stream
+Content-Length: 2936
+Last-Modified: Thu, 09 Jul 2026 00:32:31 GMT
+
+# CSS KNOWLEDGE BASE
+
+## OVERVIEW
+
+`css/` owns ordered style modules loaded directly by `index.html`; load order is part of the validated project contract.
+
+## WHERE TO LOOK
+
+| Task                | Location                                                                       | Notes                                              |
+| ------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------- |
+| Design tokens       | `variables.css`                                                                | Prefer existing variables before new colors/sizes. |
+| Base/reset          | `base.css`, `components.css`, `animations.css`                                 | Shared foundations.                                |
+| Quiz layout         | `quiz-surface.css`, `subject-content.css`, `overview-question-inputs.css`      | Main answer/input surfaces.                        |
+| Start modal         | `modal-settings.css`, `start-modal-*.css`                                      | Modal shell plus selectors/settings/controls.      |
+| Subject exceptions  | `subject-input-overrides.css`, `subject-patterns.css`, `subject-overrides.css` | Narrow fixes for subject-specific content.         |
+| Spelling UI         | `spelling-*.css`                                                               | Separate spelling quiz surface.                    |
+| Result/character UI | `character-result.css`, `result-character-modal.css`                           | Result character and dialog presentation.          |
+
+## CONVENTIONS
+
+- Keep the CSS link order in `index.html` synchronized with the sentence in `README_MODULES.md`.
+- Add new styles to the narrowest existing CSS module that matches the UI surface.
+- Use `styles.css` only as the existing compatibility entry, not as a new catch-all.
+- Preserve responsive behavior and avoid text/input overlap; many quiz rows have long Korean labels.
+- Query params on CSS links are allowed for cache busting, but validation normalizes paths.
+- Existing overrides are strong in subject-specific files; check `!important`, id selectors, and later-loaded files before assuming a rule is unused.
+- Some selectors depend on exact placeholder text such as `input[placeholder='단계 활동']`; copy changes can affect styling.
+
+## ANTI-PATTERNS
+
+- Do not resurrect `css/layout.css`, `css/modals.css`, or `css/responsive.css`.
+- Do not solve subject-specific issues in broad base files unless the rule is truly shared.
+- Do not change CSS order as a visual tweak without running the structure validator.
+- Do not add new uses of non-standard selectors such as `:contains(...)`; existing occurrences are a maintenance risk, not a pattern to copy.
+- Treat `body:has(...)` usage as browser-facing CSS that needs real browser verification.
+
+## VERIFY
+
+```bash
+npm test
+npm run lint
+npx prettier --check css/*.css
+```
+
+===== scripts/AGENTS.md =====
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1906  100  1906    0     0  2833k      0 --:--:-- --:--:-- --:--:-- 1861k
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.9.6
+Date: Thu, 09 Jul 2026 00:35:07 GMT
+Content-type: application/octet-stream
+Content-Length: 1906
+Last-Modified: Thu, 09 Jul 2026 00:32:31 GMT
+
+# SCRIPTS KNOWLEDGE BASE
+
+## OVERVIEW
+
+`scripts/` owns Node-based validation and lightweight tests used by `npm test`.
+
+## WHERE TO LOOK
+
+| Task                    | Location                        | Notes                                                          |
+| ----------------------- | ------------------------------- | -------------------------------------------------------------- |
+| Full project check      | `package.json` `scripts.check`  | Runs syntax checks and all script validators.                  |
+| Partial validation      | `validate-quiz-partials.js`     | Expands includes and validates rendered main ids/count.        |
+| Structure validation    | `validate-project-structure.js` | Checks CSS order, local scripts, module registry, legacy refs. |
+| Partial loader test     | `test-quiz-partial-loader.js`   | Tests loader behavior without a browser framework.             |
+| HTML formatting utility | `../format-html.js`             | Root-level utility that rewrites `index.html`.                 |
+
+## CONVENTIONS
+
+- Scripts are ES modules and run directly under Node.
+- Prefer deterministic filesystem checks over browser automation for structure invariants.
+- Keep error messages specific; `npm test` output is the main feedback channel.
+- `validate-project-structure.js` intentionally parses `README_MODULES.md` for documented CSS order.
+- `validate-quiz-partials.js` resolves `quiz-include` recursively and must reject circular includes.
+
+## ANTI-PATTERNS
+
+- Do not weaken validators to accommodate inconsistent docs or markup; update the source of truth instead.
+- Do not add a test framework unless the task explicitly requires broader runtime coverage.
+- Do not hide missing file errors behind optional fallbacks.
+
+## VERIFY
+
+```bash
+npm test
+node scripts/validate-project-structure.js
+node scripts/validate-quiz-partials.js
+node scripts/test-quiz-partial-loader.js
+```
+

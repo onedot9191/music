@@ -1,0 +1,4 @@
+Invocation: npx prettier --check AGENTS.md modules/AGENTS.md partials/AGENTS.md css/AGENTS.md scripts/AGENTS.md
+
+Checking formatting...
+All matched files use Prettier code style!

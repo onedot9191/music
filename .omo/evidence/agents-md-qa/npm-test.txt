@@ -1,0 +1,12 @@
+Invocation: npm test
+
+
+> music@1.0.0 test
+> npm run check
+
+
+> music@1.0.0 check
+> node --check app.js && for file in modules/*.js scripts/*.js; do node --check "$file"; done && node scripts/validate-quiz-partials.js && node scripts/validate-project-structure.js && node scripts/test-quiz-partial-loader.js
+
+Validated 62 quiz partials, 62 main elements
+Validated project structure, CSS order, scripts, and module registry

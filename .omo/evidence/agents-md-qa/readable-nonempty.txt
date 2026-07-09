@@ -1,0 +1,9 @@
+Invocation: for f in AGENTS.md modules/AGENTS.md partials/AGENTS.md css/AGENTS.md scripts/AGENTS.md; do test -r  && test -s  && printf PASS:
+  || printf FAIL:
+ ; done
+
+PASS:AGENTS.md
+PASS:modules/AGENTS.md
+PASS:partials/AGENTS.md
+PASS:css/AGENTS.md
+PASS:scripts/AGENTS.md

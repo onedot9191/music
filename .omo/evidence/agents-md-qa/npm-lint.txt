@@ -1,0 +1,6 @@
+Invocation: npm run lint
+
+
+> music@1.0.0 lint
+> eslint .
+
