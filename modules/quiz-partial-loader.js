@@ -2,6 +2,7 @@ import { QUIZ_PARTIAL_URLS } from './quiz-partials-manifest.js';
 
 const DEFAULT_ROOT_ID = 'quiz-partials-root';
 const INCLUDE_PATTERN = /<!--\s*quiz-include:\s*([^>]+?)\s*-->/g;
+const MAX_PARTIAL_FETCH_ATTEMPTS = 2;
 
 function readPartialUrls(root) {
     const configuredPartials = root.dataset.quizPartials || '';
@@ -22,10 +23,7 @@ async function loadPartialHtml(url, stack = []) {
         );
     }
 
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Failed to load quiz partial: ${url}`);
-    }
+    const response = await fetchPartial(url);
 
     const html = await response.text();
     const nextStack = [...stack, url];
@@ -43,6 +41,23 @@ async function loadPartialHtml(url, stack = []) {
         INCLUDE_PATTERN,
         () => resolvedIncludes[includeIndex++]
     );
+}
+
+async function fetchPartial(url, attempt = 1) {
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            return response;
+        }
+
+        throw new Error(`Failed to load quiz partial: ${url}`);
+    } catch (error) {
+        if (attempt >= MAX_PARTIAL_FETCH_ATTEMPTS) {
+            throw error;
+        }
+
+        return fetchPartial(url, attempt + 1);
+    }
 }
 
 export async function loadQuizPartials(rootId = DEFAULT_ROOT_ID) {

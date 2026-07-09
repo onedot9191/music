@@ -106,7 +106,11 @@ import {
 } from './modules/stats-manager.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadQuizPartials();
+    try {
+        await loadQuizPartials();
+    } catch (error) {
+        console.error('Quiz partials failed to load:', error);
+    }
 
     // --- 오디오 관리자 ---
     // AudioManager는 오디오 컨텍스트와 오디오 잠금 해제를 자동으로 처리합니다
