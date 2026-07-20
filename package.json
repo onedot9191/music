@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "check": "node --check app.js && for file in modules/*.js scripts/*.js; do node --check \"$file\"; done && node scripts/validate-quiz-partials.js && node scripts/validate-project-structure.js && node scripts/test-quiz-partial-loader.js",
+    "check": "node --check app.js && for file in modules/*.js scripts/*.js; do node --check \"$file\"; done && node scripts/validate-quiz-partials.js && node scripts/validate-project-structure.js && node scripts/test-quiz-partial-loader.js && node scripts/test-answer-reveal.js",
     "dev": "http-server -p 8080 -o",
     "test": "npm run check",
     "lint": "eslint ."

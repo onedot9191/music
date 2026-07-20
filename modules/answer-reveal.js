@@ -1,12 +1,37 @@
 function getRemainingIgnoreOrderAnswers(inputs, classes, normalizeAnswer) {
     const answers = inputs.map((input) => input.dataset.answer);
-    const correctAnswers = inputs
-        .filter((input) => input.classList.contains(classes.CORRECT))
-        .map((input) => normalizeAnswer(input.value || input.dataset.answer));
+    const remainingCounts = new Map();
 
-    return answers.filter(
-        (answer) => !correctAnswers.includes(normalizeAnswer(answer))
-    );
+    answers.forEach((answer) => {
+        const normalized = normalizeAnswer(answer);
+        remainingCounts.set(
+            normalized,
+            (remainingCounts.get(normalized) || 0) + 1
+        );
+    });
+
+    inputs
+        .filter((input) => input.classList.contains(classes.CORRECT))
+        .forEach((input) => {
+            const normalized = normalizeAnswer(
+                input.value || input.dataset.answer
+            );
+            const remaining = remainingCounts.get(normalized) || 0;
+
+            if (remaining > 0) {
+                remainingCounts.set(normalized, remaining - 1);
+            }
+        });
+
+    return answers.filter((answer) => {
+        const normalized = normalizeAnswer(answer);
+        const remaining = remainingCounts.get(normalized) || 0;
+
+        if (remaining === 0) return false;
+
+        remainingCounts.set(normalized, remaining - 1);
+        return true;
+    });
 }
 
 function revealInputs(inputs, options) {
@@ -87,7 +112,7 @@ export function revealCompetencySectionAnswers(section, options) {
 
         revealInputs(inputs, {
             ...options,
-            ignoreOrder: options.isIgnoreOrderScope(section, inputs[0]),
+            ignoreOrder: true,
         });
         return;
     }
@@ -97,7 +122,7 @@ export function revealCompetencySectionAnswers(section, options) {
 
         revealInputs(inputs, {
             ...options,
-            ignoreOrder: options.isIgnoreOrderScope(group, inputs[0]),
+            ignoreOrder: true,
             markCorrectOnReveal: true,
             avoidCurrentValueFallback: true,
         });
