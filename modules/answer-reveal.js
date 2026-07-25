@@ -92,14 +92,45 @@ export function revealSectionAnswers(section, options) {
         return;
     }
 
+    const groupedInputs = new Set();
+
     groups.forEach((group) => {
         const inputs = group.querySelectorAll('input[data-answer]');
+
+        inputs.forEach((input) => groupedInputs.add(input));
 
         revealInputs(inputs, {
             ...options,
             ignoreOrder: options.isIgnoreOrderScope(group, inputs[0]),
         });
     });
+
+    const ungroupedInputs = Array.from(
+        section.querySelectorAll('input[data-answer]')
+    ).filter((input) => !groupedInputs.has(input));
+
+    if (ungroupedInputs.length > 0) {
+        revealInputs(ungroupedInputs, {
+            ...options,
+            ignoreOrder: options.isIgnoreOrderScope(
+                section,
+                ungroupedInputs[0]
+            ),
+        });
+    }
+}
+
+export function revealMainAnswers(main, options) {
+    if (!main) return;
+
+    const sections = main.querySelectorAll('section');
+
+    if (sections.length === 0) {
+        revealInputs(main.querySelectorAll('input[data-answer]'), options);
+        return;
+    }
+
+    sections.forEach((section) => revealSectionAnswers(section, options));
 }
 
 export function revealCompetencySectionAnswers(section, options) {

@@ -142,6 +142,8 @@ export function bindAppEvents({
         gameState,
         getMainElementId,
         hideTopicSubmenus,
+        isIgnoreOrderScope,
+        normalizeAnswer,
         progressModal,
         resetBtn,
         resetGame,

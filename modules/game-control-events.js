@@ -1,3 +1,5 @@
+import { revealMainAnswers } from './answer-reveal.js';
+
 function showEthicsBasicSubmenu({
     CONSTANTS,
     TOPIC_SUBMENU_IDS,
@@ -23,26 +25,18 @@ function showEthicsBasicSubmenu({
     });
 }
 
-function revealDirectAnswers({ CONSTANTS, getMainElementId }) {
-    const mainId = getMainElementId();
-
-    document
-        .querySelectorAll(`#${mainId} input[data-answer]`)
-        .forEach((input) => {
-            if (!input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)) {
-                input.value = input.dataset.answer;
-                input.classList.remove(
-                    CONSTANTS.CSS_CLASSES.INCORRECT,
-                    CONSTANTS.CSS_CLASSES.RETRYING
-                );
-                input.classList.add(
-                    CONSTANTS.CSS_CLASSES.CORRECT,
-                    CONSTANTS.CSS_CLASSES.REVEALED
-                );
-            }
-
-            input.disabled = true;
-        });
+function revealDirectAnswers({
+    CONSTANTS,
+    getMainElementId,
+    isIgnoreOrderScope,
+    normalizeAnswer,
+}) {
+    revealMainAnswers(document.getElementById(getMainElementId()), {
+        classes: CONSTANTS.CSS_CLASSES,
+        isIgnoreOrderScope,
+        markCorrectOnReveal: true,
+        normalizeAnswer,
+    });
 }
 
 function markAnswersRevealed(getMainElementId) {
@@ -123,6 +117,8 @@ function bindResultRevealButton({
     progressModal,
     resetBtn,
     revealCompetencyAnswers,
+    isIgnoreOrderScope,
+    normalizeAnswer,
     scrapResultImageBtnTop,
     shouldRevealCompetencyAnswers,
 }) {
@@ -132,7 +128,12 @@ function bindResultRevealButton({
         if (shouldRevealCompetencyAnswers()) {
             revealCompetencyAnswers();
         } else {
-            revealDirectAnswers({ CONSTANTS, getMainElementId });
+            revealDirectAnswers({
+                CONSTANTS,
+                getMainElementId,
+                isIgnoreOrderScope,
+                normalizeAnswer,
+            });
         }
 
         markAnswersRevealed(getMainElementId);
@@ -153,6 +154,8 @@ export function bindGameControlEvents({
     gameState,
     getMainElementId,
     hideTopicSubmenus,
+    isIgnoreOrderScope,
+    normalizeAnswer,
     progressModal,
     resetBtn,
     resetGame,
@@ -196,6 +199,8 @@ export function bindGameControlEvents({
         progressModal,
         resetBtn,
         revealCompetencyAnswers,
+        isIgnoreOrderScope,
+        normalizeAnswer,
         scrapResultImageBtnTop,
         shouldRevealCompetencyAnswers,
     });
