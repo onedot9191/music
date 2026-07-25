@@ -180,6 +180,17 @@ input[placeholder='세부 단계'] {
     min-width: 0;
 }
 
+#ethics-quiz-main #value-analysis .value-analysis-checks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+}
+
+#ethics-quiz-main #value-analysis .value-analysis-checks input {
+    min-width: 0;
+}
+
 /* Moral: '검사'를 포함한 placeholder(검사 이름 등) 점선 처리 */
 #moral-course-quiz-main input[placeholder*='검사'] {
     border-width: 1px !important;
