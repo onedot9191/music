@@ -85,10 +85,7 @@ function findAvailableScopedAnswer({
         incrementCount(answerCounts, normalizeAnswer(input.dataset.answer));
 
         if (input.classList.contains('correct')) {
-            incrementCount(
-                usedCounts,
-                normalizeAnswer(input.value || input.dataset.answer)
-            );
+            incrementCount(usedCounts, normalizeAnswer(input.dataset.answer));
         }
     });
 
@@ -105,7 +102,8 @@ function findAvailableScopedAnswer({
 
         if (
             candidates.includes(userAnswer) &&
-            (usedCounts.get(normalized) || 0) < (answerCounts.get(normalized) || 0)
+            (usedCounts.get(normalized) || 0) <
+                (answerCounts.get(normalized) || 0)
         ) {
             return original;
         }
@@ -167,7 +165,10 @@ export function gradeGroupedAnswer({
         usedSet.add(canonicalNorm);
     }
 
-    return { isCorrect: true, displayAnswer: canonical };
+    return {
+        isCorrect: true,
+        displayAnswer: input.value || canonical,
+    };
 }
 
 export function gradeDirectAnswer({
@@ -198,7 +199,10 @@ export function gradeDirectAnswer({
     }
 
     if (correctAnswers.includes(userAnswer)) {
-        return { isCorrect: true, displayAnswer: input.dataset.answer };
+        return {
+            isCorrect: true,
+            displayAnswer: input.value || input.dataset.answer,
+        };
     }
 
     if (selectedTopic !== constants.TOPICS.MODEL) {
@@ -216,5 +220,10 @@ export function gradeDirectAnswer({
               correctAnswers.some((correct) => userNoModel === correct) ||
               correctNoModelList.some((correct) => userNoModel === correct);
 
-    return { isCorrect, displayAnswer: input.dataset.answer };
+    return {
+        isCorrect,
+        displayAnswer: isCorrect
+            ? input.value || input.dataset.answer
+            : input.dataset.answer,
+    };
 }
