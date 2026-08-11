@@ -158,6 +158,27 @@ export function revealCompetencySectionAnswers(section, options) {
             avoidCurrentValueFallback: true,
         });
     });
+
+    const groupedInputs = new Set();
+
+    groups.forEach((group) => {
+        group
+            .querySelectorAll('input[data-answer]')
+            .forEach((input) => groupedInputs.add(input));
+    });
+
+    const ungroupedInputs = Array.from(
+        section.querySelectorAll('input[data-answer]')
+    ).filter((input) => !groupedInputs.has(input));
+
+    if (ungroupedInputs.length > 0) {
+        revealInputs(ungroupedInputs, {
+            ...options,
+            ignoreOrder: true,
+            markCorrectOnReveal: true,
+            avoidCurrentValueFallback: true,
+        });
+    }
 }
 
 export function revealCurrentCompetencyAnswers({

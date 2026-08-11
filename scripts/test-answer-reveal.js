@@ -67,6 +67,46 @@ assert.deepEqual(
     'competency reveal should preserve the learner answer and fill remaining answers'
 );
 
+const mixedCompetencyGroupedInputs = [
+    createInput('alpha', { correct: true, value: 'beta' }),
+    createInput('beta'),
+];
+const mixedCompetencyUngroupedInput = createInput('gamma');
+const mixedCompetencyGroup = {
+    querySelectorAll() {
+        return mixedCompetencyGroupedInputs;
+    },
+};
+
+mixedCompetencyGroupedInputs.forEach((input) => {
+    input.closest = (selector) =>
+        selector === '[data-group]' ? mixedCompetencyGroup : null;
+});
+
+const mixedCompetencySection = {
+    querySelectorAll(selector) {
+        if (selector === '[data-group]') return [mixedCompetencyGroup];
+        return [...mixedCompetencyGroupedInputs, mixedCompetencyUngroupedInput];
+    },
+};
+
+revealCompetencySectionAnswers(mixedCompetencySection, {
+    classes: {
+        CORRECT: 'correct',
+        INCORRECT: 'incorrect',
+        REVEALED: 'revealed',
+        RETRYING: 'retrying',
+    },
+    isIgnoreOrderScope: () => false,
+    normalizeAnswer: (value) => value.trim(),
+});
+
+assert.deepEqual(
+    mixedCompetencyUngroupedInput.value,
+    'gamma',
+    'competency reveal should also reveal inputs outside grouped parts'
+);
+
 const groupedInputs = [
     createInput('alpha', { correct: true, value: 'beta' }),
     createInput('beta'),

@@ -66,6 +66,7 @@ export function createProgressModalController({
     gameState,
     getDailyStats,
     getMainElementId,
+    filterResultProgressInputs,
     isSpellingBlankMode,
     markSubjectAccuracyAchieved,
     modalCharacterPlaceholder,
@@ -93,11 +94,11 @@ export function createProgressModalController({
         }
 
         const mainId = getMainElementId();
-        const allInputs = document.querySelectorAll(
-            `#${mainId} input[data-answer]`
+        const allInputs = filterResultProgressInputs(
+            document.querySelectorAll(`#${mainId} input[data-answer]`)
         );
-        const correctCount = document.querySelectorAll(
-            `#${mainId} input.${CONSTANTS.CSS_CLASSES.CORRECT}`
+        const correctCount = allInputs.filter((input) =>
+            input.classList.contains(CONSTANTS.CSS_CLASSES.CORRECT)
         ).length;
 
         updateTodayBlankCount();

@@ -30,7 +30,7 @@
 - `canvas-share-targets.js` - 캔버스 이미지를 Web Share 또는 클립보드로 전달하는 브라우저 API 래퍼
 - `daily-blank-count-controller.js` - 오늘 푼 빈칸 수 표시와 50개 단위 축하 팝업 처리
 - `dday.js` - D-Day 렌더러 조립과 기존 렌더링 API 유지
-- `dday-date.js` - 11월 둘째 토요일 기준 D-Day 날짜, 텍스트, 진행률 계산
+- `dday-date.js` - 11월 7일 기준 D-Day 날짜, 텍스트, 진행률 계산
 - `dday-track-view.js` - D-Day 경주 트랙 DOM 생성, 픽셀 버섯 캔버스, 트랙 애니메이션
 - `character-state.js` - 캐릭터 표정과 콤보 성장 상태 제어
 - `utils.js` - 시간/날짜 포맷과 기존 입력폭 유틸 호환 재수출

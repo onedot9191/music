@@ -7,6 +7,22 @@ export function getResultProgressRefs(documentRef = document) {
     };
 }
 
+export function filterResultProgressInputs(inputs) {
+    return Array.from(inputs).filter((input) => {
+        const accordion = input.closest?.('.accordion');
+
+        if (!accordion) return true;
+
+        const header = accordion.querySelector('.accordion-header');
+        const content = accordion.querySelector('section');
+
+        return (
+            header?.getAttribute('aria-expanded') === 'true' &&
+            content?.classList.contains('active')
+        );
+    });
+}
+
 export function calculatePercentage(correctCount, totalCount) {
     return totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 }

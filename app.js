@@ -69,6 +69,7 @@ import {
 import {
     addResultProgress,
     calculatePercentage,
+    filterResultProgressInputs,
     readResultProgress,
     resetResultProgress,
     setResultProgress,
@@ -300,6 +301,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         gameState,
         getDailyStats,
         getMainElementId,
+        filterResultProgressInputs,
         isSpellingBlankMode,
         markSubjectAccuracyAchieved,
         modalCharacterPlaceholder,

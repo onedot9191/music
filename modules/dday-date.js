@@ -8,11 +8,7 @@ function startOfDay(date = new Date()) {
 }
 
 export function getSecondSaturdayOfNovember(year) {
-    const novemberFirst = new Date(year, 10, 1);
-    const dayOfWeek = novemberFirst.getDay();
-    const firstSaturday = dayOfWeek === 6 ? 1 : 7 - dayOfWeek;
-
-    return new Date(year, 10, firstSaturday + 7);
+    return new Date(year, 10, 7);
 }
 
 export function getNextDDayDate(today = new Date()) {
