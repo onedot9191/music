@@ -96,6 +96,11 @@ export const SUBJECT_TOPIC_MAPPING = {
             hasSubmenu: true,
         },
         { name: '교육과정', subject: 'integrated-course', topic: 'course' },
+        {
+            name: '핵심 아이디어',
+            subject: 'integrated-core-ideas',
+            topic: 'core-ideas',
+        },
         { name: '통합 지도서', subject: 'integrated-guide', topic: 'moral' },
     ],
 };

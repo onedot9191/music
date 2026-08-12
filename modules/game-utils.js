@@ -50,7 +50,7 @@ export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
 
     result = result
         .trim()
-        .replace(/,/g, '') // 콤마 무시
+        .replace(/[,.]/g, '')
         .replace(/[\s⋅·]+/g, '')
         .toLowerCase();
 

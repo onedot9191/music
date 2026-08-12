@@ -3,6 +3,7 @@ export const QUIZ_PARTIAL_URLS = [
     'partials/quiz-mains/art.html',
     'partials/quiz-mains/overview.html',
     'partials/quiz-mains/integrated-course.html',
+    'partials/quiz-mains/integrated-core-ideas.html',
     'partials/quiz-mains/eastern-ethics.html',
     'partials/quiz-mains/western-ethics.html',
     'partials/quiz-mains/moral-psychology.html',

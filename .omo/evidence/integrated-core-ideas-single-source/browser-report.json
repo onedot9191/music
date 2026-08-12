@@ -1,0 +1,49 @@
+{
+  "captures": [
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-single-source/partial-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-single-source/config-before-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-single-source/config-after-drag-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-single-source/partial-after-config-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-single-source/config-375.png"
+  ],
+  "configBefore": {
+    "configPrompts": 8,
+    "duplicateSettingsPanel": 0,
+    "partialInputs": 0,
+    "settingsButton": "완료",
+    "resetVisible": true,
+    "selectedText": "내가 누구인지"
+  },
+  "selectedState": {
+    "selectedText": "내가 누구인지",
+    "preference": {
+      "blankParts": [
+        "내가 누구인지",
+        "서로 관계를 맺으며",
+        "여러 공동체 속에서",
+        "삶의 공간을 넓히며",
+        "여러 유형의 주기로",
+        "과거, 현재, 미래를",
+        "경험하고 상상하고 만들며",
+        "느끼고 생각하고 표현하며"
+      ],
+      "mode": "partial"
+    }
+  },
+  "keyboardState": {
+    "selectedText": "생각하며",
+    "liveStatus": "빈칸을 저장했습니다."
+  },
+  "completedState": {
+    "configPrompts": 0,
+    "partialInputs": 8,
+    "firstAnswer": "생각하며",
+    "resetHidden": true,
+    "horizontalOverflow": 0
+  },
+  "mobileState": {
+    "configPrompts": 8,
+    "horizontalOverflow": 0,
+    "selectedText": "생각하며"
+  }
+}

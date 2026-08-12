@@ -1,0 +1,39 @@
+{
+  "captures": [
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-before-drag-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-during-drag-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-after-release-1280.png"
+  ],
+  "configuring": {
+    "mainVisible": true,
+    "marks": 8,
+    "visibleHighlights": 8,
+    "configuringPrompts": 8,
+    "texts": [
+      "우리는 내가 누구인지 생각하며 생활한다",
+      "우리는 서로 관계를 맺으며 생활한다",
+      "우리는 여러 공동체 속에서 생활한다",
+      "우리는 삶의 공간을 넓히며 생활한다",
+      "우리는 여러 유형의 주기로 생활한다",
+      "우리는 과거, 현재, 미래를 생각하며 생활한다",
+      "우리는 경험하고 상상하고 만들며 생활한다",
+      "우리는 느끼고 생각하고 표현하며 생활한다"
+    ]
+  },
+  "duringDrag": {
+    "marks": 8,
+    "visibleHighlights": 0,
+    "isSelecting": true,
+    "selectedText": "내가 누구인지",
+    "firstPromptHtml": "우리는 <mark class=\"core-idea-selected-part\" aria-label=\"우리는 누구로 살아갈까 첫 번째 핵심 아이디어 현재 빈칸\">내가 누구인지</mark> 생각하며 생활한다"
+  },
+  "afterRelease": {
+    "visibleHighlights": 8,
+    "isSelecting": false,
+    "storedBlank": "내가 누구인지"
+  },
+  "outsideRelease": {
+    "visibleHighlights": 8,
+    "isSelecting": false
+  }
+}

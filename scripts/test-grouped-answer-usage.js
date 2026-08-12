@@ -100,6 +100,76 @@ assert.equal(
     'an unordered group should reject an exhausted canonical answer'
 );
 
+const firstCoreIdeaCardInputs = [];
+const secondCoreIdeaCardInputs = [];
+const firstCoreIdeaCard = {
+    querySelectorAll() {
+        return firstCoreIdeaCardInputs;
+    },
+};
+const secondCoreIdeaCard = {
+    querySelectorAll() {
+        return secondCoreIdeaCardInputs;
+    },
+};
+
+firstCoreIdeaCardInputs.push(
+    createInput('첫 번째 문장', firstCoreIdeaCard),
+    createInput('두 번째 문장', firstCoreIdeaCard)
+);
+secondCoreIdeaCardInputs.push(
+    createInput('세 번째 문장', secondCoreIdeaCard),
+    createInput('네 번째 문장', secondCoreIdeaCard)
+);
+
+const coreIdeaUsedAnswers = new Map();
+const gradeCoreIdeaAnswer = (input, answer) => {
+    input.value = answer;
+
+    return gradeGroupedAnswer({
+        input,
+        section: firstCoreIdeaCard,
+        userAnswer: normalizeAnswer(answer),
+        usedAnswersMap: coreIdeaUsedAnswers,
+        getAnswerCandidates,
+        ignoreOrder: true,
+        isModelTopic: false,
+        normalizeAnswer,
+        stripModelWord: (value) => value,
+    });
+};
+
+const crossCardResult = gradeCoreIdeaAnswer(
+    firstCoreIdeaCardInputs[0],
+    '세 번째 문장'
+);
+assert.equal(
+    crossCardResult.isCorrect,
+    false,
+    'a core idea card should not consume an answer from another card'
+);
+
+const reversedFirstCardResult = gradeCoreIdeaAnswer(
+    firstCoreIdeaCardInputs[0],
+    '두 번째 문장'
+);
+assert.equal(
+    reversedFirstCardResult.isCorrect,
+    true,
+    'a core idea card should accept its own answers in either order'
+);
+firstCoreIdeaCardInputs[0].markCorrect();
+
+const remainingFirstCardResult = gradeCoreIdeaAnswer(
+    firstCoreIdeaCardInputs[1],
+    '첫 번째 문장'
+);
+assert.equal(
+    remainingFirstCardResult.isCorrect,
+    true,
+    'the remaining answer should still be available within the same card'
+);
+
 const revealInputs = [];
 const revealGroup = {
     querySelectorAll() {

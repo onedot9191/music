@@ -1,0 +1,65 @@
+{
+  "desktop": [
+    {
+      "answer": "생각하며",
+      "cssWidth": "101px",
+      "clientWidth": 97,
+      "scrollWidth": 97
+    },
+    {
+      "answer": "서로 관계를 맺으며",
+      "cssWidth": "169px",
+      "clientWidth": 165,
+      "scrollWidth": 165
+    },
+    {
+      "answer": "여러 공동체 속에서",
+      "cssWidth": "169px",
+      "clientWidth": 165,
+      "scrollWidth": 165
+    },
+    {
+      "answer": "삶의 공간을 넓히며",
+      "cssWidth": "169px",
+      "clientWidth": 165,
+      "scrollWidth": 165
+    },
+    {
+      "answer": "여러 유형의 주기로",
+      "cssWidth": "169px",
+      "clientWidth": 165,
+      "scrollWidth": 165
+    },
+    {
+      "answer": "과거, 현재, 미래를",
+      "cssWidth": "163px",
+      "clientWidth": 159,
+      "scrollWidth": 159
+    },
+    {
+      "answer": "경험하고 상상하고 만들며",
+      "cssWidth": "215px",
+      "clientWidth": 211,
+      "scrollWidth": 211
+    },
+    {
+      "answer": "느끼고 생각하고 표현하며",
+      "cssWidth": "215px",
+      "clientWidth": 211,
+      "scrollWidth": 211
+    }
+  ],
+  "mobile": {
+    "widths": [
+      318,
+      318,
+      318,
+      318,
+      318,
+      318,
+      318,
+      318
+    ],
+    "horizontalOverflow": 0
+  }
+}

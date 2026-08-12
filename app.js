@@ -21,6 +21,7 @@ import {
 } from './modules/repair-notice.js';
 import { bindRepairNoticeAdmin } from './modules/repair-notice-admin.js';
 import { initializeApp } from './modules/app-initializer.js';
+import { initializeIntegratedCoreIdeas } from './modules/integrated-core-ideas-mode.js';
 import { createDomRefs } from './modules/dom-elements.js';
 import { loadQuizPartials } from './modules/quiz-partial-loader.js';
 import {
@@ -137,6 +138,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- 저장소 관리자 ---
     const storageManager = new StorageManager();
+
+    initializeIntegratedCoreIdeas({ storageManager });
 
     const SPECIAL_SUBJECTS = createSpecialSubjects(CONSTANTS);
 

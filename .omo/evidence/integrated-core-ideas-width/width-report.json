@@ -1,0 +1,62 @@
+{
+  "captures": [
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-width/partial-width-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-width/partial-width-375.png"
+  ],
+  "desktop": {
+    "widths": [
+      {
+        "answer": "생각하며",
+        "width": 152.265625
+      },
+      {
+        "answer": "서로 관계를 맺으며",
+        "width": 165.09375
+      },
+      {
+        "answer": "여러 공동체 속에서",
+        "width": 165.09375
+      },
+      {
+        "answer": "삶의 공간을 넓히며",
+        "width": 165.09375
+      },
+      {
+        "answer": "여러 유형의 주기로",
+        "width": 165.09375
+      },
+      {
+        "answer": "과거, 현재, 미래를",
+        "width": 177.921875
+      },
+      {
+        "answer": "경험하고 상상하고 만들며",
+        "width": 203.578125
+      },
+      {
+        "answer": "느끼고 생각하고 표현하며",
+        "width": 203.578125
+      }
+    ],
+    "body": {
+      "clientWidth": 1280,
+      "scrollWidth": 1280
+    }
+  },
+  "mobile": {
+    "widths": [
+      319.8125,
+      319.8125,
+      319.8125,
+      319.8125,
+      319.8125,
+      319.8125,
+      319.8125,
+      319.8125
+    ],
+    "body": {
+      "clientWidth": 375,
+      "scrollWidth": 375
+    }
+  }
+}

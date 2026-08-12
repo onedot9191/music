@@ -1,0 +1,143 @@
+{
+  "captures": [
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-width/full-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-width/partial-settings-before-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-width/partial-settings-after-drag-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-width/partial-settings-after-drag-375.png"
+  ],
+  "fullState": {
+    "body": {
+      "clientWidth": 1280,
+      "scrollWidth": 1280
+    },
+    "mode": "full",
+    "settingsButtonHidden": true,
+    "settingsButtonVisible": false,
+    "settingsPanelHidden": true,
+    "settingsFormPresent": false,
+    "selectionOutputCount": 0,
+    "sourceText": "우리는 내가 누구인지 생각하며 생활한다.",
+    "markedText": "생각하며",
+    "localSettings": {
+      "blankParts": [
+        "생각하며",
+        "서로 관계를 맺으며",
+        "여러 공동체 속에서",
+        "삶의 공간을 넓히며",
+        "여러 유형의 주기로",
+        "과거, 현재, 미래를",
+        "경험하고 상상하고 만들며",
+        "느끼고 생각하고 표현하며"
+      ],
+      "mode": "full"
+    }
+  },
+  "mobileState": {
+    "body": {
+      "clientWidth": 375,
+      "scrollWidth": 375
+    },
+    "mode": "partial",
+    "settingsButtonHidden": false,
+    "settingsButtonVisible": true,
+    "settingsPanelHidden": false,
+    "settingsFormPresent": false,
+    "selectionOutputCount": 0,
+    "sourceText": "우리는 내가 누구인지 생각하며 생활한다.",
+    "markedText": "생각하며",
+    "localSettings": {
+      "blankParts": [
+        "생각하며",
+        "서로 관계를 맺으며",
+        "여러 공동체 속에서",
+        "삶의 공간을 넓히며",
+        "여러 유형의 주기로",
+        "과거, 현재, 미래를",
+        "경험하고 상상하고 만들며",
+        "느끼고 생각하고 표현하며"
+      ],
+      "mode": "partial"
+    }
+  },
+  "partialClosedState": {
+    "body": {
+      "clientWidth": 1280,
+      "scrollWidth": 1280
+    },
+    "mode": "partial",
+    "settingsButtonHidden": false,
+    "settingsButtonVisible": true,
+    "settingsPanelHidden": true,
+    "settingsFormPresent": false,
+    "selectionOutputCount": 0,
+    "sourceText": "우리는 내가 누구인지 생각하며 생활한다.",
+    "markedText": "생각하며",
+    "localSettings": {
+      "blankParts": [
+        "생각하며",
+        "서로 관계를 맺으며",
+        "여러 공동체 속에서",
+        "삶의 공간을 넓히며",
+        "여러 유형의 주기로",
+        "과거, 현재, 미래를",
+        "경험하고 상상하고 만들며",
+        "느끼고 생각하고 표현하며"
+      ],
+      "mode": "partial"
+    }
+  },
+  "partialOpenAfterState": {
+    "body": {
+      "clientWidth": 1265,
+      "scrollWidth": 1265
+    },
+    "mode": "partial",
+    "settingsButtonHidden": false,
+    "settingsButtonVisible": true,
+    "settingsPanelHidden": false,
+    "settingsFormPresent": false,
+    "selectionOutputCount": 0,
+    "sourceText": "우리는 내가 누구인지 생각하며 생활한다.",
+    "markedText": "생각하며",
+    "localSettings": {
+      "blankParts": [
+        "생각하며",
+        "서로 관계를 맺으며",
+        "여러 공동체 속에서",
+        "삶의 공간을 넓히며",
+        "여러 유형의 주기로",
+        "과거, 현재, 미래를",
+        "경험하고 상상하고 만들며",
+        "느끼고 생각하고 표현하며"
+      ],
+      "mode": "partial"
+    }
+  },
+  "partialOpenBeforeState": {
+    "body": {
+      "clientWidth": 1265,
+      "scrollWidth": 1265
+    },
+    "mode": "partial",
+    "settingsButtonHidden": false,
+    "settingsButtonVisible": true,
+    "settingsPanelHidden": false,
+    "settingsFormPresent": false,
+    "selectionOutputCount": 0,
+    "sourceText": "우리는 내가 누구인지 생각하며 생활한다.",
+    "markedText": "내가 누구인지",
+    "localSettings": {
+      "blankParts": [
+        "내가 누구인지",
+        "서로 관계를 맺으며",
+        "여러 공동체 속에서",
+        "삶의 공간을 넓히며",
+        "여러 유형의 주기로",
+        "과거, 현재, 미래를",
+        "경험하고 상상하고 만들며",
+        "느끼고 생각하고 표현하며"
+      ],
+      "mode": "partial"
+    }
+  }
+}

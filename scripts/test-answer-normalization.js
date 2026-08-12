@@ -64,5 +64,10 @@ assert.equal(
     normalizeAnswer('개념적 지식', modelState),
     'existing parenthetical-answer behavior must remain unchanged'
 );
+assert.equal(
+    normalizeAnswer('개념적 지식.', modelState),
+    normalizeAnswer('개념적 지식', modelState),
+    'periods must not affect answer grading'
+);
 
 console.log('Answer normalization distinguishes particle and lexical 의');

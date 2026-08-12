@@ -1,0 +1,18 @@
+{
+  "points": {
+    "start": {
+      "x": 218.03125,
+      "y": 366.09375
+    },
+    "end": {
+      "x": 262.34375,
+      "y": 366.09375
+    }
+  },
+  "selectionBeforeRelease": "관계를",
+  "result": {
+    "selected": "관계를",
+    "stored": "관계를",
+    "status": "빈칸을 저장했습니다."
+  }
+}

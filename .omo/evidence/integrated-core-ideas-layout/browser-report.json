@@ -1,0 +1,156 @@
+{
+  "captures": [
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-layout/full-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-layout/partial-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-layout/partial-768.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-layout/partial-375.png"
+  ],
+  "desktopFull": {
+    "body": {
+      "clientWidth": 1280,
+      "scrollWidth": 1280
+    },
+    "controlsInHeader": true,
+    "hasLearningModeLabel": false,
+    "header": {
+      "x": 96,
+      "y": 130,
+      "width": 1088,
+      "height": 64
+    },
+    "controls": {
+      "x": 934.8125,
+      "y": 133,
+      "width": 246.1875,
+      "height": 58
+    },
+    "fullInput": {
+      "columns": "19",
+      "rect": {
+        "x": 123,
+        "y": 274.59375,
+        "width": 482,
+        "height": 49.046875
+      }
+    },
+    "partialInput": null,
+    "mode": "full"
+  },
+  "desktopPartial": {
+    "body": {
+      "clientWidth": 1280,
+      "scrollWidth": 1280
+    },
+    "controlsInHeader": true,
+    "hasLearningModeLabel": false,
+    "header": {
+      "x": 96,
+      "y": 130,
+      "width": 1088,
+      "height": 64
+    },
+    "controls": {
+      "x": 934.8125,
+      "y": 133,
+      "width": 246.1875,
+      "height": 58
+    },
+    "fullInput": {
+      "columns": "8",
+      "rect": {
+        "x": 176.3125,
+        "y": 274.59375,
+        "width": 107.953125,
+        "height": 49.046875
+      }
+    },
+    "partialInput": {
+      "columns": "8",
+      "rect": {
+        "x": 176.3125,
+        "y": 274.59375,
+        "width": 107.953125,
+        "height": 49.046875
+      }
+    },
+    "mode": "partial"
+  },
+  "tabletPartial": {
+    "body": {
+      "clientWidth": 753,
+      "scrollWidth": 753
+    },
+    "controlsInHeader": true,
+    "hasLearningModeLabel": false,
+    "header": {
+      "x": 12.796875,
+      "y": 192,
+      "width": 727.40625,
+      "height": 107.1875
+    },
+    "controls": {
+      "x": 18.796875,
+      "y": 239.40625,
+      "width": 719.40625,
+      "height": 57.78125
+    },
+    "fullInput": {
+      "columns": "8",
+      "rect": {
+        "x": 27.59375,
+        "y": 382.59375,
+        "width": 697.8125,
+        "height": 38.03125
+      }
+    },
+    "partialInput": {
+      "columns": "8",
+      "rect": {
+        "x": 27.59375,
+        "y": 382.59375,
+        "width": 697.8125,
+        "height": 38.03125
+      }
+    },
+    "mode": "partial"
+  },
+  "mobilePartial": {
+    "body": {
+      "clientWidth": 375,
+      "scrollWidth": 375
+    },
+    "controlsInHeader": true,
+    "hasLearningModeLabel": false,
+    "header": {
+      "x": 12.796875,
+      "y": 240,
+      "width": 349.40625,
+      "height": 107.1875
+    },
+    "controls": {
+      "x": 18.796875,
+      "y": 287.40625,
+      "width": 341.40625,
+      "height": 57.78125
+    },
+    "fullInput": {
+      "columns": "8",
+      "rect": {
+        "x": 27.59375,
+        "y": 430.59375,
+        "width": 319.8125,
+        "height": 38.03125
+      }
+    },
+    "partialInput": {
+      "columns": "8",
+      "rect": {
+        "x": 27.59375,
+        "y": 430.59375,
+        "width": 319.8125,
+        "height": 38.03125
+      }
+    },
+    "mode": "partial"
+  }
+}

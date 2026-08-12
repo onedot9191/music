@@ -65,6 +65,9 @@ try {
         inputEventBindings: await import('./input-event-bindings.js'),
         inputWidthBootstrap: await import('./input-width-bootstrap.js'),
         inputWidthPolicy: await import('./input-width-policy.js'),
+        integratedCoreIdeasMode: await import(
+            './integrated-core-ideas-mode.js'
+        ),
         layoutAdjustments: await import('./layout-adjustments.js'),
         layoutInputWidths: await import('./layout-input-widths.js'),
         layoutSubjectTransforms: await import('./layout-subject-transforms.js'),
