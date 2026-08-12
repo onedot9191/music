@@ -85,6 +85,13 @@
 - **Motion**: 오버레이 opacity와 콘텐츠 transform만 사용하며 `prefers-reduced-motion`에서 제거
 - **Layout**: 중앙 정렬 stack, 오버레이가 세로 스크롤 소유
 
+### Admin Status Switch
+
+- **Structure**: 현재 상태 배지, 관리자 비밀번호 입력, `button[role='switch']`
+- **States**: 불러오는 중, 켜짐, 꺼짐, 저장 실패, 저장 완료
+- **Accessibility**: `aria-checked`로 공지 상태를 전달하고 결과는 `role='status'`로 알린다.
+- **Motion**: 기존 모달과 버튼 전환만 재사용하며 별도 장식 모션은 추가하지 않는다.
+
 ### Card
 
 - **Structure**: `.card` 또는 역할별 표면 컨테이너

@@ -73,6 +73,7 @@ try {
         overviewPurpleText: await import('./overview-purple-text.js'),
         practicalModalEvents: await import('./practical-modal-events.js'),
         repairNotice: await import('./repair-notice.js'),
+        repairNoticeAdmin: await import('./repair-notice-admin.js'),
         quizPartialLoader: await import('./quiz-partial-loader.js'),
         quizPartialsManifest: await import('./quiz-partials-manifest.js'),
         resultCaptureOptions: await import('./result-capture-options.js'),

@@ -15,7 +15,11 @@ import {
 import { createAppRuntimeHelpers } from './modules/app-runtime-helpers.js';
 import { createDDayRenderer } from './modules/dday.js';
 import { createModalManager } from './modules/modal.js?v=devil-redesign-1';
-import { prepareRepairNotice } from './modules/repair-notice.js';
+import {
+    prepareRepairNotice,
+    readRepairNoticeEnabled,
+} from './modules/repair-notice.js';
+import { bindRepairNoticeAdmin } from './modules/repair-notice-admin.js';
 import { initializeApp } from './modules/app-initializer.js';
 import { createDomRefs } from './modules/dom-elements.js';
 import { loadQuizPartials } from './modules/quiz-partial-loader.js';
@@ -108,6 +112,8 @@ import {
 } from './modules/stats-manager.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const repairNoticeEnabledPromise = readRepairNoticeEnabled();
+
     try {
         await loadQuizPartials();
     } catch (error) {
@@ -156,6 +162,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         scrapResultImageBtnTop,
         repairNoticeModal,
         repairNoticeConfirmBtn,
+        repairNoticeAdminModal,
+        repairNoticeAdminCloseBtn,
+        repairNoticeAdminPassword,
+        repairNoticeAdminStatus,
+        repairNoticeAdminAction,
+        repairNoticeAdminFeedback,
         startModal,
         settingsPanel,
         timeSettingDisplay,
@@ -191,12 +203,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- 모달 포커스 헬퍼 ---
     const { openModal, closeModal, focusModal } = createModalManager();
+    const repairNoticeEnabled = await repairNoticeEnabledPromise;
     const initialModal = prepareRepairNotice({
         closeModal,
+        enabled: repairNoticeEnabled,
         openModal,
         repairNoticeConfirmBtn,
         repairNoticeModal,
         startModal,
+    });
+    bindRepairNoticeAdmin({
+        actionButton: repairNoticeAdminAction,
+        adminModal: repairNoticeAdminModal,
+        closeButton: repairNoticeAdminCloseBtn,
+        closeModal,
+        feedback: repairNoticeAdminFeedback,
+        openModal,
+        statusBadge: repairNoticeAdminStatus,
     });
 
     // --- 오디오 ---

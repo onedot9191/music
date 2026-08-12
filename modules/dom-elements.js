@@ -25,6 +25,21 @@ export function createDomRefs() {
         repairNoticeConfirmBtn: document.getElementById(
             'repair-notice-confirm-btn'
         ),
+        repairNoticeAdminModal: document.getElementById(
+            'repair-notice-admin-modal'
+        ),
+        repairNoticeAdminCloseBtn: document.getElementById(
+            'repair-notice-admin-close-btn'
+        ),
+        repairNoticeAdminStatus: document.getElementById(
+            'repair-notice-admin-status'
+        ),
+        repairNoticeAdminAction: document.getElementById(
+            'repair-notice-admin-action'
+        ),
+        repairNoticeAdminFeedback: document.getElementById(
+            'repair-notice-admin-feedback'
+        ),
         startModal: document.getElementById('start-modal'),
         settingsPanel: document.getElementById('settings-panel'),
         timeSettingDisplay: document.getElementById('time-setting-display'),

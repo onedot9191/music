@@ -83,7 +83,8 @@
 - `layout-subject-transforms.js` - 창체 텍스트 공개, 과학 탐구 활동 래핑, 사회성 기능 목록 셔플
 - `local-storage-json.js` - localStorage JSON 저장/조회/삭제와 사용 가능 여부 확인
 - `practical-modal-events.js` - 실과 모델 제목 모달 닫기 이벤트 바인딩
-- `repair-notice.js` - 수리 공지 활성화 설정과 시작 모달 전환
+- `repair-notice.js` - 공용 수리 공지 상태 조회와 시작 모달 전환
+- `repair-notice-admin.js` - Option+Command+Enter 관리자 화면과 공지 상태 변경
 - `progress-modal-controller.js` - 결과 진행률 산출, 결과 칭호/대사, 결과 모달 렌더링
 - `quiz-partial-loader.js` - `index.html`에서 분리한 과목별 퀴즈 partial HTML과 `quiz-include` 섹션 partial 로드
 - `quiz-partials-manifest.js` - 분리된 퀴즈 partial HTML 경로 목록
@@ -155,6 +156,14 @@
 
 1. 남은 중형 partial의 섹션 경계를 점검해 `quiz-include` 적용 대상을 추가 선별
 2. 브라우저 기반 회귀 테스트 추가
+
+## 수리 공지 관리자 배포 설정
+
+- 단축키: macOS에서 `Option + Command + Enter`
+- Global Config 항목: `repairNoticeEnabled` (`boolean`)
+- Vercel 환경변수: `GLOBAL_CONFIG`, `GLOBAL_CONFIG_ID`, `VERCEL_API_TOKEN`
+- 팀 소유 Global Config라면 `VERCEL_TEAM_ID`도 설정합니다.
+- API 토큰은 Production의 Sensitive Environment Variable로 저장합니다.
 
 ## 검증
 
