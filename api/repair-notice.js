@@ -10,13 +10,17 @@ function jsonResponse(body, status = 200) {
     });
 }
 
-async function readRepairNoticeEnabled() {
+function globalConfigUrl() {
     const connectionString = process.env.GLOBAL_CONFIG;
     if (!connectionString) {
         throw new Error('GLOBAL_CONFIG is not configured');
     }
 
-    const endpoint = new URL(connectionString);
+    return new URL(connectionString);
+}
+
+async function readRepairNoticeEnabled() {
+    const endpoint = globalConfigUrl();
     endpoint.pathname = `${endpoint.pathname.replace(
         /\/$/,
         ''
@@ -36,7 +40,10 @@ async function readRepairNoticeEnabled() {
 }
 
 async function updateRepairNoticeEnabled(enabled) {
-    const globalConfigId = process.env.GLOBAL_CONFIG_ID;
+    const globalConfigId = globalConfigUrl()
+        .pathname.split('/')
+        .filter(Boolean)
+        .at(-1);
     const apiToken = process.env.VERCEL_API_TOKEN;
     if (!globalConfigId || !apiToken) {
         throw new Error('Global Config write credentials are not configured');

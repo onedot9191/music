@@ -37,7 +37,7 @@ const originalEnv = { ...process.env };
 try {
     process.env.GLOBAL_CONFIG =
         'https://edge-config.vercel.com/ecfg_test?token=read-token';
-    process.env.GLOBAL_CONFIG_ID = 'ecfg_test';
+    process.env.GLOBAL_CONFIG_ID = 'ecfg_wrong';
     process.env.VERCEL_API_TOKEN = 'write-token';
 
     let requestedUrl = '';

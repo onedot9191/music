@@ -161,7 +161,7 @@
 
 - 단축키: macOS에서 `Option + Command + Enter`
 - Global Config 항목: `repairNoticeEnabled` (`boolean`)
-- Vercel 환경변수: `GLOBAL_CONFIG`, `GLOBAL_CONFIG_ID`, `VERCEL_API_TOKEN`
+- Vercel 환경변수: `GLOBAL_CONFIG`, `VERCEL_API_TOKEN`
 - 팀 소유 Global Config라면 `VERCEL_TEAM_ID`도 설정합니다.
 - API 토큰은 Production의 Sensitive Environment Variable로 저장합니다.
 
