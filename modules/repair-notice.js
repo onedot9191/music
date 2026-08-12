@@ -1,4 +1,4 @@
-export const REPAIR_NOTICE_ENABLED = true;
+export const REPAIR_NOTICE_ENABLED = false;
 
 export function prepareRepairNotice({
     closeModal,
