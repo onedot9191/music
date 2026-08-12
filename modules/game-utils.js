@@ -3,6 +3,8 @@
 
 import { CONSTANTS } from './constants.js';
 
+const LEXICAL_EUI_WORDS = new Set(['논의', '정의', '창의', '토의']);
+
 /**
  * 답변을 정규화합니다 (공백, 특수문자 제거 등).
  * @param {string} str - 정규화할 문자열
@@ -20,8 +22,6 @@ export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
                     isSpellingBlankMode &&
                     isSpellingBlankMode())));
 
-    const pattern = ignoreParticleEui ? /[\s⋅·의]+/g : /[\s⋅·]+/g;
-
     const removeChevrons =
         gameState.selectedTopic === CONSTANTS.TOPICS.MODEL &&
         gameState.selectedSubject === CONSTANTS.SUBJECTS.PE_MODEL;
@@ -38,10 +38,20 @@ export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
         result = result.replace(/\([^)]*\)/g, '');
     }
 
+    if (ignoreParticleEui) {
+        result = result.replace(
+            /(^|[^가-힣])([가-힣]+의)(?=[^가-힣]|$)/g,
+            (match, boundary, word) =>
+                LEXICAL_EUI_WORDS.has(word)
+                    ? match
+                    : `${boundary}${word.slice(0, -1)}`
+        );
+    }
+
     result = result
         .trim()
         .replace(/,/g, '') // 콤마 무시
-        .replace(pattern, '')
+        .replace(/[\s⋅·]+/g, '')
         .toLowerCase();
 
     if (removeChevrons) {

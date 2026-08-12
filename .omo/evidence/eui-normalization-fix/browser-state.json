@@ -1,0 +1,37 @@
+{
+  "captures": [
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/before.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/lexical-eui-wrong-mid.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/lexical-eui-wrong-settled.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/lexical-eui-correct.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/particle-eui-omitted-correct.png"
+  ],
+  "finalState": [
+    {
+      "answer": "정의",
+      "classes": [
+        "correct"
+      ],
+      "disabled": true,
+      "value": "정의"
+    },
+    {
+      "answer": "개인의 책무성",
+      "classes": [
+        "correct",
+        "correct-pulse"
+      ],
+      "disabled": true,
+      "value": "개인의 책무성"
+    }
+  ],
+  "lexicalWrongState": {
+    "answer": "정의",
+    "classes": [
+      "shake",
+      "retrying"
+    ],
+    "disabled": false,
+    "value": ""
+  }
+}

@@ -33,8 +33,7 @@
     border: var(--pixel-border);
     box-shadow: var(--shadow-hard);
     transform: translateY(18px) scale(0.9);
-    transition:
-        transform 0.28s cubic-bezier(0.18, 0.9, 0.2, 1.22),
+    transition: transform 0.28s cubic-bezier(0.18, 0.9, 0.2, 1.22),
         box-shadow 0.28s ease;
     width: 90%;
     max-width: 600px;
@@ -76,6 +75,60 @@
 .modal-overlay.active .modal-content {
     transform: translateY(0) scale(1);
     animation: modal-content-pop 460ms cubic-bezier(0.18, 0.9, 0.2, 1.18);
+}
+
+#repair-notice-modal {
+    padding: var(--space-md);
+}
+
+#repair-notice-modal .repair-notice-content {
+    width: min(92%, 52rem);
+    padding: var(--space-lg);
+    overflow-x: hidden;
+}
+
+.repair-notice-image {
+    display: block;
+    width: min(100%, 42rem);
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto var(--space-lg);
+    border: var(--pixel-border);
+    object-fit: cover;
+}
+
+#repair-notice-title {
+    margin-bottom: var(--space-sm);
+    font-size: 2.4rem;
+    line-height: 1.35;
+}
+
+#repair-notice-description {
+    max-width: 42rem;
+    margin: 0 auto var(--space-lg);
+    color: var(--text-muted);
+    font-size: 1.6rem;
+    line-height: 1.65;
+    word-break: keep-all;
+}
+
+@media (max-width: 480px) {
+    #repair-notice-modal {
+        padding: var(--space-sm);
+    }
+
+    #repair-notice-modal .repair-notice-content {
+        width: 100%;
+        padding: var(--space-md);
+    }
+
+    #repair-notice-title {
+        font-size: 2rem;
+    }
+
+    #repair-notice-description {
+        font-size: 1.4rem;
+    }
 }
 .modal-content h2 {
     color: var(--text-light);

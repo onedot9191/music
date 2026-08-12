@@ -209,6 +209,41 @@
         </div>
 
         <div
+            id="repair-notice-modal"
+            class="modal-overlay"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="repair-notice-title"
+            aria-describedby="repair-notice-description"
+        >
+            <div class="modal-content repair-notice-content">
+                <img
+                    class="repair-notice-image"
+                    src="assets/repair-notice.png"
+                    width="840"
+                    height="840"
+                    alt=""
+                    fetchpriority="high"
+                    decoding="async"
+                />
+
+                <h2 id="repair-notice-title">현재 사이트를 수리하고 있어요</h2>
+
+                <p id="repair-notice-description">
+                    일부 기능이 정상적으로 동작하지 않을 수 있습니다.
+                </p>
+
+                <button
+                    id="repair-notice-confirm-btn"
+                    class="btn"
+                    type="button"
+                >
+                    확인했습니다
+                </button>
+            </div>
+        </div>
+
+        <div
             id="start-modal"
             class="modal-overlay"
             role="dialog"

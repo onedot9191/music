@@ -124,7 +124,11 @@ canonicalAnswers.forEach((answer, index) => {
         true,
         'concept analysis answers should be accepted in their own input'
     );
-    assert.equal(result.displayAnswer, requestedAnswers[index]);
+    assert.equal(
+        result.displayAnswer,
+        canonicalAnswers[index],
+        'accepted aliases should display their canonical answers'
+    );
 });
 
 const wrongInputResult = gradeAtInput(0, canonicalAnswers[1]);
@@ -146,4 +150,4 @@ assert.equal(
     'reversing concept analysis answers should not pass ordered grading'
 );
 
-console.log('Concept analysis keeps ordered grading and accepts aliases');
+console.log('Concept analysis accepts aliases and displays canonical answers');

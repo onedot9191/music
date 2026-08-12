@@ -1,0 +1,23 @@
+{"id":"P0-01","criterion":"canonical direct answer accepted","verdict":"PASS"}
+{"id":"P0-02","criterion":"wrong direct answer rejected","verdict":"PASS"}
+{"id":"P0-03","criterion":"Enter-empty is graded as wrong (allowEmpty path)","verdict":"PASS"}
+{"id":"P0-04","criterion":"normalizer trims spaces and punctuation comma","verdict":"PASS"}
+{"id":"P0-05","criterion":"normalizer removes 의 in model topic","verdict":"PASS"}
+{"id":"P0-06","criterion":"parenthetical alias accepted","verdict":"PASS"}
+{"id":"P0-07","criterion":"explicit alias data-accept accepted","verdict":"PASS"}
+{"id":"P0-08","criterion":"model answer without 모형 accepted","verdict":"PASS"}
+{"id":"P1-01","criterion":"model answer with 의 and spaces accepted","verdict":"PASS"}
+{"id":"P1-02","criterion":"ordered group rejects answer entered in another position","verdict":"PASS"}
+{"id":"P1-03","criterion":"ignore-order group accepts answer in any position","verdict":"PASS"}
+{"id":"P1-04","criterion":"ignore-order duplicate answer consumed only once","verdict":"PASS"}
+{"id":"P1-05","criterion":"repeated ordered answer is rejected on same input","verdict":"PASS"}
+{"id":"P1-06","criterion":"competency/area subjects use grouped ignore-order","verdict":"PASS"}
+{"id":"P1-07","criterion":"achievement art-std forces ordered grading","verdict":"PASS"}
+{"id":"P1-08","criterion":"Hangul composition keydown is ignored","verdict":"PASS"}
+{"id":"P1-09","criterion":"Tab on blank does not invoke grading","verdict":"PASS"}
+{"id":"P1-10","criterion":"blur invokes grading only after dirty input","verdict":"PASS"}
+{"id":"P1-11","criterion":"accepted alias reveals canonical answer text","verdict":"PASS"}
+{"id":"P1-12","criterion":"unordered duplicate entered into distinct slots is rejected after first use","verdict":"FAIL","error":"Expected values to be strictly equal:\n\ntrue !== false\n"}
+{"id":"P1-13","criterion":"particle-like internal 의 must not be removed from a word","verdict":"FAIL","error":"Expected values to be strictly equal:\n\ntrue !== false\n"}
+{"id":"P1-14","criterion":"arbitrary parenthetical suffix must not become an answer","verdict":"FAIL","error":"Expected values to be strictly equal:\n\ntrue !== false\n"}
+{"id":"P0-09","criterion":"Enter empty invokes production handler with allowEmptyAnswer","verdict":"PASS"}

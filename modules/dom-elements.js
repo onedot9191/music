@@ -21,6 +21,10 @@ export function createDomRefs() {
         scrapResultImageBtnTop: document.getElementById(
             'scrap-result-image-btn-top'
         ),
+        repairNoticeModal: document.getElementById('repair-notice-modal'),
+        repairNoticeConfirmBtn: document.getElementById(
+            'repair-notice-confirm-btn'
+        ),
         startModal: document.getElementById('start-modal'),
         settingsPanel: document.getElementById('settings-panel'),
         timeSettingDisplay: document.getElementById('time-setting-display'),

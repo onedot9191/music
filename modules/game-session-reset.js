@@ -10,6 +10,7 @@ export function resetAllAnswerInputs(CONSTANTS, { root = document } = {}) {
     root.querySelectorAll('input[data-answer]').forEach((input) => {
         input.disabled = true;
         input.value = '';
+        delete input.dataset.matchedAnswer;
         input.classList.remove(
             CONSTANTS.CSS_CLASSES.CORRECT,
             CONSTANTS.CSS_CLASSES.INCORRECT,

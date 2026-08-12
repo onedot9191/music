@@ -110,6 +110,14 @@
 
 /* Responsive: stack panels and allow full width on small screens */
 @media (max-width: 900px) {
+    #start-modal {
+        align-items: flex-start;
+        padding: var(--space-sm);
+    }
+    #start-modal .modal-boxes {
+        width: 100%;
+        margin: 0 auto;
+    }
     #settings-panel {
         width: 100%;
         max-width: none;

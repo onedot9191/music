@@ -1,0 +1,13 @@
+
+> music@1.0.0 test
+> npm run check
+
+
+> music@1.0.0 check
+> node --check app.js && for file in modules/*.js scripts/*.js; do node --check "$file"; done && node scripts/validate-quiz-partials.js && node scripts/validate-project-structure.js && node scripts/test-quiz-partial-loader.js && node scripts/test-answer-reveal.js && node scripts/test-result-progress.js && node scripts/test-concept-analysis-grading.js && node scripts/test-moral-discussion-alias.js
+
+Validated 62 quiz partials, 62 main elements
+Validated project structure, CSS order, scripts, and module registry
+Result progress excludes closed accordion inputs
+Concept analysis accepts aliases and displays canonical answers
+Moral discussion displays the canonical answer for an alias

@@ -39,11 +39,11 @@ export function initializeApp({
     fixSettingsPanelHeight,
     gameState,
     getDurationForTopic,
+    initialModal,
     openModal,
     renderTopicSelector,
     resetGame,
     setupCreativeQuestionTextReveal,
-    startModal,
     storageManager,
     timeSetterWrapper,
     updateStartModalUI,
@@ -73,7 +73,7 @@ export function initializeApp({
     setupCreativeQuestionTextReveal();
     updateStartModalUI();
 
-    openModal(startModal);
+    openModal(initialModal);
     updateStartModalUI();
     fixSettingsPanelHeight();
     initializeModeUi({ CONSTANTS, timeSetterWrapper });

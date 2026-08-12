@@ -90,8 +90,8 @@ assert.equal(
 );
 assert.equal(
     result.displayAnswer,
-    '도덕적 문제 부각시키기',
-    'revealing an alias answer should keep the entered alias'
+    '도덕적 문제 부각하기',
+    'an accepted alias should display the canonical answer'
 );
 
-console.log('Moral discussion keeps the entered alias after accepting it');
+console.log('Moral discussion displays the canonical answer for an alias');

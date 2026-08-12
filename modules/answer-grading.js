@@ -85,7 +85,12 @@ function findAvailableScopedAnswer({
         incrementCount(answerCounts, normalizeAnswer(input.dataset.answer));
 
         if (input.classList.contains('correct')) {
-            incrementCount(usedCounts, normalizeAnswer(input.dataset.answer));
+            incrementCount(
+                usedCounts,
+                normalizeAnswer(
+                    input.dataset.matchedAnswer || input.dataset.answer
+                )
+            );
         }
     });
 
@@ -163,11 +168,13 @@ export function gradeGroupedAnswer({
 
     if (!ignoreOrder) {
         usedSet.add(canonicalNorm);
+    } else {
+        input.dataset.matchedAnswer = canonical;
     }
 
     return {
         isCorrect: true,
-        displayAnswer: input.value || canonical,
+        displayAnswer: canonical,
     };
 }
 
@@ -201,7 +208,7 @@ export function gradeDirectAnswer({
     if (correctAnswers.includes(userAnswer)) {
         return {
             isCorrect: true,
-            displayAnswer: input.value || input.dataset.answer,
+            displayAnswer: input.dataset.answer,
         };
     }
 
@@ -222,8 +229,6 @@ export function gradeDirectAnswer({
 
     return {
         isCorrect,
-        displayAnswer: isCorrect
-            ? input.value || input.dataset.answer
-            : input.dataset.answer,
+        displayAnswer: input.dataset.answer,
     };
 }

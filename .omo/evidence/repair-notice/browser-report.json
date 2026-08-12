@@ -1,0 +1,155 @@
+[
+  {
+    "viewport": {
+      "name": "mobile-375",
+      "width": 375,
+      "height": 667
+    },
+    "before": {
+      "url": "http://127.0.0.1:45321/",
+      "activeModalIds": [
+        "repair-notice-modal"
+      ],
+      "focusedClass": "modal-content repair-notice-content",
+      "content": {
+        "x": 6.390625,
+        "y": 87.96875,
+        "width": 362.21875,
+        "height": 491.0625,
+        "top": 87.96875,
+        "right": 368.609375,
+        "bottom": 579.03125,
+        "left": 6.390625
+      },
+      "image": {
+        "x": 21.1875,
+        "y": 102.765625,
+        "width": 332.625,
+        "height": 332.625,
+        "top": 102.765625,
+        "right": 353.8125,
+        "bottom": 435.390625,
+        "left": 21.1875
+      },
+      "contentScrollHeight": 487,
+      "contentClientHeight": 487,
+      "documentScrollWidth": 375,
+      "documentClientWidth": 375,
+      "title": "현재 사이트를 수리하고 있어요",
+      "description": "일부 기능이 정상적으로 동작하지 않을 수 있습니다.",
+      "button": "확인했습니다"
+    },
+    "after": {
+      "activeModalIds": [
+        "start-modal"
+      ],
+      "focusedId": "settings-panel",
+      "overlayScrollTop": 0,
+      "settingsTop": 6.390625,
+      "documentScrollWidth": 375,
+      "documentClientWidth": 375
+    }
+  },
+  {
+    "viewport": {
+      "name": "tablet-768",
+      "width": 768,
+      "height": 1024
+    },
+    "before": {
+      "url": "http://127.0.0.1:45321/",
+      "activeModalIds": [
+        "repair-notice-modal"
+      ],
+      "focusedClass": "modal-content repair-notice-content",
+      "content": {
+        "x": 176,
+        "y": 254.90625,
+        "width": 416,
+        "height": 514.171875,
+        "top": 254.90625,
+        "right": 592,
+        "bottom": 769.078125,
+        "left": 176
+      },
+      "image": {
+        "x": 216,
+        "y": 276.09375,
+        "width": 336,
+        "height": 336,
+        "top": 276.09375,
+        "right": 552,
+        "bottom": 612.09375,
+        "left": 216
+      },
+      "contentScrollHeight": 510,
+      "contentClientHeight": 510,
+      "documentScrollWidth": 768,
+      "documentClientWidth": 768,
+      "title": "현재 사이트를 수리하고 있어요",
+      "description": "일부 기능이 정상적으로 동작하지 않을 수 있습니다.",
+      "button": "확인했습니다"
+    },
+    "after": {
+      "activeModalIds": [
+        "start-modal"
+      ],
+      "focusedId": "settings-panel",
+      "overlayScrollTop": 0,
+      "settingsTop": 6.390625,
+      "documentScrollWidth": 768,
+      "documentClientWidth": 768
+    }
+  },
+  {
+    "viewport": {
+      "name": "desktop-1280",
+      "width": 1280,
+      "height": 900
+    },
+    "before": {
+      "url": "http://127.0.0.1:45321/",
+      "activeModalIds": [
+        "repair-notice-modal"
+      ],
+      "focusedClass": "modal-content repair-notice-content",
+      "content": {
+        "x": 380,
+        "y": 134.609375,
+        "width": 520,
+        "height": 630.78125,
+        "top": 134.609375,
+        "right": 900,
+        "bottom": 765.390625,
+        "left": 380
+      },
+      "image": {
+        "x": 430,
+        "y": 161.609375,
+        "width": 420,
+        "height": 420,
+        "top": 161.609375,
+        "right": 850,
+        "bottom": 581.609375,
+        "left": 430
+      },
+      "contentScrollHeight": 625,
+      "contentClientHeight": 625,
+      "documentScrollWidth": 1280,
+      "documentClientWidth": 1280,
+      "title": "현재 사이트를 수리하고 있어요",
+      "description": "일부 기능이 정상적으로 동작하지 않을 수 있습니다.",
+      "button": "확인했습니다"
+    },
+    "after": {
+      "activeModalIds": [
+        "start-modal"
+      ],
+      "focusedId": "settings-panel",
+      "overlayScrollTop": 0,
+      "settingsTop": 146.90625,
+      "documentScrollWidth": 1280,
+      "documentClientWidth": 1280
+    }
+  }
+]

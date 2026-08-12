@@ -15,6 +15,7 @@ import {
 import { createAppRuntimeHelpers } from './modules/app-runtime-helpers.js';
 import { createDDayRenderer } from './modules/dday.js';
 import { createModalManager } from './modules/modal.js?v=devil-redesign-1';
+import { prepareRepairNotice } from './modules/repair-notice.js';
 import { initializeApp } from './modules/app-initializer.js';
 import { createDomRefs } from './modules/dom-elements.js';
 import { loadQuizPartials } from './modules/quiz-partial-loader.js';
@@ -153,6 +154,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         closeProgressModalBtn,
         scrapResultImageBtn,
         scrapResultImageBtnTop,
+        repairNoticeModal,
+        repairNoticeConfirmBtn,
         startModal,
         settingsPanel,
         timeSettingDisplay,
@@ -188,6 +191,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- 모달 포커스 헬퍼 ---
     const { openModal, closeModal, focusModal } = createModalManager();
+    const initialModal = prepareRepairNotice({
+        closeModal,
+        openModal,
+        repairNoticeConfirmBtn,
+        repairNoticeModal,
+        startModal,
+    });
 
     // --- 오디오 ---
     // AudioManager를 사용하므로 중복 코드 제거
@@ -616,11 +626,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         fixSettingsPanelHeight,
         gameState,
         getDurationForTopic,
+        initialModal,
         openModal,
         renderTopicSelector,
         resetGame,
         setupCreativeQuestionTextReveal,
-        startModal,
         storageManager,
         timeSetterWrapper,
         updateStartModalUI,
