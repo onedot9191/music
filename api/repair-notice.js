@@ -73,6 +73,17 @@ async function updateRepairNoticeEnabled(enabled) {
     }
 }
 
+function writeFailureMessage(error) {
+    const match =
+        error instanceof Error
+            ? /Edge Config update failed with (\d{3})/.exec(error.message)
+            : null;
+
+    return match
+        ? `공지 상태를 저장하지 못했습니다. (Vercel 응답 ${match[1]})`
+        : '공지 상태를 저장하지 못했습니다.';
+}
+
 async function handleUpdate(request) {
     let input;
     try {
@@ -88,8 +99,8 @@ async function handleUpdate(request) {
     try {
         await updateRepairNoticeEnabled(input.enabled);
         return jsonResponse({ enabled: input.enabled });
-    } catch {
-        return jsonResponse({ error: '공지 상태를 저장하지 못했습니다.' }, 502);
+    } catch (error) {
+        return jsonResponse({ error: writeFailureMessage(error) }, 502);
     }
 }
 

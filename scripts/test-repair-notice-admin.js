@@ -109,6 +109,24 @@ try {
     );
     assert.equal(invalidRequestResponse.status, 200);
     assert.equal(invalidRequestFetchCalled, true);
+
+    globalThis.fetch = async () =>
+        Response.json(
+            { error: { message: 'not authorized' } },
+            { status: 403 }
+        );
+
+    const failedUpdateResponse = await repairNoticeApi.fetch(
+        new Request('https://example.com/api/repair-notice', {
+            body: JSON.stringify({ enabled: false }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+        })
+    );
+    assert.equal(failedUpdateResponse.status, 502);
+    assert.deepEqual(await failedUpdateResponse.json(), {
+        error: '공지 상태를 저장하지 못했습니다. (Vercel 응답 403)',
+    });
 } finally {
     globalThis.fetch = originalFetch;
     process.env = originalEnv;
