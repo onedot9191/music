@@ -53,13 +53,13 @@ canonicalAnswers.forEach((answer, index) => {
     assert.match(
         partial,
         new RegExp(
-            `data-answer="${answer}"[\\s\\S]*data-accept="${alternative}"`
+            `data-answer="${answer}"[\\s\\S]*data-accept="${alternative}"[\\s\\S]*data-display-accepted-answer`
         ),
         `${alternative} should be an accepted alias of ${answer}`
     );
 });
 
-function createInput(answer, acceptedAnswer = '') {
+function createInput(answer, acceptedAnswer = '', displayAccepted = false) {
     const input = {
         classList: {
             contains() {
@@ -70,6 +70,9 @@ function createInput(answer, acceptedAnswer = '') {
         getAttribute(name) {
             if (name === 'data-answer') return answer;
             if (name === 'data-accept') return acceptedAnswer;
+            if (name === 'data-display-accepted-answer') {
+                return displayAccepted ? '' : null;
+            }
             return null;
         },
         value: '',
@@ -81,10 +84,15 @@ function createInput(answer, acceptedAnswer = '') {
 }
 
 const inputs = canonicalAnswers.map((answer, index) =>
-    createInput(answer, alternativeAnswers[index])
+    createInput(
+        answer,
+        alternativeAnswers[index],
+        Boolean(alternativeAnswers[index])
+    )
 );
 const section = {};
-const normalizeAnswer = (value) => value.trim().toLowerCase();
+const normalizeAnswer = (value) =>
+    value.trim().replace(/\s+/g, '').toLowerCase();
 const gradeAtInput = (index, answer) => {
     inputs[index].value = answer;
 
@@ -126,10 +134,18 @@ canonicalAnswers.forEach((answer, index) => {
     );
     assert.equal(
         result.displayAnswer,
-        canonicalAnswers[index],
-        'accepted aliases should display their canonical answers'
+        requestedAnswers[index],
+        'configured aliases should display their authored accepted answers'
     );
 });
+
+const spacedAliasResult = gradeAtInput(0, '  분석될  가치 개념의   확인  ');
+
+assert.equal(
+    spacedAliasResult.displayAnswer,
+    '분석될 가치 개념의 확인',
+    'configured aliases should not preserve incorrect spacing'
+);
 
 const wrongInputResult = gradeAtInput(0, canonicalAnswers[1]);
 
@@ -150,4 +166,6 @@ assert.equal(
     'reversing concept analysis answers should not pass ordered grading'
 );
 
-console.log('Concept analysis accepts aliases and displays canonical answers');
+console.log(
+    'Concept analysis displays configured aliases with authored spacing'
+);

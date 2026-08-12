@@ -1,6 +1,7 @@
 import assert from 'assert/strict';
 
 import { getAnswerCandidates } from '../modules/answer-candidates.js';
+import { createAnswerFeedbackController } from '../modules/answer-feedback-controller.js';
 import { gradeGroupedAnswer } from '../modules/answer-grading.js';
 
 function createInput(answer, group) {
@@ -13,6 +14,7 @@ function createInput(answer, group) {
             },
         },
         dataset: { answer },
+        disabled: false,
         getAttribute(name) {
             return name === 'data-answer' ? answer : null;
         },
@@ -20,7 +22,10 @@ function createInput(answer, group) {
             correct = true;
         },
         closest(selector) {
-            return selector === '[data-group]' ? group : null;
+            return selector === '[data-group]' ||
+                selector === '[data-ignore-order]'
+                ? group
+                : null;
         },
         value: '',
     };
@@ -93,6 +98,36 @@ assert.equal(
     duplicateResult.isCorrect,
     false,
     'an unordered group should reject an exhausted canonical answer'
+);
+
+const revealInputs = [];
+const revealGroup = {
+    querySelectorAll() {
+        return revealInputs;
+    },
+};
+
+revealInputs.push(
+    createInput('왜라는 질문하기', revealGroup),
+    createInput('도덕적 문제 부각하기', revealGroup),
+    createInput('상황을 복잡하게 하기', revealGroup)
+);
+revealInputs[0].dataset.matchedAnswer = '도덕적 문제 부각하기';
+
+const { revealInputWithAdvance } = createAnswerFeedbackController({});
+
+revealInputWithAdvance(revealInputs[1]);
+assert.equal(
+    revealInputs[1].value,
+    '왜라는 질문하기',
+    'a second incorrect attempt should reveal an unused unordered answer'
+);
+
+revealInputWithAdvance(revealInputs[2]);
+assert.equal(
+    revealInputs[2].value,
+    '상황을 복잡하게 하기',
+    'later reveals should continue consuming distinct unordered answers'
 );
 
 console.log('Grouped grading rejects exhausted canonical answers');

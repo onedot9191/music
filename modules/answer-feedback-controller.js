@@ -35,9 +35,40 @@ export function createAnswerFeedbackController({
         showMiniRevealButton(input, markCorrectAndAdvance);
     }
 
+    function getRevealAnswer(input) {
+        const group = input.closest('[data-ignore-order]');
+
+        if (!group) return input.dataset.answer;
+
+        const inputs = Array.from(group.querySelectorAll('input[data-answer]'));
+        const remainingAnswers = inputs.map(
+            (candidate) => candidate.dataset.answer
+        );
+
+        inputs.forEach((candidate) => {
+            const matchedAnswer = candidate.dataset.matchedAnswer;
+
+            if (!matchedAnswer) return;
+
+            const answerIndex = remainingAnswers.indexOf(matchedAnswer);
+
+            if (answerIndex !== -1) {
+                remainingAnswers.splice(answerIndex, 1);
+            }
+        });
+
+        return remainingAnswers[0] || input.dataset.answer;
+    }
+
     function revealInputWithAdvance(input, { showRevealButton = false } = {}) {
-        input.value = input.dataset.answer;
+        const answer = getRevealAnswer(input);
+
+        input.value = answer;
         input.disabled = true;
+
+        if (input.closest('[data-ignore-order]')) {
+            input.dataset.matchedAnswer = answer;
+        }
 
         if (showRevealButton) {
             showRevealButtonForIntegrated(input);
@@ -169,7 +200,7 @@ export function createAnswerFeedbackController({
 
         updateWrongAnswerIndicatorsImmediate();
 
-        input.value = input.dataset.answer;
+        input.value = input.dataset.matchedAnswer || input.dataset.answer;
         input.disabled = true;
 
         incrementTodayBlankCount();

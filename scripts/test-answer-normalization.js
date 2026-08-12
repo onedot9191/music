@@ -54,6 +54,11 @@ assert.notEqual(
     normalizeAnswer('토 토론', modelState),
     'lexical 의 in 토의 must not be omitted'
 );
+assert.notEqual(
+    normalizeAnswer('구성주의', modelState),
+    normalizeAnswer('구성주', modelState),
+    'lexical 의 in words ending with 주의 must not be omitted'
+);
 assert.equal(
     normalizeAnswer('개념적 지식(원리)', modelState),
     normalizeAnswer('개념적 지식', modelState),

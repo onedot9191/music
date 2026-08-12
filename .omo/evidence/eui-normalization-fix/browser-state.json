@@ -4,7 +4,8 @@
     "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/lexical-eui-wrong-mid.png",
     "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/lexical-eui-wrong-settled.png",
     "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/lexical-eui-correct.png",
-    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/particle-eui-omitted-correct.png"
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/particle-eui-omitted-correct.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/eui-normalization-fix/single-syllable-particle-eui-omitted-correct.png"
   ],
   "finalState": [
     {
@@ -23,6 +24,15 @@
       ],
       "disabled": true,
       "value": "개인의 책무성"
+    },
+    {
+      "answer": "삶의 안녕",
+      "classes": [
+        "correct",
+        "correct-pulse"
+      ],
+      "disabled": true,
+      "value": "삶의 안녕"
     }
   ],
   "lexicalWrongState": {
@@ -33,5 +43,11 @@
     ],
     "disabled": false,
     "value": ""
+  },
+  "submittedValues": {
+    "lexicalCorrect": "정의",
+    "lexicalWrong": "정",
+    "particleOmitted": "개인 책무성",
+    "singleSyllableParticleOmitted": "삶 안녕"
   }
 }

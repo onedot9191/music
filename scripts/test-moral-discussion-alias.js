@@ -13,11 +13,11 @@ const partial = readFileSync(
 
 assert.match(
     partial,
-    /data-answer="도덕적 문제 부각하기"[\s\S]*data-accept="도덕적 문제 부각시키기"/,
+    /data-answer="도덕적 문제 부각하기"[\s\S]*data-accept="도덕적 문제 부각시키기"[\s\S]*data-display-accepted-answer/,
     'moral discussion should expose the alternative answer'
 );
 
-function createInput(answer, acceptedAnswer = '') {
+function createInput(answer, acceptedAnswer = '', displayAccepted = false) {
     const input = {
         classList: {
             contains() {
@@ -28,6 +28,9 @@ function createInput(answer, acceptedAnswer = '') {
         getAttribute(name) {
             if (name === 'data-answer') return answer;
             if (name === 'data-accept') return acceptedAnswer;
+            if (name === 'data-display-accepted-answer') {
+                return displayAccepted ? '' : null;
+            }
             return null;
         },
         value: answer,
@@ -51,7 +54,7 @@ const group = {
 };
 const inputs = [
     createInput('왜라는 질문하기'),
-    createInput('도덕적 문제 부각하기', '도덕적 문제 부각시키기'),
+    createInput('도덕적 문제 부각하기', '도덕적 문제 부각시키기', true),
     createInput('상황을 복잡하게 하기'),
 ];
 inputs[1].value = '도덕적 문제 부각시키기';
@@ -90,8 +93,42 @@ assert.equal(
 );
 assert.equal(
     result.displayAnswer,
-    '도덕적 문제 부각하기',
-    'an accepted alias should display the canonical answer'
+    '도덕적 문제 부각시키기',
+    'the configured alias should display as an accepted answer'
 );
 
-console.log('Moral discussion displays the canonical answer for an alias');
+inputs[1].value = '  도덕적  문제 부각시키기  ';
+
+const spacedResult = gradeInputAnswer({
+    CONSTANTS: {
+        SUBJECTS: { COMPETENCY: 'competency', AREA: 'area' },
+        TOPICS: { MODEL: 'model', ACHIEVEMENT: 'achievement' },
+    },
+    SPECIAL_SUBJECTS: new Set(),
+    gameState: { selectedSubject: 'ethics', selectedTopic: 'model' },
+    gradeDirectAnswer: () => ({ isCorrect: false }),
+    gradeGroupedAnswer,
+    getAnswerCandidates,
+    input: inputs[1],
+    normalizeAnswer: (value) => value.replace(/\s+/g, '').toLowerCase(),
+    section: {},
+    sectionMatchers: {
+        isGenericModelTitleInput: () => false,
+        isGroupedGradingInput,
+        isIntegratedTitleInput: () => false,
+        isPracticalTitleInput: () => false,
+    },
+    stripModelWord: (value) => value,
+    usedAnswersMap: new Map(),
+    userAnswer: '도덕적문제부각시키기',
+});
+
+assert.equal(
+    spacedResult.displayAnswer,
+    '도덕적 문제 부각시키기',
+    'the configured alias should not preserve incorrect spacing'
+);
+
+console.log(
+    'Moral discussion displays its configured alias with authored spacing'
+);

@@ -36,6 +36,23 @@ function incrementCount(map, key) {
     map.set(key, (map.get(key) || 0) + 1);
 }
 
+function getDisplayAnswer({
+    canonicalInput,
+    userAnswer,
+    getAnswerCandidates,
+    normalizeAnswer,
+}) {
+    if (canonicalInput.getAttribute('data-display-accepted-answer') === null) {
+        return canonicalInput.dataset.answer;
+    }
+
+    return (
+        getAnswerCandidates(canonicalInput).find(
+            (answer) => normalizeAnswer(answer) === userAnswer
+        ) || canonicalInput.dataset.answer
+    );
+}
+
 function getAnswerCandidateList({
     input,
     getAnswerCandidates,
@@ -161,6 +178,10 @@ export function gradeGroupedAnswer({
     }
 
     const canonicalNorm = normalizeAnswer(canonical);
+    const canonicalInput = inputs.find(
+        (candidate) =>
+            normalizeAnswer(candidate.dataset.answer) === canonicalNorm
+    );
 
     if (!ignoreOrder && usedSet.has(canonicalNorm)) {
         return { isCorrect: false, displayAnswer: input.dataset.answer };
@@ -174,7 +195,14 @@ export function gradeGroupedAnswer({
 
     return {
         isCorrect: true,
-        displayAnswer: canonical,
+        displayAnswer: canonicalInput
+            ? getDisplayAnswer({
+                  canonicalInput,
+                  userAnswer,
+                  getAnswerCandidates,
+                  normalizeAnswer,
+              })
+            : canonical,
     };
 }
 
@@ -208,7 +236,12 @@ export function gradeDirectAnswer({
     if (correctAnswers.includes(userAnswer)) {
         return {
             isCorrect: true,
-            displayAnswer: input.dataset.answer,
+            displayAnswer: getDisplayAnswer({
+                canonicalInput: input,
+                userAnswer,
+                getAnswerCandidates,
+                normalizeAnswer,
+            }),
         };
     }
 

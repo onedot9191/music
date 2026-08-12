@@ -3,7 +3,7 @@
 
 import { CONSTANTS } from './constants.js';
 
-const LEXICAL_EUI_WORDS = new Set(['논의', '정의', '창의', '토의']);
+const LEXICAL_EUI_SUFFIXES = ['논의', '정의', '주의', '창의', '토의'];
 
 /**
  * 답변을 정규화합니다 (공백, 특수문자 제거 등).
@@ -42,7 +42,7 @@ export function normalizeAnswer(str, gameState, isSpellingBlankMode = null) {
         result = result.replace(
             /(^|[^가-힣])([가-힣]+의)(?=[^가-힣]|$)/g,
             (match, boundary, word) =>
-                LEXICAL_EUI_WORDS.has(word)
+                LEXICAL_EUI_SUFFIXES.some((suffix) => word.endsWith(suffix))
                     ? match
                     : `${boundary}${word.slice(0, -1)}`
         );
