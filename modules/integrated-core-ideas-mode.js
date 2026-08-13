@@ -44,9 +44,17 @@ function createInput({ answer, ariaLabel, placeholder }) {
     return input;
 }
 
+function getBlankPart(blankPart, answer) {
+    const candidate = Array.isArray(blankPart) ? blankPart[0] : blankPart;
+    const normalizedPart =
+        typeof candidate === 'string' ? candidate.trim() : '';
+
+    return isBlankPartInAnswer(normalizedPart, answer) ? normalizedPart : '';
+}
+
 function createPartialPrompt({ answer, ariaLabel, blankPart }) {
-    const fragmentIndex = answer.indexOf(blankPart);
     const prompt = document.createDocumentFragment();
+    const fragmentIndex = answer.indexOf(blankPart);
 
     prompt.append(document.createTextNode(answer.slice(0, fragmentIndex)));
     const input = createInput({
@@ -93,13 +101,10 @@ export function normalizeCoreIdeaSettings(rawSettings = {}, answers = []) {
     return {
         blankParts: DEFAULT_CORE_IDEA_BLANK_PARTS.map((defaultPart, index) => {
             const requestedValue = requestedParts[index];
-            const requestedPart =
-                typeof requestedValue === 'string' ? requestedValue.trim() : '';
             const answer = answers[index] || '';
+            const requestedPart = getBlankPart(requestedValue, answer);
 
-            return isBlankPartInAnswer(requestedPart, answer)
-                ? requestedPart
-                : defaultPart;
+            return requestedPart || defaultPart;
         }),
         mode: MODES.has(rawSettings.mode) ? rawSettings.mode : 'full',
     };

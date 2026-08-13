@@ -32,6 +32,34 @@ assert.equal(
     'missing blank parts should retain their usable defaults'
 );
 
+const legacyWhitespaceSettings = normalizeCoreIdeaSettings(
+    {
+        blankParts: ['  생각하며  '],
+        mode: 'partial',
+    },
+    answerSources
+);
+
+assert.equal(
+    legacyWhitespaceSettings.blankParts[0],
+    '생각하며',
+    'legacy single-string settings should retain a trimmed selection'
+);
+
+const legacyMultipleSettings = normalizeCoreIdeaSettings(
+    {
+        blankParts: [['생각하며', '생활한다']],
+        mode: 'partial',
+    },
+    answerSources
+);
+
+assert.equal(
+    legacyMultipleSettings.blankParts[0],
+    '생각하며',
+    'legacy multiple selections should retain only the first blank'
+);
+
 const invalidSettings = normalizeCoreIdeaSettings(
     {
         blankParts: ['문장에 없는 구절'],

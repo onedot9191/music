@@ -2,7 +2,8 @@
   "captures": [
     "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-before-drag-1280.png",
     "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-during-drag-1280.png",
-    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-after-release-1280.png"
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/config-after-release-1280.png",
+    "/Users/ibyeonghyeon/Documents/GitHub/music/.omo/evidence/integrated-core-ideas-config-plain/partial-single-blank-1280.png"
   ],
   "configuring": {
     "mainVisible": true,
@@ -30,10 +31,42 @@
   "afterRelease": {
     "visibleHighlights": 8,
     "isSelecting": false,
-    "storedBlank": "내가 누구인지"
+    "firstBlank": "생각하며"
   },
-  "outsideRelease": {
-    "visibleHighlights": 8,
-    "isSelecting": false
+  "partialMode": {
+    "firstRowAnswers": [
+      "생각하며",
+      "서로 관계를 맺으며"
+    ],
+    "firstPromptInputs": 1,
+    "viewportWidth": 1280,
+    "horizontalOverflow": 0,
+    "cardBounds": [
+      {
+        "left": 96,
+        "right": 632,
+        "width": 536
+      },
+      {
+        "left": 648,
+        "right": 1184,
+        "width": 536
+      },
+      {
+        "left": 96,
+        "right": 632,
+        "width": 536
+      },
+      {
+        "left": 648,
+        "right": 1184,
+        "width": 536
+      }
+    ],
+    "firstPromptBounds": {
+      "left": 123,
+      "right": 605,
+      "width": 482
+    }
   }
 }
