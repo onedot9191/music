@@ -371,6 +371,54 @@ body:has(#integrated-core-ideas-quiz-main:not(.hidden)) > #character-assistant {
     background: rgba(142, 68, 173, 0.1);
 }
 
+#practical-core-concepts-quiz-main .practical-core-concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+}
+
+#practical-core-concepts-quiz-main .practical-core-concept-card {
+    display: grid;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border: var(--pixel-border);
+    background: var(--surface);
+    box-shadow: var(--shadow-hard);
+}
+
+#practical-core-concepts-quiz-main .practical-core-concept-card h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 2rem;
+    line-height: 1.35;
+}
+
+#practical-core-concepts-quiz-main .practical-core-concept-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+}
+
+#practical-core-concepts-quiz-main .practical-core-concept-inputs input {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border: 0.2rem solid var(--secondary);
+    border-radius: 0.8rem;
+    background: var(--bg-light);
+    color: var(--text-light);
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+#practical-core-concepts-quiz-main .practical-core-concept-inputs input:focus {
+    outline: none;
+    border-color: var(--text-light);
+    box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.24);
+}
+
 @media (max-width: 768px) {
     #integrated-core-ideas-quiz-main .core-ideas-header {
         align-items: stretch;
@@ -402,6 +450,24 @@ body:has(#integrated-core-ideas-quiz-main:not(.hidden)) > #character-assistant {
         flex-basis: 100%;
         min-width: 100% !important;
         width: 100% !important;
+    }
+
+    #practical-core-concepts-quiz-main .practical-core-concepts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #practical-core-concepts-quiz-main .practical-core-concept-card {
+        padding: var(--space-md);
+    }
+
+    #practical-core-concepts-quiz-main .practical-core-concept-inputs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 420px) {
+    #practical-core-concepts-quiz-main .practical-core-concept-inputs {
+        grid-template-columns: 1fr;
     }
 }
 

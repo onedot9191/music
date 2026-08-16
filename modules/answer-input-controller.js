@@ -8,6 +8,17 @@ import {
 
 export { isIgnoreOrderScope };
 
+export function shouldKeepAnswerHiddenAfterSecondIncorrect(
+    CONSTANTS,
+    gameState
+) {
+    return (
+        gameState.selectedSubject ===
+            CONSTANTS.SUBJECTS.PRACTICAL_CORE_CONCEPTS &&
+        gameState.selectedTopic === CONSTANTS.TOPICS.CORE_CONCEPTS
+    );
+}
+
 export function createAnswerInputController({
     CONSTANTS,
     SPECIAL_SUBJECTS,
@@ -93,6 +104,12 @@ export function createAnswerInputController({
             markSecondIncorrect(input);
 
             if (
+                shouldKeepAnswerHiddenAfterSecondIncorrect(CONSTANTS, gameState)
+            ) {
+                return false;
+            }
+
+            if (
                 shouldRevealSecondIncorrect(input, {
                     includeCourse: true,
                     includeNonCurriculumTopic: true,
@@ -117,8 +134,7 @@ export function createAnswerInputController({
         if (
             !input.matches('input[data-answer]') ||
             input.disabled ||
-            (input.dataset.autoFocused === 'true' &&
-                !event.allowEmptyAnswer) ||
+            (input.dataset.autoFocused === 'true' && !event.allowEmptyAnswer) ||
             isCurriculumOrderEditingInput(input)
         ) {
             return;

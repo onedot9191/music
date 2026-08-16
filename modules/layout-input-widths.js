@@ -28,6 +28,7 @@ const CREATIVE_WIDTH_SELECTOR = [
     '#math-course-quiz-main .overview-question input[data-answer]',
     '#science-course-quiz-main .overview-question input[data-answer]',
     '#practical-course-quiz-main .overview-question input[data-answer]',
+    '#practical-core-concepts-quiz-main .practical-core-concept-inputs input[data-answer]',
     '#music-course-quiz-main .overview-question input[data-answer]',
     '#english-course-quiz-main .overview-question input[data-answer]',
     '#art-course-quiz-main .overview-question input[data-answer]',

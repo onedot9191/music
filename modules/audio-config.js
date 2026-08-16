@@ -5,9 +5,11 @@ export const AUDIO_DEFINITIONS = {
     },
     timeup: {
         src: './timeup.mp3',
+        volumeMultiplier: 0.85,
     },
     start: {
         src: './start.mp3',
+        volumeMultiplier: 0.85,
     },
     fail: {
         src: './fail.mp3',

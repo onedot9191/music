@@ -80,6 +80,11 @@ export const SUBJECT_TOPIC_MAPPING = {
         { name: '모형', subject: 'practical', topic: 'model' },
         { name: '성취기준', subject: 'practical-std', topic: 'achievement' },
         { name: '교육과정', subject: 'practical-course', topic: 'course' },
+        {
+            name: '핵심개념',
+            subject: 'practical-core-concepts',
+            topic: 'core-concepts',
+        },
     ],
     integrated: [
         {

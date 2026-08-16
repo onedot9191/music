@@ -49,6 +49,7 @@ export const CONSTANTS = {
         ENGLISH_COURSE: 'english-course',
         INTEGRATED_COURSE: 'integrated-course',
         INTEGRATED_CORE_IDEAS: 'integrated-core-ideas',
+        PRACTICAL_CORE_CONCEPTS: 'practical-core-concepts',
         SOCIAL_COURSE: 'social-course',
         MATH_COURSE: 'math-course',
         SCIENCE_COURSE: 'science-course',
@@ -78,6 +79,7 @@ export const CONSTANTS = {
         ACHIEVEMENT: 'achievement',
         MORAL: 'moral',
         CORE_IDEAS: 'core-ideas',
+        CORE_CONCEPTS: 'core-concepts',
     },
     MODES: {
         NORMAL: 'normal',
@@ -151,6 +153,7 @@ export const SUBJECT_NAMES = {
     [CONSTANTS.SUBJECTS.ENGLISH_COURSE]: '영어',
     [CONSTANTS.SUBJECTS.INTEGRATED_COURSE]: '통합',
     [CONSTANTS.SUBJECTS.INTEGRATED_CORE_IDEAS]: '통합',
+    [CONSTANTS.SUBJECTS.PRACTICAL_CORE_CONCEPTS]: '실과',
     [CONSTANTS.SUBJECTS.SOCIAL_COURSE]: '사회',
     [CONSTANTS.SUBJECTS.MATH_COURSE]: '수학',
     [CONSTANTS.SUBJECTS.SCIENCE_COURSE]: '과학',
@@ -179,4 +182,5 @@ export const TOPIC_NAMES = {
     [CONSTANTS.TOPICS.ACHIEVEMENT]: '성취기준',
     [CONSTANTS.TOPICS.MORAL]: '기타',
     [CONSTANTS.TOPICS.CORE_IDEAS]: '핵심 아이디어',
+    [CONSTANTS.TOPICS.CORE_CONCEPTS]: '핵심개념',
 };
