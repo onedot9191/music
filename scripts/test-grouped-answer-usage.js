@@ -1,4 +1,5 @@
 import assert from 'assert/strict';
+import { readFileSync } from 'fs';
 
 import { getAnswerCandidates } from '../modules/answer-candidates.js';
 import { createAnswerFeedbackController } from '../modules/answer-feedback-controller.js';
@@ -198,6 +199,36 @@ assert.equal(
     revealInputs[2].value,
     '상황을 복잡하게 하기',
     'later reveals should continue consuming distinct unordered answers'
+);
+
+const moralMethodsMarkup = readFileSync(
+    new URL(
+        '../partials/quiz-main-sections/moral-principles/moral-methods.html',
+        import.meta.url
+    ),
+    'utf8'
+);
+const methodColumnTags = moralMethodsMarkup.match(
+    /<div\s+class="method-column"[\s\S]*?>/g
+);
+const unorderedSubListTags = moralMethodsMarkup.match(
+    /<ul\s+class="sub-list"[\s\S]*?data-ignore-order[\s\S]*?>/g
+);
+
+assert.equal(
+    methodColumnTags?.some((tag) => tag.includes('data-ignore-order')),
+    false,
+    'method title inputs should keep ordered grading'
+);
+assert.equal(
+    unorderedSubListTags?.length,
+    3,
+    'only the three method sub-lists should use unordered grading'
+);
+assert.equal(
+    unorderedSubListTags?.every((tag) => tag.includes('data-group=')),
+    true,
+    'each unordered method sub-list should have its own answer pool'
 );
 
 console.log('Grouped grading rejects exhausted canonical answers');
