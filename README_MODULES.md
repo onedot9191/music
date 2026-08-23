@@ -169,4 +169,4 @@
 
 - `npm test` - JavaScript 파일 파싱과 퀴즈 partial/include 구조 검증
 - `npm run lint` - ESLint 실행
-- `npm run dev` - 로컬 웹 서버 실행
+- `npm run dev` - 파일 저장 시 자동 새로고침되는 로컬 웹 서버 실행

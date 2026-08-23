@@ -155,14 +155,26 @@ async function validateLegacyReferences(files) {
     }
 }
 
+function validateDevServer(packageJson) {
+    if (!packageJson.scripts?.dev?.startsWith('live-server ')) {
+        throw new Error('npm run dev must use live-server');
+    }
+
+    if (!packageJson.devDependencies?.['live-server']) {
+        throw new Error('live-server must be listed in devDependencies');
+    }
+}
+
 const html = await readText('index.html');
 const readme = await readText('README_MODULES.md');
+const packageJson = JSON.parse(await readText('package.json'));
 
 await validateCssOrder(html, readme);
 await validateScripts(html);
 await validateModuleRegistry();
 await validateLegacyReferences(['index.html', 'README_MODULES.md']);
+validateDevServer(packageJson);
 
 console.log(
-    'Validated project structure, CSS order, scripts, and module registry'
+    'Validated project structure, CSS order, scripts, module registry, and dev server'
 );

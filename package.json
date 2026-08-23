@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "check": "node --check app.js && for file in api/*.js modules/*.js scripts/*.js; do node --check \"$file\"; done && node scripts/validate-quiz-partials.js && node scripts/validate-project-structure.js && node scripts/test-quiz-partial-loader.js && node scripts/test-answer-reveal.js && node scripts/test-result-progress.js && node scripts/test-concept-analysis-grading.js && node scripts/test-moral-discussion-alias.js && node scripts/test-moral-principles-alias.js && node scripts/test-grouped-answer-usage.js && node scripts/test-answer-normalization.js && node scripts/test-integrated-core-ideas-mode.js && node scripts/test-practical-core-concepts.js && node scripts/test-audio-config.js && node scripts/test-repair-notice-admin.js",
-    "dev": "http-server -p 8080 -o",
+    "dev": "live-server --port=8080 --open=/ --ignorePattern='\\.git|node_modules'",
     "test": "npm run check",
     "lint": "eslint ."
   },
@@ -15,7 +15,7 @@
   "devDependencies": {
     "eslint": "^8.50.0",
     "eslint-plugin-html": "^7.1.0",
-    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
     "prettier": "^2.8.8"
   },
   "type": "module"
