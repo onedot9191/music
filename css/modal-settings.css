@@ -145,6 +145,10 @@
     margin-top: var(--space-sm);
 }
 
+.site-migration-copy-line {
+    display: block;
+}
+
 .site-migration-status {
     margin-bottom: var(--space-md);
     color: var(--revealed);
