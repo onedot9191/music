@@ -149,6 +149,25 @@
     display: block;
 }
 
+.site-migration-address {
+    padding: var(--space-sm);
+    border: 2px solid var(--border-soft);
+    background: var(--surface-muted);
+    font-size: 1.4rem;
+}
+
+.site-migration-address a {
+    color: var(--text-light);
+    font-family: var(--font-mono);
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+}
+
+.site-migration-address a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0.2rem;
+}
+
 .site-migration-status {
     margin-bottom: var(--space-md);
     color: var(--revealed);
