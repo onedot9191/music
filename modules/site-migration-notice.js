@@ -66,44 +66,80 @@ function setFailedContent(view) {
     view.dismissButton.textContent = '확인';
 }
 
-function openTransferWindow({ storageManager, view, windowObject }) {
+function prepareTransferLink({ storageManager, view, windowObject }) {
     const token = windowObject.crypto.randomUUID();
     const transferUrl = `${NEW_SITE_ORIGIN}/#${TRANSFER_HASH_KEY}=${token}`;
-    const newWindow = windowObject.open(transferUrl, '_blank');
+    let newWindow = null;
+    let timeoutId = null;
 
-    if (!newWindow) {
-        view.status.textContent =
-            '새 창을 열지 못했습니다. 팝업을 허용한 뒤 다시 눌러 주세요.';
-        view.transferButton.disabled = false;
-        return;
+    view.transferButton.href = transferUrl;
+
+    function setPending(pending) {
+        view.transferButton.setAttribute('aria-disabled', String(pending));
     }
 
-    const records = storageManager.exportData();
-    view.status.textContent = '기록을 새 주소로 옮기는 중입니다.';
-
     function finishTransfer(message) {
-        windowObject.clearTimeout(timeoutId);
-        windowObject.removeEventListener('message', handleMessage);
+        if (timeoutId !== null) windowObject.clearTimeout(timeoutId);
+        timeoutId = null;
         view.status.textContent = message.ok
             ? '새 주소로 기록을 모두 옮겼습니다.'
             : '기록을 옮기지 못했습니다. 잠시 후 다시 시도해 주세요.';
-        view.transferButton.disabled = message.ok;
+
+        if (message.ok) {
+            windowObject.removeEventListener('message', handleMessage);
+            view.transferButton.hidden = true;
+            return;
+        }
+
+        newWindow = null;
+        setPending(false);
+    }
+
+    function startTimeout() {
+        if (timeoutId !== null) return;
+
+        timeoutId = windowObject.setTimeout(() => {
+            timeoutId = null;
+            newWindow = null;
+            view.status.textContent =
+                '연결 시간이 지났습니다. 버튼을 다시 눌러 주세요.';
+            setPending(false);
+        }, TRANSFER_WAIT_MS);
     }
 
     function handleMessage(event) {
-        if (!isTrustedMessage(event, NEW_SITE_ORIGIN, newWindow)) return;
-
         const message = parseTransferMessage(event.data);
-        if (!message || message.token !== token) return;
+        if (
+            event.origin !== NEW_SITE_ORIGIN ||
+            !message ||
+            message.token !== token
+        ) {
+            return;
+        }
 
         switch (message.type) {
             case MESSAGE_TYPES.READY:
+                if (
+                    !event.source ||
+                    (newWindow && event.source !== newWindow)
+                ) {
+                    return;
+                }
+                newWindow = event.source;
+                setPending(true);
+                view.status.textContent = '기록을 새 주소로 옮기는 중입니다.';
                 newWindow.postMessage(
-                    { type: MESSAGE_TYPES.DATA, token, data: records },
+                    {
+                        type: MESSAGE_TYPES.DATA,
+                        token,
+                        data: storageManager.exportData(),
+                    },
                     NEW_SITE_ORIGIN
                 );
+                startTimeout();
                 return;
             case MESSAGE_TYPES.COMPLETE:
+                if (!newWindow || event.source !== newWindow) return;
                 finishTransfer(message);
                 return;
             case MESSAGE_TYPES.DATA:
@@ -112,12 +148,16 @@ function openTransferWindow({ storageManager, view, windowObject }) {
     }
 
     windowObject.addEventListener('message', handleMessage);
-    const timeoutId = windowObject.setTimeout(() => {
-        windowObject.removeEventListener('message', handleMessage);
-        view.status.textContent =
-            '연결 시간이 지났습니다. 버튼을 다시 눌러 주세요.';
-        view.transferButton.disabled = false;
-    }, TRANSFER_WAIT_MS);
+
+    return function handleTransferClick(event) {
+        if (view.transferButton.getAttribute('aria-disabled') === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        setPending(true);
+        view.status.textContent = '기록을 새 주소로 옮기는 중입니다.';
+    };
 }
 
 function receiveTransferredRecords({
@@ -180,10 +220,10 @@ export function bindSiteMigrationNotice({
     );
 
     if (shouldShowSiteMigrationNotice(windowObject.location.hostname)) {
-        view.transferButton.addEventListener('click', () => {
-            view.transferButton.disabled = true;
-            openTransferWindow({ storageManager, view, windowObject });
-        });
+        view.transferButton.addEventListener(
+            'click',
+            prepareTransferLink({ storageManager, view, windowObject })
+        );
         modalManager.openModal(view.modal);
         return;
     }

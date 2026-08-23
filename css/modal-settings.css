@@ -163,6 +163,18 @@
     gap: var(--space-sm);
 }
 
+.site-migration-transfer {
+    text-align: center;
+    text-decoration: none;
+}
+
+.site-migration-transfer[aria-disabled='true'] {
+    pointer-events: none;
+    cursor: wait;
+    filter: brightness(0.75);
+    transform: none;
+}
+
 .site-migration-dismiss {
     background: var(--surface-muted);
 }

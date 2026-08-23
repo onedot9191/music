@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>이전 안내창 화면 확인</title>
+        <style>
+            html,
+            body,
+            iframe {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                border: 0;
+            }
+
+            body {
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <iframe id="site-preview" title="이전 안내창 미리보기"></iframe>
+        <script>
+            const preview = document.getElementById('site-preview');
+
+            preview.addEventListener('load', () => {
+                const modal = preview.contentDocument.getElementById(
+                    'site-migration-modal'
+                );
+                modal.classList.add('active');
+            });
+
+            preview.src = '/';
+        </script>
+    </body>
+</html>

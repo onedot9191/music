@@ -10,17 +10,25 @@ const NEW_SITE_ORIGIN = 'https://music-8pz.pages.dev';
 const TRANSFER_TOKEN = 'transfer-token';
 
 function createButton() {
+    const attributes = new Map();
     let clickHandler = () => {};
 
     return {
+        href: '',
         disabled: false,
         hidden: false,
         textContent: '',
         addEventListener(_eventName, handler) {
             clickHandler = handler;
         },
+        getAttribute(name) {
+            return attributes.get(name) ?? null;
+        },
         click() {
-            clickHandler();
+            clickHandler({ preventDefault() {} });
+        },
+        setAttribute(name, value) {
+            attributes.set(name, value);
         },
     };
 }
@@ -51,6 +59,7 @@ function createWindow({ hostname, hash = '', opener = null }) {
     const listeners = new Set();
     let openedUrl = '';
     let openedWindow = null;
+    let openCallCount = 0;
     let replacedUrl = '';
     let historyUrl = '';
 
@@ -85,6 +94,9 @@ function createWindow({ hostname, hash = '', opener = null }) {
         getOpenedWindow() {
             return openedWindow;
         },
+        getOpenCallCount() {
+            return openCallCount;
+        },
         getHistoryUrl() {
             return historyUrl;
         },
@@ -92,6 +104,7 @@ function createWindow({ hostname, hash = '', opener = null }) {
             return replacedUrl;
         },
         open(url) {
+            openCallCount += 1;
             openedUrl = url;
             openedWindow = createMessageTarget();
             return openedWindow;
@@ -146,21 +159,27 @@ bindSiteMigrationNotice({
     view: oldView,
     windowObject: oldWindow,
 });
+assert.equal(
+    oldView.transferButton.href,
+    `${NEW_SITE_ORIGIN}/#record-transfer=${TRANSFER_TOKEN}`
+);
 
 // When: the visitor clicks once and the new site announces it is ready.
 oldView.transferButton.click();
-const openedWindow = oldWindow.getOpenedWindow();
+const openedWindow = createMessageTarget();
 oldWindow.dispatchMessage({
     data: { type: 'site-migration-ready', token: TRANSFER_TOKEN },
     origin: NEW_SITE_ORIGIN,
     source: openedWindow,
 });
 
-// Then: the new site opens and receives the saved records.
+// Then: native link navigation is prepared without a popup API call, and the
+// new site receives the saved records.
 assert.equal(
-    oldWindow.getOpenedUrl(),
+    oldView.transferButton.href,
     `${NEW_SITE_ORIGIN}/#record-transfer=${TRANSFER_TOKEN}`
 );
+assert.equal(oldWindow.getOpenCallCount(), 0);
 assert.deepEqual(openedWindow.messages[0], {
     message: {
         data: records,
@@ -169,6 +188,16 @@ assert.deepEqual(openedWindow.messages[0], {
     },
     targetOrigin: NEW_SITE_ORIGIN,
 });
+oldWindow.dispatchMessage({
+    data: {
+        ok: true,
+        token: TRANSFER_TOKEN,
+        type: 'site-migration-complete',
+    },
+    origin: NEW_SITE_ORIGIN,
+    source: openedWindow,
+});
+assert.equal(oldView.transferButton.hidden, true);
 
 // Given: the new site was opened by the trusted production Vercel address.
 const opener = createMessageTarget();
