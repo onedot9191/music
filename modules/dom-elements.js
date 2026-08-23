@@ -43,6 +43,18 @@ export function createDomRefs() {
         repairNoticeAdminFeedback: document.getElementById(
             'repair-notice-admin-feedback'
         ),
+        siteMigrationModal: document.getElementById('site-migration-modal'),
+        siteMigrationTitle: document.getElementById('site-migration-title'),
+        siteMigrationDescription: document.getElementById(
+            'site-migration-description'
+        ),
+        siteMigrationStatus: document.getElementById('site-migration-status'),
+        siteMigrationTransferBtn: document.getElementById(
+            'site-migration-transfer-btn'
+        ),
+        siteMigrationDismissBtn: document.getElementById(
+            'site-migration-dismiss-btn'
+        ),
         startModal: document.getElementById('start-modal'),
         settingsPanel: document.getElementById('settings-panel'),
         timeSettingDisplay: document.getElementById('time-setting-display'),

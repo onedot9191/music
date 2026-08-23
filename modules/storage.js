@@ -1,7 +1,11 @@
 // === STORAGE MODULE ===
 // 로컬 스토리지를 사용한 데이터 저장과 관리를 담당합니다.
 
-import { STORAGE_KEYS } from './storage-config.js';
+import {
+    STORAGE_KEYS,
+    TRANSFER_STORAGE_KEYS,
+    TRANSFER_STORAGE_PREFIXES,
+} from './storage-config.js';
 import {
     getJsonStorageItem,
     isLocalStorageAvailable,
@@ -194,12 +198,19 @@ export class StorageManager {
 
     // 데이터 내보내기
     exportData() {
-        return exportStorageData(this.storageKeys);
+        return exportStorageData(
+            TRANSFER_STORAGE_KEYS,
+            TRANSFER_STORAGE_PREFIXES
+        );
     }
 
     // 데이터 가져오기
     importData(data) {
-        return importStorageData(this.storageKeys, data);
+        return importStorageData(
+            TRANSFER_STORAGE_KEYS,
+            TRANSFER_STORAGE_PREFIXES,
+            data
+        );
     }
 
     // === 오답노트 관련 ===

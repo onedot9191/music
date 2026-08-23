@@ -20,6 +20,7 @@ import {
     readRepairNoticeEnabled,
 } from './modules/repair-notice.js';
 import { bindRepairNoticeAdmin } from './modules/repair-notice-admin.js';
+import { bindSiteMigrationNotice } from './modules/site-migration-notice.js';
 import { initializeApp } from './modules/app-initializer.js';
 import { initializeIntegratedCoreIdeas } from './modules/integrated-core-ideas-mode.js';
 import { createDomRefs } from './modules/dom-elements.js';
@@ -171,6 +172,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         repairNoticeAdminStatus,
         repairNoticeAdminAction,
         repairNoticeAdminFeedback,
+        siteMigrationModal,
+        siteMigrationTitle,
+        siteMigrationDescription,
+        siteMigrationStatus,
+        siteMigrationTransferBtn,
+        siteMigrationDismissBtn,
         startModal,
         settingsPanel,
         timeSettingDisplay,
@@ -205,7 +212,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     bindOverviewStyleRefresh(gameState, CONSTANTS);
 
     // --- 모달 포커스 헬퍼 ---
-    const { openModal, closeModal, focusModal } = createModalManager();
+    const modalManager = createModalManager();
+    const { openModal, closeModal, focusModal } = modalManager;
     const repairNoticeEnabled = await repairNoticeEnabledPromise;
     const initialModal = prepareRepairNotice({
         closeModal,
@@ -661,5 +669,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         storageManager,
         timeSetterWrapper,
         updateStartModalUI,
+    });
+
+    bindSiteMigrationNotice({
+        modalManager,
+        storageManager,
+        view: {
+            modal: siteMigrationModal,
+            title: siteMigrationTitle,
+            description: siteMigrationDescription,
+            status: siteMigrationStatus,
+            transferButton: siteMigrationTransferBtn,
+            dismissButton: siteMigrationDismissBtn,
+        },
+        windowObject: window,
     });
 });

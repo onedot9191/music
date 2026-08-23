@@ -7,6 +7,18 @@ export const STORAGE_KEYS = Object.freeze({
     CORRECT_ANSWERS: 'correctAnswers',
 });
 
+export const TRANSFER_STORAGE_KEYS = Object.freeze([
+    ...Object.values(STORAGE_KEYS),
+    'subjectAccuracy',
+    'subjectAchievements',
+    'soundEnabled',
+]);
+
+export const TRANSFER_STORAGE_PREFIXES = Object.freeze([
+    'curriculum-order:',
+    'curriculum-inline-order:',
+]);
+
 export const DEFAULT_USER_PREFERENCES = Object.freeze({
     volume: 0.3,
     theme: 'dark',
