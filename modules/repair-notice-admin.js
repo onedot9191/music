@@ -20,12 +20,14 @@ async function parseResponse(response) {
 }
 
 export function createRepairNoticeUpdateOptions(enabled, password) {
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+    if (password) headers.Authorization = `Bearer ${password}`;
+
     return {
         body: JSON.stringify({ enabled }),
-        headers: {
-            Authorization: `Bearer ${password}`,
-            'Content-Type': 'application/json',
-        },
+        headers,
         method: 'POST',
     };
 }
@@ -104,12 +106,6 @@ export function bindRepairNoticeAdmin({
 
     actionButton.addEventListener('click', async () => {
         const password = passwordInput.value;
-        if (!password) {
-            feedback.textContent = '관리자 비밀번호를 입력해 주세요.';
-            passwordInput.focus();
-            return;
-        }
-
         setLoading(true);
         feedback.textContent = '';
         try {
@@ -126,6 +122,7 @@ export function bindRepairNoticeAdmin({
                 : '모든 사용자에게 수리 공지를 껐습니다.';
         } catch (error) {
             feedback.textContent = error.message;
+            passwordInput.focus();
         } finally {
             setLoading(false);
         }

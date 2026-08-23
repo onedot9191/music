@@ -1,10 +1,14 @@
 const REPAIR_NOTICE_KEY = 'repairNoticeEnabled';
+const ADMIN_COOKIE_NAME = '__Host-repair_notice_admin';
+const ADMIN_COOKIE_PAYLOAD = 'repair-notice-admin-v1';
+const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
-function jsonResponse(body, status = 200) {
+function jsonResponse(body, status = 200, headers = {}) {
     return Response.json(body, {
         headers: {
             'Cache-Control': 'no-store',
             'Content-Type': 'application/json; charset=utf-8',
+            ...headers,
         },
         status,
     });
@@ -17,8 +21,48 @@ function readAdminPassword(env) {
         : null;
 }
 
-function isAuthorized(request, password) {
-    return request.headers.get('Authorization') === `Bearer ${password}`;
+async function createAdminCookieValue(password) {
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+        'raw',
+        encoder.encode(password),
+        { hash: 'SHA-256', name: 'HMAC' },
+        false,
+        ['sign']
+    );
+    const signature = await crypto.subtle.sign(
+        'HMAC',
+        key,
+        encoder.encode(ADMIN_COOKIE_PAYLOAD)
+    );
+    return Array.from(new Uint8Array(signature), (byte) =>
+        byte.toString(16).padStart(2, '0')
+    ).join('');
+}
+
+function readCookie(request, name) {
+    const cookie = request.headers.get('Cookie') || '';
+    const prefix = `${name}=`;
+    return (
+        cookie
+            .split(';')
+            .map((part) => part.trim())
+            .find((part) => part.startsWith(prefix))
+            ?.slice(prefix.length) || null
+    );
+}
+
+async function isAuthorized(request, password) {
+    if (request.headers.get('Authorization') === `Bearer ${password}`) {
+        return { authorized: true, remember: true };
+    }
+
+    const cookieValue = readCookie(request, ADMIN_COOKIE_NAME);
+    const expectedCookieValue = await createAdminCookieValue(password);
+    return {
+        authorized: cookieValue === expectedCookieValue,
+        remember: false,
+    };
 }
 
 export async function onRequestGet({ env }) {
@@ -44,8 +88,9 @@ export async function onRequestPost({ env, request }) {
             503
         );
     }
-    if (!isAuthorized(request, password)) {
-        return jsonResponse({ error: '관리자 비밀번호가 틀렸습니다.' }, 401);
+    const authorization = await isAuthorized(request, password);
+    if (!authorization.authorized) {
+        return jsonResponse({ error: '관리자 비밀번호를 입력해 주세요.' }, 401);
     }
 
     let input;
@@ -63,7 +108,14 @@ export async function onRequestPost({ env, request }) {
             REPAIR_NOTICE_KEY,
             JSON.stringify(input.enabled)
         );
-        return jsonResponse({ enabled: input.enabled });
+        const headers = authorization.remember
+            ? {
+                  'Set-Cookie': `${ADMIN_COOKIE_NAME}=${await createAdminCookieValue(
+                      password
+                  )}; Path=/; Max-Age=${ADMIN_COOKIE_MAX_AGE}; HttpOnly; Secure; SameSite=Strict`,
+              }
+            : {};
+        return jsonResponse({ enabled: input.enabled }, 200, headers);
     } catch {
         return jsonResponse({ error: '공지 상태를 저장하지 못했습니다.' }, 503);
     }
