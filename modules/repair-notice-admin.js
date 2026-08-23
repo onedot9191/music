@@ -19,6 +19,17 @@ async function parseResponse(response) {
     return body;
 }
 
+export function createRepairNoticeUpdateOptions(enabled, password) {
+    return {
+        body: JSON.stringify({ enabled }),
+        headers: {
+            Authorization: `Bearer ${password}`,
+            'Content-Type': 'application/json',
+        },
+        method: 'POST',
+    };
+}
+
 export function bindRepairNoticeAdmin({
     actionButton,
     adminModal,
@@ -26,6 +37,7 @@ export function bindRepairNoticeAdmin({
     closeModal,
     feedback,
     openModal,
+    passwordInput,
     statusBadge,
 }) {
     let enabled = false;
@@ -62,7 +74,7 @@ export function bindRepairNoticeAdmin({
                 await fetch(REPAIR_NOTICE_ENDPOINT, { cache: 'no-store' })
             );
             renderStatus(status.enabled);
-            actionButton.focus({ preventScroll: true });
+            passwordInput.focus({ preventScroll: true });
         } catch (error) {
             feedback.textContent = error.message;
         } finally {
@@ -80,24 +92,34 @@ export function bindRepairNoticeAdmin({
         }
     });
 
-    closeButton.addEventListener('click', () => closeModal(adminModal));
+    function closeAdminModal() {
+        passwordInput.value = '';
+        closeModal(adminModal);
+    }
+
+    closeButton.addEventListener('click', closeAdminModal);
     adminModal.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeModal(adminModal);
+        if (event.key === 'Escape') closeAdminModal();
     });
 
     actionButton.addEventListener('click', async () => {
+        const password = passwordInput.value;
+        if (!password) {
+            feedback.textContent = '관리자 비밀번호를 입력해 주세요.';
+            passwordInput.focus();
+            return;
+        }
+
         setLoading(true);
         feedback.textContent = '';
         try {
             const status = await parseResponse(
-                await fetch(REPAIR_NOTICE_ENDPOINT, {
-                    body: JSON.stringify({
-                        enabled: !enabled,
-                    }),
-                    headers: { 'Content-Type': 'application/json' },
-                    method: 'POST',
-                })
+                await fetch(
+                    REPAIR_NOTICE_ENDPOINT,
+                    createRepairNoticeUpdateOptions(!enabled, password)
+                )
             );
+            passwordInput.value = '';
             renderStatus(status.enabled);
             feedback.textContent = status.enabled
                 ? '모든 사용자에게 수리 공지를 켰습니다.'

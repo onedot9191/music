@@ -222,6 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         closeModal,
         feedback: repairNoticeAdminFeedback,
         openModal,
+        passwordInput: repairNoticeAdminPassword,
         statusBadge: repairNoticeAdminStatus,
     });
 

@@ -31,6 +31,9 @@ export function createDomRefs() {
         repairNoticeAdminCloseBtn: document.getElementById(
             'repair-notice-admin-close-btn'
         ),
+        repairNoticeAdminPassword: document.getElementById(
+            'repair-notice-admin-password'
+        ),
         repairNoticeAdminStatus: document.getElementById(
             'repair-notice-admin-status'
         ),

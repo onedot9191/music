@@ -149,6 +149,22 @@
     word-break: keep-all;
 }
 
+.repair-notice-admin-password-label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-size: 1.4rem;
+}
+
+.repair-notice-admin-password {
+    width: 100%;
+    margin-bottom: var(--space-lg);
+    padding: var(--space-sm);
+    border: var(--pixel-border);
+    background: var(--surface-muted);
+    color: var(--text-primary);
+    font: inherit;
+}
+
 .repair-notice-admin-status-row {
     display: flex;
     align-items: center;
