@@ -215,6 +215,17 @@ const unorderedSubListTags = moralMethodsMarkup.match(
     /<ul\s+class="sub-list"[\s\S]*?data-ignore-order[\s\S]*?>/g
 );
 
+const practicalConvergenceMarkup = readFileSync(
+    new URL(
+        '../partials/quiz-main-sections/practical-std/convergence.html',
+        import.meta.url
+    ),
+    'utf8'
+);
+const constructionCharacteristicsTag = practicalConvergenceMarkup.match(
+    /<div[\s\S]*?>\s*건설기술의 특성<br \/>/
+)?.[0];
+
 assert.equal(
     methodColumnTags?.some((tag) => tag.includes('data-ignore-order')),
     false,
@@ -229,6 +240,16 @@ assert.equal(
     unorderedSubListTags?.every((tag) => tag.includes('data-group=')),
     true,
     'each unordered method sub-list should have its own answer pool'
+);
+assert.equal(
+    constructionCharacteristicsTag?.includes('data-ignore-order'),
+    true,
+    'construction characteristics should use unordered grading'
+);
+assert.equal(
+    constructionCharacteristicsTag?.includes('data-group='),
+    true,
+    'construction characteristics should use an isolated answer pool'
 );
 
 console.log('Grouped grading rejects exhausted canonical answers');
