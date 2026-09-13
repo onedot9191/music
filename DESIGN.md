@@ -33,7 +33,7 @@
 
 ### Font Stack
 
-- Base: `--font-base`, `Noto Sans KR`, sans-serif
+- Base: `--font-base`, `SUIT Variable`, sans-serif
 - Display: `--font-display`, `Galmuri9`, `Galmuri11`, `Press Start 2P`, cursive
 - Mono: `--font-mono`, `Galmuri9`, monospace
 

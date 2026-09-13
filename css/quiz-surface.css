@@ -202,7 +202,6 @@ td input {
     border: var(--pixel-border);
     background: var(--surface-muted);
     color: var(--text-light);
-    font-family: 'Noto Sans KR', sans-serif;
     caret-color: var(--primary);
     margin-bottom: 0; /* Removed margin as gap is used now */
     transition: transform 120ms ease, border-color 140ms ease,
@@ -232,7 +231,6 @@ td input.fit-answer {
     background: var(--secondary);
     color: var(--text-light);
     cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif;
     font-weight: 800;
 }
 
@@ -282,7 +280,6 @@ td input.fit-answer {
     background: var(--secondary);
     color: var(--text-light);
     cursor: pointer;
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
     padding: 0.45rem 0.7rem;

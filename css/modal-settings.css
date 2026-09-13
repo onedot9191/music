@@ -303,7 +303,6 @@
     font-family: var(--font-display);
 }
 .modal-content p {
-    font-family: var(--font-base);
     color: var(--text-light);
     font-size: 1.8rem;
     margin-bottom: 2rem;

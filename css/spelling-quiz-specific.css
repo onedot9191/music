@@ -76,7 +76,6 @@
     border: 2px solid var(--primary);
     border-radius: 0.8rem;
     color: var(--text-light);
-    font-family: var(--font-base);
     font-size: 1.6rem;
     font-weight: 600;
 
@@ -199,8 +198,6 @@
 }
 
 .spelling-question-content {
-    font-family: var(--font-base);
-
     font-size: 1.8rem;
 
     line-height: 1.6;
