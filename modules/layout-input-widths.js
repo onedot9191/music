@@ -48,7 +48,7 @@ export function desiredWidthForAnswer(
     input,
     { hangulFactor = 1.8, latinFactor = 1.3, scale = 1 } = {}
 ) {
-    const answer = input.dataset.answer || '';
+    const answer = (input.dataset.answer || '').trim().replace(/\s+/g, ' ');
     const factor = hasHangul(answer) ? hangulFactor : latinFactor;
     const base = Math.max(2, Math.ceil(answer.length * factor) + 4);
 
