@@ -36,6 +36,7 @@
         <link rel="stylesheet" href="css/quiz-surface.css" />
         <link rel="stylesheet" href="css/pe-activity-surface.css" />
         <link rel="stylesheet" href="css/modal-settings.css" />
+        <link rel="stylesheet" href="css/student-letters.css" />
         <link rel="stylesheet" href="css/start-modal-settings.css" />
         <link rel="stylesheet" href="css/start-modal-selectors.css" />
         <link rel="stylesheet" href="css/start-modal-controls.css" />
@@ -244,6 +245,66 @@
                 >
                     확인했습니다
                 </button>
+            </div>
+        </div>
+
+        <div
+            id="student-letters-modal"
+            class="modal-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="student-letters-title"
+        >
+            <div class="modal-content student-letters-content">
+                <button
+                    id="student-letters-close-btn"
+                    class="btn student-letters-close"
+                    type="button"
+                    aria-label="돌아가기"
+                    title="돌아가기"
+                >
+                    <span
+                        class="student-letters-close-icon"
+                        aria-hidden="true"
+                    ></span>
+                </button>
+
+                <p class="student-letters-badge" aria-hidden="true">
+                    📮 LETTER
+                </p>
+
+                <h2 id="student-letters-title">받은 편지</h2>
+
+                <div
+                    id="student-letters-stage"
+                    class="student-letters-stage"
+                    aria-live="polite"
+                ></div>
+
+                <div class="student-letters-controls">
+                    <button
+                        id="student-letters-prev-btn"
+                        class="btn student-letters-prev"
+                        type="button"
+                        aria-label="이전 편지"
+                    >
+                        ◀
+                    </button>
+
+                    <span
+                        id="student-letters-counter"
+                        class="student-letters-counter"
+                    ></span>
+
+                    <button
+                        id="student-letters-next-btn"
+                        class="btn student-letters-next"
+                        type="button"
+                        aria-label="다음 편지"
+                    >
+                        ▶
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -878,8 +939,31 @@
                         </div>
                     </div>
 
-                    <!-- 시작 버튼 -->
-                    <button id="start-game-btn" class="btn">시작</button>
+                    <!-- 시작 버튼과 학생 편지 버튼 -->
+                    <div class="start-action-row">
+                        <button id="start-game-btn" class="btn">시작</button>
+
+                        <button
+                            id="student-letters-open-btn"
+                            class="btn student-letters-open-btn"
+                            type="button"
+                            aria-label="학생 편지 보기"
+                            hidden
+                        >
+                            <span
+                                class="student-letters-open-icon"
+                                aria-hidden="true"
+                            ></span>
+                            편지
+                            <span
+                                id="student-letters-unread-badge"
+                                class="student-letters-unread-badge"
+                                aria-hidden="true"
+                                hidden
+                                >New</span
+                            >
+                        </button>
+                    </div>
                 </div>
 
                 <div id="heatmap-group">

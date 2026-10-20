@@ -21,6 +21,7 @@ import {
 } from './modules/repair-notice.js';
 import { bindRepairNoticeAdmin } from './modules/repair-notice-admin.js';
 import { bindSiteMigrationNotice } from './modules/site-migration-notice.js';
+import { prepareStudentLetters } from './modules/student-letters.js';
 import { initializeApp } from './modules/app-initializer.js';
 import { initializeIntegratedCoreIdeas } from './modules/integrated-core-ideas-mode.js';
 import { createDomRefs } from './modules/dom-elements.js';
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         scrapResultImageBtnTop,
         repairNoticeModal,
         repairNoticeConfirmBtn,
+        studentLetters,
         repairNoticeAdminModal,
         repairNoticeAdminCloseBtn,
         repairNoticeAdminPassword,
@@ -215,6 +217,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const modalManager = createModalManager();
     const { openModal, closeModal, focusModal } = modalManager;
     const repairNoticeEnabled = await repairNoticeEnabledPromise;
+    prepareStudentLetters({
+        closeModal,
+        nextModal: startModal,
+        openModal,
+        view: studentLetters,
+    });
     const initialModal = prepareRepairNotice({
         closeModal,
         enabled: repairNoticeEnabled,

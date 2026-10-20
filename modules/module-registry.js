@@ -2,6 +2,8 @@
 try {
     window._modules = {
         constants: await import('./constants.js'),
+        studentLetters: await import('./student-letters.js'),
+        studentLettersData: await import('./student-letters-data.js'),
         accordionEvents: await import('./accordion-events.js'),
         appEventBindings: await import('./app-event-bindings.js'),
         appInitializer: await import('./app-initializer.js'),

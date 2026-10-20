@@ -22,6 +22,19 @@ export function createDomRefs() {
             'scrap-result-image-btn-top'
         ),
         repairNoticeModal: document.getElementById('repair-notice-modal'),
+        studentLetters: {
+            modal: document.getElementById('student-letters-modal'),
+            title: document.getElementById('student-letters-title'),
+            stage: document.getElementById('student-letters-stage'),
+            counter: document.getElementById('student-letters-counter'),
+            prevButton: document.getElementById('student-letters-prev-btn'),
+            nextButton: document.getElementById('student-letters-next-btn'),
+            closeButton: document.getElementById('student-letters-close-btn'),
+            openButton: document.getElementById('student-letters-open-btn'),
+            unreadBadge: document.getElementById(
+                'student-letters-unread-badge'
+            ),
+        },
         repairNoticeConfirmBtn: document.getElementById(
             'repair-notice-confirm-btn'
         ),

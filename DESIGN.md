@@ -26,6 +26,8 @@
 | Status/error      | `--incorrect`        | `#ef4444` | 오답과 오류             |
 | Status/warning    | `--retrying`         | `#ff9f1c` | 재시도와 경고           |
 | Status/info       | `--revealed`         | `#5f9fcb` | 공개와 정보             |
+| Letter/paper      | `--letter-paper-*`   | `#fff2a8` | 학생 편지 포스트잇 종이 (yellow·peach·mint) |
+| Letter/board      | `--letter-board`     | `#0e1626` | 학생 편지 게시판 배경   |
 
 새 UI는 `css/variables.css`의 의미 토큰을 사용한다. 기능에 필요한 새로운 색상이 생기면 먼저 이 표와 `variables.css`에 의미 역할을 추가한다.
 

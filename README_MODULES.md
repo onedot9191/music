@@ -30,7 +30,7 @@
 - `canvas-share-targets.js` - 캔버스 이미지를 Web Share 또는 클립보드로 전달하는 브라우저 API 래퍼
 - `daily-blank-count-controller.js` - 오늘 푼 빈칸 수 표시와 50개 단위 축하 팝업 처리
 - `dday.js` - D-Day 렌더러 조립과 기존 렌더링 API 유지
-- `dday-date.js` - 11월 7일 기준 D-Day 날짜, 텍스트, 진행률 계산
+- `dday-date.js` - 11월 7일 기준 D-Day 날짜, 남은 일수, 텍스트, 진행률 계산
 - `dday-track-view.js` - D-Day 경주 트랙 DOM 생성, 픽셀 버섯 캔버스, 트랙 애니메이션
 - `character-state.js` - 캐릭터 표정과 콤보 성장 상태 제어
 - `utils.js` - 시간/날짜 포맷과 기존 입력폭 유틸 호환 재수출
@@ -85,6 +85,8 @@
 - `practical-modal-events.js` - 실과 모델 제목 모달 닫기 이벤트 바인딩
 - `repair-notice.js` - 공용 수리 공지 상태 조회와 시작 모달 전환
 - `repair-notice-admin.js` - Option+Command+Enter 관리자 화면과 공지 상태 변경
+- `student-letters.js` - D-10~D-1 학생 응원 편지함(날마다 쌓임), 읽음 기록과 New 표시, 편지 모달
+- `student-letters-data.js` - 학생 편지 목록, 대체 텍스트, 날짜별 공개 일정
 - `progress-modal-controller.js` - 결과 진행률 산출, 결과 칭호/대사, 결과 모달 렌더링
 - `quiz-partial-loader.js` - `index.html`에서 분리한 과목별 퀴즈 partial HTML과 `quiz-include` 섹션 partial 로드
 - `quiz-partials-manifest.js` - 분리된 퀴즈 partial HTML 경로 목록
@@ -114,6 +116,7 @@
 - `quiz-surface.css` - 퀴즈 본문, 탭, 표, 빈칸 입력 상태 공통 스타일
 - `pe-activity-surface.css` - 체육/신체활동 활동명, 예시, 하위 단계 입력 레이아웃 보정
 - `modal-settings.css` - 공통 모달, 가이드 모달, 결과 모달 기본 스타일
+- `student-letters.css` - D-10~D-1 학생 응원 편지함, 포스트잇, New 표시 스타일
 - `start-modal-settings.css` - 시작 모달 난이도/시간/효과음 설정 그리드와 시작 버튼 스타일
 - `start-modal-selectors.css` - 시작 모달 과목, 모드, 토픽, 시간 선택 버튼 상태 스타일
 - `start-modal-controls.css` - 시작 모달 과목/주제 선택, 하위 메뉴, 효과음 토글 보조 스타일
@@ -147,7 +150,7 @@
 - 과목별 퀴즈 `main` 62개는 `partials/quiz-mains/*.html`로 분리되어 `quiz-partial-loader.js`가 초기화 전에 로드합니다.
 - 큰 과목 파일은 `<!-- quiz-include: path/to/section.html -->` 주석으로 섹션 partial을 조립할 수 있습니다. 현재 `science-std.html`, `english.html`, `practical-std.html`, `overview.html`, `social-56.html`, `english-std.html`, `geometry-measure.html`, `korean-std.html`, `integrated-course.html`, `social-34.html`, `creative.html`, `math-operation.html`, `western-ethics.html`, `geometry.html`, `pe-course.html`, `moral-psychology.html`, `social.html`, `science.html`, `art-std.html`, `pe-model.html`, `music-std.html`, `physical-activity.html`, `moral-course.html`, `eastern-ethics.html`, `korean-model.html`, `math-course.html`, `practical.html`, `korean-course.html`, `art-course.html`, `data-probability.html`, `life-achievement.html`, `ethics.html`, `wise-achievement.html`, `joy-achievement.html`, `change-relation.html`, `science-course.html`, `practical-course.html`, `math-model.html`, `korean.html`, `area.html`, `music.html`, `competency.html`, `art-model.html`, `pe.html`, `music-course.html`, `art.html`, `english-course.html`, `social-course.html`, `pe-back.html`, `moral-principles.html`, `integrated-model.html`, `spelling.html`, `practical-lite.html`, `wise.html`, `life.html`, `music-elements.html`, `joy.html`, `integrated-guide-overview.html`, `ethics-lite.html`, `sports-functions.html`, `pe-lite.html`, `science-curriculum.html`은 `partials/quiz-main-sections/*/*.html`로 분리되어 있습니다.
 - `app.js`는 주요 애플리케이션 엔트리 포인트로 유지하되, 공통 기능은 `modules/`에서 import합니다.
-- CSS는 `variables.css`, `base.css`, `components.css`, `animations.css`, `hud-controls.css`, `quiz-surface.css`, `pe-activity-surface.css`, `modal-settings.css`, `start-modal-settings.css`, `start-modal-selectors.css`, `start-modal-controls.css`, `activity-status.css`, `dday-status.css`, `daily-blank-count.css`, `wrong-answer-status.css`, `character-result.css`, `result-character-modal.css`, `six-month-heatmap.css`, `competency-ui.css`, `subject-content.css`, `overview-question-inputs.css`, `subject-input-overrides.css`, `creative-subject.css`, `english-subject.css`, `subject-patterns.css`, `interaction-effects.css`, `subject-overrides.css`, `styles.css`, `spelling-quiz-specific.css`, `spelling-progress.css`, `spelling-dataset.css`, `spelling-feedback.css`, `achievement-pairs.css`, `page-specific.css` 순서로 로드됩니다.
+- CSS는 `variables.css`, `base.css`, `components.css`, `animations.css`, `hud-controls.css`, `quiz-surface.css`, `pe-activity-surface.css`, `modal-settings.css`, `student-letters.css`, `start-modal-settings.css`, `start-modal-selectors.css`, `start-modal-controls.css`, `activity-status.css`, `dday-status.css`, `daily-blank-count.css`, `wrong-answer-status.css`, `character-result.css`, `result-character-modal.css`, `six-month-heatmap.css`, `competency-ui.css`, `subject-content.css`, `overview-question-inputs.css`, `subject-input-overrides.css`, `creative-subject.css`, `english-subject.css`, `subject-patterns.css`, `interaction-effects.css`, `subject-overrides.css`, `styles.css`, `spelling-quiz-specific.css`, `spelling-progress.css`, `spelling-dataset.css`, `spelling-feedback.css`, `achievement-pairs.css`, `page-specific.css` 순서로 로드됩니다.
 - 앱 초기화, DOM 참조, 게임 상태, 게임 흐름 유틸, 오디오 참조, 오디오 재생 위임, 오늘 빈칸 카운트 표시, 히트맵 모달 이벤트, 실과 모달 이벤트, 퀴즈 partial 로딩, 캐릭터 상태, 과목별 주제 매핑, 모델 게이팅 설정, 모드 선택 이벤트, 모델 다음 버튼, 시간 설정 이벤트, 게임 컨트롤 이벤트 바인딩, 게임 세션 시작/초기화, 타이머/게임오버 처리, 스테이지 내비게이션, 스테이지 완료 예약, 오답 추적, 시각 효과, 슬롯머신, 타이핑 효과, 입력 이벤트 바인딩, 입력 채점 컨트롤러, 입력 피드백 컨트롤러, 입력 폭 보정 정책, 과목별 레이아웃 보정, 결과 이미지 액션, 결과 진행 상태, 결과 모달 표시, 맞춤법 퀴즈 컨트롤러, 스테이지 클리어 컨트롤러, 시작 모달 UI 컨트롤러, 시작 모달 이벤트 바인딩, 탭 이벤트 바인딩, 아코디언 이벤트 바인딩, 정답 공개 처리, 정답 판정, 섹션 판별, 효과음 설정, 모듈 레지스트리 부트스트랩은 별도 모듈로 분리되어 있습니다.
 - 정답 후보 추출 구현은 `answer-candidates.js`, 입력 폭 보정 구현은 `dom-utils.js`에 두고, 기존 export는 호환용 재수출로 유지합니다.
 - 기존 호환성을 위해 `window.isSoundEnabled`와 `window._modules` 전역 API는 유지합니다.

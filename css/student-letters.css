@@ -1,0 +1,445 @@
+/* === STUDENT LETTERS ===
+   D-10~D-1 날마다 쌓이는 학생 응원 편지함.
+   손글씨는 투명 이미지이고, 종이와 테이프는 픽셀 문법으로 그린다. */
+
+#student-letters-modal {
+    padding: var(--space-md);
+}
+
+#student-letters-modal .student-letters-content {
+    width: min(94%, 56rem);
+    padding: var(--space-lg);
+    overflow-x: hidden;
+}
+
+#student-letters-modal .student-letters-badge {
+    display: inline-block;
+    margin: 0 0 var(--space-sm);
+    padding: 0.2rem 0.8rem;
+    border: var(--pixel-border);
+    background: var(--accent);
+    color: var(--border-strong);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    box-shadow: var(--shadow-soft);
+}
+
+#student-letters-title {
+    margin-bottom: var(--space-md);
+    font-size: 2.4rem;
+    line-height: 1.35;
+    word-break: keep-all;
+}
+
+.student-letters-stage {
+    position: relative;
+    width: min(100%, 46rem, 62vh);
+    aspect-ratio: 1;
+    margin: 0 auto var(--space-md);
+    border: var(--pixel-border);
+    background-color: var(--letter-board);
+    background-image: radial-gradient(
+        rgba(255, 255, 255, 0.07) 0.15rem,
+        transparent 0.16rem
+    );
+    background-size: 1.6rem 1.6rem;
+    box-shadow: inset 0 0 0 0.3rem var(--surface-muted);
+    overflow: hidden;
+}
+
+.student-letter-note {
+    --note-paper: var(--letter-paper-yellow);
+    --note-tilt: 0deg;
+    --note-strip: 9%;
+
+    position: absolute;
+    inset: 7%;
+    margin: 0;
+    background: var(--note-paper);
+    border: var(--pixel-border);
+    box-shadow: var(--shadow-hard);
+    transform: translate(1.2rem, 1.2rem) rotate(calc(var(--note-tilt) * -1.6))
+        scale(0.94);
+    opacity: 0;
+    transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.25, 1.15),
+        opacity 0.24s ease;
+    pointer-events: none;
+}
+
+.student-letter-note[data-tone='peach'] {
+    --note-paper: var(--letter-paper-peach);
+}
+
+.student-letter-note[data-tone='mint'] {
+    --note-paper: var(--letter-paper-mint);
+}
+
+/* 포스트잇 윗부분 접착 띠 */
+.student-letter-note::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--note-strip);
+    background: rgba(3, 5, 11, 0.06);
+    border-bottom: 0.2rem dashed rgba(3, 5, 11, 0.12);
+}
+
+/* 위에 붙인 마스킹 테이프 */
+.student-letter-note::after {
+    content: '';
+    position: absolute;
+    top: -1.4rem;
+    left: 50%;
+    width: 34%;
+    height: 2.6rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 0.2rem solid rgba(3, 5, 11, 0.35);
+    transform: translateX(-50%) rotate(calc(var(--note-tilt) * -1));
+}
+
+/* 손글씨는 접착 띠 아래 영역에만 놓아 띠와 도장이 글자를 가리지 않게 한다 */
+.student-letter-note img {
+    position: absolute;
+    inset: var(--note-strip) 0 0;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(100% - var(--note-strip));
+    padding: 1.5% 3% 2%;
+    object-fit: contain;
+    user-select: none;
+}
+
+/* 앞뒷면 편지: 종이는 면마다 그리고, 테이프만 바깥에 남긴다 */
+.student-letter-note.has-back {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    perspective: 120rem;
+}
+
+.student-letter-note.has-back::before {
+    display: none;
+}
+
+.student-letter-note.has-back::after {
+    z-index: 2;
+}
+
+.student-letter-faces {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.3, 0.9, 0.3, 1.05);
+    cursor: pointer;
+}
+
+.student-letter-note.is-flipped .student-letter-faces {
+    transform: rotateY(180deg);
+}
+
+.student-letter-face {
+    position: absolute;
+    inset: 0;
+    background: var(--note-paper);
+    border: var(--pixel-border);
+    box-shadow: var(--shadow-hard);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.student-letter-face::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--note-strip);
+    background: rgba(3, 5, 11, 0.06);
+    border-bottom: 0.2rem dashed rgba(3, 5, 11, 0.12);
+}
+
+.student-letter-face.is-back {
+    transform: rotateY(180deg);
+}
+
+.student-letter-flip-btn {
+    position: absolute;
+    right: -0.8rem;
+    bottom: -0.8rem;
+    z-index: 3;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--border-strong);
+    border: var(--pixel-border);
+    box-shadow: var(--shadow-soft);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    text-shadow: none;
+    animation: student-letter-flip-hint 1.6s steps(2) infinite;
+}
+
+.student-letter-flip-btn:hover {
+    background: var(--letter-paper-yellow);
+    color: var(--border-strong);
+}
+
+.student-letter-note.is-flipped .student-letter-flip-btn {
+    animation: none;
+}
+
+/* 안 읽은 편지 도장 */
+.student-letter-unread-stamp {
+    position: absolute;
+    top: -1.2rem;
+    left: -1.2rem;
+    z-index: 3;
+    padding: 0.2rem 0.8rem;
+    background: var(--primary);
+    color: var(--text-light);
+    border: var(--pixel-border);
+    box-shadow: var(--shadow-soft);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    transform: rotate(-6deg);
+}
+
+@keyframes student-letter-flip-hint {
+    50% {
+        transform: translateY(-0.3rem);
+    }
+}
+
+/* 아직 안 읽은 편지는 뒤에 살짝 겹쳐 보인다 */
+.student-letter-note.is-current + .student-letter-note {
+    opacity: 1;
+}
+
+.student-letter-note.is-current {
+    z-index: 2;
+    opacity: 1;
+    transform: rotate(var(--note-tilt));
+    pointer-events: auto;
+}
+
+.student-letter-note.is-read {
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-120%, -0.8rem) rotate(-14deg);
+}
+
+.student-letters-controls {
+    display: grid;
+    grid-template-columns: auto minmax(7rem, auto) auto;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+.student-letters-counter {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    text-align: center;
+    user-select: none;
+}
+
+/* 이전/다음은 같은 크기의 정사각 화살표 버튼 */
+.student-letters-prev,
+.student-letters-next {
+    display: grid;
+    place-items: center;
+    width: 5.2rem;
+    height: 5.2rem;
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.student-letters-prev:disabled,
+.student-letters-next:disabled {
+    visibility: hidden;
+}
+
+/* 모달 오른쪽 위의 돌아가기 버튼 */
+#student-letters-modal .student-letters-content {
+    position: relative;
+}
+
+.student-letters-close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    display: grid;
+    place-items: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    margin: 0;
+    padding: 0;
+    background: var(--surface-muted);
+}
+
+.student-letters-close.is-finish {
+    background: var(--accent);
+    color: var(--border-strong);
+    animation: student-letter-flip-hint 1.6s steps(2) infinite;
+}
+
+/* 픽셀 되돌아가기 화살표 ↩ */
+.student-letters-close-icon {
+    position: relative;
+    width: 2rem;
+    height: 1.6rem;
+    border: 0.35rem solid currentColor;
+    border-left: 0;
+    border-radius: 0 0.6rem 0.6rem 0;
+}
+
+.student-letters-close-icon::before {
+    content: '';
+    position: absolute;
+    bottom: -0.85rem;
+    left: -0.6rem;
+    border: 0.65rem solid transparent;
+    border-right: 0.8rem solid currentColor;
+    border-left: 0;
+}
+
+@media (max-width: 480px) {
+    #student-letters-modal .student-letters-content {
+        width: 100%;
+        padding: var(--space-md);
+    }
+
+    #student-letters-title {
+        font-size: 2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .student-letter-note,
+    .student-letter-faces {
+        transition: none;
+    }
+
+    .student-letter-flip-btn,
+    .student-letters-close.is-finish {
+        animation: none;
+    }
+}
+
+/* 시작 버튼 오른쪽의 편지 다시 보기 버튼 */
+.start-action-row {
+    display: flex;
+    gap: 1.2rem;
+    width: 100%;
+    margin-top: 1.2rem;
+}
+
+.start-action-row #start-game-btn {
+    flex: 1;
+    margin-top: 0;
+}
+
+.student-letters-open-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 9.6rem;
+    margin: 0;
+    padding: 0.8rem 1.6rem;
+    background: var(--letter-paper-yellow);
+    color: var(--border-strong);
+    border: var(--pixel-border);
+    box-shadow: 0.45rem 0.45rem 0 var(--border-strong);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-shadow: none;
+}
+
+.student-letters-open-btn[hidden] {
+    display: none;
+}
+
+.student-letters-open-btn:hover {
+    background: var(--accent);
+    color: var(--border-strong);
+    transform: translate(-0.1rem, -0.1rem);
+    box-shadow: 0.55rem 0.55rem 0 var(--border-strong);
+}
+
+.student-letters-open-btn:active {
+    transform: translate(0.5rem, 0.5rem);
+    box-shadow: 0.2rem 0.2rem 0 var(--border-strong);
+}
+
+/* 픽셀 편지봉투 아이콘 */
+.student-letters-open-icon {
+    position: relative;
+    width: 3.2rem;
+    height: 2.2rem;
+    border: 0.3rem solid currentColor;
+    background: var(--text-light);
+    overflow: hidden;
+}
+
+.student-letters-open-icon::before {
+    content: '';
+    position: absolute;
+    inset: -0.3rem -0.3rem auto;
+    height: 1.6rem;
+    background: currentColor;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.student-letters-open-icon::after {
+    content: '';
+    position: absolute;
+    inset: -0.3rem 0.3rem auto;
+    height: 1.1rem;
+    background: var(--primary);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* 안 읽은 편지가 있을 때 버튼 모서리의 New 표시 */
+.student-letters-unread-badge {
+    position: absolute;
+    top: -1.2rem;
+    right: -1.4rem;
+    display: grid;
+    place-items: center;
+    height: 2.6rem;
+    padding: 0 0.6rem;
+    background: var(--primary);
+    color: var(--text-light);
+    border: 0.3rem solid var(--border-strong);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1;
+    white-space: nowrap;
+    animation: student-letters-unread-blink 1.2s steps(2) infinite;
+}
+
+.student-letters-unread-badge[hidden] {
+    display: none;
+}
+
+@keyframes student-letters-unread-blink {
+    50% {
+        transform: translateY(-0.3rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .student-letters-unread-badge {
+        animation: none;
+    }
+}

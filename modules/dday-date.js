@@ -21,10 +21,14 @@ export function getNextDDayDate(today = new Date()) {
         : target;
 }
 
+export function calculateDaysUntil(targetDate, today = new Date()) {
+    return Math.round(
+        (startOfDay(targetDate) - startOfDay(today)) / MS_PER_DAY
+    );
+}
+
 export function calculateDDayText(targetDate, today = new Date()) {
-    const normalizedToday = startOfDay(today);
-    const target = startOfDay(targetDate);
-    const diffDays = Math.floor((target - normalizedToday) / MS_PER_DAY);
+    const diffDays = calculateDaysUntil(targetDate, today);
 
     if (diffDays === 0) return 'D-Day';
     if (diffDays > 0) return `D-${diffDays}`;
