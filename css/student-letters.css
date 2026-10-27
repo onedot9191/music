@@ -27,10 +27,18 @@
 }
 
 #student-letters-title {
-    margin-bottom: var(--space-md);
+    margin-bottom: 0;
     font-size: 2.4rem;
     line-height: 1.35;
     word-break: keep-all;
+    box-shadow: none;
+}
+
+#student-letters-modal .student-letters-hint {
+    margin: 0.4rem 0 var(--space-md);
+    color: var(--text-muted);
+    font-size: 1.3rem;
+    line-height: 1.5;
 }
 
 .student-letters-stage {

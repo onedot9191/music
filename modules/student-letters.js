@@ -277,12 +277,8 @@ export function prepareStudentLetters({
 
     button.addEventListener('click', () => {
         const letters = loadLetters();
-        const unreadCount = letters.filter((letter) => letter.unread).length;
         renderLetterViewer(view, letters, {
-            title:
-                unreadCount > 0
-                    ? `새 편지 ${unreadCount}통이 도착했어요`
-                    : '받은 편지',
+            title: '어느 초등학생의 편지지',
             onShow: (letter) => {
                 if (!letter.unread) return;
                 if (preview) {
